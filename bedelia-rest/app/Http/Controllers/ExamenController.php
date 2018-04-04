@@ -329,12 +329,14 @@ class ExamenController extends Controller
             $res = array (
                 "id" => $Examen->id,
                 "tipo" => 'LE',
-                "fecha" => '',
+                "fecha" => $Examen->periodoExamen->periodo->fecha,
                 "notas" => array(),
             );
             foreach ($Examen->estudiantes as $estudiante) {
                 $nota = array (
                     "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                    "Nombre" => $estudiante->usuario->persona->nombre,
+                    "Apellido" => $estudiante->usuario->persona->apellido,
                     "nota" => $estudiante->pivot->nota,
                 );
                 array_push($res['notas'], $nota);
