@@ -14,12 +14,12 @@ export class EdicionesCursoService {
 
   constructor(protected http: HttpClient) { }
 
-  inscripciones(idCurso: number, ciEstudiante: string) {
-    return this.http.post(this.apiURL + "/" + idCurso + "/inscripciones/" + ciEstudiante, null);
+  inscripciones(ciEstudiante: string, edicionesCursos:number[]) {
+    return this.http.post(this.apiURL + "/inscripciones/" + ciEstudiante, edicionesCursos);
   }
 
   asignar(id: number, ci: string) {
-    return this.http.put<EdicionCursoDTO[]>(this.apiURL + "/" + id + "/docente/" + ci, null);
+    return this.http.put(this.apiURL + "/" + id + "/docente/" + ci, null);
   }
 
   getEdicionesDocentes(ci:string){
@@ -30,8 +30,8 @@ export class EdicionesCursoService {
     return this.http.get<ClaseDictadaDTO>(this.apiURL + "/" + id + "/estudiantes/" );
   }
   
-  crearClaseDicta(idEdicionCurso: number, ciEstu:string, asis:number) {
-    return this.http.post(this.apiURL + "/" + idEdicionCurso + "/clasesDictada/", {ciEstudiante: ciEstu, asistencia:asis});
+  crearClaseDicta(idEdicionCurso: number, clasDic: ClaseDictadaDTO) {
+    return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/clasesDictada/", clasDic);
   }
 
   getEdicionesParaInscrivirse(ci:string,idCarrera:number){

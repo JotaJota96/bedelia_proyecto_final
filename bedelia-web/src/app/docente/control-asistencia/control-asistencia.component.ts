@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { ClaseDictadaDTO } from 'src/app/clases/clase-dictada-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { CursoService } from 'src/app/servicios/curso.service';
@@ -16,13 +18,17 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 export class ControlAsistenciaComponent implements OnInit {
   listaCurso: EdicionCursoDTO[] = [];
   mostrar:boolean = false;
+  claseDictada : ClaseDictadaDTO;
+  cursoSeleccionado: CursoDTO;
+
   public formulario: FormGroup;
    // columnas que se mostraran en la tabla
-   columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'accion'];
+   columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido','cant_asistencias', 'calculo' ,'accion'];
    // objeto que necesita la tabla para mostrar el contenido
    usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService,protected edicionServ: EdicionesCursoService) { }
+  constructor(private router:Router, private _snackBar: MatSnackBar, 
+    protected usuServ: UsuariosService,protected edicionServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
     this.edicionServ.getEdicionesDocentes(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
@@ -37,26 +43,33 @@ export class ControlAsistenciaComponent implements OnInit {
       curso: new FormControl('', [Validators.required])
     });
   }
-
+  
   confirmar(){
     this.mostrar = true;
-    this.edicionServ.getEstudiantesCurso(this.formulario.controls['curso'].value).subscribe(
+    this.cursoSeleccionado = this.formulario.controls['curso'].value;
+
+    this.edicionServ.getEstudiantesCurso((this.formulario.controls['curso'].value).id).subscribe(
       (datos)=>{
+        datos.lista.forEach(element => {
+          element.asistencia = 0;
+        });
+
+        this.claseDictada = datos;
         this.usuariosDataSource.data = datos.lista;
       }
     );
   }
 
-  asistio(id:string){
-    //Asistió = 1, Llegada tarde = 0.5, No asistió = 0
-  }
-  
-  noAsistio(id:string){
-    //Asistió = 1, Llegada tarde = 0.5, No asistió = 0
-  }
-  
-  mediaFalta(id:string){
-    //Asistió = 1, Llegada tarde = 0.5, No asistió = 0
+  confirmarPasajeLista(){
+ 
+    this.edicionServ.crearClaseDicta(this.formulario.controls['curso'].value, this.claseDictada).subscribe(
+      (datos)=>{
+        this.router.navigate(['/']);
+      },
+      (error)=>{
+        this.openSnackBar("Error al registrar las asistencias");
+      }
+    );
   }
 
   openSnackBar(mensaje: string) {

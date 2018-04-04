@@ -16,7 +16,7 @@
       </form>
 
       <mat-selection-list class="curso" #curso [(ngModel)]="selectedOptions">
-        <mat-list-option *ngFor="let curso of listaCurso" [disabled]="false" [value]="curso">
+        <mat-list-option *ngFor="let curso of listaCurso" [disabled]="curso.habilitado != 1" [value]="curso.id">
           {{curso.curso.nombre}}
         </mat-list-option>
       </mat-selection-list>

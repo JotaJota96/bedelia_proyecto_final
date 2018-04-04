@@ -3,17 +3,17 @@
         <mat-card-content>
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
-                  <mat-select placeholder="Lista de curso" name="curso" formControlName="curso">
-                    <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
-                      {{curso.curso.nombre}}
-                    </mat-option>
-                  </mat-select>
+                    <mat-select placeholder="Lista de curso" name="curso" formControlName="curso">
+                        <mat-option *ngFor="let curso of listaCurso" [value]="curso">
+                            {{curso.curso.nombre}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
-        
+
                 <div class="col-12 col-md-2 m-auto" align="end">
-                  <button mat-raised-button (click)="confirmar()" color="primary">Seleccionar carrera </button>
+                    <button mat-raised-button (click)="confirmar()" color="primary">Seleccionar carrera </button>
                 </div>
-              </form>
+            </form>
         </mat-card-content>
     </mat-card>
     <mat-card class="mt-2">
@@ -22,34 +22,44 @@
             <!-- Columna -->
             <ng-container matColumnDef="cedula">
                 <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                <td mat-cell *matCellDef="let element"> {{element.persona.cedula}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
             </ng-container>
 
             <!-- Columna -->
             <ng-container matColumnDef="nombre">
                 <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.persona.nombre}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
             </ng-container>
 
             <!-- Columna -->
             <ng-container matColumnDef="apellido">
                 <th mat-header-cell *matHeaderCellDef> Apellido </th>
-                <td mat-cell *matCellDef="let element"> {{element.persona.apellido}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
             </ng-container>
 
             <!-- Columna -->
-            <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef> Fecha de inasistencia </th>
-                <td mat-cell *matCellDef="let element"> </td>
+            <ng-container matColumnDef="cant_asistencias">
+                <th mat-header-cell *matHeaderCellDef> Acistencias</th>
+                <td mat-cell *matCellDef="let element"> {{element.cant_asistencias}} </td>
+            </ng-container>
+
+            <!-- Columna -->
+            <ng-container matColumnDef="calculo">
+                <th mat-header-cell *matHeaderCellDef> Calculo de falta</th>
+                <td mat-cell *matCellDef="let element"> {{element.cant_asistencias}} </td>
             </ng-container>
 
             <!-- Columna -->
             <ng-container matColumnDef="accion">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element" align="end">
-                    <button class="mx-1" (click)="asistio(element.persona.cedula)" mat-raised-button>Asistió</button>
-                    <button class="mx-1" (click)="noAsistio(element.persona.cedula)" mat-raised-button>Llegada tarde</button>
-                    <button class="mx-1" (click)="mediaFalta(element.persona.cedula)" mat-raised-button color="warn">No asistió</button>
+                <td mat-cell *matCellDef="let element"  align="end">
+                    <mat-form-field class="col-12" [style.width.%]=100>
+                        <mat-select [(ngModel)]="element.asistencia">
+                            <mat-option  [value]="1.0">Asistió</mat-option>
+                            <mat-option  [value]="0.5">Llegada tarde</mat-option>
+                            <mat-option  [value]="0.0">No asistió</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </td>
             </ng-container>
 
@@ -62,5 +72,9 @@
                 <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
             </tr>
         </table>
+
+        <mat-card-actions align="end">
+            <button mat-raised-button (click)="confirmarPasajeLista()" color="primary">Seleccionar carrera </button>
+        </mat-card-actions>
     </mat-card>
 </div>

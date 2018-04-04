@@ -4,7 +4,6 @@ export class ListaAlumnosDTO {
     public cant_asistencias : number
     public nombre : string
     public apellido : string
-    
 }
 /*
 ciEstudiante	string

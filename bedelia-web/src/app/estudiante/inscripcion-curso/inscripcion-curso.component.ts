@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { CarreraService } from 'src/app/servicios/carrera.service';
@@ -13,14 +14,14 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./inscripcion-curso.component.css']
 })
 export class InscripcionCursoComponent implements OnInit {
-  selectedOptions: EdicionCursoDTO[] = [];
+  selectedOptions: number[] = [];
   listaCurso: EdicionCursoDTO[] = [];
   listaCarrera: CarreraDTO[] = [];
   ciEstudiante: string;
 
 
   public formulario: FormGroup;
-  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
+  constructor(private router:Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
     protected carreraServis: CarreraService, protected edicionCursoServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
@@ -54,20 +55,21 @@ export class InscripcionCursoComponent implements OnInit {
   confirmar() {
     console.log(this.selectedOptions)
     let usu = this.usuServ.obtenerDatosLoginAlmacenado();
-    this.selectedOptions.forEach(element => {
-      this.edicionCursoServ.inscripciones(element.id, usu.cedula).subscribe(
-        (error) => {
-          this.openSnackBar("No se pudo inscrivir al curso: " + element.curso.nombre);
-        }
-      );
-    });
+    this.edicionCursoServ.inscripciones(this.ciEstudiante, this.selectedOptions).subscribe(
+      (datos) => {
+        this.router.navigate(['/']);
+      },
+      (error)=>{
+        this.openSnackBar("Error al inscrivirse a una materia");
+      }
+    );
   }
 
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
       duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
+      horizontalPosition: 'center',
+      verticalPosition: "top",
     });
   }
 }
