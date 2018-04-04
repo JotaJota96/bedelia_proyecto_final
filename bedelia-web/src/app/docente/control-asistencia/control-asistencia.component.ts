@@ -44,11 +44,20 @@ export class ControlAsistenciaComponent implements OnInit {
     });
   }
   
+  calculCantidadAsis(c_inasis:number,t_llegada:number):number{
+    return this.cursoSeleccionado.max_inasistencias - (c_inasis + t_llegada);
+  }
+
   confirmar(){
     this.mostrar = true;
-    this.cursoSeleccionado = this.formulario.controls['curso'].value;
+    this.listaCurso.forEach(element => {
+      if(element.id == this.formulario.controls['curso'].value){
+        this.cursoSeleccionado = element.curso;
+      }
+    });
 
-    this.edicionServ.getEstudiantesCurso((this.formulario.controls['curso'].value).id).subscribe(
+    
+    this.edicionServ.getEstudiantesCurso(this.formulario.controls['curso'].value).subscribe(
       (datos)=>{
         datos.lista.forEach(element => {
           element.asistencia = 0;

@@ -4,7 +4,7 @@
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Lista de curso" name="curso" formControlName="curso">
-                        <mat-option *ngFor="let curso of listaCurso" [value]="curso">
+                        <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
                             {{curso.curso.nombre}}
                         </mat-option>
                     </mat-select>
@@ -45,8 +45,8 @@
 
             <!-- Columna -->
             <ng-container matColumnDef="calculo">
-                <th mat-header-cell *matHeaderCellDef> Calculo de falta</th>
-                <td mat-cell *matCellDef="let element"> {{element.cant_asistencias}} </td>
+                <th mat-header-cell *matHeaderCellDef> Maximo de inasistencias permitidas</th>
+                <td mat-cell *matCellDef="let element"> {{calculCantidadAsis(element.cant_inasistencias, element.total_llegada_tarde)}} </td>
             </ng-container>
 
             <!-- Columna -->
