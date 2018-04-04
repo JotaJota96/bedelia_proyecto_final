@@ -66,7 +66,6 @@ export class ControlAsistenciaComponent implements OnInit {
   }
 
   confirmarPasajeLista(){
- 
     this.edicionServ.crearClaseDicta(this.formulario.controls['curso'].value, this.claseDictada).subscribe(
       (datos)=>{
         this.router.navigate(['/']);

@@ -26,19 +26,19 @@
                 <!-- Columna -->
                 <ng-container matColumnDef="cedula">
                     <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                    <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
                 </ng-container>
 
                 <!-- Columna -->
                 <ng-container matColumnDef="nombre">
                     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.Nombre}} </td>
                 </ng-container>
 
                 <!-- Columna -->
                 <ng-container matColumnDef="apellido">
                     <th mat-header-cell *matHeaderCellDef> Apellido </th>
-                    <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.Apellido}} </td>
                 </ng-container>
                 
                 <!-- Columna -->
@@ -51,7 +51,7 @@
                 <ng-container matColumnDef="accion">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element" align="end">
-                        <button class="mx-1" (click)="ingresarNota(element.cedula)" mat-raised-button>Ingresar nota</button>
+                        <button class="mx-1" (click)="ingresarNota(element.ciEstudiante)" mat-raised-button>Ingresar nota</button>
                     </td>
                 </ng-container>
 

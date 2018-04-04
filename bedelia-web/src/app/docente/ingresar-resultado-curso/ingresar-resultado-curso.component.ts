@@ -19,7 +19,7 @@ export class IngresarResultadoCursoComponent implements OnInit {
   listaCurso: EdicionCursoDTO[] = [];
   mostrar:boolean = false;
   notas:number[]=[];
-  acta:ActaDTO = new ActaDTO;
+  acta:ActaDTO;
 
   public formulario: FormGroup;
 
@@ -47,10 +47,11 @@ export class IngresarResultadoCursoComponent implements OnInit {
   buscar(){
     this.edicionServ.getEdicionesParaActa(this.formulario.controls['curso'].value).subscribe(
       (datos) => {
-        this.acta = datos
         datos.notas.forEach(element => {
           element.nota = 0
         });
+
+        this.acta = datos;
         this.usuariosDataSource.data = datos.notas;
       },
       (error) => {
