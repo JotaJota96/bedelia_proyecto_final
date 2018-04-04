@@ -72,6 +72,6 @@ $router->get('edicionesCurso/{ciEstudiante}/{idCarrera}',       'EdicionesCursoC
 
 $router->post('examenes/{id}/inscripciones/{ciEstudiante}', 'ExamenController@asignarEstudiante');
 
-
-
+$router->get('estudiantes/{ciEstudiante}/carreras', 'EstudianteController@Careras');
+$router->put('estudiantes/{ciEstudiante}/asistencias', 'EstudianteController@JustificarInasistencias');
 
