@@ -18,15 +18,14 @@ import { IngresarNotaComponent } from './ingresar-nota/ingresar-nota.component';
 export class IngresarResultadoCursoComponent implements OnInit {
   listaCurso: EdicionCursoDTO[] = [];
   mostrar:boolean = false;
-  notas:number[]=[];
   acta:ActaDTO;
+  notas:number[]=[];
 
   public formulario: FormGroup;
-
-   // columnas que se mostraran en la tabla
-   columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'nota','accion'];
-   // objeto que necesita la tabla para mostrar el contenido
-   usuariosDataSource = new MatTableDataSource([]);
+  // columnas que se mostraran en la tabla
+  columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'nota','accion'];
+  // objeto que necesita la tabla para mostrar el contenido
+  usuariosDataSource = new MatTableDataSource([]);
 
   constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar, protected usuServ: UsuariosService, protected edicionServ: EdicionesCursoService) { }
 
@@ -47,10 +46,6 @@ export class IngresarResultadoCursoComponent implements OnInit {
   buscar(){
     this.edicionServ.getEdicionesParaActa(this.formulario.controls['curso'].value).subscribe(
       (datos) => {
-        datos.notas.forEach(element => {
-          element.nota = 0
-        });
-
         this.acta = datos;
         this.usuariosDataSource.data = datos.notas;
       },
@@ -74,7 +69,10 @@ export class IngresarResultadoCursoComponent implements OnInit {
   ingresarNota(ciEstudiante : string){
     const dialogRef = this.dialog.open(IngresarNotaComponent,{width: '500px'});
     dialogRef.afterClosed().subscribe(result => {
-
+      if(result > 5 || result < 1){
+        this.openSnackBar("La nota a ingresar deve estar entre 1 y 5");
+        return
+      }
       this.acta.notas.forEach(element => {
         if(element.ciEstudiante == ciEstudiante){
           element.nota = result;

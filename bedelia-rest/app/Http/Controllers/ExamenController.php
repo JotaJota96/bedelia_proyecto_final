@@ -153,8 +153,11 @@ class ExamenController extends Controller
                 return response()->json(['message' => 'Usuario no encontrado'], 404);
             }
             $Docente = $Usuario->docente;
-            $Cursos = $Docente->examenesActuales();
-            return response()->json($Cursos, 200);
+            $Examenes = $Docente->examenesActuales();
+            foreach ($Examenes as $e) {
+                $e->curso;
+            }
+            return response()->json($Examenes, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
@@ -328,15 +331,15 @@ class ExamenController extends Controller
             $Examen = Examen::where('id', $id)->first();
             $res = array (
                 "id" => $Examen->id,
-                "tipo" => 'LE',
-                "fecha" => $Examen->periodoExamen->periodo->fecha,
+                "tipo" => 'EX',
+                "fecha" => $Examen->fecha,
                 "notas" => array(),
             );
             foreach ($Examen->estudiantes as $estudiante) {
                 $nota = array (
                     "ciEstudiante" => $estudiante->usuario->persona->cedula,
-                    "Nombre" => $estudiante->usuario->persona->nombre,
-                    "Apellido" => $estudiante->usuario->persona->apellido,
+                    "nombre" => $estudiante->usuario->persona->nombre,
+                    "apellido" => $estudiante->usuario->persona->apellido,
                     "nota" => $estudiante->pivot->nota,
                 );
                 array_push($res['notas'], $nota);

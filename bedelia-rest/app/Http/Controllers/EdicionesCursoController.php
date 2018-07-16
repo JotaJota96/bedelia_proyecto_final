@@ -484,14 +484,13 @@ class EdicionesCursoController extends Controller
             $res = array (
                 "id" => $EdicionCurso->id,
                 "tipo" => 'LE',
-                "fecha" => '',
                 "notas" => array(),
             );
             foreach ($EdicionCurso->estudiantes as $estudiante) {
                 $nota = array (
                     "ciEstudiante" => $estudiante->usuario->persona->cedula,
-                    "Nombre" => $estudiante->usuario->persona->nombre,
-                    "Apellido" => $estudiante->usuario->persona->apellido,
+                    "nombre" => $estudiante->usuario->persona->nombre,
+                    "apellido" => $estudiante->usuario->persona->apellido,
                     "nota" => $estudiante->pivot->nota,
                 );
                 array_push($res['notas'], $nota);

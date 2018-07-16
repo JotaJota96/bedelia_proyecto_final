@@ -24,12 +24,11 @@ export class IngresarResultadoExamenComponent implements OnInit {
   
   public formulario: FormGroup;
   // columnas que se mostraran en la tabla
-  columnasAMostrar: string[] = ['cedula', 'nombre', 'nota' ,'accion'];
+  columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'nota' ,'accion'];
   // objeto que necesita la tabla para mostrar el contenido
   usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar, 
-    protected examenServ: ExamenesService, protected usuServ: UsuariosService) { }
+  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar,protected examenServ: ExamenesService, protected usuServ: UsuariosService) { }
 
   ngOnInit(): void {
     this.examenServ.getExamenesDocente(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
@@ -49,9 +48,6 @@ export class IngresarResultadoExamenComponent implements OnInit {
     this.examenServ.getNotasDeEstudiante(this.formulario.controls['examen'].value).subscribe(
       (datos) => {
         this.acta = datos;
-        datos.notas.forEach(element => {
-          element.nota = 0
-        });
         this.usuariosDataSource.data = datos.notas;
       },
       (error) => {
@@ -61,7 +57,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
   }
 
   confirmar(){
-    this.examenServ.registrarNotas(this.formulario.controls['curso'].value, this.acta).subscribe(
+    this.examenServ.registrarNotas(this.formulario.controls['examen'].value, this.acta).subscribe(
       (datos)=>{
         this.router.navigate(['/']);
       },
@@ -74,7 +70,10 @@ export class IngresarResultadoExamenComponent implements OnInit {
   ingresarNota(ciEstudiante : string){
     const dialogRef = this.dialog.open(IngresarNotaExamenComponent,{width: '500px'});
     dialogRef.afterClosed().subscribe(result => {
-      
+      if(result > 5 || result < 1){
+        this.openSnackBar("La nota a ingresar deve estar entre 1 y 5");
+        return
+      }
       this.acta.notas.forEach(element => {
         if(element.ciEstudiante == ciEstudiante){
           element.nota = result;
