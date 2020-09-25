@@ -5,7 +5,7 @@
 Para crear el contenedor por primera vez
 
 ```bash
-docker run --name cont-mysql -v "$PWD"/database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -d mysql:8.0
+docker run --name cont-pro-mysql -v "$PWD"/docker-database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d mysql:8.0
 ```
 
 Para correr un contenedor ya creado
@@ -22,7 +22,7 @@ docker restart cont-mysql
 Para crear el contenedor por primera vez
 
 ```bash
-docker run --name cont-myadmin -d --link cont-mysql:db -p 8080:80 phpmyadmin
+docker run --name cont-pro-myadmin -d --link cont-pro-mysql:db -p 8080:80 phpmyadmin
 ```
 
 Para correr un contenedor ya creado
