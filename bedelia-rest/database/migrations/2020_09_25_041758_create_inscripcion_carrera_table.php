@@ -14,13 +14,15 @@ class CreateInscripcionCarreraTable extends Migration
     public function up()
     {
         Schema::create('inscripcion_carrera', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('carrera_id');
             $table->foreignId('sede_id');
             $table->foreignId('estudiante_id');
             $table->timestamps();
 
-            $table->primary(['carrera_id', 'sede_id', 'estudiante_id']);
-            $table->foreign(['carrera_id', 'sede_id'])->references(['carrera_id', 'sede_id'])->on('carrera_sede');
+            $table->unique(['carrera_id', 'estudiante_id']);
+            $table->foreign('carrera_id')->references('id')->on('carrera');
+            $table->foreign('sede_id')->references('id')->on('sede');
             $table->foreign('estudiante_id')->references('id')->on('estudiante');
         });
     }

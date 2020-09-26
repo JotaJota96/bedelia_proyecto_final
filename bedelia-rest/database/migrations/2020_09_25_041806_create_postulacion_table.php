@@ -14,6 +14,7 @@ class CreatePostulacionTable extends Migration
     public function up()
     {
         Schema::create('postulacion', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('carrera_id');
             $table->foreignId('sede_id');
             $table->foreignId('persona_id');
@@ -22,8 +23,9 @@ class CreatePostulacionTable extends Migration
             $table->text('img_carne_salud');
             $table->timestamps();
 
-            $table->primary(['carrera_id', 'sede_id', 'persona_id']);
-            $table->foreign(['carrera_id', 'sede_id'])->references(['carrera_id', 'sede_id'])->on('carrera_sede');
+            $table->unique(['carrera_id', 'persona_id']);
+            $table->foreign('carrera_id')->references('id')->on('carrera');
+            $table->foreign('sede_id')->references('id')->on('sede');
             $table->foreign('persona_id')->references('id')->on('persona');
         });
     }
