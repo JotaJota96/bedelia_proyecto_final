@@ -14,16 +14,17 @@ class CreatePreviaTable extends Migration
     public function up()
     {
         Schema::create('previa', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('carrera_id');
             $table->foreignId('curso_id');
-            $table->foreignId('carrera_id_previa');
             $table->foreignId('curso_id_previa');
             $table->enum('tipo', ['curso', 'examen']);
             $table->timestamps();
 
-            $table->primary(['carrera_id', 'curso_id', 'carrera_id_previa', 'curso_id_previa'], 'previa_primary');
-            $table->foreign(['carrera_id', 'curso_id'])->references(['carrera_id', 'curso_id'])->on('carrera_curso');
-            $table->foreign(['carrera_id_previa', 'curso_id_previa'])->references(['carrera_id', 'curso_id'])->on('carrera_curso');
+            $table->unique(['carrera_id', 'curso_id', 'curso_id_previa'], 'previa_unique');
+            $table->foreign('carrera_id')->references('id')->on('carrera');
+            $table->foreign('curso_id')->references('id')->on('curso');
+            $table->foreign('curso_id_previa')->references('id')->on('curso');
         });
     }
 

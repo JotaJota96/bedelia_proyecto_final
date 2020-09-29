@@ -12,7 +12,11 @@ class Direccion extends Model
         'departamento', 'ciudad', 'calle', 'numero',
     ];
 
-    public function persona() {
-        return $this->belongsTo('App\Persona');
+    // devuelve uno
+	public function persona() {
+        return $this->belongsTo('App\Models\Persona');
+    }
+	public function sede() {
+        return $this->belongsTo('App\Models\Sede');
     }
 }
