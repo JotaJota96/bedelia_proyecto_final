@@ -5,7 +5,10 @@
 Para crear el contenedor por primera vez
 
 ```bash
+# para Linux
 docker run --name cont-pro-mysql -v "$PWD"/docker-database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d mysql:8.0
+# para Windows
+docker run --name cont-pro-mysql -v $PWD/docker-database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d mysql:8.0
 ```
 
 Para correr un contenedor ya creado
