@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class PeriodoLectivo extends Model
 
 	// devuelve uno
 	public function periodo() {
-        return $this->belongsTo('App\Models\Periodo');
+        return $this->belongsTo('App\Models\Periodo', 'id', 'id');
     }
 
 	// devuelve coleccion

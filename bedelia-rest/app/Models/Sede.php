@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +23,7 @@ class Sede extends Model
 
 	// devuelve uno
     public function direccion() {
-        return $this->hasOne('App\Models\Direccion');
+        return $this->belongsTo('App\Models\Direccion');
     }
     
 	// devuelve coleccion

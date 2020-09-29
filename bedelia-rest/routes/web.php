@@ -14,3 +14,6 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+// devuelve: identificador, token, array de roles
+$router->post('usuarios/login', 'UsuarioController@login');

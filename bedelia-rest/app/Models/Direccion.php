@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,9 +14,9 @@ class Direccion extends Model
 
     // devuelve uno
 	public function persona() {
-        return $this->belongsTo('App\Models\Persona');
+        return $this->hasOne('App\Models\Persona');
     }
 	public function sede() {
-        return $this->belongsTo('App\Models\Sede');
+        return $this->hasOne('App\Models\Sede');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Administrativo extends Model
     protected $fillable = [];
 
     public function usuario() {
-        return $this->belongsTo('App\Models\Usuario');
+        return $this->belongsTo('App\Models\Usuario', 'id', 'id');
     }
 
     public function sede() {
