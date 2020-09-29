@@ -35,7 +35,8 @@ class UsuarioController extends Controller
         $ret = [
             "cedula" => $usu->persona->cedula,
             "correo" => $usu->persona->correo,
-            "token" => $usu->remember_token
+            "token" => $usu->remember_token,
+            "roles" => $usu->roles()
         ];
         /**
          * Para las siguientes peticiones se deberá añadir el Header con clave 'Authorization' y valor el token devuelto
@@ -43,6 +44,6 @@ class UsuarioController extends Controller
          * $request->user()
          */
         
-        return response()->json($ret, 200);;
+        return response()->json($ret, 200);
     }
 }

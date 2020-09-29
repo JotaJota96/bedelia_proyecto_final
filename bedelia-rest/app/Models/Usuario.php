@@ -16,6 +16,8 @@ class Usuario extends Model
         'contrasenia', 'remember_token'
     ];
 
+    // --------- funciones de relaciones ---------------------------------------------
+
     public function persona() {
         return $this->belongsTo('App\Models\Persona');
     }
@@ -40,6 +42,7 @@ class Usuario extends Model
         return $this->hasOne('App\Models\Docente', 'id', 'id');
     }
 
+    // --------- funciones estaticas ---------------------------------------------
     public static function buscar($id){
         $per = Persona::where('cedula', $id)->first();
         if ($per == null){
@@ -49,6 +52,25 @@ class Usuario extends Model
             return null;
         }
         return $per->usuario;
+    }
+
+    // --------- funciones estaticas ---------------------------------------------
+    public function roles(){
+        $roles = array();
+
+        if ($this->admin){
+            array_push($roles, 'admin');
+        }
+        if ($this->administrativo){
+            array_push($roles, 'administrativo');
+        }
+        if ($this->estudiante){
+            array_push($roles, 'estudiante');
+        }
+        if ($this->docente){
+            array_push($roles, 'docente');
+        }
+        return $roles;
     }
 
 }
