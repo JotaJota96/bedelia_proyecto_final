@@ -15,7 +15,7 @@ class CreateAdministrativoTable extends Migration
     {
         Schema::create('administrativo', function (Blueprint $table) {
             $table->foreignId('id');
-            $table->foreignId('sede_id');
+            $table->foreignId('sede_id')->nullable();
             $table->timestamps();
             
             $table->primary('id');

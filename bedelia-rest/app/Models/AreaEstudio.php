@@ -17,6 +17,6 @@ class AreaEstudio extends Model
     }
 
     public function carreras() {
-        return $this->belongsToMany('App\Models\Carrera');
+        return $this->belongsToMany('App\Models\Carrera', 'carrera_area_estudio')->withPivot('creditos');
     }
 }

@@ -26,6 +26,6 @@ class Previa extends Model
     // devuelve uno
     // curso previo
     public function previa() {
-        return $this->belongsTo('App\Models\Curso', 'id', 'curso_id_previa');
+        return $this->belongsTo('App\Models\Curso', 'curso_id_previa', 'id');
     }
 }

@@ -21,7 +21,7 @@ class Carrera extends Model
     }
 
     public function cursos() {
-        return $this->belongsToMany('App\Models\Curso');
+        return $this->belongsToMany('App\Models\Curso', 'carrera_curso')->withPivot('semestre', 'optativo');
     }
 
     public function postulaciones() {
@@ -29,7 +29,7 @@ class Carrera extends Model
     }
 
     public function areasEstudio() {
-        return $this->belongsToMany('App\Models\AreaEstudio');
+        return $this->belongsToMany('App\Models\AreaEstudio', 'carrera_area_estudio')->withPivot('creditos');
     }
     
 	// devuelve coleccion
