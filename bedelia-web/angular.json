@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "bedelia-web"
+  "defaultProject": "bedelia-web",
+  "cli": {
+    "analytics": false
+  }
 }
