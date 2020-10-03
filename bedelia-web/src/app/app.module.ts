@@ -11,13 +11,21 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list'; 
-import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatExpansionModule} from '@angular/material/expansion';
+import {ListaCarrerasComponent } from './acceso-publico/lista-carreras/lista-carreras.component';
+import { LoginComponent } from './acceso-publico/login/login.component'; 
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListaCarrerasComponent,
+    LoginComponent
   ],
   imports: [
+    MatFormFieldModule,
+    MatInputModule,
     MatExpansionModule,
     MatListModule,
     MatSidenavModule,
