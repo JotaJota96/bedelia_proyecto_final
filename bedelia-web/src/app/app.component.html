@@ -13,31 +13,22 @@
 
 <mat-drawer-container class="example-container">
   <mat-drawer #drawer mode="side" opened>
-    <mat-accordion multi>
+
+    <mat-accordion multi *ngFor="let seccion of menu">
       <mat-expansion-panel hideToggle expanded>
         <mat-expansion-panel-header>
-          <mat-panel-title >Seccion 1</mat-panel-title>
+          <mat-panel-title >
+            {{seccion.nombre}}
+          </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-selection-list [multiple]="false">
-          <mat-list-option *ngFor="let shoe of ['1', '2', '3']" [value]="shoe">
-            Opcion {{shoe}}
+          <mat-list-option *ngFor="let item of seccion.items" [value]="">
+            {{item.nombre}}
           </mat-list-option>
         </mat-selection-list>
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-accordion multi>
-      <mat-expansion-panel hideToggle expanded>
-        <mat-expansion-panel-header>
-          <mat-panel-title >Seccion 2</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-selection-list [multiple]="false">
-          <mat-list-option *ngFor="let shoe of ['1', '2', '3']" [value]="shoe">
-            Opcion {{shoe}}
-          </mat-list-option>
-        </mat-selection-list>
-      </mat-expansion-panel>
-    </mat-accordion>
   </mat-drawer>
 
   <mat-drawer-content>
