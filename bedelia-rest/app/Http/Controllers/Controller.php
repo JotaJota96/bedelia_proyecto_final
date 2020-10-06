@@ -46,5 +46,43 @@ class Controller extends BaseController
      * )
      */
 
+    /**
+     * @OA\Schema(
+     *     schema="DireccionDTO",
+     *     @OA\Property(property="departamento", type="string"),
+     *     @OA\Property(property="ciudad",       type="string"),
+     *     @OA\Property(property="calle",        type="string"),
+     *     @OA\Property(property="numero",       type="string"),
+     * )
+     */
+
+    /**
+     * @OA\Schema(
+     *     schema="PersonaDTO",
+     *     @OA\Property(property="id", type="integer"),
+     *     @OA\Property(property="cedula", type="string"),
+     *     @OA\Property(property="nombre", type="string"),
+     *     @OA\Property(property="apellido", type="string"),
+     *     @OA\Property(property="correo", type="string"),
+     *     @OA\Property(property="fecha_nac", type="string"),
+     *     @OA\Property(property="sexo", type="string"),
+     *     @OA\Property(
+     *         property="direccion",
+     *         ref="#/components/schemas/DireccionDTO",
+     *     ),
+     * )
+     */
+
+     /**
+     * @OA\Schema(
+     *     schema="UsuarioDTO",
+     *     @OA\Property(property="id", type="integer"),
+     *     @OA\Property(property="contrasenia", type="string"),
+     *     @OA\Property(
+     *         property="persona",
+     *         ref="#/components/schemas/PersonaDTO",
+     *     ),
+     * )
+     */
 
 }

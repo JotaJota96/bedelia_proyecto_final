@@ -60,4 +60,45 @@ class UsuarioController extends Controller
         
         return response()->json($ret, 200);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/usuarios/{ci}",
+     *     tags={"Usuarios"},
+     *     @OA\Parameter(
+     *         name="ci",
+     *         in="path",
+     *         description="CI del usuario",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Devuelve datos del usuario",
+     *         @OA\JsonContent(ref="#/components/schemas/UsuarioDTO"),
+     *     ),
+     * )
+     */
+    public function obtenerUno(String $ci){
+        $usu = Usuario::buscar($ci);
+        if ($usu == null){
+            return response()->json(null, 404);
+        }
+        $usu->persona->direccion;
+        return response()->json($usu, 200);
+    }
+
+
+    
+    public function obtenerTodos(){
+
+    }
+
+
+
+    public function agregar(){
+
+    }
+
+
 }

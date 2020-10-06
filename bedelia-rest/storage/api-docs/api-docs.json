@@ -37,6 +37,37 @@
                     }
                 }
             }
+        },
+        "/usuarios/{ci}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\UsuarioController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "CI del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -62,6 +93,66 @@
                     },
                     "roles": {
                         "type": "string[]"
+                    }
+                },
+                "type": "object"
+            },
+            "DireccionDTO": {
+                "properties": {
+                    "departamento": {
+                        "type": "string"
+                    },
+                    "ciudad": {
+                        "type": "string"
+                    },
+                    "calle": {
+                        "type": "string"
+                    },
+                    "numero": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PersonaDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "cedula": {
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "type": "string"
+                    },
+                    "correo": {
+                        "type": "string"
+                    },
+                    "fecha_nac": {
+                        "type": "string"
+                    },
+                    "sexo": {
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "$ref": "#/components/schemas/DireccionDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "UsuarioDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "contrasenia": {
+                        "type": "string"
+                    },
+                    "persona": {
+                        "$ref": "#/components/schemas/PersonaDTO"
                     }
                 },
                 "type": "object"
