@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -16,6 +18,8 @@ import {ListaCarrerasComponent } from './acceso-publico/lista-carreras/lista-car
 import { LoginComponent } from './acceso-publico/login/login.component'; 
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     LoginComponent
   ],
   imports: [
+    MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatExpansionModule,
@@ -35,7 +40,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCardModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
