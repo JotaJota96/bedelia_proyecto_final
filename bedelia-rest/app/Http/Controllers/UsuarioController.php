@@ -14,6 +14,20 @@ class UsuarioController extends Controller
         $this->request = $request;
     }
 
+    /**
+     * @OA\Post(
+     *     path="/usuarios/login",
+     *     tags={"Usuarios"},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Devuelve datos del usuario logueado",
+     *         @OA\JsonContent(ref="#/components/schemas/LoginResponseDTO"),
+     *     ),
+     * )
+     */
     public function login(){
         $id          = $this->request->input("id");
         $contrasenia = $this->request->input("contrasenia");

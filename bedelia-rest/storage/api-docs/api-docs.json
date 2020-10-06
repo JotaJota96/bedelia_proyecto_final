@@ -1,0 +1,79 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Bedelia UTEC",
+        "contact": {
+            "name": "Support Team",
+            "email": "support@example.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/usuarios/login": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\UsuarioController::login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos del usuario logueado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "LoginDTO": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "contrasenia": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginResponseDTO": {
+                "properties": {
+                    "cedula": {
+                        "type": "string"
+                    },
+                    "correo": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "string[]"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "description": "Token de autenticacion conformato como '<token>'",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

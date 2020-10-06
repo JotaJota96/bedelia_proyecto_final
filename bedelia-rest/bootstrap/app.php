@@ -29,6 +29,7 @@ $app->withEloquent();
 
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
+$app->configure('swagger-lume');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -97,6 +98,7 @@ $app->middleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(\SwaggerLume\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
