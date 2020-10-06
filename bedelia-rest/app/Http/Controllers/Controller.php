@@ -42,7 +42,11 @@ class Controller extends BaseController
      *     schema="LoginResponseDTO",
      *     @OA\Property(property="cedula", type="string"),
      *     @OA\Property(property="correo", type="string"),
-     *     @OA\Property(property="roles", type="string[]"),
+     *     @OA\Property(
+     *         property="roles",
+     *         type="array",
+     *         @OA\Items(type="string"),
+     *     ),
      * )
      */
 
@@ -78,6 +82,11 @@ class Controller extends BaseController
      *     schema="UsuarioDTO",
      *     @OA\Property(property="id", type="integer"),
      *     @OA\Property(property="contrasenia", type="string"),
+     *     @OA\Property(
+     *         property="roles",
+     *         type="array",
+     *         @OA\Items(type="string"),
+     *     ),
      *     @OA\Property(
      *         property="persona",
      *         ref="#/components/schemas/PersonaDTO",
