@@ -12,26 +12,38 @@ import { LoginResponseDTO } from '../clases/login-response-dto';
 export class UsuariosService {
 
   private apiURL: string = environment.apiURL + '/usuarios';
-  private loginDataStoreKey:string = "loginData"; // clave para almacenar datos en local
+  private loginDataStoreKey:string = "loginData"; // clave para almacenar datos del login en local
+  private rolDataStoreKey:string = "rolSeleccionado"; // clave para almacenar rol del login en local
   
   constructor(protected http:HttpClient) { }
 
+
+  /** Funciones relacionadas a la sesion del usuario **************************** **/
+
   login(datos:LoginDTO){
-    return this.http.post<LoginResponseDTO>(this.apiURL + '/login', datos).pipe(
-      tap((data) => {
-        localStorage.setItem(this.loginDataStoreKey, JSON.stringify(data));
-      })
-    );
+    return this.http.post<LoginResponseDTO>(this.apiURL + '/login', datos);
   }
 
+  /**
+   * Cierra la sesion del usuario logueado eliminando sus datos del local storage
+   */
   logout(){
     localStorage.removeItem(this.loginDataStoreKey); 
-    localStorage.removeItem("rolSeleccionado"); 
+    localStorage.removeItem(this.rolDataStoreKey); 
   }
+
   /**
    * Devuelve los datos del usuario guardado en localstorage, o NULL si no hay ninguno
    */
-  private obtenerUsuarioAlmacenado():LoginResponseDTO{
+  public almacenarDatosLogin(datos:LoginResponseDTO, rol:String){
+    localStorage.setItem(this.loginDataStoreKey, JSON.stringify(datos));
+    localStorage.setItem(this.rolDataStoreKey, rol.toString());
+  }
+
+  /**
+   * Devuelve los datos del usuario guardado en localstorage, o NULL si no hay ninguno
+   */
+  private obtenerDatosLoginAlmacenado():LoginResponseDTO{
     return JSON.parse(localStorage.getItem(this.loginDataStoreKey))
   }
 
@@ -39,7 +51,7 @@ export class UsuariosService {
    * Devuelve true si hay un usuario logueado actualmente
    */
   isLogged(){
-    let loginData:LoginResponseDTO = this.obtenerUsuarioAlmacenado();
+    let loginData:LoginResponseDTO = this.obtenerDatosLoginAlmacenado();
     if (loginData != null){
       return true;
     }else{
@@ -51,9 +63,7 @@ export class UsuariosService {
    * Devueve true si el rol del usuario logueado es Estudiante
    */
   isEstudiante():boolean{
-    let rolSeleccionado = localStorage.getItem("rolSeleccionado")
-    console.log(rolSeleccionado);
-    console.log(rolSeleccionado == "estudiante");
+    let rolSeleccionado = localStorage.getItem(this.rolDataStoreKey)
     return rolSeleccionado == "estudiante";
   }
 
@@ -61,9 +71,7 @@ export class UsuariosService {
    * Devueve true si el rol del usuario logueado es Estudiante
    */
   isDocente():boolean{
-    let rolSeleccionado:string = localStorage.getItem("rolSeleccionado")
-    console.log(rolSeleccionado)
-    console.log(rolSeleccionado == "docente");
+    let rolSeleccionado:string = localStorage.getItem(this.rolDataStoreKey)
     return rolSeleccionado == "docente";
   }
 
@@ -71,9 +79,7 @@ export class UsuariosService {
    * Devueve true si el rol del usuario logueado es Estudiante
    */
   isAdministrativo():boolean{
-    let rolSeleccionado:string = localStorage.getItem("rolSeleccionado")
-    console.log(rolSeleccionado)
-    console.log(rolSeleccionado == "administrativo");
+    let rolSeleccionado:string = localStorage.getItem(this.rolDataStoreKey)
     return rolSeleccionado == "administrativo";
   }
 
@@ -81,9 +87,7 @@ export class UsuariosService {
    * Devueve true si el rol del usuario logueado es Estudiante
    */
   isAdmin():boolean{
-    let rolSeleccionado:string = localStorage.getItem("rolSeleccionado")
-    console.log(rolSeleccionado)
-    console.log(rolSeleccionado == "administrativo");
+    let rolSeleccionado:string = localStorage.getItem(this.rolDataStoreKey)
     return rolSeleccionado == "admin";
   }
 
