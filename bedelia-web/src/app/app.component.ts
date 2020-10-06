@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UsuariosService } from './servicios/usuarios.service';
 
 // MenuSection y MenuItem sirven para estructurar el menú de la izquierda
 export interface MenuItem {
@@ -81,11 +82,34 @@ const MENU_ESTUDIANTE:MenuSection[] = [
 })
 export class AppComponent {
   
+  constructor(protected UsuServ:UsuariosService) { }
+  
   menu:MenuSection[];
 
   ngOnInit(): void {
     // aca habra que poner un IF o un SWITCH para cargar el menu segun el rol
     // por ahora lo hardcodeo...
-    this.menu = MENU_ADMIN;
+    if(this.UsuServ.isEstudiante()){
+      this.menu = MENU_ESTUDIANTE;
+    }
+    if(this.UsuServ.isAdmin()){
+      this.menu = MENU_ADMIN;
+    }
+    if(this.UsuServ.isDocente()){
+      this.menu = MENU_DOCENTE;
+    }
+    if(this.UsuServ.isAdministrativo()){
+      this.menu = MENU_ADMINISTRATIVO;
+    }
+  }
+  public update(){
+    this.ngOnInit();
+  } 
+
+  logeado():boolean{
+    return this.UsuServ.isLogged()
+  }
+  logout(){
+    this.UsuServ.logout();
   }
 }

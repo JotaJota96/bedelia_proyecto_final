@@ -19,6 +19,7 @@ import { LoginComponent } from './acceso-publico/login/login.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     LoginComponent
   ],
   imports: [
+    MatSelectModule,
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,

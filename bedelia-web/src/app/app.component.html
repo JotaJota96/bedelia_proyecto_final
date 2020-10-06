@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button *ngIf="true" (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span class="example-spacer"></span>
@@ -8,7 +8,8 @@
   <span class="example-spacer"></span>
   
   <button mat-raised-button [routerLink]="['/']">Inicio</button>
-  <button  mat-raised-button [routerLink]="['/login']">Iniciar sesión</button>
+  <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Iniciar sesión</button>
+  <button mat-raised-button (click)="logout()" *ngIf="logeado()">Cerrar sesion</button>
 </mat-toolbar>
 
 <mat-drawer-container class="example-container">

@@ -24,4 +24,69 @@ export class UsuariosService {
     );
   }
 
+  logout(){
+    localStorage.removeItem(this.loginDataStoreKey); 
+    localStorage.removeItem("rolSeleccionado"); 
+  }
+  /**
+   * Devuelve los datos del usuario guardado en localstorage, o NULL si no hay ninguno
+   */
+  private obtenerUsuarioAlmacenado():LoginResponseDTO{
+    return JSON.parse(localStorage.getItem(this.loginDataStoreKey))
+  }
+
+  /**
+   * Devuelve true si hay un usuario logueado actualmente
+   */
+  isLogged(){
+    let loginData:LoginResponseDTO = this.obtenerUsuarioAlmacenado();
+    if (loginData != null){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  /**
+   * Devueve true si el rol del usuario logueado es Estudiante
+   */
+  isEstudiante():boolean{
+    let rolSeleccionado = localStorage.getItem("rolSeleccionado")
+    console.log(rolSeleccionado);
+    console.log(rolSeleccionado == "estudiante");
+    return rolSeleccionado == "estudiante";
+  }
+
+   /**
+   * Devueve true si el rol del usuario logueado es Estudiante
+   */
+  isDocente():boolean{
+    let rolSeleccionado:string = localStorage.getItem("rolSeleccionado")
+    console.log(rolSeleccionado)
+    console.log(rolSeleccionado == "docente");
+    return rolSeleccionado == "docente";
+  }
+
+   /**
+   * Devueve true si el rol del usuario logueado es Estudiante
+   */
+  isAdministrativo():boolean{
+    let rolSeleccionado:string = localStorage.getItem("rolSeleccionado")
+    console.log(rolSeleccionado)
+    console.log(rolSeleccionado == "administrativo");
+    return rolSeleccionado == "administrativo";
+  }
+
+   /**
+   * Devueve true si el rol del usuario logueado es Estudiante
+   */
+  isAdmin():boolean{
+    let rolSeleccionado:string = localStorage.getItem("rolSeleccionado")
+    console.log(rolSeleccionado)
+    console.log(rolSeleccionado == "administrativo");
+    return rolSeleccionado == "admin";
+  }
+
+  
+  
 }

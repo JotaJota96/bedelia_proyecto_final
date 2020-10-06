@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,8 +13,12 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 })
 export class LoginComponent implements OnInit {
 
+  public titulo:string = "Iniciar sesión";
   public formulario: FormGroup;
-  public mostrarErrorLogin:boolean = false;
+  public mostrarErrorLogin: boolean = false;
+  public logeado: boolean = false;
+  public roles: String[];
+  rolSeleccionado: string;
 
   constructor(
     protected usuServ:UsuariosService, 
@@ -23,6 +28,7 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    
     this.formulario = new FormGroup({
       usuario:     new FormControl('', [Validators.required]),
       contrasenia: new FormControl('', [Validators.required]),
@@ -32,6 +38,10 @@ export class LoginComponent implements OnInit {
   vaciarCampos(){
     this.formulario.controls['usuario'].setValue("");
     this.formulario.controls['contrasenia'].setValue("");
+  }
+  eleguirRol(){
+    localStorage.setItem("rolSeleccionado",this.rolSeleccionado);
+    this.router.navigate(['/']);
   }
 
   login(){
@@ -47,7 +57,9 @@ export class LoginComponent implements OnInit {
         this.vaciarCampos();
         this.mostrarErrorLogin = false;
         //hacer algo si login es correcto
-        this.router.navigate(['/']);
+        this.roles = retorno.roles
+        this.logeado = !this.logeado;
+        this.titulo = "Seleccione un rol"
       },
       (error)=>{
         //datos incorrectos
