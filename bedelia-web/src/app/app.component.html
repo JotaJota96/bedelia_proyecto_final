@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="container-fluid">
   <div class="row m-0 p-0 justify-content-start col-2 col-sm-5 col-md-4">
-    <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <button mat-icon-button *ngIf="logeado()" (click)="drawer.toggle()" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
@@ -15,9 +15,9 @@
 </mat-toolbar>
 
 <mat-drawer-container class="example-container">
-  <mat-drawer #drawer mode="side" opened>
+  <mat-drawer #drawer mode="side" [opened]="logeado()">
 
-    <mat-accordion multi *ngFor="let seccion of menu">
+    <mat-accordion multi *ngFor="let seccion of menuAMostrar()">
       <mat-expansion-panel hideToggle expanded>
         <mat-expansion-panel-header>
           <mat-panel-title >

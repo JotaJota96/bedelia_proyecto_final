@@ -84,27 +84,27 @@ export class AppComponent {
   
   constructor(protected UsuServ:UsuariosService) { }
   
-  menu:MenuSection[];
-
   ngOnInit(): void {
-    // aca habra que poner un IF o un SWITCH para cargar el menu segun el rol
-    // por ahora lo hardcodeo...
-    if(this.UsuServ.isEstudiante()){
-      this.menu = MENU_ESTUDIANTE;
-    }
-    if(this.UsuServ.isAdmin()){
-      this.menu = MENU_ADMIN;
-    }
-    if(this.UsuServ.isDocente()){
-      this.menu = MENU_DOCENTE;
-    }
-    if(this.UsuServ.isAdministrativo()){
-      this.menu = MENU_ADMINISTRATIVO;
-    }
   }
-  public update(){
-    this.ngOnInit();
-  } 
+
+  public menuAMostrar():MenuSection[]{
+    // Devuelve el menu que corresponda segun el rol
+    if (this.UsuServ.isLogged()){
+      if(this.UsuServ.isEstudiante()){
+        return MENU_ESTUDIANTE;
+      }
+      if(this.UsuServ.isAdmin()){
+        return MENU_ADMIN;
+      }
+      if(this.UsuServ.isDocente()){
+        return MENU_DOCENTE;
+      }
+      if(this.UsuServ.isAdministrativo()){
+        return MENU_ADMINISTRATIVO;
+      }
+    }
+    return undefined;
+  }
 
   logeado():boolean{
     return this.UsuServ.isLogged()
