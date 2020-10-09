@@ -15,5 +15,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// devuelve: identificador, token, array de roles
 $router->post('usuarios/login', 'UsuarioController@login');
+$router->get('usuarios/{ci}', 'UsuarioController@obtenerUno');
+$router->get('usuarios', 'UsuarioController@obtenerTodos');
+$router->post('usuarios', 'UsuarioController@agregar');
+

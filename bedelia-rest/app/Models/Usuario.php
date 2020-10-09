@@ -10,7 +10,9 @@ class Usuario extends Model
     protected $table = "usuario";
     
     // (id, contrasenia, remember_token, persona_id)
-    protected $fillable = [];
+    protected $fillable = [
+        'contrasenia', 'remember_token'
+    ];
 
     protected $hidden = [
         'contrasenia', 'remember_token'

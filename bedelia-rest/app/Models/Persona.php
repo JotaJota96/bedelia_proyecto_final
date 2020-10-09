@@ -9,7 +9,7 @@ class Persona extends Model
     protected $table = "persona";
 
     protected $fillable = [
-        'ci', 'nombre', 'apellido', 'correo', 'fecha_nac', 'sexo',
+        'cedula', 'nombre', 'apellido', 'correo', 'fecha_nac', 'sexo',
     ];
 
 	// devuelve uno
