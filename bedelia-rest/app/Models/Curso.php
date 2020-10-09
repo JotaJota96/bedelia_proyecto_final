@@ -9,7 +9,7 @@ class Curso extends Model
     protected $table = "curso";
 
     protected $fillable = [
-        'nombre', 'descripcion', 'max_inasistencias', 'cant_créditos', 'cant_clases',
+        'nombre', 'descripcion', 'max_inasistencias', 'cant_creditos', 'cant_clases',
     ];
 
     // devuelve coleccion
