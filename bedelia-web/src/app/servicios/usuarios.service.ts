@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LoginDTO } from '../clases/login-dto';
 import { LoginResponseDTO } from '../clases/login-response-dto';
+import { UsuarioDTO } from '../clases/usuario-dto';
 
 
 @Injectable({
@@ -17,6 +18,17 @@ export class UsuariosService {
   
   constructor(protected http:HttpClient) { }
 
+  getAll(){
+    return this.http.get<UsuarioDTO[]>(this.apiURL);
+  }
+
+  get(id:number){
+    return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
+  }
+
+  create(datos:UsuarioDTO){
+    return this.http.post<UsuarioDTO>(this.apiURL, datos);
+  }
 
   /** Funciones relacionadas a la sesion del usuario **************************** **/
 

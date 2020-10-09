@@ -61,10 +61,10 @@ class UsuarioController extends Controller
         ];
         /**
          * Para las siguientes peticiones se deberá añadir el Header con clave 'Authorization' y valor el token devuelto
-         * Para obtener el usuario autenticado dentro de cualquier funcion, usar: 
+         * Para obtener el usuario autenticado dentro de cualquier funcion, usar:
          * $request->user()
          */
-        
+
         return response()->json($ret, 200);
     }
 
@@ -96,7 +96,7 @@ class UsuarioController extends Controller
 
         return response()->json($usu, 200);
     }
-    
+
     /**
      * @OA\Get(
      *     path="/usuarios/",
@@ -113,10 +113,10 @@ class UsuarioController extends Controller
      */
     public function obtenerTodos(){
         $usuarios = Usuario::all();
-        
+
         foreach ($usuarios as $Id => $value) {
             $value->persona->direccion;
-            $usu->roles = $usu->roles();
+            $value->roles = $value->roles();
         }
         return response()->json($usuarios, 200);
     }
@@ -141,8 +141,8 @@ class UsuarioController extends Controller
         $usu = new Usuario();
         $per = new Persona();
         $dir = new Direccion();
-        
-        // Extraigo los datos del JSON 
+
+        // Extraigo los datos del JSON
         // el $this->request->json()->all() devuelve un array con todos los datos del JSON que viene en la request
         // el $usu->fill(..) asigna los datos del objeto Usuario extrayendolos de un array asociativo que se le pase por parametro
         $usu->fill($this->request->json()->all());
@@ -163,7 +163,7 @@ class UsuarioController extends Controller
         $usu->persona()->associate($per);
         // Asociacion entre la persona asociada y direccion
         $usu->persona->direccion()->associate($dir);
-        
+
         // en este caso hay que insertar varias cosas a la vez, asi que hay que usar una transaccion
         // para que funcione el "BD::" hay que agregar el "use Illuminate\Support\Facades\DB;" al principio del archivo
         try {

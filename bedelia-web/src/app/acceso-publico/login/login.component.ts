@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     protected usuServ:UsuariosService, 
-    private router:Router,
-    private _snackBar: MatSnackBar) {
+    private router:Router) {
   }
 
   ngOnInit(): void {

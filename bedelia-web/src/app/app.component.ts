@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsuariosService } from './servicios/usuarios.service';
 
 // MenuSection y MenuItem sirven para estructurar el menú de la izquierda
@@ -16,9 +17,7 @@ const MENU_ADMIN:MenuSection[] = [
   {
     nombre: "Gestión de usuario",
     items: [
-      {nombre: "Admins",            link: "#"},
-      {nombre: "Docentes",          link: "#"},
-      {nombre: "Administrativos",   link: "#"},
+      {nombre: "Usuarios",            link: "admin/usuarios"},
     ],
   }, {
     nombre: "Gestión de carreras",
@@ -82,7 +81,9 @@ const MENU_ESTUDIANTE:MenuSection[] = [
 })
 export class AppComponent {
   
-  constructor(protected UsuServ:UsuariosService) { }
+  constructor(
+    protected UsuServ:UsuariosService,
+    private router:Router) { }
   
   ngOnInit(): void {
   }
@@ -111,5 +112,6 @@ export class AppComponent {
   }
   logout(){
     this.UsuServ.logout();
+    this.router.navigate(['/']);
   }
 }

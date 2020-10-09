@@ -20,13 +20,19 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table'; 
+
+import { UsuariosComponent } from './admin/usuarios/usuarios.component';
+import { RolesPipe } from './pipes/roles.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaCarrerasComponent,
-    LoginComponent
+    LoginComponent,
+    UsuariosComponent,
+    RolesPipe
   ],
   imports: [
     MatSelectModule,
@@ -40,6 +46,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

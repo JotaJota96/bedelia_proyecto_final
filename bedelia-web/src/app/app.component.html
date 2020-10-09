@@ -25,7 +25,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-selection-list [multiple]="false">
-          <mat-list-option *ngFor="let item of seccion.items" [value]="">
+          <mat-list-option  *ngFor="let item of seccion.items" [routerLink]="[item.link]">
             {{item.nombre}}
           </mat-list-option>
         </mat-selection-list>

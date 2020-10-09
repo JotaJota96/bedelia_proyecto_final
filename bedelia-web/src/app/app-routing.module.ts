@@ -7,7 +7,7 @@ import { LoginComponent } from './acceso-publico/login/login.component';
 //Fin de componentes de acceso publico
 
 //Inico de componentes de admin
-//...
+import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -30,7 +30,7 @@ const routes: Routes = [
   //Fin de componentes de acceso publico
 
   //Inico de componentes de admin
-  //...
+  {path: 'admin/usuarios', component: UsuariosComponent},
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo
