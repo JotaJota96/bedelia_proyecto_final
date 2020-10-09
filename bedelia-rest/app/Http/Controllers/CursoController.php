@@ -36,13 +36,14 @@ class CursoController extends Controller
     
     public function agregar(){
         $Curso = new Curso();
-        $AreaEstudio = new AreaEstudio();
-        $TipoCurso = new TipoCurso();
-        $TipoCurso->fill($this->request->json('tipo_curso'));
-        $AreaEstudio->fill($this->request->json('area_estudio'));
+        $AreaEstudio = AreaEstudio::find($this->request->json(['area_estudio','id']));
+        $TipoCurso = TipoCurso::find($this->request->json(['tipo_curso','id']));
+        // $TipoCurso->fill($this->request->json('tipo_curso'));
+        // $AreaEstudio->fill($this->request->json('area_estudio'));
         $Curso->fill($this->request->json()->all());
         $Curso->TipoCurso()->associate($TipoCurso);
         $Curso->AreaEstudio()->associate($AreaEstudio);
+        // return response()->json($Curso, 200);
         if ($Curso->save()) {
             return response()->json($Curso, 200);
         }
