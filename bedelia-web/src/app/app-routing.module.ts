@@ -11,6 +11,8 @@ import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
 import { SedesComponent } from './admin/sedes/sedes.component';
 import { SedeABMComponent } from './admin/sedes/sede-abm/sede-abm.component';
+import { AreaEstudioComponent } from './admin/area-estudio/area-estudio.component';
+import { AreaEstudioABMComponent } from './admin/area-estudio/area-estudio-abm/area-estudio-abm.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -41,6 +43,9 @@ const routes: Routes = [
   {path: 'admin/sede/abm', component: SedeABMComponent},
   {path: 'admin/sede/abm/:id', component: SedeABMComponent},
   
+  {path: 'admin/area', component: AreaEstudioComponent},
+  {path: 'admin/area/abm', component: AreaEstudioABMComponent},
+  {path: 'admin/area/abm/:id', component: AreaEstudioABMComponent},
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo

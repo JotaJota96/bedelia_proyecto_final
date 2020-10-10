@@ -30,6 +30,9 @@ import { RolesPipe } from './pipes/roles.pipe';
 import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
 import { SedesComponent } from './admin/sedes/sedes.component';
 import { SedeABMComponent } from './admin/sedes/sede-abm/sede-abm.component';
+import { AreaEstudioComponent } from './admin/area-estudio/area-estudio.component';
+import { AreaEstudioABMComponent } from './admin/area-estudio/area-estudio-abm/area-estudio-abm.component';
+import { TipoCursoComponent } from './admin/tipo-curso/tipo-curso.component';
 
 
 
@@ -42,7 +45,10 @@ import { SedeABMComponent } from './admin/sedes/sede-abm/sede-abm.component';
     RolesPipe,
     UsuarioABMComponent,
     SedesComponent,
-    SedeABMComponent
+    SedeABMComponent,
+    AreaEstudioComponent,
+    AreaEstudioABMComponent,
+    TipoCursoComponent
   ],
   imports: [
     MatChipsModule,

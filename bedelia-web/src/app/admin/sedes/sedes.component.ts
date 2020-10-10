@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { SedeDTO } from 'src/app/clases/sede-dto';
 import { SedesService } from 'src/app/servicios/sedes.service';
 
 @Component({
