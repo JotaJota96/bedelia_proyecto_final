@@ -9,6 +9,87 @@
         "version": "1.0"
     },
     "paths": {
+        "/areasEstudio/{id}": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaEstudioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/areasEstudio": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AreaEstudioDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaEstudioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/foo": {
             "post": {
                 "tags": [
@@ -19,6 +100,87 @@
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/AnioLectivoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CursoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cursos/{id}": {
+            "get": {
+                "tags": [
+                    "Cursos"
+                ],
+                "operationId": "App\\Http\\Controllers\\CursoController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CursoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cursos": {
+            "get": {
+                "tags": [
+                    "Cursos"
+                ],
+                "operationId": "App\\Http\\Controllers\\CursoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cursos"
+                ],
+                "operationId": "App\\Http\\Controllers\\CursoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CursoDTO"
                             }
                         }
                     }
@@ -113,6 +275,87 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tiposCurso/{id}": {
+            "get": {
+                "tags": [
+                    "Tipos de curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\TipoCursoController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoCursoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tiposCurso": {
+            "get": {
+                "tags": [
+                    "Tipos de curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\TipoCursoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TipoCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tipos de curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\TipoCursoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoCursoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoCursoDTO"
                                 }
                             }
                         }

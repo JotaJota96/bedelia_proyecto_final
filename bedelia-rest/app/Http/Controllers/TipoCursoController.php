@@ -17,6 +17,24 @@ class TipoCursoController extends Controller
         $this->request = $request;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/tiposCurso/{id}",
+     *     tags={"Tipos de curso"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/TipoCursoDTO"),
+     *     ),
+     * )
+     */
     public function obtenerUno(int $Id){
         $TipoCurso = TipoCurso::find($Id);
         if ($TipoCurso == null){
@@ -25,11 +43,40 @@ class TipoCursoController extends Controller
         return response()->json($TipoCurso, 200);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/tiposCurso",
+     *     tags={"Tipos de curso"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/TipoCursoDTO"),
+     *         ),
+     *     ),
+     * )
+     */
     public function obtenerLista(){
         $TipoCurso = TipoCurso::all();
         return response()->json($TipoCurso, 200);
     }
     
+
+    /**
+     * @OA\Post(
+     *     path="/tiposCurso",
+     *     tags={"Tipos de curso"},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/TipoCursoDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/TipoCursoDTO"),
+     *     ),
+     * )
+     */
     public function agregar(){
         $TipoCurso = new TipoCurso();
         $TipoCurso->fill($this->request->json()->all());

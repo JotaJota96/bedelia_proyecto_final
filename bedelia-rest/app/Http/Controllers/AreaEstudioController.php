@@ -17,6 +17,24 @@ class AreaEstudioController extends Controller
         $this->request = $request;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/areasEstudio/{id}",
+     *     tags={"Areas de estudio"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/AreaEstudioDTO"),
+     *     ),
+     * )
+     */
     public function obtenerUno(int $Id){
         $AreaEstudio = AreaEstudio::find($Id);
         if ($AreaEstudio == null){
@@ -25,11 +43,39 @@ class AreaEstudioController extends Controller
         return response()->json($AreaEstudio, 200);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/areasEstudio",
+     *     tags={"Areas de estudio"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/AreaEstudioDTO"),
+     *         ),
+     *     ),
+     * )
+     */
     public function obtenerLista(){
         $AreasEstudio = AreaEstudio::all();
         return response()->json($AreasEstudio, 200);
     }
     
+    /**
+     * @OA\Post(
+     *     path="/areasEstudio",
+     *     tags={"Areas de estudio"},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/AreaEstudioDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/AreaEstudioDTO"),
+     *     ),
+     * )
+     */
     public function agregar(){
         $AreaEstudio = new AreaEstudio();
         $AreaEstudio->fill($this->request->json()->all());

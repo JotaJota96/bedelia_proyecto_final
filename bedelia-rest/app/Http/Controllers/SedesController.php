@@ -15,7 +15,7 @@ class SedesController extends Controller
         $this->request = $request;
     }
 
-        /**
+    /**
      * @OA\Get(
      *     path="/sedes/{id}",
      *     tags={"Sedes"},
@@ -43,7 +43,7 @@ class SedesController extends Controller
         return response()->json($sede, 200);
     }
 
-        /**
+    /**
      * @OA\Get(
      *     path="/sedes/",
      *     tags={"Sedes"},
@@ -66,7 +66,7 @@ class SedesController extends Controller
         return response()->json($sedes, 200);
     }
 
-        /**
+    /**
      * @OA\Post(
      *     path="/sedes",
      *     tags={"Sedes"},

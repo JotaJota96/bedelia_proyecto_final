@@ -19,6 +19,25 @@ class CursoController extends Controller
         $this->request = $request;
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/cursos/{id}",
+     *     tags={"Cursos"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/CursoDTO"),
+     *     ),
+     * )
+     */
     public function obtenerUno(int $Id){
         $Curso = Curso::find($Id);
         if ($Curso == null){
@@ -29,11 +48,46 @@ class CursoController extends Controller
         return response()->json($Curso, 200);
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/cursos",
+     *     tags={"Cursos"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/CursoDTO"),
+     *         ),
+     *     ),
+     * )
+     */
     public function obtenerLista(){
         $Curso = Curso::all();
+
+        foreach ($Curso as $Id => $value) {
+            $value->AreaEstudio;
+            $value->TipoCurso;
+        }
         return response()->json($Curso, 200);
     }
     
+
+    /**
+     * @OA\Post(
+     *     path="/cursos",
+     *     tags={"Cursos"},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/CursoDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/CursoDTO"),
+     *     ),
+     * )
+     */
     public function agregar(){
         $Curso = new Curso();
         $AreaEstudio = AreaEstudio::find($this->request->json(['area_estudio','id']));
