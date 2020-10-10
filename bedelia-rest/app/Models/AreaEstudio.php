@@ -19,4 +19,26 @@ class AreaEstudio extends Model
     public function carreras() {
         return $this->belongsToMany('App\Models\Carrera', 'carrera_area_estudio')->withPivot('creditos');
     }
+
+    // --------- funciones estaticas ---------------------------------------------
+    public static function buscar($id){
+        $AE = AreaEstudio::where('Id', $id)->first();
+        if ($AE == null){
+            return null;
+        }
+        return $AE;
+    }
+
+    public static function buscarArea($area){
+        $AE = AreaEstudio::where('area', $area)->first();
+        if ($AE == null){
+            return null;
+        }
+        return $AE;
+    }
+
+    public static function listar(){
+        $AE = Persona::all();
+        return $AE;
+    }
 }
