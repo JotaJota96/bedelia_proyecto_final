@@ -9,31 +9,31 @@
                     <!-- datos de la persona -->
                     <div class="col-6">
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Cédula" name="cedula" formControlName="cedula">
+                            <input matInput placeholder="Cédula" name="cedula" formControlName="cedula" [readonly]="soloLectura">
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
+                            <input matInput placeholder="Nombre" name="nombre" formControlName="nombre" [readonly]="soloLectura">
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Apellido" name="apellido" formControlName="apellido">
+                            <input matInput placeholder="Apellido" name="apellido" formControlName="apellido" [readonly]="soloLectura">
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Correo" name="correo" formControlName="correo">
+                            <input matInput placeholder="Correo" name="correo" formControlName="correo" [readonly]="soloLectura">
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
                             <mat-label>Fecha de nacimiento</mat-label>
-                            <input matInput [matDatepicker]="fecha" name="fecha_nac" formControlName="fecha_nac">
-                            <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
+                            <input matInput [matDatepicker]="fecha" name="fecha_nac" formControlName="fecha_nac" [readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fecha"></mat-datepicker-toggle>
                             <mat-datepicker #fecha></mat-datepicker>
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
                             <mat-select placeholder="Sexo" formControlName="sexo">
-                              <mat-option *ngFor="let sex of listaSexos" [value]="sex.clave">
+                              <mat-option *ngFor="let sex of listaSexos" [value]="sex.clave" [disabled]="soloLectura">
                                 {{sex.texto}}
                               </mat-option>
                             </mat-select>
@@ -45,35 +45,35 @@
                     <div class="col-6">
                         <mat-form-field [style.width.%]=100>
                             <mat-select placeholder="Departamento" formControlName="departamento">
-                              <mat-option *ngFor="let dep of listaDepartamentos" [value]="dep">
+                              <mat-option *ngFor="let dep of listaDepartamentos" [value]="dep" [disabled]="soloLectura">
                                 {{dep}}
                               </mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Ciudad" name="ciudad" formControlName="ciudad">
+                            <input matInput placeholder="Ciudad" name="ciudad" formControlName="ciudad" [readonly]="soloLectura">
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Calle" name="calle" formControlName="calle">
+                            <input matInput placeholder="Calle" name="calle" formControlName="calle" [readonly]="soloLectura">
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Número" name="numero" formControlName="numero">
+                            <input matInput placeholder="Número" name="numero" formControlName="numero" [readonly]="soloLectura">
                         </mat-form-field>
                     </div>
 
                     <!-- datos de la direccion -->
                     <div class="col-6">
-                        <mat-form-field *ngIf="!datosUsuario">
+                        <mat-form-field *ngIf="!soloLectura">
                             <mat-select placeholder="Elegir rol" [(value)]="rolSeleccionado" >
                               <mat-option *ngFor="let rol of listaRoles" [value]="rol">
                                 {{rol}}
                               </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <button *ngIf="!datosUsuario" mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
+                        <button *ngIf="!soloLectura" mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
                         <mat-chip-list aria-label="Fish selection">
                             <mat-chip *ngFor="let rol of rolesSeleccionados">{{rol}}</mat-chip>
                         </mat-chip-list>
@@ -83,8 +83,8 @@
 
             </mat-card-content>
             <mat-card-actions align="end">
-                <button mat-raised-button *ngIf="!datosUsuario" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
-                <button mat-raised-button *ngIf="datosUsuario" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
+                <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
+                <button mat-raised-button *ngIf="soloLectura" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
             </mat-card-actions>
         </mat-card>
     </div>

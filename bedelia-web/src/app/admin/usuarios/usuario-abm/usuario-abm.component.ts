@@ -57,7 +57,7 @@ export class UsuarioABMComponent implements OnInit {
   listaRoles:string[] = ROLES;
   rolesSeleccionados:string[] = [];
   rolSeleccionado:string;
-  datosUsuario:boolean = false;
+  soloLectura:boolean = false;
   
   public formulario: FormGroup;
 
@@ -68,7 +68,7 @@ export class UsuarioABMComponent implements OnInit {
     let parametroCi:string = this.rutaActiva.snapshot.params.id;
 
     if(parametroCi != undefined){
-      this.datosUsuario = true
+      this.soloLectura = true
       let usu = new UsuarioDTO();
       this.usuServ.get(parametroCi).subscribe(
         (datos)=>{
@@ -113,8 +113,6 @@ export class UsuarioABMComponent implements OnInit {
     this.formulario.controls['numero'].setValue(usu.persona.direccion.numero);
      // roles
     this.rolesSeleccionados = usu.roles;
-
-    this.formulario.disable();
   }
   vaciarDatos(){
     // persona

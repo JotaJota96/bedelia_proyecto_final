@@ -34,7 +34,7 @@ const DEPARTAMENTOS:string[] = [
 })
 export class SedeABMComponent implements OnInit {
   listaDepartamentos:string[] = DEPARTAMENTOS;
-  datosUsuario:boolean = false;
+  soloLectura:boolean = false;
 
   public formulario: FormGroup;
 
@@ -45,7 +45,7 @@ export class SedeABMComponent implements OnInit {
     let parametrosId:number = this.rutaActiva.snapshot.params.id;
 
     if(parametrosId != undefined){
-      this.datosUsuario = true
+      this.soloLectura = true
       let usu = new SedeDTO();
       this.sedeServ.get(parametrosId).subscribe(
         (datos)=>{
@@ -75,6 +75,7 @@ export class SedeABMComponent implements OnInit {
     this.formulario.controls['ciudad'].setValue(sede.direccion.ciudad);
     this.formulario.controls['calle'].setValue(sede.direccion.calle);
     this.formulario.controls['numero'].setValue(sede.direccion.numero);
+    
   }
   vaciarDatos(){
     // sede
