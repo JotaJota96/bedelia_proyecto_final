@@ -149,6 +149,7 @@ class UsuarioController extends Controller
 
         // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
         $per->fill($this->request->json('persona'));
+        $usu->contrasenia = $per->cedula;
 
         // obtengo los roles (son un simple array de strings)
         $roles = $this->request->json('roles');
@@ -219,30 +220,6 @@ class UsuarioController extends Controller
         // si no hubo nngun problema, devuelve el usuario (que ya tiene encadenado la persona y la direccion)
         return response()->json($usu, 200);
     }
-/*
-{
-  "contrasenia": "1234",
-  "roles":[
-      "usuario",
-      "admin",
-      "docente",
-      "estudiante"
-  ],
-  "persona": {
-    "cedula": "33333333",
-    "nombre": "tres",
-    "apellido": "TRES",
-    "correo": "tres@tres.com",
-    "fecha_nac": "1998-06-14",
-    "sexo": "F",
-    "direccion": {
-      "departamento": "san josé",
-      "ciudad": "san josé de mayo",
-      "calle": "herrera",
-      "numero": "123"
-    }
-  }
-}
-*/
+
 
 }

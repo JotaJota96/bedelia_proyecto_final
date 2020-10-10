@@ -16,11 +16,11 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('usuarios/login', 'UsuarioController@login');
-$router->get('usuarios/{ci}', 'UsuarioController@obtenerUno');
-$router->get('usuarios', 'UsuarioController@obtenerTodos');
-$router->post('usuarios', 'UsuarioController@agregar');
+$router->get('usuarios/{ci}',   'UsuarioController@obtenerUno');
+$router->get('usuarios',        'UsuarioController@obtenerTodos');
+$router->post('usuarios',       'UsuarioController@agregar');
 
-$router->get( 'sedes/{id}',        'SedesController@obtenerUno');
-$router->get( 'sedes',             'SedesController@obtenerTodos');
-$router->post('sedes',             'SedesController@agregar');
+$router->get( 'sedes/{id}', 'SedesController@obtenerUno');
+$router->get( 'sedes',      'SedesController@obtenerTodos');
+$router->post('sedes',      'SedesController@agregar');
 
