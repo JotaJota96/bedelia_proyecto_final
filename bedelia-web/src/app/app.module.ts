@@ -21,9 +21,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatChipsModule} from '@angular/material/chips'; 
 
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { RolesPipe } from './pipes/roles.pipe';
+import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
+
 
 
 @NgModule({
@@ -32,9 +37,13 @@ import { RolesPipe } from './pipes/roles.pipe';
     ListaCarrerasComponent,
     LoginComponent,
     UsuariosComponent,
-    RolesPipe
+    RolesPipe,
+    UsuarioABMComponent
   ],
   imports: [
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatSelectModule,
     MatSnackBarModule,
     MatFormFieldModule,

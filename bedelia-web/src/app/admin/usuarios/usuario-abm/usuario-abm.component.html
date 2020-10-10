@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <mat-card class="col-12  mx-auto my-2 example-card">
+            <mat-card-header>
+                <mat-card-title>Ingrese los datos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="formulario" class="row">
+                    <!-- datos de la persona -->
+                    <div class="col-6">
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Cédula" name="cedula" formControlName="cedula">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Apellido" name="apellido" formControlName="apellido">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Correo" name="correo" formControlName="correo">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <mat-label>Fecha de nacimiento</mat-label>
+                            <input matInput [matDatepicker]="fecha" name="fecha_nac" formControlName="fecha_nac">
+                            <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
+                            <mat-datepicker #fecha></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <mat-select placeholder="Sexo" formControlName="sexo">
+                              <mat-option *ngFor="let sex of listaSexos" [value]="sex.clave">
+                                {{sex.texto}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- datos de la direccion -->
+                    <div class="col-6">
+                        <mat-form-field [style.width.%]=100>
+                            <mat-select placeholder="Departamento" formControlName="departamento">
+                              <mat-option *ngFor="let dep of listaDepartamentos" [value]="dep">
+                                {{dep}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Ciudad" name="ciudad" formControlName="ciudad">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Calle" name="calle" formControlName="calle">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Número" name="numero" formControlName="numero">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- datos de la direccion -->
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-select placeholder="Elegir rol" [(value)]="rolSeleccionado" >
+                              <mat-option *ngFor="let rol of listaRoles" [value]="rol">
+                                {{rol}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
+                        <mat-chip-list aria-label="Fish selection">
+                            <mat-chip *ngFor="let rol of rolesSeleccionados">{{rol}}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+
+                </form>
+
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

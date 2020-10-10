@@ -1,12 +1,16 @@
 <div class="container">
     <h1>Usuarios</h1>
-
-    <!-- Campo para escrbir un filtro -->
-    <mat-form-field class="col-12">
-        <mat-label>Filtro</mat-label>
-        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Cédula, correo, nombre o apellido" #input>
-    </mat-form-field>
-
+    <div class="row d-flex">
+        <!-- Campo para escrbir un filtro -->
+        <mat-form-field class="col-6">
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="aplicarFiltro($event)" placeholder="Cédula, correo, nombre o apellido" #input>
+        </mat-form-field>
+    
+        <div class="col-6">
+            <button mat-raised-button color="primary" [routerLink]="['/admin/usuarios/abm']" >Agregar</button>
+        </div>
+    </div>
     <!-- Tabla -->
     <table mat-table [dataSource]="usuariosDataSource" class="col-12">
         <!-- Columna -->
