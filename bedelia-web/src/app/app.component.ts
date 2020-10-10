@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsuariosService } from './servicios/usuarios.service';
 
 // MenuSection y MenuItem sirven para estructurar el menú de la izquierda
 export interface MenuItem {
@@ -15,9 +17,7 @@ const MENU_ADMIN:MenuSection[] = [
   {
     nombre: "Gestión de usuario",
     items: [
-      {nombre: "Admins",            link: "#"},
-      {nombre: "Docentes",          link: "#"},
-      {nombre: "Administrativos",   link: "#"},
+      {nombre: "Usuarios",            link: "admin/usuarios"},
     ],
   }, {
     nombre: "Gestión de carreras",
@@ -81,11 +81,37 @@ const MENU_ESTUDIANTE:MenuSection[] = [
 })
 export class AppComponent {
   
-  menu:MenuSection[];
-
+  constructor(
+    protected UsuServ:UsuariosService,
+    private router:Router) { }
+  
   ngOnInit(): void {
-    // aca habra que poner un IF o un SWITCH para cargar el menu segun el rol
-    // por ahora lo hardcodeo...
-    this.menu = MENU_ADMIN;
+  }
+
+  public menuAMostrar():MenuSection[]{
+    // Devuelve el menu que corresponda segun el rol
+    if (this.UsuServ.isLogged()){
+      if(this.UsuServ.isEstudiante()){
+        return MENU_ESTUDIANTE;
+      }
+      if(this.UsuServ.isAdmin()){
+        return MENU_ADMIN;
+      }
+      if(this.UsuServ.isDocente()){
+        return MENU_DOCENTE;
+      }
+      if(this.UsuServ.isAdministrativo()){
+        return MENU_ADMINISTRATIVO;
+      }
+    }
+    return undefined;
+  }
+
+  logeado():boolean{
+    return this.UsuServ.isLogged()
+  }
+  logout(){
+    this.UsuServ.logout();
+    this.router.navigate(['/']);
   }
 }

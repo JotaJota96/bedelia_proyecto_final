@@ -19,15 +19,32 @@ import { LoginComponent } from './acceso-publico/login/login.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatChipsModule} from '@angular/material/chips'; 
+
+import { UsuariosComponent } from './admin/usuarios/usuarios.component';
+import { RolesPipe } from './pipes/roles.pipe';
+import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaCarrerasComponent,
-    LoginComponent
+    LoginComponent,
+    UsuariosComponent,
+    RolesPipe,
+    UsuarioABMComponent
   ],
   imports: [
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
@@ -38,6 +55,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
