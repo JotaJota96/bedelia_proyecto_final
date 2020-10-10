@@ -24,6 +24,7 @@ constructor(protected tipoServ:TipoCursoService, public dialog: MatDialog) { }
       }
     );
   }
+
  cargarDatos(){
    this.tipoServ.getAll().subscribe(
      (datos) => {
@@ -31,12 +32,12 @@ constructor(protected tipoServ:TipoCursoService, public dialog: MatDialog) { }
      }
    );
  }
+
  openDialog() {
    const dialogRef = this.dialog.open(TipoCursoABMComponent,{width: '500px'});
    
    dialogRef.afterClosed().subscribe(result => {
      this.cargarDatos();
-     console.log(`Dialog result: ${result}`);
    });
  }
 }

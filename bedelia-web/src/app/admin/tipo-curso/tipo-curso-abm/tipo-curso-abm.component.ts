@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TipoCursoDTO } from 'src/app/clases/tipo-curso-dto';
 import { TipoCursoService } from 'src/app/servicios/tipo-curso.service';
 
@@ -16,7 +16,6 @@ export class TipoCursoABMComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit(): void {
-    
     this.formulario = new FormGroup({
       tipo:    new FormControl('', [Validators.required])
       });
@@ -31,7 +30,6 @@ export class TipoCursoABMComponent implements OnInit {
 
     this.tipoServ.create(tipo).subscribe(
       (datos)=>{
-        
         this.router.navigate(['/admin/tipo']);
       },
       (error) =>{

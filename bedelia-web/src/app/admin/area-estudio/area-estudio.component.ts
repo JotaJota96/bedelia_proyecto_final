@@ -37,7 +37,6 @@ export class AreaEstudioComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.cargarDatos();
-      console.log(`Dialog result: ${result}`);
     });
   }
 }
