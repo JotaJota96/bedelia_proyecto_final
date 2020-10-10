@@ -9,6 +9,89 @@
         "version": "1.0"
     },
     "paths": {
+        "/sedes/{id}": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos de la sede",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes/": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerTodos",
+                "responses": {
+                    "200": {
+                        "description": "Todas las sedes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SedeDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes": {
+            "post": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::crear",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SedeDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos de la sede creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/usuarios/login": {
             "post": {
                 "tags": [
@@ -214,6 +297,20 @@
                     },
                     "persona": {
                         "$ref": "#/components/schemas/PersonaDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "SedeDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "telefono": {
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "$ref": "#/components/schemas/DireccionDTO"
                     }
                 },
                 "type": "object"

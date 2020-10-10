@@ -93,5 +93,17 @@ class Controller extends BaseController
      *     ),
      * )
      */
+    
+    /**
+     * @OA\Schema(
+     *     schema="SedeDTO",
+     *     @OA\Property(property="id",       type="integer"),
+     *     @OA\Property(property="telefono", type="string"),
+     *     @OA\Property(
+     *         property="direccion",
+     *         ref="#/components/schemas/DireccionDTO",
+     *     ),
+     * )
+     */
 
 }

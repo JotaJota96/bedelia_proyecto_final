@@ -20,3 +20,7 @@ $router->get('usuarios/{ci}', 'UsuarioController@obtenerUno');
 $router->get('usuarios', 'UsuarioController@obtenerTodos');
 $router->post('usuarios', 'UsuarioController@agregar');
 
+$router->get( 'sedes/{id}',        'SedesController@obtenerUno');
+$router->get( 'sedes',             'SedesController@obtenerTodos');
+$router->post('sedes',             'SedesController@agregar');
+
