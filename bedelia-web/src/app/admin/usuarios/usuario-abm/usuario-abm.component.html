@@ -66,14 +66,14 @@
 
                     <!-- datos de la direccion -->
                     <div class="col-6">
-                        <mat-form-field>
+                        <mat-form-field *ngIf="!datosUsuario">
                             <mat-select placeholder="Elegir rol" [(value)]="rolSeleccionado" >
                               <mat-option *ngFor="let rol of listaRoles" [value]="rol">
                                 {{rol}}
                               </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <button mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
+                        <button *ngIf="!datosUsuario" mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
                         <mat-chip-list aria-label="Fish selection">
                             <mat-chip *ngFor="let rol of rolesSeleccionados">{{rol}}</mat-chip>
                         </mat-chip-list>
@@ -83,7 +83,8 @@
 
             </mat-card-content>
             <mat-card-actions align="end">
-                <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
+                <button mat-raised-button *ngIf="!datosUsuario" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
+                <button mat-raised-button *ngIf="datosUsuario" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
             </mat-card-actions>
         </mat-card>
     </div>

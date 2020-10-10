@@ -28,6 +28,8 @@ import {MatChipsModule} from '@angular/material/chips';
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { RolesPipe } from './pipes/roles.pipe';
 import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
+import { SedesComponent } from './admin/sedes/sedes.component';
+import { SedeABMComponent } from './admin/sedes/sede-abm/sede-abm.component';
 
 
 
@@ -38,7 +40,9 @@ import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.co
     LoginComponent,
     UsuariosComponent,
     RolesPipe,
-    UsuarioABMComponent
+    UsuarioABMComponent,
+    SedesComponent,
+    SedeABMComponent
   ],
   imports: [
     MatChipsModule,

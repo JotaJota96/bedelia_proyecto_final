@@ -31,7 +31,7 @@ const MENU_ADMIN:MenuSection[] = [
     nombre: "Otros",
     items: [
       {nombre: "Año lectivo",   link: "#"},
-      {nombre: "Cedes",         link: "#"},
+      {nombre: "Sedes",         link: "admin/sede"},
     ],
   },
 ];
