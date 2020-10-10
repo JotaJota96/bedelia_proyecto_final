@@ -14,23 +14,9 @@ export class AreaEstudioABMComponent implements OnInit {
   public formulario: FormGroup;
 
   constructor(protected areaServ:AreaEstudioService,
-    private router:Router, private rutaActiva: ActivatedRoute) { }
+    private router:Router) { }
 
   ngOnInit(): void {
-    let parametrosId:number = this.rutaActiva.snapshot.params.id;
-
-    if(parametrosId != undefined){
-      let area = new AreaEstudioDTO();
-      this.areaServ.get(parametrosId).subscribe(
-        (datos)=>{
-          this.cargaDeDatos(datos);
-        },
-        (error) =>{
-          alert("Error");
-        }
-      );
-    }
-
     this.formulario = new FormGroup({
       area:    new FormControl('', [Validators.required])
       });
