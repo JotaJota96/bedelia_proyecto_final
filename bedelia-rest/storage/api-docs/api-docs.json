@@ -9,6 +9,34 @@
         "version": "1.0"
     },
     "paths": {
+        "/foo": {
+            "post": {
+                "tags": [
+                    "Foo"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnioLectivoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CursoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/sedes/{id}": {
             "get": {
                 "tags": [
@@ -68,7 +96,7 @@
                 "tags": [
                     "Sedes"
                 ],
-                "operationId": "App\\Http\\Controllers\\SedesController::crear",
+                "operationId": "App\\Http\\Controllers\\SedesController::agregar",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -311,6 +339,142 @@
                     },
                     "direccion": {
                         "$ref": "#/components/schemas/DireccionDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoCursoDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "tipo": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AreaEstudioDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "area": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CursoDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string"
+                    },
+                    "max_inasistencias": {
+                        "type": "integer"
+                    },
+                    "cant_creditos": {
+                        "type": "integer"
+                    },
+                    "cant_clases": {
+                        "type": "integer"
+                    },
+                    "area_estudio": {
+                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                    },
+                    "tipo_curso": {
+                        "$ref": "#/components/schemas/TipoCursoDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "AnioLectivoDTO": {
+                "properties": {
+                    "ini_1er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-01-01"
+                    },
+                    "fin_1er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-01-15"
+                    },
+                    "ini_1er_per_exam": {
+                        "type": "string",
+                        "example": "2018-02-01"
+                    },
+                    "fin_1er_per_exam": {
+                        "type": "string",
+                        "example": "2018-02-15"
+                    },
+                    "ini_1er_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-03-01"
+                    },
+                    "fin_1er_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-03-15"
+                    },
+                    "ini_1er_per_lect": {
+                        "type": "string",
+                        "example": "2018-04-01"
+                    },
+                    "fin_1er_per_lect": {
+                        "type": "string",
+                        "example": "2018-04-15"
+                    },
+                    "ini_2do_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-05-01"
+                    },
+                    "fin_2do_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-05-15"
+                    },
+                    "ini_2do_per_exam": {
+                        "type": "string",
+                        "example": "2018-06-01"
+                    },
+                    "fin_2do_per_exam": {
+                        "type": "string",
+                        "example": "2018-06-15"
+                    },
+                    "ini_2do_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-07-01"
+                    },
+                    "fin_2do_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-07-15"
+                    },
+                    "ini_2do_per_lect": {
+                        "type": "string",
+                        "example": "2018-08-01"
+                    },
+                    "fin_2do_per_lect": {
+                        "type": "string",
+                        "example": "2018-08-15"
+                    },
+                    "ini_3er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-09-01"
+                    },
+                    "fin_3er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-09-15"
+                    },
+                    "ini_3er_per_exam": {
+                        "type": "string",
+                        "example": "2018-10-01"
+                    },
+                    "fin_3er_per_exam": {
+                        "type": "string",
+                        "example": "2018-10-15"
                     }
                 },
                 "type": "object"
