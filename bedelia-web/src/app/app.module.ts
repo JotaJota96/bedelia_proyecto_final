@@ -34,6 +34,8 @@ import { AreaEstudioComponent } from './admin/area-estudio/area-estudio.componen
 import { AreaEstudioABMComponent } from './admin/area-estudio/area-estudio-abm/area-estudio-abm.component';
 import { TipoCursoComponent } from './admin/tipo-curso/tipo-curso.component';
 import { TipoCursoABMComponent } from './admin/tipo-curso/tipo-curso-abm/tipo-curso-abm.component';
+import { CursoComponent } from './admin/curso/curso.component';
+import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
 
 
 
@@ -50,7 +52,9 @@ import { TipoCursoABMComponent } from './admin/tipo-curso/tipo-curso-abm/tipo-cu
     AreaEstudioComponent,
     AreaEstudioABMComponent,
     TipoCursoComponent,
-    TipoCursoABMComponent
+    TipoCursoABMComponent,
+    CursoComponent,
+    CursoABMComponent
   ],
   imports: [
     MatChipsModule,
