@@ -22,7 +22,7 @@ export class UsuariosService {
     return this.http.get<UsuarioDTO[]>(this.apiURL);
   }
 
-  get(id:number){
+  get(id:string){
     return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
   }
 
