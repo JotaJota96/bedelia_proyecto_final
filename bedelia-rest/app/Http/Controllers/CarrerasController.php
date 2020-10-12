@@ -47,6 +47,12 @@ class CarrerasController extends Controller
             $value->direccion;
             unset($value->pivot); // quito el atributo 'pivot' porque no lo quiero devolver
         }
+        $carrera->areasEstudio;
+        foreach ($carrera->areasEstudio as $Id => $value) {
+            $value->creditos = $value->pivot->creditos;
+            unset($value->pivot); // quito el atributo 'pivot' porque no lo quiero devolver
+        }
+        
         return response()->json($carrera, 200);
     }
 
@@ -74,6 +80,13 @@ class CarrerasController extends Controller
                 $s->direccion;
                 unset($s->pivot); // quito el atributo 'pivot' porque no lo quiero devolver
             }
+
+            $c->areasEstudio;
+            foreach ($c->areasEstudio as $Id => $value) {
+                $value->creditos = $value->pivot->creditos;
+                unset($value->pivot); // quito el atributo 'pivot' porque no lo quiero devolver
+            }
+            
         }
         return response()->json($carreras, 200);
     }
