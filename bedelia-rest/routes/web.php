@@ -38,4 +38,5 @@ $router->get('cursos', 'CursoController@obtenerLista');
 
 $router->get('carreras',               'CarrerasController@obtenerTodos');
 $router->get('carreras/{Id}',          'CarrerasController@obtenerUno');
+$router->get('carreras/{Id}/cursos',   'CarrerasController@obtenerCursosDeCarrera');
 

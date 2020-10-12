@@ -144,6 +144,41 @@
                 }
             }
         },
+        "/carreras/{id}/cursos": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "description": "Devuelve la lista de cursos que conforman la carrera",
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerCursosDeCarrera",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/foo": {
             "post": {
                 "tags": [
@@ -658,19 +693,9 @@
                     },
                     "area": {
                         "type": "string"
-                    }
-                },
-                "type": "object"
-            },
-            "AreaEstudioCarreraDTO": {
-                "properties": {
-                    "id": {
-                        "type": "integer"
-                    },
-                    "area": {
-                        "type": "string"
                     },
                     "creditos": {
+                        "description": "Solo utilizado a veces para devolver informacion",
                         "type": "integer"
                     }
                 },
@@ -694,6 +719,14 @@
                         "type": "integer"
                     },
                     "cant_clases": {
+                        "type": "integer"
+                    },
+                    "semestre": {
+                        "description": "Solo utilizado a veces para devolver informacion",
+                        "type": "integer"
+                    },
+                    "optativo": {
+                        "description": "Solo utilizado a veces para devolver informacion",
                         "type": "integer"
                     },
                     "area_estudio": {
@@ -802,12 +835,12 @@
                         "type": "string"
                     },
                     "cant_semestres": {
-                        "type": "string"
+                        "type": "integer"
                     },
                     "areas_estudio": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/AreaEstudioCarreraDTO"
+                            "$ref": "#/components/schemas/AreaEstudioDTO"
                         }
                     },
                     "sedes": {
