@@ -8,7 +8,7 @@ import { CarreraDTO } from '../clases/carrera-dto';
 })
 export class CarreraService {
 
-  private apiURL: string = environment.apiURL + '/carrera';
+  private apiURL: string = environment.apiURL + '/carreras';
 
   constructor(protected http:HttpClient) { }
 

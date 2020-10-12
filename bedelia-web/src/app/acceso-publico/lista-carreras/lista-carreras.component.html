@@ -1,20 +1,19 @@
 <div class="container">
   <h1>Carreras</h1>
   <div class="row">
-      <div *ngFor="let item of listaCarrera" class="p-2 col-12 col-sm-6 col-lg-4 col-xl-3">
-        <mat-card>
+    <div *ngFor="let item of listaCarrera" class="p-2 col-12 col-sm-6 col-lg-4 col-xl-3">
+      <a class="link" href="/admin/carrera/abm/{{item.id}}">
+        <mat-card class="carrera">
           <mat-card-header>
-            <mat-card-title>item.nombre</mat-card-title>
+            <mat-card-title>{{item.nombre}}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <p>
-              item.descripcion
+              {{item.descripcion}}
             </p>
           </mat-card-content>
-          <mat-card-actions>
-            <a mat-stroked-button href="#" target="_blank">Más información</a> 
-          </mat-card-actions>
         </mat-card>
-      </div>
+        </a>
+    </div>
   </div>
 </div>
