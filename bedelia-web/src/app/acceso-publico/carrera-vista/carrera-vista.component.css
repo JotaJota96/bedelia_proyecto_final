@@ -1,7 +1,9 @@
 .barra{
-    height: 200px;
+    height: 180px;
     font-size: 3em;
 }
-.w-90{
-    width: 100% !important;
-}
+.tabla {
+    height: 400px;
+    max-width: 100%;
+    overflow: auto;
+  }
