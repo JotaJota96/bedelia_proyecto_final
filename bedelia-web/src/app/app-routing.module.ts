@@ -20,6 +20,7 @@ import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
 import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-abm.component';
 import { CarreraComponent } from './admin/carrera/carrera.component';
 import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
+import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -39,6 +40,8 @@ const routes: Routes = [
   //Inico de componentes de acceso publico
   {path: '', component: ListaCarrerasComponent},
   {path: 'login', component: LoginComponent},
+  
+  {path: 'ver/carrera/:id', component: CarreraVistaComponent},
   //Fin de componentes de acceso publico
 
   //Inico de componentes de admin
@@ -68,7 +71,7 @@ const routes: Routes = [
   
   {path: 'admin/carrera', component: CarreraComponent},
   {path: 'admin/carrera/abm', component: CarreraABMComponent},
-  {path: 'admin/carrera/abm/:id', component: CarreraABMComponent},
+  
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo

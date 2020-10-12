@@ -1,6 +1,7 @@
-.carrera {
-    min-height: 300px;
+.mat-card-content{
+    height: 100px;
+    overflow: hidden;
 }
-.link{
-    text-decoration:none;
+.mat-card-header{
+    min-height: 75px;
 }

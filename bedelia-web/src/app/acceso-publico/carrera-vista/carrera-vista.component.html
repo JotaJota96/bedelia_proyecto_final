@@ -1,0 +1,37 @@
+<mat-toolbar color="primary" class="barra">
+    <span class="mx-auto">{{carrera.nombre}}</span>
+</mat-toolbar>
+<div class="container-fluid mx-auto">
+    <div class=" row mt-5">
+        <div class="col-6">
+            <mat-card>
+                <h2 class="mb-2">Descripcion de la carrera</h2>
+                <div [innerHTML]="carrera.descripcion"></div>
+                <mat-card-actions class="ml-1">
+                    <h2 class="mb-2">Duracion de la carrera</h2>
+                    <p>Cantidad de semestres: {{carrera.cant_semestres}} </p>
+                </mat-card-actions>
+            </mat-card>
+            
+        </div>
+
+        <div class="col-3">
+            <mat-card>
+                <h2 class="mb-2">Ubicacion de las sedes:</h2>
+                <mat-list role="list" *ngFor="let item of listaSedes">
+                    <mat-list-item role="listitem">{{item.direccion.ciudad}} - {{item.direccion.departamento}}</mat-list-item>
+                  </mat-list>
+            </mat-card>
+        </div>   
+        
+        <div class="col-3">
+            <mat-card>
+                <h2 class="mb-2">Areas de estudio</h2>
+                <mat-list role="list" *ngFor="let item of listaAreaEstudo">
+                    <mat-list-item role="listitem">{{item.area}}</mat-list-item>
+                  </mat-list>
+            </mat-card>
+        </div>     
+    </div>
+    
+</div>

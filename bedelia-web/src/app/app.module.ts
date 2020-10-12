@@ -39,6 +39,7 @@ import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
 import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-abm.component';
 import { CarreraComponent } from './admin/carrera/carrera.component';
 import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
+import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
 
 
 
@@ -60,7 +61,8 @@ import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.com
     CursoABMComponent,
     AnioLectivoABMComponent,
     CarreraComponent,
-    CarreraABMComponent
+    CarreraABMComponent,
+    CarreraVistaComponent
   ],
   imports: [
     MatChipsModule,
