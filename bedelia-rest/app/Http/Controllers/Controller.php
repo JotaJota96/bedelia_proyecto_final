@@ -121,10 +121,15 @@ class Controller extends BaseController
      *     @OA\Property(property="id",   type="integer"),
      *     @OA\Property(property="area", type="string"),
      * )
+     * 
+     * @OA\Schema(
+     *     schema="AreaEstudioCarreraDTO",
+     *     @OA\Property(property="id",       type="integer"),
+     *     @OA\Property(property="area",     type="string"),
+     *     @OA\Property(property="creditos", type="integer"),
+     * )
      */
-    /*
 
-    */
      /**
      * @OA\Schema(
      *     schema="CursoDTO",
@@ -172,6 +177,26 @@ class Controller extends BaseController
      */
     
     /**
+     * @OA\Schema(
+     *     schema="CarreraDTO",
+     *     @OA\Property(property="id",              type="integer"),
+     *     @OA\Property(property="nombre",          type="string"),
+     *     @OA\Property(property="descripcion",     type="string"),
+     *     @OA\Property(property="cant_semestres",  type="integer"),
+     *     @OA\Property(
+     *         property="areas_estudio",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/AreaEstudioCarreraDTO"),
+     *     ),
+     *     @OA\Property(
+     *         property="sedes",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/SedeDTO"),
+     *     ),
+     * )
+     */
+
+    /**
      * @OA\Post(
      *     path="/foo",
      *     tags={"Foo"},
@@ -187,69 +212,3 @@ class Controller extends BaseController
      */
 
 }
-
-/*
-{
-  "ini_1er_per_insc_exam": "string",
-  "fin_1er_per_insc_exam": "string",
-  "ini_1er_per_exam": "string",
-  "fin_1er_per_exam": "string",
-  "ini_1er_per_insc_lect": "string",
-  "fin_1er_per_insc_lect": "string",
-  "ini_1er_per_lect": "string",
-  "fin_1er_per_lect": "string",
-  "ini_2do_per_insc_exam": "string",
-  "fin_2do_per_insc_exam": "string",
-  "ini_2do_per_exam": "string",
-  "fin_2do_per_exam": "string",
-  "ini_2do_per_insc_lect": "string",
-  "fin_2do_per_insc_lect": "string",
-  "ini_2do_per_lect": "string",
-  "fin_2do_per_lect": "string",
-  "ini_3er_per_insc_exam": "string",
-  "fin_3er_per_insc_exam": "string",
-  "ini_3er_per_exam": "string",
-  "fin_3er_per_exam": "string"
-}
-*/
-/*
-// Inscripción a primer período de exámenes
-ini_1er_per_insc_exam
-fin_1er_per_insc_exam
-
-// Primer período de exámenes
-ini_1er_per_exam
-fin_1er_per_exam
-
-// Inscripción a primer período lectivo
-ini_1er_per_insc_lect
-fin_1er_per_insc_lect
-
-// Primer período lectivo
-ini_1er_per_lect
-fin_1er_per_lect
-
-// Inscripción a segundo período de exámenes
-ini_2do_per_insc_exam
-fin_2do_per_insc_exam
-
-// Segundo período de exámenes
-ini_2do_per_exam
-fin_2do_per_exam
-
-// Inscripción a segundo período lectivo
-ini_2do_per_insc_lect
-fin_2do_per_insc_lect
-
-// Segundo período lectivo
-ini_2do_per_lect
-fin_2do_per_lect
-
-// Inscripción a tercer período de exámenes
-ini_3er_per_insc_exam
-fin_3er_per_insc_exam
-
-// Tercer período de exámenes
-ini_3er_per_exam
-fin_3er_per_exam
-*/

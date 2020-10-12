@@ -36,3 +36,6 @@ $router->post('cursos', 'CursoController@agregar');
 $router->get('cursos/{Id}', 'CursoController@obtenerUno');
 $router->get('cursos', 'CursoController@obtenerLista');
 
+$router->get('carreras',               'CarrerasController@obtenerTodos');
+$router->get('carreras/{Id}',          'CarrerasController@obtenerUno');
+
