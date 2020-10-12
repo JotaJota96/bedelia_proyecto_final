@@ -7,6 +7,7 @@ use App\Models\Carrera;
 use App\Models\Sede;
 use App\Models\AreaEstudio;
 use App\Models\Curso;
+use App\Models\Previa;
 
 class CarrerasController extends Controller
 {
@@ -49,7 +50,6 @@ class CarrerasController extends Controller
         return response()->json($carrera, 200);
     }
 
-
     /**
      * @OA\Get(
      *     path="/carreras",
@@ -77,8 +77,6 @@ class CarrerasController extends Controller
         }
         return response()->json($carreras, 200);
     }
-
-
 
     /**
      * @OA\Get(
@@ -118,5 +116,37 @@ class CarrerasController extends Controller
         return response()->json($cursos, 200);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/carreras/{id}/previas",
+     *     tags={"Carreras"},
+     *     description="Devuelve las relaciones de previas entre los cursos que conforman la carrera",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/PreviaDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerPreviasEntreCursosDeCarrera(int $Id){
+        $carrera = Carrera::find($Id);
+        if ($carrera == null){
+            return response()->json(null, 404);
+        }
+        // obtengo la lista de cursos
+        $previas = $carrera->previas;
 
+        return response()->json($previas, 200);
+    }
+    
 }

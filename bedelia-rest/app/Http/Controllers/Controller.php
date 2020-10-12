@@ -193,6 +193,16 @@ class Controller extends BaseController
      */
 
     /**
+     * @OA\Schema(
+     *     schema="PreviaDTO",
+     *     @OA\Property(property="id",               type="integer"),
+     *     @OA\Property(property="carrera_id",       type="integer"),
+     *     @OA\Property(property="curso_id",         type="integer"),
+     *     @OA\Property(property="curso_id_previa",  type="integer"),
+     *     @OA\Property(property="tipo",             type="string"),
+     * )
+     */
+    /**
      * @OA\Post(
      *     path="/foo",
      *     tags={"Foo"},
