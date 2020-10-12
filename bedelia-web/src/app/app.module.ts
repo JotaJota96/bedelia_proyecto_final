@@ -40,6 +40,7 @@ import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-a
 import { CarreraComponent } from './admin/carrera/carrera.component';
 import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
 import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 
 
 
@@ -65,6 +66,7 @@ import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vi
     CarreraVistaComponent
   ],
   imports: [
+    NgxGraphModule,
     MatChipsModule,
     MatDatepickerModule,
     MatNativeDateModule,
