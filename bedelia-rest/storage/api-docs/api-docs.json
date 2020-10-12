@@ -214,6 +214,35 @@
                 }
             }
         },
+        "/carreras/": {
+            "post": {
+                "tags": [
+                    "Carreras"
+                ],
+                "operationId": "App\\Http\\Controllers\\CarrerasController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarreraCreateDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/foo": {
             "post": {
                 "tags": [
@@ -903,6 +932,52 @@
                     },
                     "tipo": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CarreraCreateDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string"
+                    },
+                    "cant_semestres": {
+                        "type": "integer"
+                    },
+                    "areas_estudio": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AreaEstudioDTO"
+                        }
+                    },
+                    "previas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PreviaDTO"
+                        }
+                    },
+                    "cursos": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "semestre": {
+                                    "type": "integer"
+                                },
+                                "optativo": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 },
                 "type": "object"

@@ -40,4 +40,5 @@ $router->get('carreras',               'CarrerasController@obtenerTodos');
 $router->get('carreras/{Id}',          'CarrerasController@obtenerUno');
 $router->get('carreras/{Id}/cursos',   'CarrerasController@obtenerCursosDeCarrera');
 $router->get('carreras/{Id}/previas',  'CarrerasController@obtenerPreviasEntreCursosDeCarrera');
+$router->post('carreras',              'CarrerasController@agregar');
 
