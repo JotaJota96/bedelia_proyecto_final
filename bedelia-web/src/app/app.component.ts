@@ -23,15 +23,15 @@ const MENU_ADMIN:MenuSection[] = [
     nombre: "Gestión de carreras",
     items: [
       {nombre: "Carreras",           link: "#"},
-      {nombre: "Cursos",             link: "#"},
-      {nombre: "Áreas de estudio",   link: "#"},
-      {nombre: "Tipos de curso",     link: "#"},
+      {nombre: "Cursos",             link: "admin/curso"},
+      {nombre: "Áreas de estudio",   link: "admin/area"},
+      {nombre: "Tipos de curso",     link: "admin/tipo"},
     ],
   }, {
     nombre: "Otros",
     items: [
       {nombre: "Año lectivo",   link: "#"},
-      {nombre: "Cedes",         link: "#"},
+      {nombre: "Sedes",         link: "admin/sede"},
     ],
   },
 ];

@@ -8,6 +8,7 @@ import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 
 const DEPARTAMENTOS:string[] = [
@@ -56,13 +57,29 @@ export class UsuarioABMComponent implements OnInit {
   listaRoles:string[] = ROLES;
   rolesSeleccionados:string[] = [];
   rolSeleccionado:string;
-
+  soloLectura:boolean = false;
+  
   public formulario: FormGroup;
 
   constructor(protected usuServ:UsuariosService,
-    private router:Router) { }
+    private router:Router, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
+    let parametroCi:string = this.rutaActiva.snapshot.params.id;
+
+    if(parametroCi != undefined){
+      this.soloLectura = true
+      let usu = new UsuarioDTO();
+      this.usuServ.get(parametroCi).subscribe(
+        (datos)=>{
+          this.cargaDeDatos(datos);
+        },
+        (error) =>{
+          alert("Error");
+        }
+      );
+    }
+
     this.formulario = new FormGroup({
       // persona
       cedula:    new FormControl('', [Validators.required]),
@@ -80,7 +97,40 @@ export class UsuarioABMComponent implements OnInit {
       roles: new FormControl([], [Validators.required]),
     });
   }
-  
+
+  cargaDeDatos(usu:UsuarioDTO){
+     // persona
+    this.formulario.controls['cedula'].setValue(usu.persona.cedula);
+    this.formulario.controls['nombre'].setValue(usu.persona.nombre);
+    this.formulario.controls['apellido'].setValue(usu.persona.apellido);
+    this.formulario.controls['correo'].setValue(usu.persona.correo);
+    this.formulario.controls['fecha_nac'].setValue(usu.persona.fecha_nac);
+    this.formulario.controls['sexo'].setValue(usu.persona.sexo);
+    // direccion
+    this.formulario.controls['departamento'].setValue(usu.persona.direccion.departamento);
+    this.formulario.controls['ciudad'].setValue(usu.persona.direccion.ciudad);
+    this.formulario.controls['calle'].setValue(usu.persona.direccion.calle);
+    this.formulario.controls['numero'].setValue(usu.persona.direccion.numero);
+     // roles
+    this.rolesSeleccionados = usu.roles;
+  }
+  vaciarDatos(){
+    // persona
+    this.formulario.controls['cedula'].setValue("");
+    this.formulario.controls['nombre'].setValue("");
+    this.formulario.controls['apellido'].setValue("");
+    this.formulario.controls['correo'].setValue("");
+    this.formulario.controls['fecha_nac'].setValue("");
+    this.formulario.controls['sexo'].setValue("");
+    // direccion
+    this.formulario.controls['departamento'].setValue("");
+    this.formulario.controls['ciudad'].setValue("");
+    this.formulario.controls['calle'].setValue("");
+    this.formulario.controls['numero'].setValue("");
+    // roles
+    this.formulario.controls['roles'].setValue("");
+  }
+
   agregarRol(){
     if (this.rolesSeleccionados.includes(this.rolSeleccionado)){
       return;

@@ -41,7 +41,7 @@
         <ng-container matColumnDef="accion">
             <th mat-header-cell *matHeaderCellDef> Accion </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button disabled>Ver detalle</button>
+                <button mat-raised-button [routerLink]="['/admin/usuarios/abm',element.persona.cedula]">Ver detalle</button>
             </td>
         </ng-container>
 
