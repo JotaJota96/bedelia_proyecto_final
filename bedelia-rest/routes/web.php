@@ -32,3 +32,6 @@ $router->post('Curso', 'CursoController@agregar');
 $router->get('Curso/{Id}', 'CursoController@obtenerUno');
 $router->get('Curso', 'CursoController@obtenerLista');
 
+$router->post('Periodos', 'PeriodoLectivoController@agregar');
+// $router->get('Periodos/{Id}', 'PeriodoLectivoController@obtenerUno');
+$router->get('Periodos', 'PeriodoLectivoController@obtenerLista');
