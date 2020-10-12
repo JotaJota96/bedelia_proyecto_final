@@ -90,6 +90,60 @@
                 }
             }
         },
+        "/carreras/{id}": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/carreras": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerTodos",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CarreraDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/foo": {
             "post": {
                 "tags": [
@@ -608,6 +662,20 @@
                 },
                 "type": "object"
             },
+            "AreaEstudioCarreraDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "creditos": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "CursoDTO": {
                 "properties": {
                     "id": {
@@ -718,6 +786,35 @@
                     "fin_3er_per_exam": {
                         "type": "string",
                         "example": "2018-10-15"
+                    }
+                },
+                "type": "object"
+            },
+            "CarreraDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string"
+                    },
+                    "cant_semestres": {
+                        "type": "string"
+                    },
+                    "areas_estudio": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AreaEstudioCarreraDTO"
+                        }
+                    },
+                    "sedes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SedeDTO"
+                        }
                     }
                 },
                 "type": "object"
