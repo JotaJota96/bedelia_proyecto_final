@@ -1,17 +1,14 @@
 <div class="container">
   <h1>Carreras</h1>
   <div class="row">
-      <div *ngFor="let item of ['1','2','3','4']" class="p-2 col-12 col-sm-6 col-lg-4 col-xl-3">
+      <div *ngFor="let item of listaCarrera" class="p-2 col-12 col-sm-6 col-lg-4 col-xl-3">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
+            <mat-card-title>item.nombre</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Debitis cupiditate, id quaerat mollitia vero sed maxime dolores
-              fugiat minus velit distinctio. Architecto nisi perferendis voluptates
-              consectetur expedita minus neque dolor.
+              item.descripcion
             </p>
           </mat-card-content>
           <mat-card-actions>

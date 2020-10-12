@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
-import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 import {MatButtonModule} from '@angular/material/button';
@@ -37,6 +37,8 @@ import { TipoCursoABMComponent } from './admin/tipo-curso/tipo-curso-abm/tipo-cu
 import { CursoComponent } from './admin/curso/curso.component';
 import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
 import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-abm.component';
+import { CarreraComponent } from './admin/carrera/carrera.component';
+import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
 
 
 
@@ -56,7 +58,9 @@ import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-a
     TipoCursoABMComponent,
     CursoComponent,
     CursoABMComponent,
-    AnioLectivoABMComponent
+    AnioLectivoABMComponent,
+    CarreraComponent,
+    CarreraABMComponent
   ],
   imports: [
     MatChipsModule,
