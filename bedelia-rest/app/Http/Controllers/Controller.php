@@ -118,27 +118,23 @@ class Controller extends BaseController
     /**
      * @OA\Schema(
      *     schema="AreaEstudioDTO",
-     *     @OA\Property(property="id",   type="integer"),
-     *     @OA\Property(property="area", type="string"),
-     * )
-     * 
-     * @OA\Schema(
-     *     schema="AreaEstudioCarreraDTO",
      *     @OA\Property(property="id",       type="integer"),
      *     @OA\Property(property="area",     type="string"),
-     *     @OA\Property(property="creditos", type="integer"),
+     *     @OA\Property(property="creditos", type="integer", description="Solo utilizado a veces para devolver informacion"),
      * )
      */
 
      /**
      * @OA\Schema(
      *     schema="CursoDTO",
-     *     @OA\Property(property="id", type="integer"),
-     *     @OA\Property(property="nombre", type="string"),
-     *     @OA\Property(property="descripcion", type="string"),
+     *     @OA\Property(property="id",                type="integer"),
+     *     @OA\Property(property="nombre",            type="string"),
+     *     @OA\Property(property="descripcion",       type="string"),
      *     @OA\Property(property="max_inasistencias", type="integer"),
-     *     @OA\Property(property="cant_creditos", type="integer"),
-     *     @OA\Property(property="cant_clases", type="integer"),
+     *     @OA\Property(property="cant_creditos",     type="integer"),
+     *     @OA\Property(property="cant_clases",       type="integer"),
+     *     @OA\Property(property="semestre",          type="integer", description="Solo utilizado a veces para devolver informacion"),
+     *     @OA\Property(property="optativo",          type="integer", description="Solo utilizado a veces para devolver informacion"),
      *     @OA\Property(
      *         property="area_estudio",
      *         ref="#/components/schemas/AreaEstudioDTO",
@@ -186,7 +182,7 @@ class Controller extends BaseController
      *     @OA\Property(
      *         property="areas_estudio",
      *         type="array",
-     *         @OA\Items(ref="#/components/schemas/AreaEstudioCarreraDTO"),
+     *         @OA\Items(ref="#/components/schemas/AreaEstudioDTO"),
      *     ),
      *     @OA\Property(
      *         property="sedes",
@@ -196,6 +192,16 @@ class Controller extends BaseController
      * )
      */
 
+    /**
+     * @OA\Schema(
+     *     schema="PreviaDTO",
+     *     @OA\Property(property="id",               type="integer"),
+     *     @OA\Property(property="carrera_id",       type="integer"),
+     *     @OA\Property(property="curso_id",         type="integer"),
+     *     @OA\Property(property="curso_id_previa",  type="integer"),
+     *     @OA\Property(property="tipo",             type="string"),
+     * )
+     */
     /**
      * @OA\Post(
      *     path="/foo",
