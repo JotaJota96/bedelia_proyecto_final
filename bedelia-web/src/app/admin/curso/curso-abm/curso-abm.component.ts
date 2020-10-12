@@ -15,8 +15,8 @@ import { TipoCursoService } from 'src/app/servicios/tipo-curso.service';
 })
 export class CursoABMComponent implements OnInit {
   soloLectura: boolean = false;
-  listaArea: AreaEstudioDTO[] = [];
-  listaTipo: TipoCursoDTO[] = [];
+  listaArea: AreaEstudioDTO[];
+  listaTipo: TipoCursoDTO[];
 
   public formulario: FormGroup;
 
@@ -81,8 +81,8 @@ export class CursoABMComponent implements OnInit {
     this.formulario.controls['cant_creditos'].setValue(curso.cant_creditos);
     this.formulario.controls['cant_clases'].setValue(curso.cant_clases);
     // areaEstudio / tipoCurso
-    this.formulario.controls['area_estudio'].setValue(curso.area_estudio);
-    this.formulario.controls['tipo_curso'].setValue(curso.tipo_curso);
+    this.formulario.controls['area_estudio'].setValue(curso.area_estudio.id);
+    this.formulario.controls['tipo_curso'].setValue(curso.tipo_curso.id);
 
   }
   vaciarDatos() {
@@ -107,8 +107,20 @@ export class CursoABMComponent implements OnInit {
     sede.cant_creditos = this.formulario.controls['cant_creditos'].value;
     sede.cant_clases = this.formulario.controls['cant_clases'].value;
 
-    sede.area_estudio = this.formulario.controls['area_estudio'].value;
-    sede.tipo_curso = this.formulario.controls['tipo_curso'].value;
+    let idArea = this.formulario.controls['area_estudio'].value;
+    let idTipo = this.formulario.controls['tipo_curso'].value;
+
+    this.listaArea.forEach(element => {
+      if(element.id == idArea){
+        sede.area_estudio = element;
+      }
+    });
+
+    this.listaTipo.forEach(element => {
+      if(element.id == idArea){
+        sede.tipo_curso = element;
+      }
+    });
 
     this.cursoServ.create(sede).subscribe(
       (datos) => {
@@ -119,5 +131,6 @@ export class CursoABMComponent implements OnInit {
         alert("Error");
       }
     );
+    
   }
 }

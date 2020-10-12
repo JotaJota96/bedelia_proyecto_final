@@ -38,7 +38,7 @@
                     <div class="col-6 pl-5 pr-5">
                         <mat-form-field [style.width.%]=100>
                             <mat-select placeholder="Area de estudio" formControlName="area_estudio">
-                                <mat-option *ngFor="let area of listaArea" [value]="area" [disabled]="soloLectura">
+                                <mat-option *ngFor="let area of listaArea" [value]="area.id" [disabled]="soloLectura">
                                     {{area.area}}
                                 </mat-option>
                             </mat-select>
@@ -46,7 +46,7 @@
                         
                         <mat-form-field [style.width.%]=100>
                             <mat-select placeholder="Tipo de estudio" formControlName="tipo_curso">
-                                <mat-option *ngFor="let tipo of listaTipo" [value]="tipo" [disabled]="soloLectura">
+                                <mat-option *ngFor="let tipo of listaTipo" [value]="tipo.id" [disabled]="soloLectura">
                                     {{tipo.tipo}}
                                 </mat-option>
                             </mat-select>

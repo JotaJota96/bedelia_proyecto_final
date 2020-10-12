@@ -8,6 +8,7 @@ export class CursoDTO {
     public max_inasistencias    :number;
     public cant_creditos        :number;
     public cant_clases          :number;
+    
     public area_estudio         :AreaEstudioDTO;
     public tipo_curso           :TipoCursoDTO;    
 }
