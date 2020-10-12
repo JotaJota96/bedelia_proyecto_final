@@ -18,7 +18,7 @@ export class AreaEstudioComponent implements OnInit {
  constructor(protected areaServ:AreaEstudioService, public dialog: MatDialog) { }
 
  ngOnInit(): void {
-   // obtiene todos los usuarios y los carga en el DataSource de la tala
+   // obtiene todas las areas y los carga en el DataSource de la tala
    this.areaServ.getAll().subscribe(
      (datos) => {
        this.areaDataSource.data = datos;

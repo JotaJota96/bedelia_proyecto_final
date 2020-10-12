@@ -36,6 +36,7 @@ import { TipoCursoComponent } from './admin/tipo-curso/tipo-curso.component';
 import { TipoCursoABMComponent } from './admin/tipo-curso/tipo-curso-abm/tipo-curso-abm.component';
 import { CursoComponent } from './admin/curso/curso.component';
 import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
+import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-abm.component';
 
 
 
@@ -54,7 +55,8 @@ import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
     TipoCursoComponent,
     TipoCursoABMComponent,
     CursoComponent,
-    CursoABMComponent
+    CursoABMComponent,
+    AnioLectivoABMComponent
   ],
   imports: [
     MatChipsModule,

@@ -30,7 +30,7 @@ const MENU_ADMIN:MenuSection[] = [
   }, {
     nombre: "Otros",
     items: [
-      {nombre: "Año lectivo",   link: "#"},
+      {nombre: "Año lectivo",   link: "admin/periodos"},
       {nombre: "Sedes",         link: "admin/sede"},
     ],
   },

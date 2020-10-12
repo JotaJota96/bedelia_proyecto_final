@@ -9,7 +9,7 @@ import { CursoService } from 'src/app/servicios/curso.service';
 })
 export class CursoComponent implements OnInit {
 // columnas que se mostraran en la tabla
-columnasAMostrar:string[] = ['nombre', 'descripcion', 'area_estudio', 'tipo_curso', 'accion'];
+columnasAMostrar:string[] = ['nombre', 'area_estudio', 'tipo_curso', 'accion'];
 // objeto que necesita la tabla para mostrar el contenido
 cursoDataSource = new MatTableDataSource([]);
 

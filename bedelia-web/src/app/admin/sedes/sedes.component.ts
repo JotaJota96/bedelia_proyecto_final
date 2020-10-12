@@ -16,7 +16,7 @@ export class SedesComponent implements OnInit {
   constructor(protected sedeServ:SedesService) { }
 
   ngOnInit(): void {
-    // obtiene todos los usuarios y los carga en el DataSource de la tala
+    // obtiene todos las sedes y los carga en el DataSource de la tala
     this.sedeServ.getAll().subscribe(
       (datos) => {
         this.sedeDataSource.data = datos;

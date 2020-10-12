@@ -17,6 +17,7 @@ import { TipoCursoComponent } from './admin/tipo-curso/tipo-curso.component';
 import { TipoCursoABMComponent } from './admin/tipo-curso/tipo-curso-abm/tipo-curso-abm.component';
 import { CursoComponent } from './admin/curso/curso.component';
 import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
+import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-abm.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -57,6 +58,9 @@ const routes: Routes = [
   {path: 'admin/curso', component: CursoComponent},
   {path: 'admin/curso/abm', component: CursoABMComponent},
   {path: 'admin/curso/abm/:id', component: CursoABMComponent},
+
+  
+  {path: 'admin/periodos', component: AnioLectivoABMComponent},
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo
