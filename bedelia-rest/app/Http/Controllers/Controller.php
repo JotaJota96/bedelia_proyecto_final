@@ -202,6 +202,40 @@ class Controller extends BaseController
      *     @OA\Property(property="tipo",             type="string"),
      * )
      */
+
+
+    /**
+     * @OA\Schema(
+     *     schema="CarreraCreateDTO",
+     *     @OA\Property(property="id",              type="integer"),
+     *     @OA\Property(property="nombre",          type="string"),
+     *     @OA\Property(property="descripcion",     type="string"),
+     *     @OA\Property(property="cant_semestres",  type="integer"),
+     *     @OA\Property(
+     *         property="areas_estudio",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/AreaEstudioDTO"),
+     *     ),
+     *     @OA\Property(
+     *         property="previas",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/PreviaDTO"),
+     *     ),
+     *     @OA\Property(
+     *         property="cursos",
+     *         type="array",
+     *         @OA\Items(
+     *             @OA\Property(property="id",         type="integer"),
+     *             @OA\Property(property="semestre",   type="integer"),
+     *             @OA\Property(property="optativo",   type="boolean"),
+     *         ),
+     *     ),
+     * )
+     */
+
+
+
+
     /**
      * @OA\Post(
      *     path="/foo",
