@@ -20,18 +20,18 @@ $router->get('usuarios/{ci}', 'UsuarioController@obtenerUno');
 $router->get('usuarios', 'UsuarioController@obtenerTodos');
 $router->post('usuarios', 'UsuarioController@agregar');
 
-$router->post('AreasEstudio', 'AreaEstudioController@agregar');
-$router->get('AreasEstudio/{Id}', 'AreaEstudioController@obtenerUno');
-$router->get('AreasEstudio', 'AreaEstudioController@obtenerLista');
+$router->post('areasEstudio', 'AreaEstudioController@agregar');
+$router->get('areasEstudio/{Id}', 'AreaEstudioController@obtenerUno');
+$router->get('areasEstudio', 'AreaEstudioController@obtenerLista');
 
-$router->post('TipoCurso', 'TipoCursoController@agregar');
-$router->get('TipoCurso/{Id}', 'TipoCursoController@obtenerUno');
-$router->get('TipoCurso', 'TipoCursoController@obtenerLista');
+$router->post('tipoCurso', 'TipoCursoController@agregar');
+$router->get('tipoCurso/{Id}', 'TipoCursoController@obtenerUno');
+$router->get('tipoCurso', 'TipoCursoController@obtenerLista');
 
-$router->post('Curso', 'CursoController@agregar');
-$router->get('Curso/{Id}', 'CursoController@obtenerUno');
-$router->get('Curso', 'CursoController@obtenerLista');
+$router->post('curso', 'CursoController@agregar');
+$router->get('curso/{Id}', 'CursoController@obtenerUno');
+$router->get('curso', 'CursoController@obtenerLista');
 
-$router->post('Periodos', 'PeriodoLectivoController@agregar');
+$router->post('periodos', 'PeriodoLectivoController@agregar');
 // $router->get('Periodos/{Id}', 'PeriodoLectivoController@obtenerUno');
-$router->get('Periodos', 'PeriodoLectivoController@obtenerLista');
+$router->get('periodos', 'PeriodoLectivoController@obtenerLista');
