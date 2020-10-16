@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnioLectivoDTO } from 'src/app/clases/anio-lectivo-dto';
@@ -10,6 +11,7 @@ import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 })
 export class AnioLectivoABMComponent implements OnInit {
   soloLectura: boolean = true;
+  periodoLec: AnioLectivoDTO;
 
   public formulario: FormGroup;
 
@@ -49,16 +51,21 @@ export class AnioLectivoABMComponent implements OnInit {
       fin_3er_per_exam: new FormControl('', [Validators.required]),
     });
 
-    /*this.periodoServ.get().subscribe(
+    this.periodoServ.get().subscribe(
       (datos)=>{
+        this.periodoLec = datos;
         this.cargaDeDatos(datos);
       },
       (error)=>{
         alert("Error");
       }
-    );*/
+    );
   }
 
+  volver(){
+    this.soloLectura = true;
+    this.cargaDeDatos(this.periodoLec);
+  }
   crearPeriodo(){
     this.soloLectura = false;
     this.vaciarDatos();
@@ -131,36 +138,50 @@ export class AnioLectivoABMComponent implements OnInit {
 
   agregar() {
     let anio: AnioLectivoDTO = new AnioLectivoDTO();
+    
     anio.ini_1er_per_insc_exam = this.formulario.controls['ini_1er_per_insc_exam'].value;
     anio.fin_1er_per_insc_exam = this.formulario.controls['fin_1er_per_insc_exam'].value;
-
     anio.ini_1er_per_exam = this.formulario.controls['ini_1er_per_exam'].value;
     anio.fin_1er_per_exam = this.formulario.controls['fin_1er_per_exam'].value;
-
     anio.ini_1er_per_insc_lect = this.formulario.controls['ini_1er_per_insc_lect'].value;
     anio.fin_1er_per_insc_lect = this.formulario.controls['fin_1er_per_insc_lect'].value;
-
     anio.ini_1er_per_lect = this.formulario.controls['ini_1er_per_lect'].value;
     anio.fin_1er_per_lect = this.formulario.controls['fin_1er_per_lect'].value;
-
     anio.ini_2do_per_insc_exam = this.formulario.controls['ini_2do_per_insc_exam'].value;
     anio.fin_2do_per_insc_exam = this.formulario.controls['fin_2do_per_insc_exam'].value;
-
     anio.ini_2do_per_exam = this.formulario.controls['ini_2do_per_exam'].value;
     anio.fin_2do_per_exam = this.formulario.controls['fin_2do_per_exam'].value;
-
     anio.ini_2do_per_insc_lect = this.formulario.controls['ini_2do_per_insc_lect'].value;
     anio.fin_2do_per_insc_lect = this.formulario.controls['fin_2do_per_insc_lect'].value;
-
     anio.ini_2do_per_lect = this.formulario.controls['ini_2do_per_lect'].value;
     anio.fin_2do_per_lect = this.formulario.controls['fin_2do_per_lect'].value;
-
     anio.ini_3er_per_insc_exam = this.formulario.controls['ini_3er_per_insc_exam'].value;
     anio.fin_3er_per_insc_exam = this.formulario.controls['fin_3er_per_insc_exam'].value;
-
     anio.ini_3er_per_exam = this.formulario.controls['ini_3er_per_exam'].value;
     anio.fin_3er_per_exam = this.formulario.controls['fin_3er_per_exam'].value;
 
+    anio.ini_1er_per_insc_exam = formatDate(anio.ini_1er_per_insc_exam, 'yyyy-MM-dd', 'en-US');
+    anio.fin_1er_per_insc_exam = formatDate(anio.fin_1er_per_insc_exam, 'yyyy-MM-dd', 'en-US');
+    anio.ini_1er_per_exam = formatDate(anio.ini_1er_per_exam, 'yyyy-MM-dd', 'en-US');
+    anio.fin_1er_per_exam = formatDate(anio.fin_1er_per_exam, 'yyyy-MM-dd', 'en-US');
+    anio.ini_1er_per_insc_lect = formatDate(anio.ini_1er_per_insc_lect, 'yyyy-MM-dd', 'en-US');
+    anio.fin_1er_per_insc_lect = formatDate(anio.fin_1er_per_insc_lect, 'yyyy-MM-dd', 'en-US');
+    anio.ini_1er_per_lect = formatDate(anio.ini_1er_per_lect, 'yyyy-MM-dd', 'en-US');
+    anio.fin_1er_per_lect = formatDate(anio.fin_1er_per_lect, 'yyyy-MM-dd', 'en-US');
+    anio.ini_2do_per_insc_exam = formatDate(anio.ini_2do_per_insc_exam, 'yyyy-MM-dd', 'en-US');
+    anio.fin_2do_per_insc_exam = formatDate(anio.fin_2do_per_insc_exam, 'yyyy-MM-dd', 'en-US');
+    anio.ini_2do_per_exam = formatDate(anio.ini_2do_per_exam, 'yyyy-MM-dd', 'en-US');
+    anio.fin_2do_per_exam = formatDate(anio.fin_2do_per_exam, 'yyyy-MM-dd', 'en-US');
+    anio.ini_2do_per_insc_lect = formatDate(anio.ini_2do_per_insc_lect, 'yyyy-MM-dd', 'en-US');
+    anio.fin_2do_per_insc_lect = formatDate(anio.fin_2do_per_insc_lect, 'yyyy-MM-dd', 'en-US');
+    anio.ini_2do_per_lect = formatDate(anio.ini_2do_per_lect, 'yyyy-MM-dd', 'en-US');
+    anio.fin_2do_per_lect = formatDate(anio.fin_2do_per_lect, 'yyyy-MM-dd', 'en-US');
+    anio.ini_3er_per_insc_exam = formatDate(anio.ini_3er_per_insc_exam, 'yyyy-MM-dd', 'en-US');
+    anio.fin_3er_per_insc_exam = formatDate(anio.fin_3er_per_insc_exam, 'yyyy-MM-dd', 'en-US');
+    anio.ini_3er_per_exam = formatDate(anio.ini_3er_per_exam, 'yyyy-MM-dd', 'en-US');
+    anio.fin_3er_per_exam = formatDate(anio.fin_3er_per_exam, 'yyyy-MM-dd', 'en-US');
+
+    console.log(anio);
     this.periodoServ.create(anio).subscribe(
       (datos) => {
         this.soloLectura = false;

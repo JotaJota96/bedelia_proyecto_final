@@ -56,6 +56,7 @@
 
             </mat-card-content>
             <mat-card-actions align="end" class="pr-5">
+                <button mat-raised-button *ngIf="!soloLectura" color="primary" [routerLink]="['/admin/curso']">Volver</button>
                 <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid"
                     (click)="agregar()">Acceder</button>
                 <button mat-raised-button *ngIf="soloLectura" color="primary"

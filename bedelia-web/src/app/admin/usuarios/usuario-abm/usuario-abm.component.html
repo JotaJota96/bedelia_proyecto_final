@@ -82,7 +82,9 @@
 
             </mat-card-content>
             <mat-card-actions align="end">
-                <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
+                <button mat-raised-button *ngIf="!soloLectura" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
+                <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Crear</button>
+    
                 <button mat-raised-button *ngIf="soloLectura" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
             </mat-card-actions>
         </mat-card>
