@@ -19,7 +19,7 @@ class CreateEdicionCursoTable extends Migration
             $table->foreignId('sede_id');
             $table->foreignId('periodo_lectivo_id');
             $table->boolean('acta_confirmada');
-            $table->foreignId('docente_id');
+            $table->foreignId('docente_id')->nullable();
             $table->timestamps();
             
             $table->unique(['curso_id', 'sede_id', 'periodo_lectivo_id']);
