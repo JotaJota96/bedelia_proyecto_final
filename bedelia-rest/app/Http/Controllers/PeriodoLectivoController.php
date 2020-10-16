@@ -8,6 +8,9 @@ use App\Models\PeriodoLectivo;
 use App\Models\PeriodoInscExamen;
 use App\Models\PeriodoExamen;
 use App\Models\PeriodoInscCurso;
+use App\Models\Sede;
+use App\Models\examen;
+use App\Models\EdicionCurso;
 use Illuminate\Support\Facades\DB;
 
 class PeriodoLectivoController extends Controller
@@ -60,6 +63,8 @@ class PeriodoLectivoController extends Controller
     }
     public function agregar(){
         try {
+            $Sedes = Sede::all();
+
             $Periodo = new Periodo();
             $PeriodoInscExamen = new PeriodoInscExamen();
             $Periodo->fecha_inicio = $this->request->json('ini_1er_per_insc_exam');
@@ -79,7 +84,7 @@ class PeriodoLectivoController extends Controller
             $Periodo->save();
             $PeriodoExamen->id = $Periodo->id;
             $PeriodoExamen->save();
-
+            
             $Periodo = new Periodo();
             $PeriodoInscCurso = new PeriodoInscCurso();
             $Periodo->fecha_inicio = $this->request->json('ini_1er_per_insc_lect');
@@ -89,7 +94,7 @@ class PeriodoLectivoController extends Controller
             $Periodo->save();
             $PeriodoInscCurso->id = $Periodo->id;
             $PeriodoInscCurso->save();
-
+            
             $Periodo = new Periodo();
             $PeriodoLectivo = new PeriodoLectivo();
             $Periodo->fecha_inicio = $this->request->json('ini_1er_per_lect');
@@ -99,6 +104,9 @@ class PeriodoLectivoController extends Controller
             $Periodo->save();
             $PeriodoLectivo->id = $Periodo->id;
             $PeriodoLectivo->save();
+            InsertarLectivo($Periodo, $Sedes);
+            InsertarLectivo($PeriodoExamen, $PeriodoLectivo, $Sedes);
+
             //2-----------------------------------------------------
             $Periodo = new Periodo();
             $PeriodoInscExamen2 = new PeriodoInscExamen();
@@ -109,7 +117,7 @@ class PeriodoLectivoController extends Controller
             $Periodo->save();
             $PeriodoInscExamen2->id = $Periodo->id;
             $PeriodoInscExamen2->save();
-
+            
             $Periodo = new Periodo();
             $PeriodoExamen2 = new PeriodoExamen();
             $Periodo->fecha_inicio = $this->request->json('ini_2do_per_exam');
@@ -139,6 +147,8 @@ class PeriodoLectivoController extends Controller
             $Periodo->save();
             $PeriodoLectivo2->id = $Periodo->id;
             $PeriodoLectivo2->save();
+            InsertarLectivo($PeriodoExamen2, $PeriodoLectivo2, $Sedes);
+            
             //3------------------------------------------------------
             $Periodo = new Periodo();
             $PeriodoInscExamen3 = new PeriodoInscExamen();
@@ -165,27 +175,54 @@ class PeriodoLectivoController extends Controller
         }
     }
 
+    private function InsertarLectivo($PeriodoExamen, $PeriodoLectivo, $Sedes){
+        foreach ($Sedes as $id => $Sede) {
+            $Cursos = [];
+            foreach ($Sede->carreras as $id => $carrera) {
+                foreach ($carrera->cursos as $id => $curso) {
+                    if ($Cursos::find($curso->Id)==null) {
+                        array_push($Cursos,$Curso);
+                    }
+                }
+            }
+            foreach ($Cursos as $id => $Curso) {
+                $examen = new examen();
+                $examen->fecha = $PeriodoExamen->fecha_inicio;
+                $examen->periodoLectivo()->associate($PeriodoExamen);
+                $examen->sede()->associate($Sede);
+                $examen->curso()->associate($Curso);
+                $examen->save();
+                
+                $EdicionCurso = new EdicionCurso();
+                $EdicionCurso->periodoLectivo()->associate($PeriodoExamen);
+                $EdicionCurso->sede()->associate($Sede);
+                $EdicionCurso->curso()->associate($Curso);
+                $EdicionCurso->save();
+            }
+        }
+    }
+
     // {
-    //     "ini_1er_per_insc_exam": "2021-01-24",
-    //     "fin_1er_per_insc_exam": "2021-01-24",
-    //     "ini_1er_per_exam": "2021-01-24",
-    //     "fin_1er_per_exam": "2021-01-24",
-    //     "ini_1er_per_insc_lect": "2021-01-24",
-    //     "fin_1er_per_insc_lect": "2021-01-24",
-    //     "ini_1er_per_lect": "2021-01-24",
-    //     "fin_1er_per_lect": "2021-01-24",
-    //     "ini_2do_per_insc_exam": "2021-01-24",
-    //     "fin_2do_per_insc_exam": "2021-01-24",
-    //     "ini_2do_per_exam": "2021-01-24",
-    //     "fin_2do_per_exam": "2021-01-24",
-    //     "ini_2do_per_insc_lect": "2021-01-24",
-    //     "fin_2do_per_insc_lect": "2021-01-24",
-    //     "ini_2do_per_lect": "2021-01-24",
-    //     "fin_2do_per_lect": "2021-01-24",
-    //     "ini_3er_per_insc_exam": "2021-01-24",
-    //     "fin_3er_per_insc_exam": "2021-01-24",
-    //     "ini_3er_per_exam": "2021-01-24",
-    //     "fin_3er_per_exam": "2021-01-24"
+    //     "ini_1er_per_insc_exam": "2020-01-24",
+    //     "fin_1er_per_insc_exam": "2020-01-24",
+    //     "ini_1er_per_exam": "2020-01-24",
+    //     "fin_1er_per_exam": "2020-01-24",
+    //     "ini_1er_per_insc_lect": "2020-01-24",
+    //     "fin_1er_per_insc_lect": "2020-01-24",
+    //     "ini_1er_per_lect": "2020-01-24",
+    //     "fin_1er_per_lect": "2020-01-24",
+    //     "ini_2do_per_insc_exam": "2020-01-24",
+    //     "fin_2do_per_insc_exam": "2020-01-24",
+    //     "ini_2do_per_exam": "2020-01-24",
+    //     "fin_2do_per_exam": "2020-01-24",
+    //     "ini_2do_per_insc_lect": "2020-01-24",
+    //     "fin_2do_per_insc_lect": "2020-01-24",
+    //     "ini_2do_per_lect": "2020-01-24",
+    //     "fin_2do_per_lect": "2020-01-24",
+    //     "ini_3er_per_insc_exam": "2020-01-24",
+    //     "fin_3er_per_insc_exam": "2020-01-24",
+    //     "ini_3er_per_exam": "2020-01-24",
+    //     "fin_3er_per_exam": "2020-01-24"
     // }
 
     // Inscripción a primer período de exámenes

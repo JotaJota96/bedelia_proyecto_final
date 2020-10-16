@@ -42,6 +42,5 @@ $router->get('carreras/{Id}/cursos',   'CarrerasController@obtenerCursosDeCarrer
 $router->get('carreras/{Id}/previas',  'CarrerasController@obtenerPreviasEntreCursosDeCarrera');
 $router->post('carreras',              'CarrerasController@agregar');
 
-$router->post('Periodos', 'PeriodoLectivoController@agregar');
-// $router->get('Periodos/{Id}', 'PeriodoLectivoController@obtenerUno');
-$router->get('Periodos', 'PeriodoLectivoController@obtenerLista');
+$router->post('periodos', 'PeriodoLectivoController@agregar');
+$router->get('periodos', 'PeriodoLectivoController@obtenerLista');
