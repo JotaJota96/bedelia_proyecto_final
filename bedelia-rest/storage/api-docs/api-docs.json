@@ -90,6 +90,41 @@
                 }
             }
         },
+        "/areasEstudio/{id}/cursos": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "description": "Devuelve los cursos que pertenecen al area de estudio",
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerCursosPertenecientesAUnArea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/carreras/{id}": {
             "get": {
                 "tags": [

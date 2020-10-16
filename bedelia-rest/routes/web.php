@@ -27,6 +27,7 @@ $router->post('sedes',      'SedesController@agregar');
 $router->post('areasEstudio', 'AreaEstudioController@agregar');
 $router->get('areasEstudio/{Id}', 'AreaEstudioController@obtenerUno');
 $router->get('areasEstudio', 'AreaEstudioController@obtenerLista');
+$router->get('areasEstudio/{Id}/cursos', 'AreaEstudioController@obtenerCursosPertenecientesAUnArea');
 
 $router->post('tiposCurso', 'TipoCursoController@agregar');
 $router->get('tiposCurso/{Id}', 'TipoCursoController@obtenerUno');
