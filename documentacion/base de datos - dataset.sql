@@ -20,11 +20,11 @@ previa                hecho
 carrera_area_estudio  hecho
 
 
-periodo               (sin hacer)
-periodo_examen        (sin hacer)
-periodo_insc_curso    (sin hacer)
-periodo_insc_examen   (sin hacer)
-periodo_lectivo       (sin hacer)
+periodo               hecho
+periodo_examen        hecho
+periodo_insc_curso    hecho
+periodo_insc_examen   hecho
+periodo_lectivo       hecho
 
 edicion_curso         (sin hacer)
 examen                (sin hacer)
@@ -312,83 +312,82 @@ INSERT INTO `carrera_area_estudio`(`carrera_id`, `area_estudio_id`, `creditos`) 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `periodo`
 --
-INSERT INTO `periodo`(/*`id`,*/ `fecha_inicio`, `fecha_fin`, `tipo`) VALUES
-(/*  1 */ '2018-01-01', '2018-01-15', 'IE'),
-(/*  2 */ '2018-02-01', '2018-02-15', 'EX'),
-(/*  3 */ '2018-03-01', '2018-03-15', 'IC'),
-(/*  4 */ '2018-04-01', '2018-04-15', 'LE'),
-(/*  5 */ '2018-05-01', '2018-05-15', 'IE'),
-(/*  6 */ '2018-06-01', '2018-06-15', 'EX'),
-(/*  7 */ '2018-07-01', '2018-07-15', 'IC'),
-(/*  8 */ '2018-08-01', '2018-08-15', 'LE'),
-(/*  9 */ '2018-09-01', '2018-09-15', 'IE'),
-(/* 10 */ '2018-10-01', '2018-10-15', 'EX'),
+INSERT INTO `periodo`(/*`id`,*/ `fecha_inicio`, `fecha_fin`, `numero`, `tipo`) VALUES
+    (/*  1 */ '2018-01-01', '2018-01-15', 1, 'IE'),
+    (/*  2 */ '2018-02-01', '2018-02-15', 1, 'EX'),
+    (/*  3 */ '2018-03-01', '2018-03-15', 1, 'IC'),
+    (/*  4 */ '2018-04-01', '2018-04-15', 1, 'LE'),
+    (/*  5 */ '2018-05-01', '2018-05-15', 2, 'IE'),
+    (/*  6 */ '2018-06-01', '2018-06-15', 2, 'EX'),
+    (/*  7 */ '2018-07-01', '2018-07-15', 2, 'IC'),
+    (/*  8 */ '2018-08-01', '2018-08-15', 2, 'LE'),
+    (/*  9 */ '2018-09-01', '2018-09-15', 3, 'IE'),
+    (/* 10 */ '2018-10-01', '2018-10-15', 3, 'EX'),
 
-(/* 11 */ '2019-01-01', '2019-01-15', 'IE'),
-(/* 12 */ '2019-02-01', '2019-02-15', 'EX'),
-(/* 13 */ '2019-03-01', '2019-03-15', 'IC'),
-(/* 14 */ '2019-04-01', '2019-04-15', 'LE'),
-(/* 15 */ '2019-05-01', '2019-05-15', 'IE'),
-(/* 16 */ '2019-06-01', '2019-06-15', 'EX'),
-(/* 17 */ '2019-07-01', '2019-07-15', 'IC'),
-(/* 18 */ '2019-08-01', '2019-08-15', 'LE'),
-(/* 19 */ '2019-09-01', '2019-09-15', 'IE'),
-(/* 20 */ '2019-10-01', '2019-10-15', 'EX');
+    (/* 11 */ '2019-01-01', '2019-01-15', 1, 'IE'),
+    (/* 12 */ '2019-02-01', '2019-02-15', 1, 'EX'),
+    (/* 13 */ '2019-03-01', '2019-03-15', 1, 'IC'),
+    (/* 14 */ '2019-04-01', '2019-04-15', 1, 'LE'),
+    (/* 15 */ '2019-05-01', '2019-05-15', 2, 'IE'),
+    (/* 16 */ '2019-06-01', '2019-06-15', 2, 'EX'),
+    (/* 17 */ '2019-07-01', '2019-07-15', 2, 'IC'),
+    (/* 18 */ '2019-08-01', '2019-08-15', 2, 'LE'),
+    (/* 19 */ '2019-09-01', '2019-09-15', 3, 'IE'),
+    (/* 20 */ '2019-10-01', '2019-10-15', 3, 'EX');
 
--- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `periodo_examen`
---
 INSERT INTO `periodo_examen`(`id`) VALUES
-(2), (6), (10),
-(12), (16), (20);
+    (2), (6), (10),
+    (12), (16), (20);
 
--- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `periodo_insc_curso`
---
 INSERT INTO `periodo_insc_curso`(`id`) VALUES
-(3), (7),
-(13), (17);
+    (3), (7),
+    (13), (17);
 
--- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `periodo_insc_examen`
---
 INSERT INTO `periodo_insc_examen`(`id`) VALUES
-(1), (5), (9),
-(11), (15), (19);
+    (1), (5), (9),
+    (11), (15), (19);
 
--- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `periodo_lectivo`
---
 INSERT INTO `periodo_lectivo`(`id`) VALUES
-(4), (8),
-(14), (18);
-
--- ##############################################################################3
--- ------------------------------------------------------------------------
--- Truncar tablas antes de insertar `asistencia`
---
-
-
-
--- ------------------------------------------------------------------------
--- Truncar tablas antes de insertar `clase_dictada`
---
+    (4), (8),
+    (14), (18);
 
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `edicion_curso`
 --
-
-
--- ------------------------------------------------------------------------
--- Truncar tablas antes de insertar `escolaridad`
---
-
+INSERT INTO `edicion_curso`(`curso_id`, `sede_id`, `periodo_lectivo_id`)
+    SELECT DISTINCT cc.curso_id, cs.sede_id, p.id as 'periodo_lectivo_id'
+    FROM carrera_sede cs
+        JOIN carrera_curso cc ON cc.carrera_id = cs.carrera_id
+        JOIN periodo p
+    WHERE p.tipo = 'LE' 
+        AND (
+            (p.numero = 1 AND cc.semestre % 2 != 0) 
+            OR
+            (p.numero = 2 AND cc.semestre % 2 = 0)
+        )
+    ORDER BY cs.sede_id, p.id, cc.curso_id
+;
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `examen`
 --
+INSERT INTO `examen`(`curso_id`, `sede_id`, `periodo_examen_id`)
 
+    SELECT DISTINCT cc.curso_id, cs.sede_id, p.id as 'periodo_examen_id'
+    FROM carrera_sede cs
+        JOIN carrera_curso cc ON cc.carrera_id = cs.carrera_id
+        JOIN periodo p
+    WHERE p.tipo = 'EX' 
+    ORDER BY cs.sede_id, p.id, cc.curso_id
+;
+
+
+-- ##############################################################################3
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `inscripcion_carrera`
@@ -406,7 +405,22 @@ INSERT INTO `periodo_lectivo`(`id`) VALUES
 
 
 -- ------------------------------------------------------------------------
+-- Truncar tablas antes de insertar `clase_dictada`
+--
+
+
+-- ------------------------------------------------------------------------
+-- Truncar tablas antes de insertar `asistencia`
+--
+
+
+-- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `postulacion`
+--
+
+
+-- ------------------------------------------------------------------------
+-- Truncar tablas antes de insertar `escolaridad`
 --
 
 
