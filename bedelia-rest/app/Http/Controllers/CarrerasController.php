@@ -181,6 +181,7 @@ class CarrerasController extends Controller
         // Pseudocodigo de esta funcion:
         // Extraer los datos basicos de la carrera
         // Extraer y guardar provisoriamente los datos de la relacion con areas de estudio
+        // Extraer y guardar provisoriamente los datos de la relacion con sedes
         // Extraer y guardar provisoriamente los datos de la relacion con los cursos
         // Extraer y guardar provisoriamente los datos de las previas entre los cursos
         // Abrir una TRANSACCION de base de datos
@@ -207,6 +208,16 @@ class CarrerasController extends Controller
             }
             $a->creditos = $value['creditos']; // atributo ficticio
             array_push($areasEstudio, $a);
+        }
+
+        // extraigo el array de sedes y verifico que existan
+        $sedes = array();
+        foreach ($req->json('sedes') as $key => $value) {
+            $s = Sede::find($value['id']);
+            if ($s == null){
+                return $this->responder500("No existe una sede con id = " . $value['id']);
+            }
+            array_push($sedes, $s);
         }
 
         // extraigo el array de cursos y verifico que existan
@@ -260,6 +271,13 @@ class CarrerasController extends Controller
                     'creditos' => $value->creditos
                 ];
                 $carrera->areasEstudio()->attach($value, $datosTablaIntermedia);
+            }
+
+            // guarda relaciones entre carrera y sedes
+            foreach ($sedes as $key => $value) {
+                $datosTablaIntermedia = [
+                ];
+                $carrera->sedes()->attach($value, $datosTablaIntermedia);
             }
 
             // guarda las relaciones entre la nueva carrera a los cursos
@@ -327,6 +345,10 @@ class CarrerasController extends Controller
     {"id": 5, "semestre": 2, "optativo": false },
     {"id": 7, "semestre": 2, "optativo": false }
   ],
+  "sedes": [
+      { "id": 2 },
+      { "id": 3 }
+  ]
   "previas": [
     { "curso_id": 5, "curso_id_previa": 1, "tipo": "examen" },
     { "curso_id": 5, "curso_id_previa": 2, "tipo": "curso" },

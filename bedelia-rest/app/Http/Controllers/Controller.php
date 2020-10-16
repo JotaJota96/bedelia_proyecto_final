@@ -212,6 +212,11 @@ class Controller extends BaseController
      *     @OA\Property(property="descripcion",     type="string"),
      *     @OA\Property(property="cant_semestres",  type="integer"),
      *     @OA\Property(
+     *         property="sedes",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/SedeDTO"),
+     *     ),
+     *     @OA\Property(
      *         property="areas_estudio",
      *         type="array",
      *         @OA\Items(ref="#/components/schemas/AreaEstudioDTO"),

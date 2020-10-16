@@ -985,6 +985,12 @@
                     "cant_semestres": {
                         "type": "integer"
                     },
+                    "sedes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SedeDTO"
+                        }
+                    },
                     "areas_estudio": {
                         "type": "array",
                         "items": {
