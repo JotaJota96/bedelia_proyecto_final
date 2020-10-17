@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Edge, Node, Layout, ClusterNode } from '@swimlane/ngx-graph';
@@ -34,7 +35,7 @@ export class CarreraVistaComponent implements OnInit {
   public links: Edge[] = [];
   public semestre: ClusterNode[] = [];
 
-  constructor(protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute) { }
+  constructor(protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     
@@ -61,10 +62,9 @@ export class CarreraVistaComponent implements OnInit {
               this.CargarLinks();
             }
           );
-          
         },
         (error) => {
-          alert("Error");
+          this.openSnackBar("No se pudo cargar los datos desde la Base de dato");
           this.carrera = null;
         }
       );
@@ -112,15 +112,11 @@ export class CarreraVistaComponent implements OnInit {
 
   }
 
-
-  
-  /*
-  [clusters]="[
-    {
-      id: 'third',
-      label: 'Cluster node',
-      childNodeIds: ['c1', 'c2']
-    }
-  ]"
-  */
+  openSnackBar(mensaje : string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
+  }
 }

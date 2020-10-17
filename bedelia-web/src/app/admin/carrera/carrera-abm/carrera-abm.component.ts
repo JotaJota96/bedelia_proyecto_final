@@ -2,6 +2,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
 import { CarreraCreateDTO } from 'src/app/clases/carrera-create-dto';
@@ -48,7 +49,7 @@ export class CarreraABMComponent implements OnInit {
   public formularioArea: FormGroup;
   public formularioCurso: FormGroup;
 
-  constructor(private router:Router, public dialog: MatDialog, protected carreraServ: CarreraService, protected sedeServ: SedesService, protected cursoServ: CursoService,
+  constructor(private _snackBar: MatSnackBar, private router:Router, public dialog: MatDialog, protected carreraServ: CarreraService, protected sedeServ: SedesService, protected cursoServ: CursoService,
     protected areaServ: AreaEstudioService) { }
 
   ngOnInit(): void {
@@ -56,18 +57,24 @@ export class CarreraABMComponent implements OnInit {
     this.areaServ.getAll().subscribe(
       (datos) => {
         this.listaAreasEstudio = datos;
+      },(erro)=>{
+        this.openSnackBar("No se puediero traer las areas de estudio de la base de dato")
       }
     );
 
     this.sedeServ.getAll().subscribe(
       (datos) => {
         this.listaSedes = datos;
+      },(error)=>{
+        this.openSnackBar("No se pudieron traer las sedes desde la base de dato");
       }
     );
 
     this.cursoServ.getAll().subscribe(
       (datos) => {
         this.listaCurso = datos;
+      },(error)=>{
+        this.openSnackBar("No se pudieron traer los cursos desde la base de dato");
       }
     );
 
@@ -173,7 +180,7 @@ export class CarreraABMComponent implements OnInit {
       });
 
     } else {
-      alert("No podes agregar previa a las materias del primer semestre");
+      this.openSnackBar("No se puede agregar previas a las materias de primer semestre");
     }
 
 
@@ -198,13 +205,19 @@ export class CarreraABMComponent implements OnInit {
 
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
-        alert("Hecho");
         this.router.navigate(['/admin/carrera']);
       },
       (error) => {
-        alert("Error");
+        this.openSnackBar("No se pudo crear la carrera");
       }
     );
   }
-
+  
+  openSnackBar(mensaje : string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
+  }
 }

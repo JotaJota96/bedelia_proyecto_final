@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 
@@ -10,7 +11,7 @@ import { CarreraService } from 'src/app/servicios/carrera.service';
 export class ListaCarrerasComponent implements OnInit {
   listaCarrera : CarreraDTO[];
 
-  constructor(protected carreraServ: CarreraService) { }
+  constructor(protected carreraServ: CarreraService , private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     // obtiene todos los carrera y los carga en el DataSource de la tala
@@ -19,8 +20,16 @@ export class ListaCarrerasComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error)=>{
-        alert("error");
+        this.openSnackBar("No se pudieron las carreras desde la Base de dato");
       }
     );
+  }
+  
+  openSnackBar(mensaje : string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
   }
 }

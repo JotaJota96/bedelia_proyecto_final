@@ -61,6 +61,7 @@
       </div>
 
       <div class="col-6">
+        <mat-spinner class="m-auto" *ngIf="!(links.length != 0 && semestre.length != 0 && nodes.length != 0)"></mat-spinner>
         <div *ngIf="links.length != 0 && semestre.length != 0 && nodes.length != 0">
           <ngx-graph class="chart-container" [view]="[500, 500]" [links]="links" [nodes]="nodes" [clusters]="semestre" layout="dagreCluster">
             <ng-template #defsTemplate>

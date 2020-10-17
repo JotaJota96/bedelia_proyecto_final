@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnioLectivoDTO } from 'src/app/clases/anio-lectivo-dto';
 import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 
@@ -15,7 +16,7 @@ export class AnioLectivoABMComponent implements OnInit {
 
   public formulario: FormGroup;
 
-  constructor(protected periodoServ: AnioLectivoService) { }
+  constructor(protected periodoServ: AnioLectivoService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
 
@@ -52,21 +53,22 @@ export class AnioLectivoABMComponent implements OnInit {
     });
 
     this.periodoServ.get().subscribe(
-      (datos)=>{
+      (datos) => {
         this.periodoLec = datos;
         this.cargaDeDatos(datos);
       },
-      (error)=>{
-        alert("Error");
+      (error) => {
+        this.openSnackBar("No se pudo cargar los años lectivos desde la base de dato");
       }
     );
   }
 
-  volver(){
+  volver() {
     this.soloLectura = true;
     this.cargaDeDatos(this.periodoLec);
   }
-  crearPeriodo(){
+
+  crearPeriodo() {
     this.soloLectura = false;
     this.vaciarDatos();
   }
@@ -135,10 +137,9 @@ export class AnioLectivoABMComponent implements OnInit {
     this.formulario.controls['fin_3er_per_exam'].setValue("");
   }
 
-
   agregar() {
     let anio: AnioLectivoDTO = new AnioLectivoDTO();
-    
+
     anio.ini_1er_per_insc_exam = this.formulario.controls['ini_1er_per_insc_exam'].value;
     anio.fin_1er_per_insc_exam = this.formulario.controls['fin_1er_per_insc_exam'].value;
     anio.ini_1er_per_exam = this.formulario.controls['ini_1er_per_exam'].value;
@@ -185,11 +186,18 @@ export class AnioLectivoABMComponent implements OnInit {
     this.periodoServ.create(anio).subscribe(
       (datos) => {
         this.soloLectura = false;
-        alert("Echo!");
       },
       (error) => {
-        alert("Error");
+        this.openSnackBar("Error al crear el año lectivo");
       }
     );
+  }
+
+  openSnackBar(mensaje: string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
@@ -20,7 +21,7 @@ export class CursoABMComponent implements OnInit {
 
   public formulario: FormGroup;
 
-  constructor(protected cursoServ: CursoService, protected areaServ: AreaEstudioService, protected tipoServ: TipoCursoService,
+  constructor(private _snackBar: MatSnackBar, protected cursoServ: CursoService, protected areaServ: AreaEstudioService, protected tipoServ: TipoCursoService,
     private router: Router, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -30,7 +31,7 @@ export class CursoABMComponent implements OnInit {
         this.listaArea = datos;
       },
       (error) => {
-        alert("Error");
+        this.openSnackBar("No se pudieron cargar las areas de estudio de la base de dato");
       }
     )
 
@@ -73,6 +74,7 @@ export class CursoABMComponent implements OnInit {
       tipo_curso: new FormControl('', [Validators.required])
     });
   }
+
   cargaDeDatos(curso: CursoDTO) {
     // curso
     this.formulario.controls['nombre'].setValue(curso.nombre);
@@ -85,6 +87,7 @@ export class CursoABMComponent implements OnInit {
     this.formulario.controls['tipo_curso'].setValue(curso.tipo_curso.id);
 
   }
+
   vaciarDatos() {
     // curso
     this.formulario.controls['nombre'].setValue("");
@@ -124,13 +127,19 @@ export class CursoABMComponent implements OnInit {
 
     this.cursoServ.create(sede).subscribe(
       (datos) => {
-        alert("Hecho");
         this.router.navigate(['/admin/curso']);
       },
       (error) => {
-        alert("Error");
+        this.openSnackBar("No se pudo crear el curso");
       }
     );
-    
+  }
+
+  openSnackBar(mensaje: string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
   }
 }

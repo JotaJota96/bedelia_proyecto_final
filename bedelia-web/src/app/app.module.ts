@@ -42,6 +42,9 @@ import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.com
 import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { ModalPreviaComponent } from './admin/carrera/carrera-abm/modal-previa/modal-previa.component';
+import { RevicionInscripcionesPostulantesComponent } from './administrativo/revicion-inscripciones-postulantes/revicion-inscripciones-postulantes.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SexoPipe } from './pipes/sexo.pipe';
 
 
 
@@ -65,9 +68,12 @@ import { ModalPreviaComponent } from './admin/carrera/carrera-abm/modal-previa/m
     CarreraComponent,
     CarreraABMComponent,
     CarreraVistaComponent,
-    ModalPreviaComponent
+    ModalPreviaComponent,
+    RevicionInscripcionesPostulantesComponent,
+    SexoPipe
   ],
   imports: [
+    MatProgressSpinnerModule,
     NgxGraphModule,
     MatChipsModule,
     MatDatepickerModule,

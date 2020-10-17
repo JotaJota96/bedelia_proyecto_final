@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row mt-5">
+        <mat-card class="col-6">
+            <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
+                    {{shoe}}
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-card>
+
+        <mat-card class="col-6">
+            <mat-card-content>
+                <mat-list role="list">
+                    <mat-list-item role="listitem">Cedula: {{Elusuario.persona.cedula}}</mat-list-item>
+                    <mat-list-item role="listitem">Nombre: {{Elusuario.persona.nombre}}</mat-list-item>
+                    <mat-list-item role="listitem">Apellido: {{Elusuario.persona.apellido}}</mat-list-item>
+                    <mat-list-item role="listitem">Correo: {{Elusuario.persona.correo}}</mat-list-item>
+                    <mat-list-item role="listitem">Sexo: {{Elusuario.persona.sexo | sexo}}</mat-list-item>
+                    <mat-list-item role="listitem">Fecha Nacimiento: {{Elusuario.persona.fecha_nac | date:'dd/MM/yyyy'}}</mat-list-item>
+                    <mat-list-item role="listitem">
+                        <button mat-raised-button color="primary">Ver documentacion</button>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button mat-button>Informar de un problema</button>
+                <button mat-button>Aprobar</button>
+                <button mat-button>No aprobar</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

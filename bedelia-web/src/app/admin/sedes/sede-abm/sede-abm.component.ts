@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { SedeDTO} from 'src/app/clases/sede-dto';
@@ -38,7 +39,7 @@ export class SedeABMComponent implements OnInit {
 
   public formulario: FormGroup;
 
-  constructor(protected sedeServ:SedesService,
+  constructor(protected sedeServ:SedesService,private _snackBar: MatSnackBar,
     private router:Router, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -52,7 +53,7 @@ export class SedeABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) =>{
-          alert("Error");
+          this.openSnackBar("No se pudieron cargar la sede desde la base de dato");
         }
       );
     }
@@ -67,6 +68,7 @@ export class SedeABMComponent implements OnInit {
       numero:       new FormControl('', [Validators.required]),
       });
   }
+
   cargaDeDatos(sede: SedeDTO){
     // sede
     this.formulario.controls['telefono'].setValue(sede.telefono);
@@ -77,6 +79,7 @@ export class SedeABMComponent implements OnInit {
     this.formulario.controls['numero'].setValue(sede.direccion.numero);
     
   }
+
   vaciarDatos(){
     // sede
     this.formulario.controls['telefono'].setValue("");
@@ -101,12 +104,19 @@ export class SedeABMComponent implements OnInit {
 
     this.sedeServ.create(sede).subscribe(
       (datos)=>{
-        alert("Hecho");
         this.router.navigate(['/admin/sede']);
       },
       (error) =>{
-        alert("Error");
+        this.openSnackBar("No se pudo crear la sede");
       }
     );
+  }
+  
+  openSnackBar(mensaje : string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
   }
 }

@@ -21,6 +21,7 @@ import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-a
 import { CarreraComponent } from './admin/carrera/carrera.component';
 import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
 import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
+import { RevicionInscripcionesPostulantesComponent } from './administrativo/revicion-inscripciones-postulantes/revicion-inscripciones-postulantes.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -75,7 +76,7 @@ const routes: Routes = [
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo
-  //...
+  {path: 'administrativo/revicion-postulante', component: RevicionInscripcionesPostulantesComponent}
   //Fin de componentes de administrativo
 
   //Inico de componentes de estudiante
