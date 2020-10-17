@@ -41,6 +41,7 @@ import { CarreraComponent } from './admin/carrera/carrera.component';
 import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
 import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { ModalPreviaComponent } from './admin/carrera/carrera-abm/modal-previa/modal-previa.component';
 
 
 
@@ -63,7 +64,8 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     AnioLectivoABMComponent,
     CarreraComponent,
     CarreraABMComponent,
-    CarreraVistaComponent
+    CarreraVistaComponent,
+    ModalPreviaComponent
   ],
   imports: [
     NgxGraphModule,

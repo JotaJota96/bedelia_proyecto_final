@@ -1,7 +1,7 @@
 export class LoginDTO {
     
-    public id:String;
-    public contrasenia:String;
+    public id:          string;
+    public contrasenia: string;
 
     constructor() {}
 

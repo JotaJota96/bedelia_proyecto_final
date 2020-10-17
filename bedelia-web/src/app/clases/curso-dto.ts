@@ -9,7 +9,7 @@ export class CursoDTO {
     public cant_creditos        :number;
     public cant_clases          :number;
     public semestre             :number;
-    public optativo             :number;
+    public optativo             :boolean;
     
     public area_estudio         :AreaEstudioDTO;
     public tipo_curso           :TipoCursoDTO;    

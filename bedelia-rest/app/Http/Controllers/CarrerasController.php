@@ -218,7 +218,7 @@ class CarrerasController extends Controller
             }
             // atributos ficticios
             $c->semestre = $value['semestre'];
-            $c->optativo = $value['optativo'];
+            $c->optativo = (bool) $value['optativo'];
             //array_push($cursos, $c);
             $cursos[$c->id] = $c;
         }
@@ -302,7 +302,7 @@ class CarrerasController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             // devuelve un estado HTTP 500 y un mensaje simple del error
-            return $this->responder500("Error al guardar los datos");
+            return $this->responder500("Error al guardar los datos".$e->getMessage());
         }
     }
 
