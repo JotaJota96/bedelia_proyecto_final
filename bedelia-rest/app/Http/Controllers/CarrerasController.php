@@ -181,6 +181,7 @@ class CarrerasController extends Controller
         // Pseudocodigo de esta funcion:
         // Extraer los datos basicos de la carrera
         // Extraer y guardar provisoriamente los datos de la relacion con areas de estudio
+        // Extraer y guardar provisoriamente los datos de la relacion con sedes
         // Extraer y guardar provisoriamente los datos de la relacion con los cursos
         // Extraer y guardar provisoriamente los datos de las previas entre los cursos
         // Abrir una TRANSACCION de base de datos
@@ -209,6 +210,16 @@ class CarrerasController extends Controller
             array_push($areasEstudio, $a);
         }
 
+        // extraigo el array de sedes y verifico que existan
+        $sedes = array();
+        foreach ($req->json('sedes') as $key => $value) {
+            $s = Sede::find($value['id']);
+            if ($s == null){
+                return $this->responder500("No existe una sede con id = " . $value['id']);
+            }
+            array_push($sedes, $s);
+        }
+
         // extraigo el array de cursos y verifico que existan
         $cursos = array();
         foreach ($req->json('cursos') as $key => $value) {
@@ -218,7 +229,7 @@ class CarrerasController extends Controller
             }
             // atributos ficticios
             $c->semestre = $value['semestre'];
-            $c->optativo = $value['optativo'];
+            $c->optativo = (bool) $value['optativo'];
             //array_push($cursos, $c);
             $cursos[$c->id] = $c;
         }
@@ -262,6 +273,13 @@ class CarrerasController extends Controller
                 $carrera->areasEstudio()->attach($value, $datosTablaIntermedia);
             }
 
+            // guarda relaciones entre carrera y sedes
+            foreach ($sedes as $key => $value) {
+                $datosTablaIntermedia = [
+                ];
+                $carrera->sedes()->attach($value, $datosTablaIntermedia);
+            }
+
             // guarda las relaciones entre la nueva carrera a los cursos
             foreach ($cursos as $key => $value) {
                 $datosTablaIntermedia = [
@@ -302,7 +320,7 @@ class CarrerasController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             // devuelve un estado HTTP 500 y un mensaje simple del error
-            return $this->responder500("Error al guardar los datos");
+            return $this->responder500("Error al guardar los datos" . $e->getMessage());
         }
     }
 
@@ -326,6 +344,10 @@ class CarrerasController extends Controller
     {"id": 1, "semestre": 1, "optativo": false },
     {"id": 5, "semestre": 2, "optativo": false },
     {"id": 7, "semestre": 2, "optativo": false }
+  ],
+  "sedes": [
+      { "id": 2 },
+      { "id": 3 }
   ],
   "previas": [
     { "curso_id": 5, "curso_id_previa": 1, "tipo": "examen" },
