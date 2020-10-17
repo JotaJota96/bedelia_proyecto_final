@@ -2,6 +2,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
 import { CarreraCreateDTO } from 'src/app/clases/carrera-create-dto';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
@@ -47,7 +48,7 @@ export class CarreraABMComponent implements OnInit {
   public formularioArea: FormGroup;
   public formularioCurso: FormGroup;
 
-  constructor(public dialog: MatDialog, protected carreraServ: CarreraService, protected sedeServ: SedesService, protected cursoServ: CursoService,
+  constructor(private router:Router, public dialog: MatDialog, protected carreraServ: CarreraService, protected sedeServ: SedesService, protected cursoServ: CursoService,
     protected areaServ: AreaEstudioService) { }
 
   ngOnInit(): void {
@@ -198,6 +199,7 @@ export class CarreraABMComponent implements OnInit {
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
         alert("Hecho");
+        this.router.navigate(['/admin/carrera']);
       },
       (error) => {
         alert("Error");
