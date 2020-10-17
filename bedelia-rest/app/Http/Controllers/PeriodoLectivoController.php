@@ -21,50 +21,65 @@ class PeriodoLectivoController extends Controller
         $this->request = $request;
     }
     
+
+
+    /**
+     * @OA\Get(
+     *     path="/periodos",
+     *     tags={"Periodos"},
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/AnioLectivoDTO"),
+     *     ),
+     * )
+     */
     public function obtenerLista(){
         try {
-            $PeriodoInscExamen= PeriodoInscExamen::orderby('id', 'desc')->first();
-            $PeriodoExamen= PeriodoExamen::orderby('id', 'desc')->first();
-            $PeriodoInscCurso= PeriodoInscCurso::orderby('id', 'desc')->first();
-            $PeriodoLectivo= PeriodoLectivo::orderby('id', 'desc')->first();
-            
-            $PeriodoInscExamen2= PeriodoInscExamen::orderby('id', 'desc')->first();
-            $PeriodoExamen2= PeriodoExamen::orderby('id', 'desc')->first();
-            $PeriodoInscCurso2= PeriodoInscCurso::orderby('id', 'desc')->first();
-            $PeriodoLectivo2= PeriodoLectivo::orderby('id', 'desc')->first();
-            
-            $PeriodoInscExamen3= PeriodoInscExamen::orderby('id', 'desc')->first();
-            $PeriodoExamen3= PeriodoExamen::orderby('id', 'desc')->first();
-            $items = array(
-                "ini_1er_per_insc_exam"=> $PeriodoInscExamen->Periodo->fecha_inicio,
-                "fin_1er_per_insc_exam"=> $PeriodoInscExamen->Periodo->fecha_fin,
-                "ini_1er_per_exam"=> $PeriodoExamen->Periodo->fecha_inicio,
-                "fin_1er_per_exam"=> $PeriodoExamen->Periodo->fecha_fin,
-                "ini_1er_per_insc_lect"=> $PeriodoInscCurso->Periodo->fecha_inicio,
-                "fin_1er_per_insc_lect"=> $PeriodoInscCurso->Periodo->fecha_fin,
-                "ini_1er_per_lect"=> $PeriodoLectivo->Periodo->fecha_inicio,
-                "fin_1er_per_lect"=> $PeriodoLectivo->Periodo->fecha_fin,
 
-                "ini_2do_per_insc_exam"=> $PeriodoInscExamen2->Periodo->fecha_inicio,
-                "fin_2do_per_insc_exam"=> $PeriodoInscExamen2->Periodo->fecha_fin,
-                "ini_2do_per_exam"=> $PeriodoExamen2->Periodo->fecha_inicio,
-                "fin_2do_per_exam"=> $PeriodoExamen2->Periodo->fecha_fin,
-                "ini_2do_per_insc_lect"=> $PeriodoInscCurso2->Periodo->fecha_inicio,
-                "fin_2do_per_insc_lect"=> $PeriodoInscCurso2->Periodo->fecha_fin,
-                "ini_2do_per_lect"=> $PeriodoLectivo2->Periodo->fecha_inicio,
-                "fin_2do_per_lect"=> $PeriodoLectivo2->Periodo->fecha_fin,
+            $PeriodoInscExamen1 = Periodo::where('numero', 1)->where('tipo', 'IE')->orderby('id', 'desc')->first();
+            $PeriodoExamen1     = Periodo::where('numero', 1)->where('tipo', 'EX')->orderby('id', 'desc')->first();
+            $PeriodoInscCurso1  = Periodo::where('numero', 1)->where('tipo', 'IC')->orderby('id', 'desc')->first();
+            $PeriodoLectivo1    = Periodo::where('numero', 1)->where('tipo', 'LE')->orderby('id', 'desc')->first();
+
+            $PeriodoInscExamen2 = Periodo::where('numero', 2)->where('tipo', 'IE')->orderby('id', 'desc')->first();
+            $PeriodoExamen2     = Periodo::where('numero', 2)->where('tipo', 'EX')->orderby('id', 'desc')->first();
+            $PeriodoInscCurso2  = Periodo::where('numero', 2)->where('tipo', 'IC')->orderby('id', 'desc')->first();
+            $PeriodoLectivo2    = Periodo::where('numero', 2)->where('tipo', 'LE')->orderby('id', 'desc')->first();
+
+            $PeriodoInscExamen3 = Periodo::where('numero', 3)->where('tipo', 'IE')->orderby('id', 'desc')->first();
+            $PeriodoExamen3     = Periodo::where('numero', 3)->where('tipo', 'EX')->orderby('id', 'desc')->first();
+
+            $items = array(
+                "ini_1er_per_insc_exam"=> $PeriodoInscExamen1->fecha_inicio,
+                "fin_1er_per_insc_exam"=> $PeriodoInscExamen1->fecha_fin,
+                "ini_1er_per_exam"=> $PeriodoExamen1->fecha_inicio,
+                "fin_1er_per_exam"=> $PeriodoExamen1->fecha_fin,
+                "ini_1er_per_insc_lect"=> $PeriodoInscCurso1->fecha_inicio,
+                "fin_1er_per_insc_lect"=> $PeriodoInscCurso1->fecha_fin,
+                "ini_1er_per_lect"=> $PeriodoLectivo1->fecha_inicio,
+                "fin_1er_per_lect"=> $PeriodoLectivo1->fecha_fin,
+
+                "ini_2do_per_insc_exam"=> $PeriodoInscExamen2->fecha_inicio,
+                "fin_2do_per_insc_exam"=> $PeriodoInscExamen2->fecha_fin,
+                "ini_2do_per_exam"=> $PeriodoExamen2->fecha_inicio,
+                "fin_2do_per_exam"=> $PeriodoExamen2->fecha_fin,
+                "ini_2do_per_insc_lect"=> $PeriodoInscCurso2->fecha_inicio,
+                "fin_2do_per_insc_lect"=> $PeriodoInscCurso2->fecha_fin,
+                "ini_2do_per_lect"=> $PeriodoLectivo2->fecha_inicio,
+                "fin_2do_per_lect"=> $PeriodoLectivo2->fecha_fin,
                 
-                "ini_3er_per_insc_exam"=> $PeriodoInscExamen3->Periodo->fecha_inicio,
-                "fin_3er_per_insc_exam"=> $PeriodoInscExamen3->Periodo->fecha_fin,
-                "ini_3er_per_exam"=> $PeriodoExamen3->Periodo->fecha_inicio,
-                "fin_3er_per_exam"=> $PeriodoExamen3->Periodo->fecha_fin
+                "ini_3er_per_insc_exam"=> $PeriodoInscExamen3->fecha_inicio,
+                "fin_3er_per_insc_exam"=> $PeriodoInscExamen3->fecha_fin,
+                "ini_3er_per_exam"=> $PeriodoExamen3->fecha_inicio,
+                "fin_3er_per_exam"=> $PeriodoExamen3->fecha_fin
             );
             // $versiones = array("productos" => array($items));
             json_encode($items);     
             
             return response()->json($items, 200);
         } catch (Exception $e) {
-            return response()->json(0$e->getMessage(), 404);
+            return response()->json($e->getMessage(), 404);
         }
     }
     public function agregar(){

@@ -387,6 +387,26 @@
                 }
             }
         },
+        "/periodos": {
+            "get": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnioLectivoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/sedes/{id}": {
             "get": {
                 "tags": [
