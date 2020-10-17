@@ -21,15 +21,13 @@ class PeriodoLectivoController extends Controller
         $this->request = $request;
     }
     
-
-
     /**
      * @OA\Get(
      *     path="/periodos",
      *     tags={"Periodos"},
      *     @OA\Response(
      *         response="200",
-     *         description="",
+     *         description="Devuelve el ultimo anio lectivo ingresado",
      *         @OA\JsonContent(ref="#/components/schemas/AnioLectivoDTO"),
      *     ),
      * )
@@ -85,7 +83,7 @@ class PeriodoLectivoController extends Controller
 
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/periodos",
      *     tags={"Periodos"},
      *     @OA\RequestBody(
@@ -93,8 +91,7 @@ class PeriodoLectivoController extends Controller
      *     ),
      *     @OA\Response(
      *         response="201",
-     *         description="",
-     *         @OA\JsonContent(ref="#/components/schemas/AnioLectivoDTO"),
+     *         description="No devuelve nada, ya es bastante que funcione xD",
      *     ),
      * )
      */

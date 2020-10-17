@@ -395,7 +395,7 @@
                 "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::obtenerLista",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "Devuelve el ultimo anio lectivo ingresado",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -403,6 +403,26 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnioLectivoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "No devuelve nada, ya es bastante que funcione xD"
                     }
                 }
             }

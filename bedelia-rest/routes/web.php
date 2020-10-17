@@ -12,7 +12,8 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    // redirige a la documentacion de Swagger
+    return redirect()->to('api/documentation');
 });
 
 $router->post('usuarios/login', 'UsuarioController@login');
