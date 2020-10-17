@@ -90,6 +90,41 @@
                 }
             }
         },
+        "/areasEstudio/{id}/cursos": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "description": "Devuelve los cursos que pertenecen al area de estudio",
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerCursosPertenecientesAUnArea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/carreras/{id}": {
             "get": {
                 "tags": [
@@ -352,6 +387,111 @@
                 }
             }
         },
+        "/periodos": {
+            "get": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve el ultimo anio lectivo ingresado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnioLectivoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnioLectivoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "No devuelve nada, ya es bastante que funcione xD"
+                    }
+                }
+            }
+        },
+        "/postulantes/{id}": {
+            "get": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "devuelve una postulacion especifica, incluyendo la persona asociada y su direccion",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PostulanteDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/postulantes": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Registra en el sistema los datos de un postulante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostulanteDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostulanteDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/sedes/{id}": {
             "get": {
                 "tags": [
@@ -428,6 +568,40 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes/{id}/postulantes": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerListaPostulantesDeSede",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PostulanteDTO"
+                                    }
                                 }
                             }
                         }
@@ -950,6 +1124,12 @@
                     "cant_semestres": {
                         "type": "integer"
                     },
+                    "sedes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SedeDTO"
+                        }
+                    },
                     "areas_estudio": {
                         "type": "array",
                         "items": {
@@ -978,6 +1158,32 @@
                             },
                             "type": "object"
                         }
+                    }
+                },
+                "type": "object"
+            },
+            "PostulanteDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "img_ci": {
+                        "type": "string"
+                    },
+                    "img_escolaridad": {
+                        "type": "string"
+                    },
+                    "img_carne_salud": {
+                        "type": "string"
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "carrera": {
+                        "$ref": "#/components/schemas/CarreraDTO"
+                    },
+                    "persona": {
+                        "$ref": "#/components/schemas/PersonaDTO"
                     }
                 },
                 "type": "object"
