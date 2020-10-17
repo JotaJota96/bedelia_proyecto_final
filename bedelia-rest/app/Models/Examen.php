@@ -9,12 +9,17 @@ class Examen extends Model
     protected $table = "examen";
 
     protected $fillable = [
-        acta_confirmada, fecha,
+        'acta_confirmada', 'fecha',
     ];
 
 	// devuelve uno
     public function curso() {
         return $this->belongsTo('App\Models\Curso');
+    }
+
+	// devuelve uno
+    public function sede() {
+        return $this->belongsTo('App\Models\Sede');
     }
 
 	// devuelve uno

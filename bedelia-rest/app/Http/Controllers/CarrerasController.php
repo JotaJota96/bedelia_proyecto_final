@@ -229,7 +229,7 @@ class CarrerasController extends Controller
             }
             // atributos ficticios
             $c->semestre = $value['semestre'];
-            $c->optativo = $value['optativo'];
+            $c->optativo = (bool) $value['optativo'];
             //array_push($cursos, $c);
             $cursos[$c->id] = $c;
         }
@@ -320,7 +320,7 @@ class CarrerasController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             // devuelve un estado HTTP 500 y un mensaje simple del error
-            return $this->responder500("Error al guardar los datos");
+            return $this->responder500("Error al guardar los datos" . $e->getMessage());
         }
     }
 
@@ -348,7 +348,7 @@ class CarrerasController extends Controller
   "sedes": [
       { "id": 2 },
       { "id": 3 }
-  ]
+  ],
   "previas": [
     { "curso_id": 5, "curso_id_previa": 1, "tipo": "examen" },
     { "curso_id": 5, "curso_id_previa": 2, "tipo": "curso" },
