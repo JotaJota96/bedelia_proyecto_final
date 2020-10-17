@@ -107,4 +107,37 @@ class SedesController extends Controller
 
         return response()->json($sede, 200);
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="/sedes/{id}/postulantes",
+     *     tags={"Sedes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la sede",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/PostulanteDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerListaPostulantesDeSede(int $id){
+        // devuelve la lista de postulantes asociados a una sede especifica
+        // para cada postulante recordar devolver la persona asociada y su direccion. Tambien la sede, la carrera
+
+        return response()->json(['message' => 'Operacion no implementada aun'], 500);
+    }
+
+
+
+
 }

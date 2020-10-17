@@ -427,6 +427,71 @@
                 }
             }
         },
+        "/postulantes/{id}": {
+            "get": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "devuelve una postulacion especifica, incluyendo la persona asociada y su direccion",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PostulanteDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/postulantes": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Registra en el sistema los datos de un postulante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostulanteDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostulanteDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/sedes/{id}": {
             "get": {
                 "tags": [
@@ -503,6 +568,40 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes/{id}/postulantes": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerListaPostulantesDeSede",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PostulanteDTO"
+                                    }
                                 }
                             }
                         }
@@ -1059,6 +1158,32 @@
                             },
                             "type": "object"
                         }
+                    }
+                },
+                "type": "object"
+            },
+            "PostulanteDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "img_ci": {
+                        "type": "string"
+                    },
+                    "img_escolaridad": {
+                        "type": "string"
+                    },
+                    "img_carne_salud": {
+                        "type": "string"
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "carrera": {
+                        "$ref": "#/components/schemas/CarreraDTO"
+                    },
+                    "persona": {
+                        "$ref": "#/components/schemas/PersonaDTO"
                     }
                 },
                 "type": "object"

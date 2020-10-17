@@ -239,8 +239,28 @@ class Controller extends BaseController
      */
 
 
-
-
+    /**
+     * @OA\Schema(
+     *     schema="PostulanteDTO",
+     *     @OA\Property(property="id",              type="integer"),
+     *     @OA\Property(property="img_ci",          type="string"),
+     *     @OA\Property(property="img_escolaridad", type="string"),
+     *     @OA\Property(property="img_carne_salud", type="string"),
+     *     @OA\Property(
+     *         property="sede",
+     *         ref="#/components/schemas/SedeDTO",
+     *     ),
+     *     @OA\Property(
+     *         property="carrera",
+     *         ref="#/components/schemas/CarreraDTO",
+     *     ),
+     *     @OA\Property(
+     *         property="persona",
+     *         ref="#/components/schemas/PersonaDTO",
+     *     ),
+     * )
+     */
+    
     /**
      * @OA\Post(
      *     path="/foo",
