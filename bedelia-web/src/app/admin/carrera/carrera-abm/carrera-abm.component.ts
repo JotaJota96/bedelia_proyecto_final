@@ -131,14 +131,13 @@ export class CarreraABMComponent implements OnInit {
     (this.formularioCurso.controls['curso'].value).optativo = optativo;
     
     console.log(this.formularioCurso.controls['curso'].value);
-
+    
+    this.listaTodosCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
     this.listaCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
     this.formularioCurso.controls['curso'].setValue(undefined);
   }
 
   crearSemestre() {
-    this.listaTodosCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
-
     this.listaSemestre.push({
       clave: this.contadorSemestres,
       cursos: this.listaCursoSeleccionados
