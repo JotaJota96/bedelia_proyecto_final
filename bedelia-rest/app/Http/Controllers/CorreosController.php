@@ -15,7 +15,22 @@ class CorreosController extends Controller
     }
 
     public function enviarCorreo(){
-        //Mail::to('jjap96@gmail.com')->send(new MiCorreo());
-        return response()->json(null, 200);
+        // envia el correo solo si se habilita desde la configuracion
+        if (env('MAIL_SEND')){
+            try {
+                //Mail::to('asfasfsadfsafsafgdfgertelkcnvblknerg@gmail.com')->send(new MiCorreo());
+            } catch (\Exception $e) {
+                return response()->json(
+                    [
+                        "message" => "No se pudo enviar el gorreo",
+                        "error" => $e->getMessage()
+                    ],
+                    500
+                );
+            }
+        }else{
+            return response()->json("Correos desactivados", 200);
+        }
+        return response()->json("Correo enviado", 200);
     }
 }
