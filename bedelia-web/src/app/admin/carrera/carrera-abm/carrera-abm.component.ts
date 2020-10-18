@@ -186,7 +186,7 @@ export class CarreraABMComponent implements OnInit {
   }
 
   validarForm():boolean{
-    return this.formulario.valid && this.listaTodosCursoSeleccionados.length != 0 && this.listaSedes.length != 0  &&  this.listaAreaSeleccionada.length != 0
+    return this.formulario.valid && this.listaSemestre.length != 0 && this.listaSedes.length != 0  &&  this.listaAreaSeleccionada.length != 0
   }
 
   crear() {

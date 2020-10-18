@@ -22,6 +22,7 @@ import { CarreraComponent } from './admin/carrera/carrera.component';
 import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
 import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
 import { RevicionInscripcionesPostulantesComponent } from './administrativo/revicion-inscripciones-postulantes/revicion-inscripciones-postulantes.component';
+import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrera/inscripcion-carrera.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -43,6 +44,9 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   
   {path: 'ver/carrera/:id', component: CarreraVistaComponent},
+
+  
+  {path: 'inscripcion/carrera/:id', component: InscripcionCarreraComponent},
   //Fin de componentes de acceso publico
 
   //Inico de componentes de admin

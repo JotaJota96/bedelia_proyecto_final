@@ -45,6 +45,7 @@ import { ModalPreviaComponent } from './admin/carrera/carrera-abm/modal-previa/m
 import { RevicionInscripcionesPostulantesComponent } from './administrativo/revicion-inscripciones-postulantes/revicion-inscripciones-postulantes.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SexoPipe } from './pipes/sexo.pipe';
+import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrera/inscripcion-carrera.component';
 
 
 
@@ -70,7 +71,8 @@ import { SexoPipe } from './pipes/sexo.pipe';
     CarreraVistaComponent,
     ModalPreviaComponent,
     RevicionInscripcionesPostulantesComponent,
-    SexoPipe
+    SexoPipe,
+    InscripcionCarreraComponent
   ],
   imports: [
     MatProgressSpinnerModule,

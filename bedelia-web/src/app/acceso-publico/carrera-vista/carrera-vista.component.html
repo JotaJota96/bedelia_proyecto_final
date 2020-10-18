@@ -4,6 +4,7 @@
 <div class="container-fluid mx-auto">
   <mat-card class="mt-3">
     <div class=" row">
+
       <div class="col-6">
         <mat-card>
           <h2 class="mb-2">Descripcion de la carrera</h2>
@@ -35,7 +36,7 @@
         </mat-card>
       </div>
 
-      <button mat-raised-button class="m-2" color="primary">Postularce</button>
+      <button  [routerLink]="['/inscripcion/carrera', carrera.id]" mat-raised-button class="m-2" color="primary">Postularce</button>
     </div>
   </mat-card>
 
