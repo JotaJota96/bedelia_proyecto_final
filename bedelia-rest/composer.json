@@ -8,6 +8,7 @@
         "php": "^7.2.5",
         "darkaonline/swagger-lume": "7.*",
         "flipbox/lumen-generator": "^7.0",
+        "illuminate/mail": "7.*",
         "laravel/lumen-framework": "^7.0"
     },
     "require-dev": {
