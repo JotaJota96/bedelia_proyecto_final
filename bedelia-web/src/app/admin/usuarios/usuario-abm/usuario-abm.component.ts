@@ -187,10 +187,12 @@ export class UsuarioABMComponent implements OnInit {
       }
     }
     
+    let sede: SedeDTO = this.formulario.controls['sede'].value;
+
     this.usuServ.create(usu).subscribe(
       (datos) => {
-        if (this.formulario.controls['sede'].value == true) {
-          this.adminisServ.asignar(this.formulario.controls['sede'].value, datos.persona.cedula).subscribe(
+        if (this.esAdministrativo == true) {
+          this.adminisServ.asignar(sede, this.formulario.controls['cedula'].value).subscribe(
             (datos) => {
               this.formulario.controls['sede'].setValue(undefined);
             },
