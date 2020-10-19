@@ -46,6 +46,8 @@ import { RevicionInscripcionesPostulantesComponent } from './administrativo/revi
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SexoPipe } from './pipes/sexo.pipe';
 import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrera/inscripcion-carrera.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ModalInformarComponent } from './administrativo/revicion-inscripciones-postulantes/modal-informar/modal-informar.component';
 
 
 
@@ -72,9 +74,11 @@ import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrer
     ModalPreviaComponent,
     RevicionInscripcionesPostulantesComponent,
     SexoPipe,
-    InscripcionCarreraComponent
+    InscripcionCarreraComponent,
+    ModalInformarComponent
   ],
   imports: [
+    MatStepperModule,
     MatProgressSpinnerModule,
     NgxGraphModule,
     MatChipsModule,

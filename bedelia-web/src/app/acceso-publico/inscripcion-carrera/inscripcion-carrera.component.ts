@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
@@ -51,18 +51,19 @@ const DEPARTAMENTOS: string[] = [
   styleUrls: ['./inscripcion-carrera.component.css']
 })
 export class InscripcionCarreraComponent implements OnInit {
-  
+
   carrera: CarreraDTO;
   listaSedes: SedeDTO[];
-  listaSexos: ISexo[] = SEXOS;  
+  listaSexos: ISexo[] = SEXOS;
   soloLectura: boolean = false;
   listaDepartamentos: string[] = DEPARTAMENTOS;
+  tipo: number;
 
   public formulario: FormGroup;
-  constructor(private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService, protected sedeServ: SedesService, protected carreraServ:CarreraService, private rutaActiva: ActivatedRoute) { }
+  constructor(private router:Router, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService, protected sedeServ: SedesService, protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
+
     let parametrosId: number = this.rutaActiva.snapshot.params.id;
 
     if (parametrosId != undefined) {
@@ -81,14 +82,18 @@ export class InscripcionCarreraComponent implements OnInit {
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
       correo: new FormControl('', [Validators.required]),
-      fechaNac : new FormControl('', [Validators.required]),
-      sexo : new FormControl('', [Validators.required]),
-      sede : new FormControl('', [Validators.required]),
+      fechaNac: new FormControl('', [Validators.required]),
+      sexo: new FormControl('', [Validators.required]),
       // direccion
       departamento: new FormControl('', [Validators.required]),
       ciudad: new FormControl('', [Validators.required]),
       calle: new FormControl('', [Validators.required]),
       numero: new FormControl('', [Validators.required]),
+      //
+      sede: new FormControl('', [Validators.required]),
+      img_ci: new FormControl('', [Validators.required]),
+      img_escolaridad: new FormControl('', [Validators.required]),
+      img_carne_salud: new FormControl('', [Validators.required]),
     });
 
     // obtiene todos las sedes
@@ -101,36 +106,85 @@ export class InscripcionCarreraComponent implements OnInit {
     );
   }
 
-  enviar(){
-    let postulante: PostulanteDTO   = new PostulanteDTO();
-    postulante.persona              = new PersonaDTO();
-    postulante.persona.direccion    = new DireccionDTO();
+  alCargarImagen(evt: any, tipo: number) {
+    const archivo = evt.target.files[0];
+    // Si realmente se cargo un archivo
+    if (archivo) {
+      const lector = new FileReader();
+      lector.onload = this.obtenerStringImagen.bind(this);
+      lector.readAsBinaryString(archivo);
+      // OJO que el string con la imagen demora unos milisegundos en cargarse
 
-    postulante.persona.cedula                   = this.formulario.controls['cedula'].value;
-    postulante.persona.nombre                   = this.formulario.controls['nombre'].value;
-    postulante.persona.apellido                 = this.formulario.controls['apellido'].value;
-    postulante.persona.correo                   = this.formulario.controls['correo'].value;
-    postulante.persona.fecha_nac                = this.formulario.controls['fechaNac'].value;
-    postulante.persona.sexo                     = this.formulario.controls['sexo'].value;
-    postulante.persona.direccion.departamento   = this.formulario.controls['departamento'].value;
-    postulante.persona.direccion.ciudad         = this.formulario.controls['ciudad'].value;
-    postulante.persona.direccion.calle          = this.formulario.controls['calle'].value;
-    postulante.persona.direccion.numero         = this.formulario.controls['numero'].value;
-    postulante.sede                             = this.formulario.controls['sede'].value;
-    postulante.persona.fecha_nac                = formatDate(postulante.persona.fecha_nac, 'yyyy-MM-dd', 'en-US');
+    } else {
+      // aca no se como hacer que entre, pero por las dudas le pongo esto...
+      if (tipo == 0) {
+        this.tipo = 0;
+        this.formulario.controls['img_ci'].setValue("");
+      }
+      if (tipo == 1) {
+        this.tipo = 1;
+        this.formulario.controls['img_escolaridad'].setValue("");
+      }
+      if (tipo == 2) {
+        this.tipo = 2;
+        this.formulario.controls['img_carne_salud'].setValue("");
+      }
+      //this.restablecerAImagenPorDefecto();
+    }
+  }
 
+  obtenerStringImagen(e) {
+    let strImg = "data:image/png;base64," + btoa(e.target.result);
+
+    if (this.tipo == 0) {
+      this.formulario.controls['img_ci'].setValue(strImg);
+    }
+    if (this.tipo == 1) {
+      this.formulario.controls['img_escolaridad'].setValue(strImg);
+    }
+    if (this.tipo == 2) {
+      this.formulario.controls['img_carne_salud'].setValue(strImg);
+    }
+    //this.imagenVistaPrevia = this.profileForm.controls['imagen'].valueimagenVistaPrevia = this.profileForm.controls['imagen'].value;
+  }
+
+  enviar() {
+    let postulante: PostulanteDTO = new PostulanteDTO();
+    postulante.persona = new PersonaDTO();
+    postulante.persona.direccion = new DireccionDTO();
     
+    postulante.sede = this.formulario.controls['sede'].value;
+    postulante.carrera = this.carrera;
+    postulante.img_ci = this.formulario.controls['img_ci'].value;
+    postulante.img_escolaridad = this.formulario.controls['img_escolaridad'].value;
+    postulante.img_carne_salud = this.formulario.controls['img_carne_salud'].value;
+
+    postulante.persona.cedula = this.formulario.controls['cedula'].value;
+    postulante.persona.nombre = this.formulario.controls['nombre'].value;
+    postulante.persona.apellido = this.formulario.controls['apellido'].value;
+    postulante.persona.correo = this.formulario.controls['correo'].value;
+    postulante.persona.fecha_nac = this.formulario.controls['fechaNac'].value;
+    postulante.persona.fecha_nac = formatDate(postulante.persona.fecha_nac, 'yyyy-MM-dd', 'en-US');
+    postulante.persona.sexo = this.formulario.controls['sexo'].value;
+
+    postulante.persona.direccion.departamento = this.formulario.controls['departamento'].value;
+    postulante.persona.direccion.ciudad = this.formulario.controls['ciudad'].value;
+    postulante.persona.direccion.calle = this.formulario.controls['calle'].value;
+    postulante.persona.direccion.numero = this.formulario.controls['numero'].value;
+
+
 
     this.postulanteServ.create(postulante).subscribe(
       (datos) => {
-        this.openSnackBar("Correcto");
+        this.router.navigate(['/']);
       },
       (error) => {
-        this.openSnackBar("No se pudo crear el curso");
+        this.openSnackBar("No se pudo mandar la inscripcion");
       }
     );
 
   }
+
 
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
