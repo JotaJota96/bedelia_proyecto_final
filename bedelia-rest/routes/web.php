@@ -61,7 +61,7 @@ $router->post('postulantes/{id}/aceptar',   'PostulantesController@aceptar');
 $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerSede');
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
 
-$router->get('edicionesCurso/{id}/docente', 'EdicionesCursoController@obtenerDocente');
+$router->put('edicionesCurso/{id}/docente', 'EdicionesCursoController@asignarDocente');
 
 
 

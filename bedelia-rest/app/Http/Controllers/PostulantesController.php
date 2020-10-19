@@ -125,8 +125,20 @@ class PostulantesController extends Controller
      */
     public function rechazar($id){
         // Elimina la postulacion especifica, incluyendo datos asociados de Persona y Direccion
-
-        return response()->json(["message" => "No implementado aun"], 501);
+        try {
+            DB::beginTransaction();
+            $Postulacion = Postulacion::where('id', $id)->first();
+            $Direccion = $Postulacion->Persona->direccion;
+            $Persona = $Postulacion->Persona;
+            $Postulacion->delete();
+            $Persona->delete();
+            $Direccion->delete();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Error al eliminar la postulacion.' . $e->getMessage()], 500);
+        }
     }
     
 

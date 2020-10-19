@@ -175,10 +175,21 @@ class SedesController extends Controller
      * )
      */
     public function obtenerEdicionesCurso($id){
+        try {
+            $Sede = Sede::where('id', $id)->first();
+            // return response()->json($Sede, 200);
+            foreach ($Sede->edicionesCurso as $id => $edicionCurso) {
+                if ($edicionCurso->docente != null) {
+                    $edicionCurso->docente->usuario->persona->id;
+                }
+                $edicionCurso->curso->id;
+            }
+            return response()->json($Sede->edicionesCurso, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
         // devuelve un array de EdicionCurso que correspondan a la Sede especificada
         // devlver Sede, Persona (el docente) y curso de cada EdicionCurso
-
-        return response()->json(["message" => "No implementado aun"], 501);
     }
 
 }
