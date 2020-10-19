@@ -135,13 +135,14 @@ class SedesController extends Controller
      */
     public function obtenerListaPostulantesDeSede(int $id){
         $Sede = Sede::where('id', $id)->first();
-        foreach ($Sede->postulaciones as $id => $postulacion) {
-            $postulacion->persona->direccion;
-            $postulacion->carrera;
-            $postulacion->sede;
-        }
+        
         if ($Sede != null) {
-            return response()->json($Sede, 200);
+            foreach ($Sede->postulaciones as $id => $postulacion) {
+                $postulacion->persona->direccion;
+                $postulacion->carrera;
+                $postulacion->sede;
+            }
+            return response()->json($Sede->postulantes, 200);
         }
         return response()->json(['error' => 'Error al buscar las postulaciones. '], 404);
         // devuelve la lista de postulantes asociados a una sede especifica
