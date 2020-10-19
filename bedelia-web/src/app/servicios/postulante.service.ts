@@ -19,4 +19,16 @@ export class PostulanteService {
   create(datos: PostulanteDTO) {
     return this.http.post<PostulanteDTO>(this.apiURL, datos);
   }
+
+  aceptar(id : number) {
+    return this.http.post<PostulanteDTO>(this.apiURL + "/" + id + "/aceptar", null);
+  }
+
+  notificar(id : number, elmensaje:string) {
+    return this.http.post<PostulanteDTO>(this.apiURL + "/" + id + "/notificar", {mensaje: elmensaje});
+  }
+
+  rechasar(id : number) {
+    return this.http.delete<PostulanteDTO>(this.apiURL + "/" + id);
+  }
 }

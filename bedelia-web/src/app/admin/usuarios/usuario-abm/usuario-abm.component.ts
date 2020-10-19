@@ -175,10 +175,7 @@ export class UsuarioABMComponent implements OnInit {
     usu.persona.direccion.ciudad = this.formulario.controls['ciudad'].value;
     usu.persona.direccion.calle = this.formulario.controls['calle'].value;
     usu.persona.direccion.numero = this.formulario.controls['numero'].value;
-
     usu.persona.fecha_nac = formatDate(usu.persona.fecha_nac, 'yyyy-MM-dd', 'en-US');
-
-    usu.contrasenia = "1234";
     
     if (this.esAdministrativo == true) {
       if(this.formulario.controls['sede'].value == undefined){

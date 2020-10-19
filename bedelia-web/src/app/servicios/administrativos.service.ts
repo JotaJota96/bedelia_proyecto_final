@@ -12,8 +12,8 @@ export class AdministrativosService {
 
   constructor(protected http: HttpClient) { }
 
-  get(id: number) {
-    return this.http.get<SedeDTO[]>(this.apiURL + "/" + id + "/sede/");
+  get(id: string) {
+    return this.http.get<SedeDTO>(this.apiURL + "/" + id + "/sede");
   }
 
   asignar(datos:SedeDTO, id: string) {

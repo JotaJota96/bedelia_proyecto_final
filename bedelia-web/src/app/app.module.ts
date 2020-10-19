@@ -49,6 +49,7 @@ import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrer
 import {MatStepperModule} from '@angular/material/stepper';
 import { ModalInformarComponent } from './administrativo/revicion-inscripciones-postulantes/modal-informar/modal-informar.component';
 import { VerMasComponent } from './administrativo/revicion-inscripciones-postulantes/ver-mas/ver-mas.component';
+import { AsignarDocenteComponent } from './administrativo/asignar-docente/asignar-docente.component';
 
 
 
@@ -77,7 +78,8 @@ import { VerMasComponent } from './administrativo/revicion-inscripciones-postula
     SexoPipe,
     InscripcionCarreraComponent,
     ModalInformarComponent,
-    VerMasComponent
+    VerMasComponent,
+    AsignarDocenteComponent
   ],
   imports: [
     MatStepperModule,

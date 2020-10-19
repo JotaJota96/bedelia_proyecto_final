@@ -2,11 +2,12 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { AdministrativosService } from 'src/app/servicios/administrativos.service';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
-import { ModalInformarComponent } from './modal-informar/modal-informar.component';
 
 @Component({
   selector: 'app-revicion-inscripciones-postulantes',
@@ -19,22 +20,30 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
 
   Elusuario: UsuarioDTO;
   elMensaje: string;
-  idSedeAdministrativo: number = 1;
-
+  idSedeAdministrativo: number;
+  ciLogeado: string = JSON.parse(localStorage.getItem("loginData")).cedula;
   verDocumentacion: boolean = false;
   postulanteSeleccionado: PostulanteDTO;
 
-  constructor(protected sedesServ: SedesService, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
+  constructor(protected administrativoServ: AdministrativosService, protected sedesServ: SedesService, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
 
   ngOnInit(): void {
-
-    this.sedesServ.getSedes(this.idSedeAdministrativo).subscribe(
+    this.administrativoServ.get(this.ciLogeado).subscribe(
       (datos) => {
-        this.sedeDataSource.data = datos;
-      }, (error) => {
-        this.openSnackBar("No se pudieron traer los postulante de la base de dato");
+        let id = datos.id
+        if (id != null) {
+          this.sedesServ.getSedes(id).subscribe(
+            (datos) => {
+              this.sedeDataSource.data = datos;
+            }, (error) => {
+            }
+          );
+        }
+      },
+      (error) => {
+        this.openSnackBar("No se pudieron traer datos de la base de dato");
       }
-    );
+    )
   }
 
   openSnackBar(mensaje: string) {

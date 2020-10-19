@@ -1,0 +1,54 @@
+<div class="container">
+    <mat-card class="mt-5">
+        <form [formGroup]="formularioBusqueda" class="row">
+            <mat-form-field class="col-10">
+                <mat-label>Cedula del docente</mat-label>
+                <input matInput name="ci" formControlName="ci">
+            </mat-form-field>
+            <div align="center" class="col-2 m-auto">
+                <button [disabled]="!formularioBusqueda.valid" mat-raised-button color="primary"
+                    (click)="buscar()">Buscar</button>
+            </div>
+        </form>
+        <form [formGroup]="formularioAsignar" class="row">
+            <div class="col-10">
+                <mat-form-field [style.width.%]=100>
+                    <mat-select placeholder="Lista de curso sin docentes" name="curso" formControlName="curso">
+                        <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
+                            {{curso.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div align="center" class="col-2 m-auto">
+                <button [disabled]="!formularioAsignar.valid" mat-raised-button color="primary"
+                    (click)="asignar()">Asignar</button>
+            </div>
+        </form>
+    </mat-card>
+    <mat-card *ngIf="mostrarDatos" class="mt-2">
+        <div class="row">
+            <div class="col-6">
+                <mat-list role="list" class="m-auto">
+                    <mat-list-item role="listitem">Cedula: </mat-list-item>
+                    <mat-list-item role="listitem">Nombre: </mat-list-item>
+                    <mat-list-item role="listitem">Apellido: </mat-list-item>
+                    <mat-list-item role="listitem">Correo: </mat-list-item>
+                    <mat-list-item role="listitem">Sexo: </mat-list-item>
+                    <mat-list-item role="listitem">Fecha Nacimiento: </mat-list-item>
+                </mat-list>
+            </div>
+            <div class="col-6">
+                <mat-list role="list" class="m-auto">
+                    <mat-list-item role="listitem">{{persona.cedula}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.nombre}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.apellido}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.correo}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.sexo | sexo}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.fecha_nac | date:'dd/MM/yyyy'}}
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+    </mat-card>
+</div>

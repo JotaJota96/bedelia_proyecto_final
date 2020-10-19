@@ -25,6 +25,10 @@ export class UsuariosService {
   get(id:string){
     return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
   }
+  
+  getAllDocente(){
+    return this.http.get<UsuarioDTO[]>(this.apiURL + '/docentes');
+  }
 
   create(datos:UsuarioDTO){
     return this.http.post<UsuarioDTO>(this.apiURL, datos);

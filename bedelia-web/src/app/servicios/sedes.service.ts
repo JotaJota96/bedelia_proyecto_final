@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { EdicionCursoDTO } from '../clases/edicion-curso-dto';
 import { PostulanteDTO } from '../clases/postulante-dto';
 import { SedeDTO } from '../clases/sede-dto';
 
@@ -27,5 +28,9 @@ export class SedesService {
 
   getSedes(id:number){
     return this.http.get<PostulanteDTO[]>(this.apiURL + '/' + id + '/postulantes');
+  }
+
+  getCrsos(id:number){
+    return this.http.get<EdicionCursoDTO[]>(this.apiURL + '/' + id + '/edicionesCurso');
   }
 }
