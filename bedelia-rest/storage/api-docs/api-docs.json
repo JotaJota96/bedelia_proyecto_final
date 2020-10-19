@@ -9,6 +9,77 @@
         "version": "1.0"
     },
     "paths": {
+        "/administrativos/{ci}/sede/": {
+            "get": {
+                "tags": [
+                    "Administrativos"
+                ],
+                "description": "Devuelve la sede en la que trabaja el usuario administrativo",
+                "operationId": "App\\Http\\Controllers\\AdministrativosController::obtenerSede",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "Cédula del usuario administrativo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la sede donde trabaja el usuario administratvo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Administrativos"
+                ],
+                "description": "Establece la sede en la que trabaja el usuario administrativo",
+                "operationId": "App\\Http\\Controllers\\AdministrativosController::establecerSede",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "Cédula del usuario administrativo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SedeDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la sede donde trabaja el usuario administratvo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/areasEstudio/{id}": {
             "get": {
                 "tags": [
@@ -822,6 +893,9 @@
                         "type": "string"
                     },
                     "correo": {
+                        "type": "string"
+                    },
+                    "token": {
                         "type": "string"
                     },
                     "roles": {

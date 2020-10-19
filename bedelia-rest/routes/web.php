@@ -15,6 +15,8 @@ $router->get('/', function () use ($router) {
     // redirige a la documentacion de Swagger
     return redirect()->to('api/documentation');
 });
+// este es para probar los correos cuando se estan haciendo
+$router->post('correos',         'CorreosController@enviarCorreo');
 
 $router->post('usuarios/login', 'UsuarioController@login');
 $router->get('usuarios/{ci}',   'UsuarioController@obtenerUno');
@@ -51,4 +53,9 @@ $router->get('periodos',    'PeriodoLectivoController@obtenerLista');
 $router->get('postulantes/{id}',     'PostulantesController@obtenerUno');
 $router->post('postulantes',         'PostulantesController@agregar');
 
-$router->post('correos',         'CorreosController@enviarCorreo');
+$router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerSede');
+$router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
+
+
+
+
