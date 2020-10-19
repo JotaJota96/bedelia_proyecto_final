@@ -17,7 +17,7 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
   elMensaje: string;
 
   verDocumentacion: boolean = false;
-  postulanteSeleccionado: PostulanteDTO = null;
+  postulanteSeleccionado: PostulanteDTO;
 
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
 

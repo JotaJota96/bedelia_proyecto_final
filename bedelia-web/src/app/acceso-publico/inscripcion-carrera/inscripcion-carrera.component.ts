@@ -57,10 +57,10 @@ export class InscripcionCarreraComponent implements OnInit {
   listaSexos: ISexo[] = SEXOS;
   soloLectura: boolean = false;
   listaDepartamentos: string[] = DEPARTAMENTOS;
-  tipo: number;
+  tipo: number =0;
 
   public formulario: FormGroup;
-  constructor(private router:Router, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService, protected sedeServ: SedesService, protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService, protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -70,6 +70,7 @@ export class InscripcionCarreraComponent implements OnInit {
       this.carreraServ.get(parametrosId).subscribe(
         (datos) => {
           this.carrera = datos;
+          this.listaSedes = datos.sedes;
         },
         (error) => {
           this.openSnackBar("Error al cargar la carrera de la base de dato");
@@ -95,18 +96,10 @@ export class InscripcionCarreraComponent implements OnInit {
       img_escolaridad: new FormControl('', [Validators.required]),
       img_carne_salud: new FormControl('', [Validators.required]),
     });
-
-    // obtiene todos las sedes
-    this.sedeServ.getAll().subscribe(
-      (datos) => {
-        this.listaSedes = datos;
-      }, (error) => {
-        this.openSnackBar("Error al cargar las sedes de la base de dato");
-      }
-    );
   }
 
   alCargarImagen(evt: any, tipo: number) {
+    this.tipo = tipo;
     const archivo = evt.target.files[0];
     // Si realmente se cargo un archivo
     if (archivo) {
@@ -118,15 +111,12 @@ export class InscripcionCarreraComponent implements OnInit {
     } else {
       // aca no se como hacer que entre, pero por las dudas le pongo esto...
       if (tipo == 0) {
-        this.tipo = 0;
         this.formulario.controls['img_ci'].setValue("");
       }
       if (tipo == 1) {
-        this.tipo = 1;
         this.formulario.controls['img_escolaridad'].setValue("");
       }
       if (tipo == 2) {
-        this.tipo = 2;
         this.formulario.controls['img_carne_salud'].setValue("");
       }
       //this.restablecerAImagenPorDefecto();
@@ -152,7 +142,7 @@ export class InscripcionCarreraComponent implements OnInit {
     let postulante: PostulanteDTO = new PostulanteDTO();
     postulante.persona = new PersonaDTO();
     postulante.persona.direccion = new DireccionDTO();
-    
+
     postulante.sede = this.formulario.controls['sede'].value;
     postulante.carrera = this.carrera;
     postulante.img_ci = this.formulario.controls['img_ci'].value;
@@ -172,6 +162,8 @@ export class InscripcionCarreraComponent implements OnInit {
     postulante.persona.direccion.calle = this.formulario.controls['calle'].value;
     postulante.persona.direccion.numero = this.formulario.controls['numero'].value;
 
+
+    console.log(postulante);
 
 
     this.postulanteServ.create(postulante).subscribe(
