@@ -70,6 +70,7 @@
                               </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        
                        
                         <button class="mb-2" *ngIf="!soloLectura" mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
                        
@@ -78,6 +79,13 @@
                         </mat-chip-list>
                     </div>
 
+                    <mat-form-field class="col-12 col-sm-6" *ngIf="esAdministrativo">
+                        <mat-select name="sede" formControlName="sede" placeholder="Elegir la sede que va a trabajar de administrativo">
+                          <mat-option *ngFor="let sede of listaSedes" [value]="sede">
+                            {{sede.direccion.departamento}}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </form>
 
             </mat-card-content>

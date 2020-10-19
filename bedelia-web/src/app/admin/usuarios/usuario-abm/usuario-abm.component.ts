@@ -2,14 +2,15 @@ import { DatePipe, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { utimes } from 'fs';
-import { utils } from 'protractor';
 import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SedesService } from 'src/app/servicios/sedes.service';
+import { SedeDTO } from 'src/app/clases/sede-dto';
+import { AdministrativosService } from 'src/app/servicios/administrativos.service';
 
 
 const DEPARTAMENTOS: string[] = [
@@ -59,11 +60,14 @@ export class UsuarioABMComponent implements OnInit {
   rolesSeleccionados: string[] = [];
   rolSeleccionado: string;
   soloLectura: boolean = false;
+  listaSedes: SedeDTO[];
+  esAdministrativo: boolean = false;
+  sedeSeleccionada:SedeDTO = null;
 
   public formulario: FormGroup;
 
-  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
-    private router: Router, private rutaActiva: ActivatedRoute) { }
+  constructor(private _snackBar: MatSnackBar, protected sedeServ: SedesService, protected adminisServ: AdministrativosService,
+    protected usuServ: UsuariosService, private router: Router, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
     let parametroCi: string = this.rutaActiva.snapshot.params.id;
@@ -81,6 +85,15 @@ export class UsuarioABMComponent implements OnInit {
       );
     }
 
+    this.sedeServ.getAll().subscribe(
+      (datos) => {
+        this.listaSedes = datos;
+      },
+      (error) => {
+        this.openSnackBar("No se pudo cargar las sedes de la base de dato");
+      }
+    );
+
     this.formulario = new FormGroup({
       // persona
       cedula: new FormControl('', [Validators.required]),
@@ -96,6 +109,7 @@ export class UsuarioABMComponent implements OnInit {
       numero: new FormControl('', [Validators.required]),
       // roles
       roles: new FormControl([], [Validators.required]),
+      sede: new FormControl(undefined),
     });
   }
 
@@ -137,6 +151,9 @@ export class UsuarioABMComponent implements OnInit {
     if (this.rolesSeleccionados.includes(this.rolSeleccionado)) {
       return;
     }
+    if (this.rolSeleccionado == "administrativo") {
+      this.esAdministrativo = true;
+    }
     this.rolesSeleccionados.push(this.rolSeleccionado);
     this.formulario.controls['roles'].setValue(this.rolesSeleccionados);
   }
@@ -161,11 +178,27 @@ export class UsuarioABMComponent implements OnInit {
 
     usu.persona.fecha_nac = formatDate(usu.persona.fecha_nac, 'yyyy-MM-dd', 'en-US');
 
-
     usu.contrasenia = "1234";
-
+    
+    if (this.esAdministrativo == true) {
+      if(this.formulario.controls['sede'].value == undefined){
+        this.openSnackBar("Se deve seleccionar una sede")
+        return;
+      }
+    }
+    
     this.usuServ.create(usu).subscribe(
       (datos) => {
+        if (this.formulario.controls['sede'].value == true) {
+          this.adminisServ.asignar(this.formulario.controls['sede'].value, datos.persona.cedula).subscribe(
+            (datos) => {
+              this.formulario.controls['sede'].setValue(undefined);
+            },
+            (error) => {
+              this.openSnackBar("No se pudo asignar la sede")
+            }
+          );
+        }
         this.router.navigate(['/admin/usuarios']);
       },
       (error) => {

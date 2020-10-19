@@ -19,6 +19,7 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
 
   Elusuario: UsuarioDTO;
   elMensaje: string;
+  idSedeAdministrativo: number = 1;
 
   verDocumentacion: boolean = false;
   postulanteSeleccionado: PostulanteDTO;
@@ -27,7 +28,7 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.sedesServ.getSedes(1).subscribe(
+    this.sedesServ.getSedes(this.idSedeAdministrativo).subscribe(
       (datos) => {
         this.sedeDataSource.data = datos;
       }, (error) => {

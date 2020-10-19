@@ -1,19 +1,23 @@
-<mat-card class="example-card">
-  <mat-card-content>
-    <mat-list role="list">
-      <mat-list-item role="listitem">Cedula: {{postulante.persona.cedula}}</mat-list-item>
-      <mat-list-item role="listitem">Nombre: {{postulante.persona.nombre}}</mat-list-item>
-      <mat-list-item role="listitem">Apellido: {{postulante.persona.apellido}}</mat-list-item>
-      <mat-list-item role="listitem">Correo: {{postulante.persona.correo}}</mat-list-item>
-      <mat-list-item role="listitem">Sexo: {{postulante.persona.sexo | sexo}}</mat-list-item>
-      <mat-list-item role="listitem">Fecha Nacimiento: {{postulante.persona.fecha_nac | date:'dd/MM/yyyy'}}
-      </mat-list-item>
-    </mat-list>
-
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button (click)="informarProblema()">Informar problema</button>
-    <button mat-raised-button color="warn" (click)="rechasar()">Rechasar</button>
-    <button mat-raised-button color="primary" (click)="aceptar()">Aceptar</button>
-  </mat-card-actions>
-</mat-card>
+<div class="container">
+  <div class="row mt-5">
+    <mat-card class="col-12">
+      <mat-card-content>
+        <mat-list role="list" class="m-auto">
+          <mat-list-item role="listitem">Cedula: {{postulante.persona.cedula}}</mat-list-item>
+          <mat-list-item role="listitem">Nombre: {{postulante.persona.nombre}}</mat-list-item>
+          <mat-list-item role="listitem">Apellido: {{postulante.persona.apellido}}</mat-list-item>
+          <mat-list-item role="listitem">Correo: {{postulante.persona.correo}}</mat-list-item>
+          <mat-list-item role="listitem">Sexo: {{postulante.persona.sexo | sexo}}</mat-list-item>
+          <mat-list-item role="listitem">Fecha Nacimiento: {{postulante.persona.fecha_nac | date:'dd/MM/yyyy'}}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="aceptar()">Aceptar</button>
+        <button mat-raised-button color="warn" (click)="rechasar()">Rechasar</button>
+        <button mat-raised-button (click)="informarProblema()">Informar problema</button>
+        <button mat-raised-button [routerLink]="['/administrativo/revicion-postulante']">Volver</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

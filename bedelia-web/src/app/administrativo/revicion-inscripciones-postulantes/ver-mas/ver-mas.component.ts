@@ -35,7 +35,7 @@ export class VerMasComponent implements OnInit {
     
   }
 
-  informarProblema(id: number) {
+  informarProblema() {
     const dialogRef = this.dialog.open(ModalInformarComponent);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -43,11 +43,11 @@ export class VerMasComponent implements OnInit {
     });
   }
 
-  rechasar(id: number){
+  rechasar(){
 
   }
 
-  aceptar(id: number){
+  aceptar(){
 
   }
 }

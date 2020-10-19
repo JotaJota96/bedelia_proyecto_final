@@ -81,7 +81,7 @@ const routes: Routes = [
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo
-  {path: 'administrativo/revicion-postulante', component: RevicionInscripcionesPostulantesComponent}
+  {path: 'administrativo/revicion-postulante', component: RevicionInscripcionesPostulantesComponent},
   {path: 'administrativo/postulante/ver/:id', component: VerMasComponent}
   //Fin de componentes de administrativo
 
