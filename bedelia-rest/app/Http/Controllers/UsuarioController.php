@@ -234,5 +234,26 @@ class UsuarioController extends Controller
         return response()->json($usu, 200);
     }
 
+    
+    /**
+     * @OA\Get(
+     *     path="/usuarios/docentes",
+     *     tags={"Usuarios"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/UsuarioDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerDocentes(){
+        // devuelve todos los usuarios con rol 'docente'
+        // revisar en el modelo \App\Models\Usuario que que hay una funcion que devuelve un string[] con los roles
+
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
 
 }

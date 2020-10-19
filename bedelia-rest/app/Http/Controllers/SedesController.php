@@ -153,6 +153,32 @@ class SedesController extends Controller
     }
 
 
+    /**
+     * @OA\Get(
+     *     path="/sedes/{id}/edicionesCurso",
+     *     tags={"Sedes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la sede",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/EdicionCursoDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerEdicionesCurso($id){
+        // devuelve un array de EdicionCurso que correspondan a la Sede especificada
+        // devlver Sede, Persona (el docente) y curso de cada EdicionCurso
 
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
 
 }

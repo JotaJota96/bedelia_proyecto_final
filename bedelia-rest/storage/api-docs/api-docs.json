@@ -458,6 +458,46 @@
                 }
             }
         },
+        "/edicionesCurso/{id}/docente": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::obtenerDocente",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EdicionCursoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/periodos": {
             "get": {
                 "tags": [
@@ -528,6 +568,36 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Elimina la postulacion especifica",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::rechazar",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/postulantes": {
@@ -556,6 +626,70 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/postulantes/{id}/notificar": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Envia un email al postulante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::notificar",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "mensaje": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/postulantes/{id}/aceptar": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Acepta al postulante generandole una cuenta de estudiante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::aceptar",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
                     }
                 }
             }
@@ -669,6 +803,40 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/PostulanteDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes/{id}/edicionesCurso": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerEdicionesCurso",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EdicionCursoDTO"
                                     }
                                 }
                             }
@@ -863,6 +1031,29 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/docentes": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\UsuarioController::obtenerDocentes",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioDTO"
+                                    }
                                 }
                             }
                         }
@@ -1255,6 +1446,26 @@
                     },
                     "persona": {
                         "$ref": "#/components/schemas/PersonaDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "EdicionCursoDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "acta_confirmada": {
+                        "type": "boolean"
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "curso": {
+                        "$ref": "#/components/schemas/CursoDTO"
+                    },
+                    "docente": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
                     }
                 },
                 "type": "object"

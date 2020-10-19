@@ -102,4 +102,88 @@ class PostulantesController extends Controller
         return response()->json(['message' => 'Operacion no implementada aun'], 500);
     }
 
+
+
+    /**
+     * @OA\Delete(
+     *     path="/postulantes/{id}",
+     *     tags={"Postulante"},
+     *     description="Elimina la postulacion especifica",
+     *     @OA\Parameter(
+     *         name="ci",
+     *         in="path",
+     *         description="ID de la postulacion",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Devuelve datos del usuario",
+     *         @OA\JsonContent(ref="#/components/schemas/UsuarioDTO"),
+     *     ),
+     * )
+     */
+    public function rechazar($id){
+        // Elimina la postulacion especifica, incluyendo datos asociados de Persona y Direccion
+
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
+    
+
+    /**
+     * @OA\Post(
+     *     path="/postulantes/{id}/notificar",
+     *     tags={"Postulante"},
+     *     description="Envia un email al postulante",
+     *     @OA\Parameter(
+     *         name="ci",
+     *         in="path",
+     *         description="ID de la postulacion",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+    *     @OA\RequestBody(
+    *         @OA\JsonContent(
+    *             @OA\Property(property="mensaje", type="string"),
+    *         ),
+    *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description=""
+     *     ),
+     * )
+     */
+    public function notificar($id){
+        // DTO en body
+        // Envia un correo al postulante
+
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
+    
+
+    /**
+     * @OA\Post(
+     *     path="/postulantes/{id}/aceptar",
+     *     tags={"Postulante"},
+     *     description="Acepta al postulante generandole una cuenta de estudiante",
+     *     @OA\Parameter(
+     *         name="ci",
+     *         in="path",
+     *         description="ID de la postulacion",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description=""
+     *     ),
+     * )
+     */
+    public function aceptar($id){
+        // dado el ID de una postulacion, se deben crear y asociar el Usuario y Estudiante, asociar el usuario a la Persona (la direccion ya estaba asociada a la persona asi que no hacerle nada), y eliminar el registro de la Postulacion (pero dejando la persona y la direccion)
+        
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
+    
+
 }
