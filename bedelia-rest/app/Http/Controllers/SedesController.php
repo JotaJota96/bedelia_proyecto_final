@@ -224,14 +224,14 @@ class SedesController extends Controller
             foreach ($Sede->carreras as $id => $carrera) {
                 foreach ($carrera->cursos as $id => $curso) {
                     foreach ($curso->examenes as $id => $examen) {
-                        if ($examen->periodoExamen == $PeriodoActual) {
-                            if ($examen->docente != null) {
-                                $examen->docente->usuario->persona->id;
-                            }
-                            $examen->curso();
-                            $examen->sede();
-                            array_push($RES, $examen);
+                        // if ($examen->periodoExamen == $PeriodoActual) {
+                        if ($examen->docente != null) {
+                            $examen->docente->usuario->persona->id;
                         }
+                        $examen->curso();
+                        $examen->sede();
+                        array_push($RES, $examen);
+                        // }
                     }
                 }
             }
