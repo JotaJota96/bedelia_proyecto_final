@@ -29,6 +29,7 @@ $router->get( 'sedes',                     'SedesController@obtenerTodos');
 $router->post('sedes',                     'SedesController@agregar');
 $router->get('sedes/{id}/postulantes',     'SedesController@obtenerListaPostulantesDeSede');
 $router->get('sedes/{id}/edicionesCurso',  'SedesController@obtenerEdicionesCurso');
+$router->get('sedes/{id}/examenes',        'SedesController@obtenerExamenes');
 
 $router->post('areasEstudio',              'AreaEstudioController@agregar');
 $router->get('areasEstudio/{Id}',          'AreaEstudioController@obtenerUno');
