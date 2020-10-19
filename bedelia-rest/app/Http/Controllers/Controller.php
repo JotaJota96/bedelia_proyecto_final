@@ -42,6 +42,7 @@ class Controller extends BaseController
      *     schema="LoginResponseDTO",
      *     @OA\Property(property="cedula", type="string"),
      *     @OA\Property(property="correo", type="string"),
+     *     @OA\Property(property="token",  type="string"),
      *     @OA\Property(
      *         property="roles",
      *         type="array",
