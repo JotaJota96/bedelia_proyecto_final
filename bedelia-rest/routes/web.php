@@ -51,3 +51,4 @@ $router->get('periodos',    'PeriodoLectivoController@obtenerLista');
 $router->get('postulantes/{id}',     'PostulantesController@obtenerUno');
 $router->post('postulantes',         'PostulantesController@agregar');
 
+$router->post('correos',         'CorreosController@enviarCorreo');
