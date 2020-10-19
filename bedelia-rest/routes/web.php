@@ -18,15 +18,17 @@ $router->get('/', function () use ($router) {
 // este es para probar los correos cuando se estan haciendo
 $router->post('correos',         'CorreosController@enviarCorreo');
 
-$router->post('usuarios/login', 'UsuarioController@login');
-$router->get('usuarios/{ci}',   'UsuarioController@obtenerUno');
-$router->get('usuarios',        'UsuarioController@obtenerTodos');
-$router->post('usuarios',       'UsuarioController@agregar');
+$router->post('usuarios/login',   'UsuarioController@login');
+$router->get('usuarios/docentes', 'UsuarioController@obtenerDocentes');
+$router->get('usuarios/{ci}',     'UsuarioController@obtenerUno');
+$router->get('usuarios',          'UsuarioController@obtenerTodos');
+$router->post('usuarios',         'UsuarioController@agregar');
 
-$router->get( 'sedes/{id}',            'SedesController@obtenerUno');
-$router->get( 'sedes',                 'SedesController@obtenerTodos');
-$router->post('sedes',                 'SedesController@agregar');
-$router->get('sedes/{id}/postulantes', 'SedesController@obtenerListaPostulantesDeSede');
+$router->get( 'sedes/{id}',                'SedesController@obtenerUno');
+$router->get( 'sedes',                     'SedesController@obtenerTodos');
+$router->post('sedes',                     'SedesController@agregar');
+$router->get('sedes/{id}/postulantes',     'SedesController@obtenerListaPostulantesDeSede');
+$router->get('sedes/{id}/edicionesCurso',  'SedesController@obtenerEdicionesCurso');
 
 $router->post('areasEstudio',              'AreaEstudioController@agregar');
 $router->get('areasEstudio/{Id}',          'AreaEstudioController@obtenerUno');
@@ -50,11 +52,17 @@ $router->post('carreras',              'CarrerasController@agregar');
 $router->post('periodos',   'PeriodoLectivoController@agregar');
 $router->get('periodos',    'PeriodoLectivoController@obtenerLista');
 
-$router->get('postulantes/{id}',     'PostulantesController@obtenerUno');
-$router->post('postulantes',         'PostulantesController@agregar');
+$router->get('postulantes/{id}',            'PostulantesController@obtenerUno');
+$router->post('postulantes',                'PostulantesController@agregar');
+$router->delete('postulantes/{id}',         'PostulantesController@rechazar');
+$router->post('postulantes/{id}/notificar', 'PostulantesController@notificar');
+$router->post('postulantes/{id}/aceptar',   'PostulantesController@aceptar');
 
 $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerSede');
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
+
+$router->get('edicionesCurso/{id}/docente', 'EdicionesCursoController@obtenerDocente');
+
 
 
 
