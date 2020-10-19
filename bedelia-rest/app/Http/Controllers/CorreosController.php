@@ -18,12 +18,17 @@ class CorreosController extends Controller
         // envia el correo solo si se habilita desde la configuracion
         if (env('MAIL_SEND')){
             try {
-                //Mail::to('asfasfsadfsafsafgdfgertelkcnvblknerg@gmail.com')->send(new MiCorreo());
+                $datos = [
+                    "nombre" => "José",
+                    "url" => env('APP_URL'),
+                ];
+
+                Mail::to('jjap96@gmail.com')->send(new MiCorreo($datos));
             } catch (\Exception $e) {
                 return response()->json(
                     [
                         "message" => "No se pudo enviar el gorreo",
-                        "error" => $e->getMessage()
+                        "details" => $e->getMessage()
                     ],
                     500
                 );

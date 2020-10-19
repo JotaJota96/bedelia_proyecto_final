@@ -1,2 +1,3 @@
-<h1>¡Hola!</h1>
-<p>Si estás leyendo esto significa que logré mandar correos desde el backend</p>
+<h1>¡Hola {{ $nombre }}!</h1>
+La documentación Swagger está disponible <a href="{{ $url }}">aquí</a>
+

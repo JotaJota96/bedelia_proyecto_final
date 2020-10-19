@@ -10,24 +10,18 @@ use Illuminate\Queue\SerializesModels;
 class MiCorreo extends Mailable
 {
     use Queueable, SerializesModels;
+    private $mailData = null;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
+    public function __construct($mailData = null) {
+        $this->mailData = $mailData;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->view('mi-correo');
+    public function build() {
+        if ($this->mailData == null){
+            throw new Exception("No se especificaron datos para rellenar el correo");
+        }
+        return $this->subject('asunto')
+            ->view('mi-correo')
+            ->with($this->mailData);
     }
 }
