@@ -577,7 +577,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::rechazar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -588,14 +588,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Devuelve datos del usuario",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UsuarioDTO"
-                                }
-                            }
-                        }
+                        "description": ""
                     }
                 }
             }
@@ -639,7 +632,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::notificar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -678,7 +671,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::aceptar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -689,7 +682,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Devuelve datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
                     }
                 }
             }

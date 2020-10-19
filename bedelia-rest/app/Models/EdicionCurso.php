@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EdicionCurso extends Model
 {
     protected $table = "edicion_curso";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'acta_confirmada'
     ];

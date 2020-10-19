@@ -8,7 +8,8 @@ use App\Models\Persona;
 class Usuario extends Model
 {
     protected $table = "usuario";
-    
+    protected $primaryKey = "id";
+
     // (id, contrasenia, remember_token, persona_id)
     protected $fillable = [
         'contrasenia', 'remember_token'

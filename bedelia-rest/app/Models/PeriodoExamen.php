@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PeriodoExamen extends Model
 {
     protected $table = "periodo_examen";
-    
+    protected $primaryKey = "id";
     protected $fillable = [];
 
 	// devuelve uno
