@@ -136,34 +136,38 @@ class UsuarioController extends Controller
      * )
      */
     public function agregar(){
-        // Para agregar un usuario se recibe: un Usuario, que adentro tiene un objeto Persona, y este adentro tiene un objeto Direccion
-        // Creo instancias vacias para cada objeto
-        $usu = new Usuario();
-        $per = new Persona();
-        $dir = new Direccion();
+        try {
+            // Para agregar un usuario se recibe: un Usuario, que adentro tiene un objeto Persona, y este adentro tiene un objeto Direccion
+            // Creo instancias vacias para cada objeto
+            $usu = new Usuario();
+            $per = new Persona();
+            $dir = new Direccion();
 
-        // Extraigo los datos del JSON
-        // el $this->request->json()->all() devuelve un array con todos los datos del JSON que viene en la request
-        // el $usu->fill(..) asigna los datos del objeto Usuario extrayendolos de un array asociativo que se le pase por parametro
-        $usu->fill($this->request->json()->all());
+            // Extraigo los datos del JSON
+            // el $this->request->json()->all() devuelve un array con todos los datos del JSON que viene en la request
+            // el $usu->fill(..) asigna los datos del objeto Usuario extrayendolos de un array asociativo que se le pase por parametro
+            $usu->fill($this->request->json()->all());
 
-        // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
-        $per->fill($this->request->json('persona'));
-        $usu->contrasenia = $per->cedula;
+            // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
+            $per->fill($this->request->json('persona'));
+            $usu->contrasenia = $per->cedula;
 
-        // obtengo los roles (son un simple array de strings)
-        $roles = $this->request->json('roles');
+            // obtengo los roles (son un simple array de strings)
+            $roles = $this->request->json('roles');
 
-        // lo mismo que lo anterior pero 'direccion' es un objeto dentro del objeto 'persona' que viene dentro del objeto principal
-        $dir->fill($this->request->json(['persona', 'direccion']));
+            // lo mismo que lo anterior pero 'direccion' es un objeto dentro del objeto 'persona' que viene dentro del objeto principal
+            $dir->fill($this->request->json(['persona', 'direccion']));
 
-        // Los objetos instanciados al principio ya tienen los valores recibidos en la peticion pero no estan asociados entre si
-        // La asociacion debe aserse mientras se van guardando en la DB porque se necesitan los ID autoincrementales
+            // Los objetos instanciados al principio ya tienen los valores recibidos en la peticion pero no estan asociados entre si
+            // La asociacion debe aserse mientras se van guardando en la DB porque se necesitan los ID autoincrementales
 
-        // Asociacion entre usuario y persona
-        $usu->persona()->associate($per);
-        // Asociacion entre la persona asociada y direccion
-        $usu->persona->direccion()->associate($dir);
+            // Asociacion entre usuario y persona
+            $usu->persona()->associate($per);
+            // Asociacion entre la persona asociada y direccion
+            $usu->persona->direccion()->associate($dir);
+        } catch (\Exception $e) {
+            return response()->json(["message" => "Error al procesar los datos recibidos. $e->getMessage()"], 500);
+        }
 
         // en este caso hay que insertar varias cosas a la vez, asi que hay que usar una transaccion
         // para que funcione el "BD::" hay que agregar el "use Illuminate\Support\Facades\DB;" al principio del archivo
@@ -212,10 +216,19 @@ class UsuarioController extends Controller
             DB::rollBack();
             return response()->json($e, 500);
             // devuelve un estado HTTP 500 y un mensaje simple del error
-            return response()->json(['error' => 'Error al guardar los datos'], 500);
+            return response()->json(["message" => "Error al guardar los datos. $e->getMessage()"], 500);
         }
 
         $usu->roles = $usu->roles();
+
+        // se envia un correo al nuevo usuario
+        $mailData = [
+            'destinatario' => $usu->persona->correo,
+            'nombre'       => $usu->persona->nombre,
+            'usuario'      => $usu->persona->cedula,
+            'contrasenia'  => $usu->contrasenia,
+        ];
+        \App\Mail\CorreoBienvenida::enviar($mailData);
 
         // si no hubo nngun problema, devuelve el usuario (que ya tiene encadenado la persona y la direccion)
         return response()->json($usu, 200);
