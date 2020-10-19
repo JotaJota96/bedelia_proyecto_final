@@ -577,7 +577,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::rechazar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -639,7 +639,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::notificar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -678,7 +678,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::aceptar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,

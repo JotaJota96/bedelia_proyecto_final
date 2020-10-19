@@ -9,6 +9,7 @@ use App\Models\carrera;
 use App\Models\persona;
 use App\Models\Direccion;
 use App\Models\Postulacion;
+use App\Mail\CorreoPostulanteNotificacion;
 
 class PostulantesController extends Controller
 {
@@ -110,7 +111,7 @@ class PostulantesController extends Controller
      *     tags={"Postulante"},
      *     description="Elimina la postulacion especifica",
      *     @OA\Parameter(
-     *         name="ci",
+     *         name="id",
      *         in="path",
      *         description="ID de la postulacion",
      *         required=true,
@@ -136,17 +137,17 @@ class PostulantesController extends Controller
      *     tags={"Postulante"},
      *     description="Envia un email al postulante",
      *     @OA\Parameter(
-     *         name="ci",
+     *         name="id",
      *         in="path",
      *         description="ID de la postulacion",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-    *     @OA\RequestBody(
-    *         @OA\JsonContent(
-    *             @OA\Property(property="mensaje", type="string"),
-    *         ),
-    *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="mensaje", type="string"),
+     *         ),
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description=""
@@ -156,8 +157,29 @@ class PostulantesController extends Controller
     public function notificar($id){
         // DTO en body
         // Envia un correo al postulante
+        try {
+            $postu = Postulacion::find($id);
+            if ($postu == null){
+                return response()->json(['message' => 'Postulante no encontrado.'], 404);
+            }
+            $destinatario = $postu->persona->correo;
+            $mensaje = $this->request->json('mensaje');
 
-        return response()->json(["message" => "No implementado aun"], 501);
+            if ($mensaje == null || strlen($mensaje) == 0 ){
+                return response()->json(['message' => 'Debe especificar un mensaje.'], 500);
+            }
+            // enviar correo
+            $mailData = [
+                'destinatario' => $postu->persona->correo,
+                'nombre'       => $postu->persona->nombre,
+                'mensaje'      => $this->request->json('mensaje'),
+            ];
+            CorreoPostulanteNotificacion::enviar($mailData);
+
+            return response()->json(['message' => "Correo enviado a $destinatario"], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Error al enviar el correo.' . $e->getMessage()], 500);
+        }
     }
     
 
@@ -167,7 +189,7 @@ class PostulantesController extends Controller
      *     tags={"Postulante"},
      *     description="Acepta al postulante generandole una cuenta de estudiante",
      *     @OA\Parameter(
-     *         name="ci",
+     *         name="id",
      *         in="path",
      *         description="ID de la postulacion",
      *         required=true,
