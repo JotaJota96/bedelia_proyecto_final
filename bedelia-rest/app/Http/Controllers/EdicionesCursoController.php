@@ -20,6 +20,53 @@ class EdicionesCursoController extends Controller
 
 
     /**
+     * @OA\Post(
+     *     path="/edicionesCurso/{id}/inscripciones/{ciEstudiante}",
+     *     tags={"Ediciones Curso"},
+     *     description="Inscribe a un estudiante a una edicion de curso",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la edicion del curso",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\Parameter(
+     *         name="ciEstudiante",
+     *         in="path",
+     *         description="CI del estudiante a inscribir",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description=""
+     *     ),
+     * )
+     */
+    public function asignarEstudiante($id, $idEstudiante){
+        try {
+            DB::beginTransaction();
+            $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            // return response()->json($EdicionCurso, 200);
+            $Usuario = Usuario::buscar($idEstudiante);
+            $Usuario->estudiante;
+            // return response()->json($Estudiante, 200);
+            // return response()->json($Docente, 200);
+            $datosTablaIntermedia = [
+                'nota' => 0,
+            ];
+            $Usuario->estudiante->edicionesCurso()->attach($EdicionCurso, $datosTablaIntermedia);
+            $Usuario->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
+    } 
+    
+    /**
      * @OA\Put(
      *     path="/edicionesCurso/{id}/docente",
      *     tags={"Ediciones Curso"},

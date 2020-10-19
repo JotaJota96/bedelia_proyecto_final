@@ -283,6 +283,27 @@ class Controller extends BaseController
      */
 
 
+     /**
+     * @OA\Schema(
+     *     schema="ExamenDTO",
+     *     @OA\Property(property="id",              type="integer"),
+     *     @OA\Property(property="fecha",           type="string"),
+     *     @OA\Property(property="acta_confirmada", type="boolean"),
+     *     @OA\Property(
+     *         property="sede",
+     *         ref="#/components/schemas/SedeDTO",
+     *     ),
+     *     @OA\Property(
+     *         property="curso",
+     *         ref="#/components/schemas/CursoDTO",
+     *     ),
+     *     @OA\Property(
+     *         property="docente",
+     *         ref="#/components/schemas/UsuarioDTO",
+     *     ),
+     * )
+     */
+
     /**
      * @OA\Post(
      *     path="/foo",
