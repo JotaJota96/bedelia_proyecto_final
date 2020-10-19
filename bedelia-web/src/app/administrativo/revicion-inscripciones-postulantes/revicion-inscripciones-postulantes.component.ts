@@ -23,7 +23,7 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
   verDocumentacion: boolean = false;
   postulanteSeleccionado: PostulanteDTO;
 
-  constructor(protected sedesServ: SedesService, public dialog: MatDialog, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
+  constructor(protected sedesServ: SedesService, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
 
   ngOnInit(): void {
 
@@ -34,35 +34,6 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
         this.openSnackBar("No se pudieron traer los postulante de la base de dato");
       }
     );
-  }
-
-  verMas(idPostulante: number) {
-    this.verDocumentacion = false;
-    this.sedeDataSource.data.forEach(element => {
-      if (element.id == idPostulante) {
-        this.postulanteSeleccionado = element;
-      }
-    });
-  }
-
-  verDocumentos() {
-    this.verDocumentacion = !this.verDocumentacion;
-  }
-
-  informarProblema(id: number) {
-    const dialogRef = this.dialog.open(ModalInformarComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.elMensaje = result;
-    });
-  }
-
-  rechasar(id: number){
-
-  }
-
-  aceptar(id: number){
-
   }
 
   openSnackBar(mensaje: string) {

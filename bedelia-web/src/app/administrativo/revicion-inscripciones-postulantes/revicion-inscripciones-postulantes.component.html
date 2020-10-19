@@ -18,10 +18,7 @@
                 <ng-container matColumnDef="accion">
                     <th mat-header-cell *matHeaderCellDef> Accion </th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-raised-button                 (click)="verMas(element.id)">Ver detalle</button>
-                        <button mat-raised-button color="warn"    (click)="informarProblema(element.id)">Informar problema</button>
-                        <button mat-raised-button color="warn"    (click)="rechasar(element.id)">Rechasar</button>
-                        <button mat-raised-button color="primary" (click)="aceptar(element.id)">Aceptar</button>
+                        <button mat-raised-button [routerLink]="['/administrativo/postulante/ver/',element.id]">Ver detalle</button>
                     </td>
                 </ng-container>
         

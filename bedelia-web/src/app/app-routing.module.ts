@@ -23,6 +23,7 @@ import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.com
 import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
 import { RevicionInscripcionesPostulantesComponent } from './administrativo/revicion-inscripciones-postulantes/revicion-inscripciones-postulantes.component';
 import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrera/inscripcion-carrera.component';
+import { VerMasComponent } from './administrativo/revicion-inscripciones-postulantes/ver-mas/ver-mas.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -81,6 +82,7 @@ const routes: Routes = [
 
   //Inico de componentes de administrativo
   {path: 'administrativo/revicion-postulante', component: RevicionInscripcionesPostulantesComponent}
+  {path: 'administrativo/postulante/ver/:id', component: VerMasComponent}
   //Fin de componentes de administrativo
 
   //Inico de componentes de estudiante
