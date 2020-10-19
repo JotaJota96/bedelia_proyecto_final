@@ -22,7 +22,7 @@ class Estudiante extends Model
 	// devuelve coleccion
     public function examenes() {
         return $this->belongsToMany('App\Models\Examen','inscripcion_examen');
-    }    
+    }
 
 	// devuelve coleccion
     public function clasesDictada() {
