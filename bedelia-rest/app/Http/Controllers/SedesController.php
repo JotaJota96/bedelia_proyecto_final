@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \App\Models\Sede;
-use \App\Models\Direccion;
+use App\Models\carrera;
+use App\Models\persona;
+use App\Models\Direccion;
+use App\Models\Postulacion;
 
 class SedesController extends Controller
 {
@@ -131,10 +134,20 @@ class SedesController extends Controller
      * )
      */
     public function obtenerListaPostulantesDeSede(int $id){
+        $Sede = Sede::where('id', $id)->first();
+        
+        if ($Sede != null) {
+            foreach ($Sede->postulaciones as $id => $postulacion) {
+                $postulacion->persona->direccion;
+                $postulacion->carrera;
+                $postulacion->sede;
+            }
+            return response()->json($Sede->postulantes, 200);
+        }
+        return response()->json(['error' => 'Error al buscar las postulaciones. '], 404);
         // devuelve la lista de postulantes asociados a una sede especifica
         // para cada postulante recordar devolver la persona asociada y su direccion. Tambien la sede, la carrera
 
-        return response()->json(['message' => 'Operacion no implementada aun'], 500);
     }
 
 
