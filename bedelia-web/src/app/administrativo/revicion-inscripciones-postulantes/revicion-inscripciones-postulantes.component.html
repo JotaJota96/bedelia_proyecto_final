@@ -1,43 +1,39 @@
 <div class="container">
     <div class="row mt-5">
         <mat-card class="col-12">
-            <mat-selection-list #shoes [multiple]="false">
-                <mat-list-option *ngFor="let postulante of listaPostulante" (click)="verMas(postulante.id)" [value]="postulante">
-                    {{postulante}}
-                </mat-list-option>
-            </mat-selection-list>
-        </mat-card>
-
-        <mat-card  class="col-12">
-            <mat-card-content>
-                <mat-list role="list">
-                    <div *ngIf="false">
-                        <mat-list-item role="listitem">Cedula: {{postulanteSeleccionado.persona.cedula}}</mat-list-item>
-                        <mat-list-item role="listitem">Nombre: {{postulanteSeleccionado.persona.nombre}}</mat-list-item>
-                        <mat-list-item role="listitem">Apellido: {{postulanteSeleccionado.persona.apellido}}</mat-list-item>
-                        <mat-list-item role="listitem">Correo: {{postulanteSeleccionado.persona.correo}}</mat-list-item>
-                        <mat-list-item role="listitem">Sexo: {{postulanteSeleccionado.persona.sexo | sexo}}</mat-list-item>
-                        <mat-list-item role="listitem">Fecha Nacimiento: {{postulanteSeleccionado.persona.fecha_nac | date:'dd/MM/yyyy'}}</mat-list-item>
-                    </div>
-                   
-                    <mat-list-item role="listitem">
-                        <button (click)="verDocumentos()" mat-raised-button color="primary">Ver documentacion</button>
-                    </mat-list-item>
-                    <mat-card *ngIf="verDocumentacion">
-                        <div class="row">
-                            <img class="col-12" src="https://i.blogs.es/a19bfc/testing/1366_2000.jpg">
-                            <img class="col-12" src="https://i.blogs.es/a19bfc/testing/1366_2000.jpg">
-                            <img class="col-12" src="https://i.blogs.es/a19bfc/testing/1366_2000.jpg">
-                        </div>
-                    </mat-card>
-                    
-                </mat-list>
-            </mat-card-content>
-            <mat-card-actions align="end">
-                <button (click)="informarProblema()" mat-button>Informar de un problema</button>
-                <button mat-button>Aprobar</button>
-                <button mat-button>No aprobar</button>
-            </mat-card-actions>
+            <table mat-table [dataSource]="sedeDataSource" class="col-12">
+                <!-- Columna -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+        
+                <!-- Columna -->
+                <ng-container matColumnDef="persona">
+                    <th mat-header-cell *matHeaderCellDef> Cedula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.persona.cedula}} </td>
+                </ng-container>
+        
+                <!-- Columna -->
+                <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef> Accion </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-raised-button                 (click)="verMas(element.id)">Ver detalle</button>
+                        <button mat-raised-button color="warn"    (click)="informarProblema(element.id)">Informar problema</button>
+                        <button mat-raised-button color="warn"    (click)="rechasar(element.id)">Rechasar</button>
+                        <button mat-raised-button color="primary" (click)="aceptar(element.id)">Aceptar</button>
+                    </td>
+                </ng-container>
+        
+                <!-- Definicion de columnas y filas, o algo asi-->
+                <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+        
+                <!-- Esto se muestra si la tabla esta vacia -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
+                </tr>
+            </table>
         </mat-card>
     </div>
 </div>

@@ -10,13 +10,13 @@ export class PostulanteService {
 
   private apiURL: string = environment.apiURL + '/postulantes';
 
-  constructor(protected http:HttpClient) { }
+  constructor(protected http: HttpClient) { }
 
-  getAll(){
-    return this.http.get<PostulanteDTO[]>(this.apiURL);
+  get(id: number) {
+    return this.http.get<PostulanteDTO>(this.apiURL + '/' + id);
   }
 
-  create(datos:PostulanteDTO){
+  create(datos: PostulanteDTO) {
     return this.http.post<PostulanteDTO>(this.apiURL, datos);
   }
 }

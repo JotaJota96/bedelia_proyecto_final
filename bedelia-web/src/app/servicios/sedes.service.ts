@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { PostulanteDTO } from '../clases/postulante-dto';
 import { SedeDTO } from '../clases/sede-dto';
 
 @Injectable({
@@ -22,5 +23,9 @@ export class SedesService {
 
   create(datos:SedeDTO){
     return this.http.post<SedeDTO>(this.apiURL, datos);
+  }
+
+  getSedes(id:number){
+    return this.http.get<PostulanteDTO[]>(this.apiURL + '/' + id + '/postulantes');
   }
 }

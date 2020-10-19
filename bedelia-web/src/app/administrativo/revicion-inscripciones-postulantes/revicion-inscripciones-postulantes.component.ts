@@ -1,9 +1,11 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
+import { SedesService } from 'src/app/servicios/sedes.service';
 import { ModalInformarComponent } from './modal-informar/modal-informar.component';
 
 @Component({
@@ -12,20 +14,22 @@ import { ModalInformarComponent } from './modal-informar/modal-informar.componen
   styleUrls: ['./revicion-inscripciones-postulantes.component.css']
 })
 export class RevicionInscripcionesPostulantesComponent implements OnInit {
-  listaPostulante: PostulanteDTO[];
+  columnasAMostrar: string[] = ['id', 'persona', 'accion'];
+  sedeDataSource = new MatTableDataSource([]);
+
   Elusuario: UsuarioDTO;
   elMensaje: string;
 
   verDocumentacion: boolean = false;
   postulanteSeleccionado: PostulanteDTO;
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
+  constructor(protected sedesServ: SedesService, public dialog: MatDialog, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
 
   ngOnInit(): void {
 
-    this.postulanteServ.getAll().subscribe(
+    this.sedesServ.getSedes(1).subscribe(
       (datos) => {
-        this.listaPostulante = datos;
+        this.sedeDataSource.data = datos;
       }, (error) => {
         this.openSnackBar("No se pudieron traer los postulante de la base de dato");
       }
@@ -34,23 +38,31 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
 
   verMas(idPostulante: number) {
     this.verDocumentacion = false;
-    this.listaPostulante.forEach(element => {
+    this.sedeDataSource.data.forEach(element => {
       if (element.id == idPostulante) {
         this.postulanteSeleccionado = element;
       }
     });
   }
 
-  verDocumentos(){
+  verDocumentos() {
     this.verDocumentacion = !this.verDocumentacion;
   }
 
-  informarProblema(){
+  informarProblema(id: number) {
     const dialogRef = this.dialog.open(ModalInformarComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       this.elMensaje = result;
     });
+  }
+
+  rechasar(id: number){
+
+  }
+
+  aceptar(id: number){
+
   }
 
   openSnackBar(mensaje: string) {
