@@ -31,12 +31,9 @@ class PostulantesController extends Controller
      *         @OA\Schema(type="number")
      *     ),
      *     @OA\Response(
-     *         response=200,
+     *         response="200",
      *         description="",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/PostulanteDTO"),
-     *         ),
+     *         @OA\JsonContent(ref="#/components/schemas/PostulanteDTO"),
      *     ),
      * )
      */
