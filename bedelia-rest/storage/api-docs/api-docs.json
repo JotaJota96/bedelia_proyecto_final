@@ -522,10 +522,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PostulanteDTO"
-                                    }
+                                    "$ref": "#/components/schemas/PostulanteDTO"
                                 }
                             }
                         }
