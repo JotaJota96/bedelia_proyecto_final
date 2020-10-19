@@ -151,6 +151,8 @@ class UsuarioController extends Controller
             // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
             $per->fill($this->request->json('persona'));
             $usu->contrasenia = $per->cedula;
+            // para contraseña encriptada
+            //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
 
             // obtengo los roles (son un simple array de strings)
             $roles = $this->request->json('roles');
@@ -214,7 +216,6 @@ class UsuarioController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e, 500);
             // devuelve un estado HTTP 500 y un mensaje simple del error
             return response()->json(["message" => "Error al guardar los datos. $e->getMessage()"], 500);
         }

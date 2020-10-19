@@ -588,14 +588,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Devuelve datos del usuario",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UsuarioDTO"
-                                }
-                            }
-                        }
+                        "description": ""
                     }
                 }
             }
@@ -689,7 +682,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Devuelve datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
                     }
                 }
             }

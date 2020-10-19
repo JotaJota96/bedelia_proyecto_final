@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Postulacion extends Model
 {
     protected $table = "postulacion";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'img_ci', 'img_escolaridad', 'img_carne_salud',
     ];

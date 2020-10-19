@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Estudiante extends Model
 {
     protected $table = "estudiante";
-
+    protected $primaryKey = "id";
     protected $fillable = [];
 
     public function usuario() {
@@ -22,7 +22,7 @@ class Estudiante extends Model
 	// devuelve coleccion
     public function examenes() {
         return $this->belongsToMany('App\Models\Examen');
-    }    
+    }
 
 	// devuelve coleccion
     public function clasesDictada() {

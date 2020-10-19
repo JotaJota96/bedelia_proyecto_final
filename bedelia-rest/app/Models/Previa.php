@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Previa extends Model
 {
     protected $table = "previa";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'tipo',
     ];

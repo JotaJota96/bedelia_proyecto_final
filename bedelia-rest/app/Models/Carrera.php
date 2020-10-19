@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Carrera extends Model
 {
     protected $table = "carrera";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'nombre', 'descripcion', 'cant_semestres',
     ];
@@ -31,7 +31,7 @@ class Carrera extends Model
     public function areasEstudio() {
         return $this->belongsToMany('App\Models\AreaEstudio', 'carrera_area_estudio')->withPivot('creditos');
     }
-    
+
 	// devuelve coleccion
     public function inscripcionesCarrera() {
         return $this->hasMany('App\Models\InscripcionCarrera');

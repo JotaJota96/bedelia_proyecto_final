@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sede extends Model
 {
     protected $table = "sede";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'telefono',
     ];
@@ -25,7 +25,7 @@ class Sede extends Model
     public function direccion() {
         return $this->belongsTo('App\Models\Direccion');
     }
-    
+
 	// devuelve coleccion
     public function inscripcionesCarrera() {
         return $this->hasMany('App\Models\InscripcionCarrera');

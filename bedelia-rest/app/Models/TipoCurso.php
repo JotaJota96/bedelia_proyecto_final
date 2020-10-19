@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TipoCurso extends Model
 {
     protected $table = "tipo_curso";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'tipo',
     ];
