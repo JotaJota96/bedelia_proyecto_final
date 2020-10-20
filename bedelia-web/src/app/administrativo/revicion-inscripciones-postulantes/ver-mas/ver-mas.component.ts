@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
@@ -14,7 +14,7 @@ import { ModalInformarComponent } from '../modal-informar/modal-informar.compone
 })
 export class VerMasComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar, public dialog: MatDialog, private rutaActiva: ActivatedRoute, protected postulanteServis: PostulanteService) { }
+  constructor(private router: Router,private _snackBar: MatSnackBar, public dialog: MatDialog, private rutaActiva: ActivatedRoute, protected postulanteServis: PostulanteService) { }
 
   elMensaje: string;
   postulante: PostulanteDTO = new PostulanteDTO;
@@ -57,7 +57,7 @@ export class VerMasComponent implements OnInit {
   rechasar() {
     this.postulanteServis.rechasar(this.postulante.id).subscribe(
       (datos) => {
-        this.openSnackBar("La postulacion se rechaso");
+        this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
         this.openSnackBar("No se pudo rechasar la postulacion");
@@ -68,7 +68,7 @@ export class VerMasComponent implements OnInit {
   aceptar() {
     this.postulanteServis.aceptar(this.postulante.id).subscribe(
       (datos) => {
-        this.openSnackBar("La postulacion fue acetada");
+        this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
         this.openSnackBar("No se pudo aceptar la postulacion");

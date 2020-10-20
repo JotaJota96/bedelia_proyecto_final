@@ -8,8 +8,13 @@
           <mat-list-item role="listitem">Apellido: {{persona.apellido}}</mat-list-item>
           <mat-list-item role="listitem">Correo: {{persona.correo}}</mat-list-item>
           <mat-list-item role="listitem">Sexo: {{persona.sexo | sexo}}</mat-list-item>
-          <mat-list-item role="listitem">Fecha Nacimiento: {{persona.fecha_nac | date:'dd/MM/yyyy'}}
-          </mat-list-item>
+          <mat-list-item role="listitem">Fecha Nacimiento: {{persona.fecha_nac | date:'dd/MM/yyyy'}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <div class="row mt-3 mx-5">
+            <a class="col-4" href="{{postulante.img_ci}}">img_ci</a>
+            <a class="col-4" href="{{postulante.img_escolaridad}}">img_escolaridad</a>
+            <a class="col-4" href="{{postulante.img_carne_salud}}">img_carne_salud</a>
+          </div>
         </mat-list>
       </mat-card-content>
       <mat-card-actions align="end">

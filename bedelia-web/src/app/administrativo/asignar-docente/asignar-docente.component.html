@@ -15,7 +15,7 @@
                 <mat-form-field [style.width.%]=100>
                     <mat-select placeholder="Lista de curso sin docentes" name="curso" formControlName="curso">
                         <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
-                            {{curso.nombre}}
+                            {{curso.curso.nombre}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

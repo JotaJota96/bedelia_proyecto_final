@@ -17,7 +17,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 })
 export class AsignarDocenteComponent implements OnInit {
 
-  listaCurso: EdicionCursoDTO[];
+  listaCurso: EdicionCursoDTO[] = [];
   listaDocente: UsuarioDTO[];
   persona: PersonaDTO = new PersonaDTO;
   mostrarDatos: boolean = false;
@@ -49,7 +49,11 @@ export class AsignarDocenteComponent implements OnInit {
         if (datos.id != null) {
           this.sedeServ.getCrsos(datos.id).subscribe(
             (datos) => {
-              this.listaCurso = datos;
+              datos.forEach(element => {
+                if(element.docente == null){
+                  this.listaCurso.push(element);
+                }
+              });
             },
             (error) => {
               this.openSnackBar("Error al traer los cursos de la base de dato");
@@ -70,7 +74,7 @@ export class AsignarDocenteComponent implements OnInit {
   buscar() {
     this.mostrarDatos = true;
     this.listaDocente.forEach(element => {
-      if (element.id == this.formularioBusqueda.controls['ci'].value) {
+      if (element.persona.cedula == this.formularioBusqueda.controls['ci'].value) {
         this.persona = element.persona;
       }
     });
@@ -78,8 +82,10 @@ export class AsignarDocenteComponent implements OnInit {
 
   asignar() {
     this.mostrarDatos = false;
-    this.edicionCurServ.asignar(this.formularioAsignar.controls['curso'].value, this.formularioBusqueda.controls['ci'].value).subscribe(
+
+    this.edicionCurServ.asignar(this.formularioAsignar.controls['curso'].value, this.persona.cedula).subscribe(
       (datos) => {
+        this.openSnackBar("OK");
       },
       (error) => {
         this.openSnackBar("Error al asignar el docente");
