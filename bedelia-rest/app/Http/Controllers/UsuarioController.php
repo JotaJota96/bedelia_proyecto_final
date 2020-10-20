@@ -260,7 +260,7 @@ class UsuarioController extends Controller
             array_push($usus, $Docente->usuario);
         }
 
-        return response()->json($usus, 401);
+        return response()->json($usus, 200);
     }
 
 }
