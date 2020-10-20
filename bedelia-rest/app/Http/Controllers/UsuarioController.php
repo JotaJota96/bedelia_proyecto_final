@@ -251,10 +251,16 @@ class UsuarioController extends Controller
      * )
      */
     public function obtenerDocentes(){
+        $Docentes = docente::all();
+        foreach ($Docentes as $id => $Docente) {
+            $Docente->usuario->direccion;
+        }
         // devuelve todos los usuarios con rol 'docente'
         // revisar en el modelo \App\Models\Usuario que que hay una funcion que devuelve un string[] con los roles
-
-        return response()->json(["message" => "No implementado aun"], 501);
+        if ($Docentes != null){
+            return response()->json($Docentes, 200);
+        }
+        return response()->json($Docentes, 401);
     }
 
 }

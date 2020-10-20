@@ -39,6 +39,6 @@ class EdicionCurso extends Model
 
 	// devuelve coleccion
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante');
+        return $this->belongsToMany('App\Models\Estudiante','inscripcion_curso');
     }
 }

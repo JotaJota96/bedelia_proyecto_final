@@ -9,7 +9,7 @@ class Periodo extends Model
     protected $table = "periodo";
     protected $primaryKey = "id";
     protected $fillable = [
-        'fecha_inicio', 'fecha_fin', 'tipo'
+        'fecha_inicio', 'fecha_fin','numero', 'tipo'
     ];
 
 	// devuelve uno
