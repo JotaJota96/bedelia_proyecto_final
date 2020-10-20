@@ -21,8 +21,7 @@
                 </mat-form-field>
             </div>
             <div align="center" class="col-2 m-auto">
-                <button [disabled]="!formularioAsignar.valid" mat-raised-button color="primary"
-                    (click)="asignar()">Asignar</button>
+                <button [disabled]="!(formularioAsignar.valid && mostrarDatos)" mat-raised-button color="primary" (click)="asignar()">Asignar</button>
             </div>
         </form>
     </mat-card>

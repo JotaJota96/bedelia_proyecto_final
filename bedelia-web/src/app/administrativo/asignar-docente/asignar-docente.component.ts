@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
@@ -27,7 +28,7 @@ export class AsignarDocenteComponent implements OnInit {
   public formularioBusqueda: FormGroup;
   public formularioAsignar: FormGroup;
 
-  constructor(private _snackBar: MatSnackBar,
+  constructor(private router: Router, private _snackBar: MatSnackBar,
     protected edicionCurServ: EdicionesCursoService,
     protected administrativoServ: AdministrativosService,
     protected sedeServ: SedesService,
@@ -72,23 +73,23 @@ export class AsignarDocenteComponent implements OnInit {
   }
 
   buscar() {
-    this.mostrarDatos = true;
     this.listaDocente.forEach(element => {
       if (element.persona.cedula == this.formularioBusqueda.controls['ci'].value) {
         this.persona = element.persona;
+        this.mostrarDatos = true;
       }
     });
   }
 
   asignar() {
-    this.mostrarDatos = false;
-
     this.edicionCurServ.asignar(this.formularioAsignar.controls['curso'].value, this.persona.cedula).subscribe(
       (datos) => {
-        this.openSnackBar("OK");
+        this.openSnackBar("El docente fue asignado correctamente");
+        this.formularioAsignar.controls['curso'].setValue(undefined);
       },
       (error) => {
         this.openSnackBar("Error al asignar el docente");
+        this.mostrarDatos = false;
       }
     )
   }
