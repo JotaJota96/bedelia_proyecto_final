@@ -492,11 +492,12 @@
                 }
             }
         },
-        "/edicionesCurso/{id}/docente": {
+        "/edicionesCurso/{id}/docente/{ciDocente}": {
             "put": {
                 "tags": [
                     "Ediciones Curso"
                 ],
+                "description": "Asigna un docente a una edicion de curso",
                 "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarDocente",
                 "parameters": [
                     {
@@ -507,27 +508,20 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/EdicionCursoDTO"
-                            }
-                        }
-                    }
-                },
                 "responses": {
-                    "200": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UsuarioDTO"
-                                }
-                            }
-                        }
+                    "default": {
+                        "description": ""
                     }
                 }
             }
@@ -905,6 +899,40 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/EdicionCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sedes/{id}/examenes": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerExamenes",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamenDTO"
                                     }
                                 }
                             }
