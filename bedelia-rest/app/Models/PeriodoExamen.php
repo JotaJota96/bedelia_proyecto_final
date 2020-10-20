@@ -24,6 +24,12 @@ class PeriodoExamen extends Model
     public static function periodoActual(){
         $hoy = date('Y-m-d');
         $PeriodoActual = Periodo::where('tipo', 'EX')->where('fecha_inicio', '<', $hoy)->where('fecha_fin', '>', $hoy)->orderby('id', 'desc')->first();
-        return $PeriodoActual;
+        return $PeriodoActual->periodoExamen;
+    }
+
+    public static function periodoProximo(){
+        $hoy = date('Y-m-d');
+        $PeriodoActual = Periodo::where('tipo', 'EX')->where('fecha_inicio', '>', $hoy)->orderby('id', 'asc')->first();
+        return $PeriodoActual->periodoExamen;
     }
 }
