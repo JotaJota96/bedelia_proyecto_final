@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 $router->post('correos',         'CorreosController@enviarCorreo');
 
 $router->post('usuarios/login',   'UsuarioController@login');
+$router->put('usuarios/passReset', 'UsuarioController@cambiarContrasenia');
 $router->get('usuarios/docentes', 'UsuarioController@obtenerDocentes');
 $router->get('usuarios/{ci}',     'UsuarioController@obtenerUno');
 $router->get('usuarios',          'UsuarioController@obtenerTodos');
@@ -29,6 +30,7 @@ $router->get( 'sedes',                     'SedesController@obtenerTodos');
 $router->post('sedes',                     'SedesController@agregar');
 $router->get('sedes/{id}/postulantes',     'SedesController@obtenerListaPostulantesDeSede');
 $router->get('sedes/{id}/edicionesCurso',  'SedesController@obtenerEdicionesCurso');
+$router->get('sedes/{id}/examenes',        'SedesController@obtenerExamenes');
 
 $router->post('areasEstudio',              'AreaEstudioController@agregar');
 $router->get('areasEstudio/{Id}',          'AreaEstudioController@obtenerUno');
@@ -62,7 +64,7 @@ $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerS
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
 
 $router->post('edicionesCurso/{id}/inscripciones/{idEstudiante}', 'EdicionesCursoController@asignarEstudiante');
-$router->put('edicionesCurso/{id}/docente', 'EdicionesCursoController@asignarDocente');
+$router->put('edicionesCurso/{id}/docente/{ciDocente}', 'EdicionesCursoController@asignarDocente');
 
 $router->post('examenes/{id}/inscripciones/{ciEstudiante}', 'ExamenController@asignarEstudiante');
 

@@ -68,8 +68,9 @@ class EdicionesCursoController extends Controller
     
     /**
      * @OA\Put(
-     *     path="/edicionesCurso/{id}/docente",
+     *     path="/edicionesCurso/{id}/docente/{ciDocente}",
      *     tags={"Ediciones Curso"},
+     *     description="Asigna un docente a una edicion de curso",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -77,27 +78,31 @@ class EdicionesCursoController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\RequestBody(
-     *         @OA\JsonContent(ref="#/components/schemas/EdicionCursoDTO"),
+     *     @OA\Parameter(
+     *         name="ciDocente",
+     *         in="path",
+     *         description="CI del docente",
+     *         required=true,
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
-     *         response="200",
+     *         response="default",
      *         description="",
-     *         @OA\JsonContent(ref="#/components/schemas/UsuarioDTO"),
      *     ),
      * )
      */
-    public function asignarDocente($id){
+    public function asignarDocente($id, $ciDocente){
         // viene un UsuarioDTO en body
         // asocia a un EdicionCurso (ya existente) con un Docente (ya existente)
         try {
             DB::beginTransaction();
             $EdicionCurso = EdicionCurso::where('id', $id)->first();
-            $UsuarioDTO = new persona();
-            $UsuarioDTO->fill($this->request->json(['persona']));
+            $Usuario = Usuario::buscar($ciDocente);
+            //$UsuarioDTO = new persona();
+            //$UsuarioDTO->fill($this->request->json(['persona']));
             // return response()->json($EdicionCurso, 200);
-            $Docente = Usuario::buscar($UsuarioDTO->cedula)->docente;
-            $Docente->usuario;
+            $Docente = $Usuario->docente;
+                        
             // return response()->json($Docente, 200);
             $EdicionCurso->docente()->associate($Docente);
             $EdicionCurso->save();

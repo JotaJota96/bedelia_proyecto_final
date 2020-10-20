@@ -9,6 +9,11 @@ use App\Models\carrera;
 use App\Models\persona;
 use App\Models\Direccion;
 use App\Models\Postulacion;
+use App\Models\Periodo;
+use App\Models\PeriodoInscCurso;
+use App\Models\PeriodoLectivo;
+use App\Models\PeriodoInscExamen;
+use App\Models\PeriodoExamen;
 
 class SedesController extends Controller
 {
@@ -175,16 +180,31 @@ class SedesController extends Controller
      * )
      */
     public function obtenerEdicionesCurso($id){
+        $retEdicionesCursos = array();
         try {
             $Sede = Sede::where('id', $id)->first();
-            // return response()->json($Sede, 200);
-            foreach ($Sede->edicionesCurso as $id => $edicionCurso) {
-                if ($edicionCurso->docente != null) {
-                    $edicionCurso->docente->usuario->persona->id;
-                }
-                $edicionCurso->curso->id;
+            
+            // ---- guarda en $retEdicionesCursos los EdicionCurso que se dicten en el proximo o actual PeriodoLectivo
+            $idPeriodo = 0;
+            $pla  = PeriodoLectivo::periodoActual();
+            $pica = PeriodoLectivo::periodoProximo();
+            if ($pla != null) {
+                $idPeriodo = $pla->id;
+            } else if ($pica != null) {
+                $idPeriodo = $pica->id;
             }
-            return response()->json($Sede->edicionesCurso, 200);
+            foreach ($Sede->edicionesCurso as $id => $edicionCurso) {
+                if ($edicionCurso->periodoLectivo->id == $idPeriodo) {
+                    if ($edicionCurso->docente != null) {
+                        $edicionCurso->docente->usuario->persona;
+                    }
+                    $edicionCurso->curso;
+                    array_push($retEdicionesCursos, $edicionCurso);
+                }
+            }
+            // ----
+            
+            return response()->json($retEdicionesCursos, 200);
         } catch (Exception $e) {
             return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
@@ -192,4 +212,71 @@ class SedesController extends Controller
         // devlver Sede, Persona (el docente) y curso de cada EdicionCurso
     }
 
+    /**
+     * @OA\Get(
+     *     path="/sedes/{id}/examenes",
+     *     tags={"Sedes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la sede",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/ExamenDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerExamenes($id){
+        // devuelve un array de Examenes que correspondan a la Sede especificada
+        // de cada Examen devlver Sede, Usuario (el docente) y curso
+        try {
+            $RES = [];
+
+            // ---- guarda en $RES los Examen que se asocian al proximo o actual PeriodoExamen
+            $idPeriodo = 0;
+            $pea  = PeriodoExamen::periodoActual();
+            $piea = PeriodoExamen::periodoProximo();
+            if ($pea != null) {
+                $idPeriodo = $pea->id;
+            } else if ($piea != null) {
+                $idPeriodo = $piea->id;
+            }
+
+            $Sede = Sede::where('id', $id)->first();
+            foreach ($Sede->examenes as $id => $examen) {
+                if ($examen->periodoExamen->id == $idPeriodo) {
+                    if ($examen->docente != null) {
+                        $examen->docente->usuario->persona;
+                    }
+                    $examen->curso;
+                    array_push($RES, $examen);
+                }
+            }
+            //foreach ($Sede->carreras as $id => $carrera) {
+            //    foreach ($carrera->cursos as $id => $curso) {
+            //        foreach ($curso->examenes as $id => $examen) {
+            //            // if ($examen->periodoExamen == $idPeriodo) {
+            //            if ($examen->docente != null) {
+            //                $examen->docente->usuario->persona->id;
+            //            }
+            //            $examen->curso();
+            //            $examen->sede();
+            //            array_push($RES, $examen);
+            //            // }
+            //        }
+            //    }
+            //}
+            return response()->json($RES, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
 }

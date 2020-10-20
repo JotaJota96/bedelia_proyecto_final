@@ -260,7 +260,54 @@ class UsuarioController extends Controller
             array_push($usus, $Docente->usuario);
         }
 
-        return response()->json($usus, 401);
+        return response()->json($usus, 200);
     }
+    /**
+     * @OA\Put(
+     *     path="/usuarios/passReset",
+     *     tags={"Usuarios"},
+     *     description="Actualiza la contraseña del usuario",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Devuelve datos del usuario logueado",
+     *         @OA\JsonContent(ref="#/components/schemas/LoginResponseDTO"),
+     *     ),
+     * )
+     */
+    public function cambiarContrasenia(){
+        $id          = $this->request->input("id");
+        $contrasenia = $this->request->input("contrasenia");
+
+        $usu = Usuario::buscar($id);
+
+        // verifica existencia de usuario y su contrasenia
+        if ($usu == null){
+            return response()->json(null, 401);
+        }
+        $usu->contrasenia = $contrasenia;
+        // para contraseña encriptada
+        //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+
+        $usu->remember_token = \Illuminate\Support\Str::random(100);
+        $usu->save();
+
+        $ret = [
+            "cedula" => $usu->persona->cedula,
+            "correo" => $usu->persona->correo,
+            "token" => $usu->remember_token,
+            "roles" => $usu->roles()
+        ];
+        /**
+         * Para las siguientes peticiones se deberá añadir el Header con clave 'Authorization' y valor el token devuelto
+         * Para obtener el usuario autenticado dentro de cualquier funcion, usar:
+         * $request->user()
+         */
+
+        return response()->json($ret, 200);
+    }
+
 
 }
