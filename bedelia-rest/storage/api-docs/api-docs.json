@@ -458,12 +458,46 @@
                 }
             }
         },
-        "/edicionesCurso/{id}/docente": {
-            "get": {
+        "/edicionesCurso/{id}/inscripciones/{ciEstudiante}": {
+            "post": {
                 "tags": [
                     "Ediciones Curso"
                 ],
-                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::obtenerDocente",
+                "description": "Inscribe a un estudiante a una edicion de curso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarEstudiante",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la edicion del curso",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante a inscribir",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/edicionesCurso/{id}/docente": {
+            "put": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarDocente",
                 "parameters": [
                     {
                         "name": "id",
@@ -494,6 +528,40 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/examenes/{id}/inscripciones/{ciEstudiante}": {
+            "post": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Inscribe a un estudiante a un exámen",
+                "operationId": "App\\Http\\Controllers\\ExamenController::asignarEstudiante",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del exámen",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante a inscribir",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
                     }
                 }
             }
@@ -577,7 +645,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::rechazar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -588,14 +656,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Devuelve datos del usuario",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UsuarioDTO"
-                                }
-                            }
-                        }
+                        "description": ""
                     }
                 }
             }
@@ -639,7 +700,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::notificar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -678,7 +739,7 @@
                 "operationId": "App\\Http\\Controllers\\PostulantesController::aceptar",
                 "parameters": [
                     {
-                        "name": "ci",
+                        "name": "id",
                         "in": "path",
                         "description": "ID de la postulacion",
                         "required": true,
@@ -689,7 +750,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Devuelve datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1454,6 +1522,29 @@
                 "properties": {
                     "id": {
                         "type": "integer"
+                    },
+                    "acta_confirmada": {
+                        "type": "boolean"
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "curso": {
+                        "$ref": "#/components/schemas/CursoDTO"
+                    },
+                    "docente": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "ExamenDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "fecha": {
+                        "type": "string"
                     },
                     "acta_confirmada": {
                         "type": "boolean"

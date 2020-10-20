@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Examen extends Model
 {
     protected $table = "examen";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'acta_confirmada', 'fecha',
     ];
@@ -29,7 +29,7 @@ class Examen extends Model
 
 	// devuelve coleccion
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante');
+        return $this->belongsToMany('App\Models\Estudiante','inscripcion_examen');
     }
 
 	// devuelve uno

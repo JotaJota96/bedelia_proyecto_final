@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Estudiante extends Model
 {
     protected $table = "estudiante";
-
+    protected $primaryKey = "id";
     protected $fillable = [];
 
     public function usuario() {
@@ -16,13 +16,13 @@ class Estudiante extends Model
 
 	// devuelve coleccion
     public function edicionesCurso() {
-        return $this->belongsToMany('App\Models\EdicionCurso');
+        return $this->belongsToMany('App\Models\EdicionCurso','inscripcion_curso');
     }
 
 	// devuelve coleccion
     public function examenes() {
-        return $this->belongsToMany('App\Models\Examen');
-    }    
+        return $this->belongsToMany('App\Models\Examen','inscripcion_examen');
+    }
 
 	// devuelve coleccion
     public function clasesDictada() {

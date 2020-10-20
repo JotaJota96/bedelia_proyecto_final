@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Curso extends Model
 {
     protected $table = "curso";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'nombre', 'descripcion', 'max_inasistencias', 'cant_creditos', 'cant_clases',
     ];
@@ -23,7 +23,7 @@ class Curso extends Model
     public function previaDe() {
         return $this->hasMany('App\Models\Previa', 'curso_id_previa', 'id');
     }
-    
+
 	// devuelve uno
     public function areaEstudio() {
         return $this->belongsTo('App\Models\AreaEstudio');

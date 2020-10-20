@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PeriodoLectivo extends Model
 {
     protected $table = "periodo_lectivo";
+    protected $primaryKey = "id";
     //aca tambien
     protected $fillable = [];
 
