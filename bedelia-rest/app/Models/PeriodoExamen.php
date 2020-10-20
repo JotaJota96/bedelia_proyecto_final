@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Periodo;
 
 class PeriodoExamen extends Model
 {
@@ -18,5 +19,11 @@ class PeriodoExamen extends Model
 	// devuelve coleccion
     public function examenes() {
         return $this->hasMany('App\Models\Examen');
+    }
+
+    public static function periodoActual(){
+        $hoy = date('Y-m-d');
+        $PeriodoActual = Periodo::where('tipo', 'EX')->where('fecha_inicio', '<', $hoy)->where('fecha_fin', '>', $hoy)->orderby('id', 'desc')->first();
+        return $PeriodoActual;
     }
 }

@@ -9,6 +9,7 @@ use App\Models\carrera;
 use App\Models\persona;
 use App\Models\Direccion;
 use App\Models\Postulacion;
+use App\Models\PeriodoLectivo;
 
 class SedesController extends Controller
 {
@@ -192,4 +193,52 @@ class SedesController extends Controller
         // devlver Sede, Persona (el docente) y curso de cada EdicionCurso
     }
 
+        /**
+     * @OA\Get(
+     *     path="/sedes/{id}/examenes",
+     *     tags={"Sedes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la sede",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/ExamenDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerExamenes($id){
+        // devuelve un array de Examenes que correspondan a la Sede especificada
+        // de cada Examen devlver Sede, Usuario (el docente) y curso
+        try {
+            $PeriodoActual = PeriodoLectivo::periodoActual();
+            $RES = [];
+            $Sede = Sede::where('id', $id)->first();
+            foreach ($Sede->carreras as $id => $carrera) {
+                foreach ($carrera->cursos as $id => $curso) {
+                    foreach ($curso->examenes as $id => $examen) {
+                        // if ($examen->periodoExamen == $PeriodoActual) {
+                        if ($examen->docente != null) {
+                            $examen->docente->usuario->persona->id;
+                        }
+                        $examen->curso();
+                        $examen->sede();
+                        array_push($RES, $examen);
+                        // }
+                    }
+                }
+            }
+            return response()->json($RES, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
+        return response()->json(["message" => "No implementado aun"], 501);
+    }
 }
