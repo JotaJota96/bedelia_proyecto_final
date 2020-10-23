@@ -26,12 +26,18 @@ class PeriodoInscCurso extends Model
     public static function periodoActual(){
         $hoy = date('Y-m-d');
         $PeriodoActual = Periodo::where('tipo', 'IC')->where('fecha_inicio', '<', $hoy)->where('fecha_fin', '>', $hoy)->orderby('id', 'desc')->first();
+        if ($PeriodoActual == null) {
+            return null;
+        }
         return $PeriodoActual->periodoInscCurso;
     }
 
     public static function periodoProximo(){
         $hoy = date('Y-m-d');
-        $PeriodoActual = Periodo::where('tipo', 'IC')->where('fecha_inicio', '>', $hoy)->orderby('id', 'asc')->first();
-        return $PeriodoActual->periodoInscCurso;
+        $PeriodoProximo = Periodo::where('tipo', 'IC')->where('fecha_inicio', '>', $hoy)->orderby('id', 'asc')->first();
+        if ($PeriodoProximo == null) {
+            return null;
+        }
+        return $PeriodoProximo->periodoInscCurso;
     }
 }

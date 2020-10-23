@@ -25,12 +25,18 @@ class PeriodoLectivo extends Model
     public static function periodoActual(){
         $hoy = date('Y-m-d');
         $PeriodoActual = Periodo::where('tipo', 'LE')->where('fecha_inicio', '<', $hoy)->where('fecha_fin', '>', $hoy)->orderby('id', 'desc')->first();
+        if ($PeriodoActual == null) {
+            return null;
+        }
         return $PeriodoActual->periodoLectivo;
     }
 
     public static function periodoProximo(){
         $hoy = date('Y-m-d');
-        $PeriodoActual = Periodo::where('tipo', 'LE')->where('fecha_inicio', '>', $hoy)->orderby('id', 'asc')->first();
-        return $PeriodoActual->periodoLectivo;
+        $PeriodoProximo = Periodo::where('tipo', 'LE')->where('fecha_inicio', '>', $hoy)->orderby('id', 'asc')->first();
+        if ($PeriodoProximo == null) {
+            return null;
+        }
+        return $PeriodoProximo->periodoLectivo;
     }
 }

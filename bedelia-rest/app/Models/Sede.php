@@ -40,4 +40,8 @@ class Sede extends Model
     public function edicionesCurso() {
         return $this->hasMany('App\Models\EdicionCurso');
     }
+	// devuelve coleccion
+    public function examenes() {
+        return $this->hasMany('App\Models\Examen');
+    }
 }

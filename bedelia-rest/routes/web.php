@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 $router->post('correos',         'CorreosController@enviarCorreo');
 
 $router->post('usuarios/login',   'UsuarioController@login');
+$router->put('usuarios/passReset', 'UsuarioController@cambiarContrasenia');
 $router->get('usuarios/docentes', 'UsuarioController@obtenerDocentes');
 $router->get('usuarios/{ci}',     'UsuarioController@obtenerUno');
 $router->get('usuarios',          'UsuarioController@obtenerTodos');

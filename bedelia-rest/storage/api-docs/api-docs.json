@@ -1156,6 +1156,36 @@
                     }
                 }
             }
+        },
+        "/usuarios/passReset": {
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "description": "Actualiza la contraseña del usuario",
+                "operationId": "App\\Http\\Controllers\\UsuarioController::cambiarContrasenia",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos del usuario logueado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
