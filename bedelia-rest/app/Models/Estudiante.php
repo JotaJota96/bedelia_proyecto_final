@@ -37,18 +37,35 @@ class Estudiante extends Model
     public function NotasCarrera($idCarrera){
         $res = [];
         foreach ($this->edicionesCurso as $value) {
-            $Item = array (
-                "curso_id"        => $value->curso->id,
-                "periodo_id"      => $value->periodoLectivo->id,
-                "nota"            => $value->pivot->nota,
-                "cant_asistencias"=> $value->contarAsistidas($this->id),
-            );
-            array_push($res, $Item);
+            if ($value->curso->carreras->find($idCarrera)!=null) {
+                $Item = array (
+                    "curso_id"        => $value->curso->id,
+                    "periodo_id"      => $value->periodoLectivo->id,
+                    "nota"            => $value->pivot->nota,
+                    "cant_asistencias"=> $value->contarAsistidas($this->id),
+                );
+                array_push($res, $Item);
+            }
         }
         $res = $this->filtrarMasReciente($res);
         return $res;
     }
-
+    //php artisan tinker
+    public function NotasExamenes($idCarrera){
+        $res = [];
+        foreach ($this->examenes as $value) {
+            if ($value->curso->carreras->find($idCarrera) != null) {
+                $Item = array (
+                    "curso_id"        => $value->curso->id,
+                    "periodo_id"      => $value->periodoExamen->id,
+                    "nota"            => $value->pivot->nota,
+                );
+                array_push($res, $Item);
+            }
+        }
+        $res = $this->filtrarMasReciente($res);
+        return $res;
+    }
     private function filtrarMasReciente($arr){
         // Dado un array con el siguiente formato,  devuelve un array solo con los elementos mas recientes de cada curso
         // [
