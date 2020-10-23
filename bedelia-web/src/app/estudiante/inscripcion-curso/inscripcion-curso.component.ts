@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { CursoService } from 'src/app/servicios/curso.service';
+import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
+import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
   selector: 'app-inscripcion-curso',
@@ -12,7 +14,8 @@ export class InscripcionCursoComponent implements OnInit {
   selectedOptions: CursoDTO[] = [];
   listaCurso: CursoDTO[] = [];
   
-  constructor(private _snackBar: MatSnackBar, protected cursoServ: CursoService) { }
+  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService, 
+    protected cursoServ: CursoService, protected edicionCursoServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
     this.cursoServ.getAll().subscribe(
@@ -26,6 +29,17 @@ export class InscripcionCursoComponent implements OnInit {
 
   confirmar(){
     console.log(this.selectedOptions)
+    let usu = this.usuServ.obtenerDatosLoginAlmacenado();
+    this.selectedOptions.forEach(element => {
+      this.edicionCursoServ.inscripciones(element.id, usu.cedula).subscribe(
+        (datos)=>{
+  
+        },
+        (error)=>{
+  
+        }
+      );
+    });
   }
 
   openSnackBar(mensaje: string) {

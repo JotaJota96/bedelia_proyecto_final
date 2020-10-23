@@ -34,6 +34,10 @@ export class UsuariosService {
     return this.http.post<UsuarioDTO>(this.apiURL, datos);
   }
 
+  passReset(idUsuario:string, pass:string){
+    return this.http.put<LoginDTO>(this.apiURL + "/passReset", {id:idUsuario,contrasenia:pass});
+  }
+
   /** Funciones relacionadas a la sesion del usuario **************************** **/
 
   login(datos:LoginDTO){
@@ -59,7 +63,7 @@ export class UsuariosService {
   /**
    * Devuelve los datos del usuario guardado en localstorage, o NULL si no hay ninguno
    */
-  private obtenerDatosLoginAlmacenado():LoginResponseDTO{
+  public obtenerDatosLoginAlmacenado():LoginResponseDTO{
     return JSON.parse(localStorage.getItem(this.loginDataStoreKey))
   }
 

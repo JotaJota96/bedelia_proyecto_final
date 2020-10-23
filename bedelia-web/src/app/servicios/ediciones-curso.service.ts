@@ -13,7 +13,11 @@ export class EdicionesCursoService {
 
   constructor(protected http: HttpClient) { }
 
+  inscripciones(idCurso: number, ciEstudiante: string) {
+    return this.http.post(this.apiURL + "/" + idCurso + "/inscripciones/" + ciEstudiante, null);
+  }
+
   asignar(id: number, ci: string) {
-    return this.http.put<EdicionCursoDTO[]>(this.apiURL + "/" + id + "/docente/"+ ci, null);
+    return this.http.put<EdicionCursoDTO[]>(this.apiURL + "/" + id + "/docente/" + ci, null);
   }
 }

@@ -1,9 +1,9 @@
 <div class="container">
     <mat-card class="mt-5">
       <mat-card-content>
-        <mat-selection-list class="curso" #curso [(ngModel)]="selectedOptions">
-          <mat-list-option *ngFor="let curso of listaCurso" [disabled]="false" [value]="curso">
-            {{curso.nombre}}
+        <mat-selection-list class="examen" #examen [(ngModel)]="selectedOptions">
+          <mat-list-option *ngFor="let examen of listaExamen" [disabled]="false" [value]="examen">
+            {{examen.nombre}}
           </mat-list-option>
         </mat-selection-list>
       </mat-card-content>
