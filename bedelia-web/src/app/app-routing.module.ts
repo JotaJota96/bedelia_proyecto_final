@@ -25,6 +25,9 @@ import { RevicionInscripcionesPostulantesComponent } from './administrativo/revi
 import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrera/inscripcion-carrera.component';
 import { VerMasComponent } from './administrativo/revicion-inscripciones-postulantes/ver-mas/ver-mas.component';
 import { AsignarDocenteComponent } from './administrativo/asignar-docente/asignar-docente.component';
+import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
+import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
+import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -43,11 +46,11 @@ import { AsignarDocenteComponent } from './administrativo/asignar-docente/asigna
 const routes: Routes = [
   //Inico de componentes de acceso publico
   {path: '', component: ListaCarrerasComponent},
+  
   {path: 'login', component: LoginComponent},
   
   {path: 'ver/carrera/:id', component: CarreraVistaComponent},
 
-  
   {path: 'inscripcion/carrera/:id', component: InscripcionCarreraComponent},
   //Fin de componentes de acceso publico
 
@@ -65,17 +68,13 @@ const routes: Routes = [
   
   {path: 'admin/tipo', component: TipoCursoComponent},
   {path: 'admin/tipo/abm', component: TipoCursoABMComponent},
-
   
   {path: 'admin/curso', component: CursoComponent},
   {path: 'admin/curso/abm', component: CursoABMComponent},
   {path: 'admin/curso/abm/:id', component: CursoABMComponent},
-
   
   {path: 'admin/periodos', component: AnioLectivoABMComponent},
 
-  
-  
   {path: 'admin/carrera', component: CarreraComponent},
   {path: 'admin/carrera/abm', component: CarreraABMComponent},
   
@@ -86,11 +85,15 @@ const routes: Routes = [
   
   {path: 'administrativo/postulante/ver/:id', component: VerMasComponent},
   
-  {path: 'administrativo/asignar-docente', component: AsignarDocenteComponent}
+  {path: 'administrativo/asignar-docente', component: AsignarDocenteComponent},
   //Fin de componentes de administrativo
 
   //Inico de componentes de estudiante
-  //...
+  {path: 'estudiante/inscripcion/curso', component: InscripcionCursoComponent},
+  
+  {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent},
+
+  {path: 'estudiante/cambiar/contrasenia', component: CambirContraseniaComponent},
   //Fin de componentes de estudiante
 
   //Inico de componentes de docente

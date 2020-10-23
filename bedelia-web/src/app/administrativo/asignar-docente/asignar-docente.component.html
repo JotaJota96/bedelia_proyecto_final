@@ -1,17 +1,20 @@
 <div class="container">
     <mat-card class="mt-5">
         <form [formGroup]="formularioBusqueda" class="row">
-            <mat-form-field class="col-10">
+            
+            <mat-form-field class="col-12 col-md-10">
                 <mat-label>Cedula del docente</mat-label>
                 <input matInput name="ci" formControlName="ci">
             </mat-form-field>
-            <div align="center" class="col-2 m-auto">
+
+            <div align="center" class="col-12 col-md-2 m-auto">
                 <button [disabled]="!formularioBusqueda.valid" mat-raised-button color="primary"
                     (click)="buscar()">Buscar</button>
             </div>
+
         </form>
         <form [formGroup]="formularioAsignar" class="row">
-            <div class="col-10">
+            <div class="col-12 col-md-10">
                 <mat-form-field [style.width.%]=100>
                     <mat-select placeholder="Lista de curso sin docentes" name="curso" formControlName="curso">
                         <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
@@ -20,11 +23,13 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div align="center" class="col-2 m-auto">
+            
+            <div align="center" class="col-12 col-md-2 m-auto">
                 <button [disabled]="!(formularioAsignar.valid && mostrarDatos)" mat-raised-button color="primary" (click)="asignar()">Asignar</button>
             </div>
         </form>
     </mat-card>
+
     <mat-card *ngIf="mostrarDatos" class="mt-2">
         <div class="row">
             <div class="col-6">

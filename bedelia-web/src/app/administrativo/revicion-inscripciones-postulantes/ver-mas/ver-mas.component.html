@@ -11,9 +11,9 @@
           <mat-list-item role="listitem">Fecha Nacimiento: {{persona.fecha_nac | date:'dd/MM/yyyy'}}</mat-list-item>
           <mat-divider></mat-divider>
           <div class="row mt-3 mx-5">
-            <a class="col-4" href="{{postulante.img_ci}}">img_ci</a>
-            <a class="col-4" href="{{postulante.img_escolaridad}}">img_escolaridad</a>
-            <a class="col-4" href="{{postulante.img_carne_salud}}">img_carne_salud</a>
+            <a class="col-4 enlaceboton" download="" href="{{postulante.img_ci}}" >Descargar imagen de cedula</a>
+            <a class="col-4 enlaceboton" download="" href="{{postulante.img_escolaridad}}">Descargar imagen de escolaridad</a>
+            <a class="col-4 enlaceboton" download="" href="{{postulante.img_carne_salud}}">Descargar imagen de carne de salud</a>
           </div>
         </mat-list>
       </mat-card-content>

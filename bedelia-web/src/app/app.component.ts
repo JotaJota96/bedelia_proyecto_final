@@ -61,14 +61,14 @@ const MENU_ESTUDIANTE:MenuSection[] = [
   {
     nombre: "Datos",
     items: [
-      {nombre: "Mis datos",   link: "#"},
+      {nombre: "Cambiar contraseña ",   link: "estudiante/cambiar/contrasenia"},
     ],
   }, {
     nombre: "Académico",
     items: [
       {nombre: "Escolaridad",            link: "#"},
-      {nombre: "Inscripcion a cursos",   link: "#"},
-      {nombre: "Inscripcion a exámenes", link: "#"},
+      {nombre: "Inscripcion a cursos",   link: "estudiante/inscripcion/curso"},
+      {nombre: "Inscripcion a exámenes", link: "estudiante/inscripcion/examen"},
       {nombre: "Año lectivo",            link: "#"},
     ],
   },

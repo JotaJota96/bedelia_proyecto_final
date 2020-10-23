@@ -11,7 +11,7 @@
             </mat-form-field>
         </div>
         <!-- datos de la persona -->
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6">
             <mat-form-field [style.width.%]=100>
                 <input matInput placeholder="Cédula" name="cedula" formControlName="cedula" [readonly]="soloLectura">
             </mat-form-field>
@@ -46,7 +46,7 @@
             </mat-form-field>
         </div>
         <!-- datos de la direccion -->
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6">
             <mat-form-field [style.width.%]=100>
                 <mat-select placeholder="Departamento" formControlName="departamento">
                     <mat-option *ngFor="let dep of listaDepartamentos" [value]="dep" [disabled]="soloLectura">
@@ -67,12 +67,27 @@
                 <input matInput placeholder="Número" name="numero" formControlName="numero" [readonly]="soloLectura">
             </mat-form-field>
         </div>
-        <div class="col-12  col-sm-6 row">
-            <input class="col-4" type="file" (change)="alCargarImagen($event, 0)" accept=".png, .jpg, .jpeg,"/>
-            
-            <input class="col-4" type="file" (change)="alCargarImagen($event, 1)" accept=".png, .jpg, .jpeg,"/>
 
-            <input class="col-4" type="file" (change)="alCargarImagen($event, 2)" accept=".png, .jpg, .jpeg,"/>
+        <div class="col-12 col-md-6 ml-1 row">
+
+            <div class="col-12 my-1 custom-input-file">
+                <input class="input-file" type="file" (change)="alCargarImagen($event, 0)"
+                    accept=".png, .jpg, .jpeg," />
+                    Subir imagen Cedula
+            </div>
+
+            <div class="col-12 my-1 custom-input-file">
+                <input class="my-auto input-file" type="file" (change)="alCargarImagen($event, 1)"
+                    accept=".png, .jpg, .jpeg," />
+                    Subir imagen Escolaridad
+            </div>
+
+            <div class="col-12 my-1 custom-input-file">
+                <input class="input-file" type="file" (change)="alCargarImagen($event, 2)"
+                    accept=".png, .jpg, .jpeg," />
+                    Subir imagen Carne de salud
+            </div>
+
         </div>
     </form>
     <div align="end">

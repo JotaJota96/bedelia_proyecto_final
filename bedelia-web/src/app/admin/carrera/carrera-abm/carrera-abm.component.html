@@ -7,7 +7,6 @@
                 </mat-card-header>
                 <mat-card-content>
                     <div class="row">
-
                         <div class=" col-12 pl-5 pr-5">
                             <!-- datos de la persona -->
                             <mat-form-field [style.width.%]=100>
@@ -23,7 +22,7 @@
 
                             <form [formGroup]="formularioSede" class="mt-4">
                                 <div class="row">
-                                    <mat-form-field class="col-9" [style.width.%]=100>
+                                    <mat-form-field class="col-12 col-md-9" [style.width.%]=100>
                                         <mat-select placeholder="Lista de sedes" name="sede" formControlName="sede">
                                             <mat-option *ngFor="let sede of listaSedes" [value]="sede">
                                                 {{sede.direccion.departamento}}
@@ -31,7 +30,7 @@
                                         </mat-select>
                                     </mat-form-field>
 
-                                    <div class="col-3 m-auto" align="end">
+                                    <div class="col-12 col-md-3 m-auto" align="end">
                                         <button mat-raised-button (click)="asignarSedes()"
                                             [disabled]="!formularioSede.valid" color="primary">Agregar
                                             sede</button>
@@ -49,7 +48,7 @@
                             <form [formGroup]="formularioArea">
 
                                 <div class="row">
-                                    <mat-form-field class="col-6" [style.width.%]=100>
+                                    <mat-form-field class="col-12 col-md-6" [style.width.%]=100>
                                         <mat-select placeholder="Lista de areas de estudio" name="area"
                                             formControlName="area">
                                             <mat-option *ngFor="let area of listaAreasEstudio" [value]="area">
@@ -58,16 +57,18 @@
                                         </mat-select>
                                     </mat-form-field>
 
-                                    <mat-form-field class="col-3" [style.width.%]=100>
+                                    <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
                                         <input matInput placeholder="Creditos" name="creditos"
                                             formControlName="creditos">
                                     </mat-form-field>
-                                    <div class="col-3 m-auto" align="end">
+
+                                    <div class="col-12 col-md-3 m-auto" align="end">
                                         <button mat-raised-button (click)="asignarArea()"
                                             [disabled]="!formularioArea.valid" color="primary">Agregar area de
                                             estudio</button>
                                     </div>
                                 </div>
+
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
                                         <mat-chip *ngFor="let area of listaAreaSeleccionada">{{area.area}}
@@ -84,7 +85,7 @@
                                 <p class="my-3">Ingrese los cursos para el semestre {{contadorSemestres}}</p>
 
                                 <div class="row">
-                                    <div class="col-5">
+                                    <div class="col-12 col-md-5">
                                         <mat-form-field [style.width.%]=100>
                                             <mat-select placeholder="Lista de curso" name="curso"
                                                 formControlName="curso">
@@ -95,7 +96,7 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-12 col-md-3">
                                         <mat-form-field [style.width.%]=100>
                                             <mat-select placeholder="Tipo de curso" name="optativo"
                                                 formControlName="optativo">
@@ -105,17 +106,19 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <div class="col-2 m-auto" align="end">
-                                        <button mat-raised-button (click)="asignarCurso()"
+                                    <div class="col-12 col-md-2 m-auto" align="end">
+                                        <button  class="mt-2" mat-raised-button (click)="asignarCurso()"
                                             [disabled]="!formularioCurso.valid" color="primary">Agregar
                                             cursos</button>
                                     </div>
-                                    <div class="col-2 m-auto" align="end">
-                                        <button mat-raised-button (click)="crearSemestre()"
+
+                                    <div class="col-12 col-md-2 m-auto" align="end">
+                                        <button class="mt-2" mat-raised-button (click)="crearSemestre()"
                                             [disabled]="listaCursoSeleccionados.length == 0" color="primary">Agregar
                                             semestre</button>
                                     </div>
                                 </div>
+
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
                                         <mat-chip *ngFor="let curso of listaCursoSeleccionados">{{curso.nombre}}
@@ -140,8 +143,8 @@
                             </div>
 
                             <br>
-                            <mat-divider></mat-divider>
 
+                            <mat-divider></mat-divider>
                         </div>
                     </div>
 

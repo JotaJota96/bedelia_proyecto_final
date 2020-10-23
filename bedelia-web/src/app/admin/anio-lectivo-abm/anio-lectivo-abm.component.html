@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
         <mat-card class="col-12  mx-auto my-2 example-card">
-            <mat-card-header align="end">
-                <button class="mb-2" mat-raised-button color="primary" *ngIf="soloLectura" (click)="crearPeriodo()">Crear un prtiodo</button>
-            </mat-card-header>
             <mat-card-content>
+                <div>
+                    <button class="mb-2" mat-raised-button color="primary" *ngIf="soloLectura" (click)="crearPeriodo()">Crear un prtiodo</button>
+                </div>
                 <form [formGroup]="formulario" class="row">
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-md-6">
                     
                         <mat-form-field [style.width.%]=100>
                             <mat-label>Inicio primer periodo incripcion examen</mat-label>
@@ -80,7 +80,7 @@
 
                     </div>
 
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-md-6">
                     
                         <mat-form-field [style.width.%]=100>
                             <mat-label>Fin primer periodo incripcion examen</mat-label>

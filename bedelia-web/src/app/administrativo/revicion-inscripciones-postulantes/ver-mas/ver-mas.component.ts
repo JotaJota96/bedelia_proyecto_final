@@ -76,6 +76,10 @@ export class VerMasComponent implements OnInit {
     );
   }
 
+  abrirImagen(base64 :string){
+    
+  }
+
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
       duration: 3000,

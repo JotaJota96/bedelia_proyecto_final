@@ -50,6 +50,9 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { ModalInformarComponent } from './administrativo/revicion-inscripciones-postulantes/modal-informar/modal-informar.component';
 import { VerMasComponent } from './administrativo/revicion-inscripciones-postulantes/ver-mas/ver-mas.component';
 import { AsignarDocenteComponent } from './administrativo/asignar-docente/asignar-docente.component';
+import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
+import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
+import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
 
 
 
@@ -79,7 +82,10 @@ import { AsignarDocenteComponent } from './administrativo/asignar-docente/asigna
     InscripcionCarreraComponent,
     ModalInformarComponent,
     VerMasComponent,
-    AsignarDocenteComponent
+    AsignarDocenteComponent,
+    InscripcionCursoComponent,
+    InscripcionExamenComponent,
+    CambirContraseniaComponent
   ],
   imports: [
     MatStepperModule,
