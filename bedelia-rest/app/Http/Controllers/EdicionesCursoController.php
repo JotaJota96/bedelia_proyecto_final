@@ -8,6 +8,7 @@ use App\Models\EdicionCurso;
 use App\Models\Docente;
 use App\Models\Usuario;
 use App\Models\Persona;
+use App\Models\ClaseDictada;
 
 class EdicionesCursoController extends Controller
 {
@@ -16,9 +17,6 @@ class EdicionesCursoController extends Controller
     public function __construct(Request $request){
         $this->request = $request;
     }
-
-
-
     /**
      * @OA\Post(
      *     path="/edicionesCurso/{id}/inscripciones/{ciEstudiante}",
@@ -111,6 +109,58 @@ class EdicionesCursoController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
+    }
+
+    public function CursosDocente($ciDocente) {
+        try {
+            $Docente=Docente::find($ciDocente);
+            $Cursos = $Docente->edicionesCursoActuales();
+            return response()->json($Cursos, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 404);
+        }
+    }
+
+    public function estudiantes($id) {
+        try {
+            $EdicionCurso=EdicionCurso::find($id);
+            foreach ($EdicionCurso->estudiantes as $estudiante) {
+                $estudiante->usuario->persona;
+            }
+            return response()->json($EdicionCurso->estudiantes, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 404);
+        }
+    }
+    
+    public function claseDictada($id) {
+        try {
+            DB::beginTransaction();
+            $Hoy = date('Y-m-d');
+            $EdicionCurso=EdicionCurso::find($id);
+            $data = $this->request->json('asistencias');
+            $ClaseDictada = new ClaseDictada();
+            $ClaseDictada->fecha=$Hoy;
+            $ClaseDictada->EdicionCurso()->associate($EdicionCurso);
+            $ClaseDictada->save();
+            foreach ($data as $asistencia) {
+                $datosTablaIntermedia = [
+                    'asistencia' => $asistencia['asistencia']
+                ];
+                $estudiante = Usuario::buscar($asistencia['ciEstudiante']);
+                $ClaseDictada->estudiantes()->attach($estudiante, $datosTablaIntermedia);
+                // $ClaseDictada->pivot->asistencia=$asistencia['asistencia'];
+            }
+            $ClaseDictada->save();
+            foreach ($ClaseDictada->estudiantes as $asistencia) {
+                $asistencia->pivot->asistencia;
+            }
+            DB::commit();
+            return $ClaseDictada;
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json($e->getMessage(), 404);
         }
     }
 }
