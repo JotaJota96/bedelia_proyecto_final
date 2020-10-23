@@ -28,6 +28,9 @@ import { AsignarDocenteComponent } from './administrativo/asignar-docente/asigna
 import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
 import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
 import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
+import { ControlAsistenciaComponent } from './docente/control-asistencia/control-asistencia.component';
+import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
+import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -97,7 +100,10 @@ const routes: Routes = [
   //Fin de componentes de estudiante
 
   //Inico de componentes de docente
-  //...
+  {path: 'docente/control-asistencia', component: ControlAsistenciaComponent},
+  
+  {path: 'docente/ingreso/resultados-curso', component: IngresarResultadoCursoComponent},
+  {path: 'docente/ingreso/resultados-examen', component: IngresarResultadoExamenComponent},
   //Fin de componentes de docente
 
 ];

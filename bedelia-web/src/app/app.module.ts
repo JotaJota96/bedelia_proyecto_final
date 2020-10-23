@@ -53,6 +53,11 @@ import { AsignarDocenteComponent } from './administrativo/asignar-docente/asigna
 import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
 import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
 import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
+import { ControlAsistenciaComponent } from './docente/control-asistencia/control-asistencia.component';
+import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
+import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
+import { IngresarNotaComponent } from './docente/ingresar-resultado-curso/ingresar-nota/ingresar-nota.component';
+import { IngresarNotaExamenComponent } from './docente/ingresar-resultado-examen/ingresar-nota-examen/ingresar-nota-examen.component';
 
 
 
@@ -85,7 +90,12 @@ import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/camb
     AsignarDocenteComponent,
     InscripcionCursoComponent,
     InscripcionExamenComponent,
-    CambirContraseniaComponent
+    CambirContraseniaComponent,
+    ControlAsistenciaComponent,
+    IngresarResultadoCursoComponent,
+    IngresarResultadoExamenComponent,
+    IngresarNotaComponent,
+    IngresarNotaExamenComponent
   ],
   imports: [
     MatStepperModule,
