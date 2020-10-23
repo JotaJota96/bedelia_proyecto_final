@@ -17,6 +17,6 @@ class ClaseDictada extends Model
     }
 
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante');
+        return $this->belongsToMany('App\Models\Estudiante','asistencia')->withPivot('asistencia');
     }
 }
