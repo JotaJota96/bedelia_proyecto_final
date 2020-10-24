@@ -236,34 +236,32 @@ class EdicionesCursoController extends Controller
             // se van recorriendo los EdicionCurso y se marcan con 'habilitado = false' los que correpondan
             foreach ($edicionesCurso as $ec) {
                 $idCurso = $ec->curso->id;
-                error_log("-----------------------------");
-                error_log("Verificando curso $idCurso");
+                // error_log("-----------------------------");
+                // error_log("Verificando curso $idCurso");
 
                 // si el curso ya está aprobado
                 if (in_array($idCurso, $idCursosExonerados) || in_array($idCurso, $idCursosExamenAprobado)){
                     $ec->habilitado = false;
-                     error_log("El curso ha sido aprobado");
+                     // error_log("El curso ha sido aprobado");
                      // limpieza de datos para retornar
                      unset($ec->curso->carreras);
                      unset($ec->curso->previas);
                     continue;
                 }
-                error_log("El curso NO ha sido aprobado");
+                // error_log("El curso NO ha sido aprobado");
 
                 // si se cumple con las previas
                 $previas = $ec->curso->previas;
-
-                error_log("previas:");
+                // error_log("previas:");
                 foreach ($previas as $p) {
-                    error_log("    requiere $p->tipo de " . $p->previa->id);
+                    // error_log("    requiere $p->tipo de " . $p->previa->id);
 
                     if (strcmp($p->tipo, "curso") == 0 && 
                         ! ( in_array($p->previa->id, $idCursosExonerados) || 
                         in_array($p->previa->id, $idCursosAExamen) || 
                         in_array($p->previa->id, $idCursosExamenAprobado))) {
     
-                        error_log("      no se cumple con la previa");
-
+                        // error_log("      no se cumple con la previa");
                         $ec->habilitado = false;
                         break;
                     }
@@ -272,8 +270,7 @@ class EdicionesCursoController extends Controller
                         ! (in_array($p->previa->id, $idCursosExonerados) || 
                         in_array($p->previa->id, $idCursosExamenAprobado))){
 
-                        error_log("      no se cumple con la previa");
-
+                            // error_log("      no se cumple con la previa");
                         $ec->habilitado = false;
                         break;
                     }
