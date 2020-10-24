@@ -64,7 +64,10 @@ $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerS
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
 
 $router->post('edicionesCurso/{id}/inscripciones/{idEstudiante}', 'EdicionesCursoController@asignarEstudiante');
+$router->post('edicionesCurso/{id}/clasesDictada', 'EdicionesCursoController@claseDictada');
 $router->put('edicionesCurso/{id}/docente/{ciDocente}', 'EdicionesCursoController@asignarDocente');
+$router->get('edicionesCurso/docente/{ciDocente}', 'EdicionesCursoController@CursosDocente');
+$router->get('edicionesCurso/{id}/estudiantes', 'EdicionesCursoController@estudiantes');
 
 $router->post('examenes/{id}/inscripciones/{ciEstudiante}', 'ExamenController@asignarEstudiante');
 

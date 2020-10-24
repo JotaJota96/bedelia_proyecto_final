@@ -24,4 +24,12 @@ class Docente extends Model
     public function examenes() {
         return $this->hasMany('App\Models\Examen');
     }
+
+    public function edicionesCursoActuales() {
+        $PeriodoLetivoActual = PeriodoLectivo::periodoActual();
+        if ($PeriodoLetivoActual == null) {
+            return [];
+        }
+        return $this->edicionesCurso->where('periodo_lectivo_id', $PeriodoLetivoActual->id);
+    }
 }
