@@ -6,42 +6,47 @@
                     {{curso.nombre}}
                 </mat-list-option>
             </mat-selection-list>
-            <mat-card-actions align="end">
-                <button mat-button (click)="confirmar(curso.selectedOptions.selected[0]?.value.id)">Confirmar</button>
-            </mat-card-actions>
         </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button (click)="buscar(curso.selectedOptions.selected[0]?.value.id)">Buscar</button>
+        </mat-card-actions>
     </mat-card>
     <mat-card class="mt-2">
-        <!-- Tabla -->
-        <table mat-table [dataSource]="usuariosDataSource" class="col-12">
-            <!-- Columna -->
-            <ng-container matColumnDef="cedula">
-                <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                <td mat-cell *matCellDef="let element"> {{element.persona.cedula}} </td>
-            </ng-container>
+        <mat-card-header>
+            <button color="primary" mat-raised-button (click)="confirmar()">Confirmar</button>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Tabla -->
+            <table mat-table [dataSource]="usuariosDataSource" class="col-12">
+                <!-- Columna -->
+                <ng-container matColumnDef="cedula">
+                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.persona.cedula}} </td>
+                </ng-container>
 
-            <!-- Columna -->
-            <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.persona.nombre}} </td>
-            </ng-container>
+                <!-- Columna -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.persona.nombre}} </td>
+                </ng-container>
 
-            <!-- Columna -->
-            <ng-container matColumnDef="accion">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element" align="end">
-                    <button class="mx-1" (click)="ingresarNota()" mat-raised-button>Ingresar nota</button>
-                </td>
-            </ng-container>
+                <!-- Columna -->
+                <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element" align="end">
+                        <button class="mx-1" (click)="ingresarNota()" mat-raised-button>Ingresar nota</button>
+                    </td>
+                </ng-container>
 
-            <!-- Definicion de columnas y filas, o algo asi-->
-            <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+                <!-- Definicion de columnas y filas, o algo asi-->
+                <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
 
-            <!-- Esto se muestra si la tabla esta vacia -->
-            <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
-            </tr>
-        </table>
+                <!-- Esto se muestra si la tabla esta vacia -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
+                </tr>
+            </table>
+        </mat-card-content>
     </mat-card>
 </div>

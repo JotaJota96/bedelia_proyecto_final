@@ -32,7 +32,10 @@ export class IngresarResultadoExamenComponent implements OnInit {
         this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
       }
     );
+  }
 
+  buscar(id:number){
+    this.mostrar = true;
     this.usuServ.getAll().subscribe(
       (datos) => {
         this.usuariosDataSource.data = datos;
@@ -42,9 +45,8 @@ export class IngresarResultadoExamenComponent implements OnInit {
     );
   }
 
-  confirmar(id:number){
-    this.mostrar = true;
-    console.log(id);
+  confirmar(){
+
   }
 
   ingresarNota(){

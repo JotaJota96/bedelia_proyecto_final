@@ -45,15 +45,15 @@ export class ControlAsistenciaComponent implements OnInit {
   }
 
   asistio(id:string){
-
+    //Asistió = 1, Llegada tarde = 0.5, No asistió = 0
   }
   
   noAsistio(id:string){
-
+    //Asistió = 1, Llegada tarde = 0.5, No asistió = 0
   }
   
   mediaFalta(id:string){
-
+    //Asistió = 1, Llegada tarde = 0.5, No asistió = 0
   }
 
   openSnackBar(mensaje: string) {

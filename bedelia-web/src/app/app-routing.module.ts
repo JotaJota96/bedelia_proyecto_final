@@ -31,6 +31,7 @@ import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/camb
 import { ControlAsistenciaComponent } from './docente/control-asistencia/control-asistencia.component';
 import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
 import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
+import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -97,6 +98,8 @@ const routes: Routes = [
   {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent},
 
   {path: 'estudiante/cambiar/contrasenia', component: CambirContraseniaComponent},
+
+  {path: 'estudiante/consultar-escolaridad', component: ConsultaEscolaridadComponent},
   //Fin de componentes de estudiante
 
   //Inico de componentes de docente

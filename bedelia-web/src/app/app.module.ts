@@ -58,6 +58,7 @@ import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-cu
 import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
 import { IngresarNotaComponent } from './docente/ingresar-resultado-curso/ingresar-nota/ingresar-nota.component';
 import { IngresarNotaExamenComponent } from './docente/ingresar-resultado-examen/ingresar-nota-examen/ingresar-nota-examen.component';
+import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
 
 
 
@@ -95,7 +96,8 @@ import { IngresarNotaExamenComponent } from './docente/ingresar-resultado-examen
     IngresarResultadoCursoComponent,
     IngresarResultadoExamenComponent,
     IngresarNotaComponent,
-    IngresarNotaExamenComponent
+    IngresarNotaExamenComponent,
+    ConsultaEscolaridadComponent
   ],
   imports: [
     MatStepperModule,

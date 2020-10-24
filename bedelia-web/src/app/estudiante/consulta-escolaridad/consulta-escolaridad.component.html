@@ -1,0 +1,24 @@
+<div class="container">
+    <mat-card class="mt-5">
+        <mat-card-content>
+            <!-- datos de la direccion -->
+            <div class="row mb-2">
+                <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
+                    <mat-select placeholder="Carrera" formControlName="carrera">
+                        <mat-option *ngFor="let carrera of listaCarrera" [value]="carrera">
+                            {{carrera.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="col-12 col-md-2 mb-2 m-auto">
+                    <button mat-raised-button color="primary" (click)="obtenerEscolaridad()">Obtener escolaridad</button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-content>
+            
+        </mat-card-content>
+    </mat-card>
+</div>
