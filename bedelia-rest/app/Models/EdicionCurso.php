@@ -39,6 +39,18 @@ class EdicionCurso extends Model
 
 	// devuelve coleccion
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante','inscripcion_curso');
+        return $this->belongsToMany('App\Models\Estudiante','inscripcion_curso')->withPivot('nota');
+    }
+
+    public function contarAsistidas($idEstudiante){
+        $cont = 0;
+        foreach ($this->clasesDictada as $claseDictada) {
+            foreach ($claseDictada->estudiantes as $estudiante) {
+                if ($estudiante->id == $idEstudiante) {
+                    $cont += $estudiante->pivot->asistencia;
+                }
+            }
+        }
+        return $cont;
     }
 }

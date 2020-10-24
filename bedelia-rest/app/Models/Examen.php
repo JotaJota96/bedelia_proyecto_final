@@ -29,7 +29,7 @@ class Examen extends Model
 
 	// devuelve coleccion
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante','inscripcion_examen');
+        return $this->belongsToMany('App\Models\Estudiante','inscripcion_examen')->withPivot('nota');
     }
 
 	// devuelve uno
