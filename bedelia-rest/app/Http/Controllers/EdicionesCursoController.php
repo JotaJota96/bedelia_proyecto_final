@@ -7,8 +7,13 @@ use Illuminate\Support\Facades\DB;
 use App\Models\EdicionCurso;
 use App\Models\Docente;
 use App\Models\Usuario;
+use App\Models\Estudiante;
 use App\Models\Persona;
 use App\Models\ClaseDictada;
+use App\Models\Carrera;
+use App\Models\PeriodoInscCurso;
+
+
 
 class EdicionesCursoController extends Controller
 {
@@ -17,6 +22,7 @@ class EdicionesCursoController extends Controller
     public function __construct(Request $request){
         $this->request = $request;
     }
+
     /**
      * @OA\Post(
      *     path="/edicionesCurso/{id}/inscripciones/{ciEstudiante}",
@@ -161,6 +167,126 @@ class EdicionesCursoController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json($e->getMessage(), 404);
+        }
+    }
+
+    public function listarParaInscripcion($ciEstudiante, $idCarrera){
+        try{
+            $usu = Usuario::buscar($ciEstudiante);
+            if ($usu == null) return response()->json(['message' => 'No se encontró el usuario.'], 404);
+            $est = $usu->estudiante;
+            if ($est == null) throw new \Exception("El usuario no es estudiante");
+
+            $idSede = 0;
+            foreach ($est->inscripcionesCarrera as $insc) {
+                if ($insc->carrera->id == $idCarrera){
+                    $idSede = $insc->sede->id;
+                }
+            }
+
+            $carrera = Carrera::find($idCarrera);
+            if ($carrera == null) return response()->json(['message' => 'No se encontro la carrera.'], 404);
+            $cursos = array();
+            foreach ($carrera->cursos as $value) $cursos[$value->id] = $value;
+
+            $edicionesCurso = array();
+            $edicionesCursoPreFiltro = EdicionCurso::where('periodo_lectivo_id', PeriodoInscCurso::periodoProximo()->periodoLectivo->id)
+                ->where('sede_id', $idSede)->get();
+            foreach ($edicionesCursoPreFiltro as $ec) {
+                foreach ($ec->curso->carreras as $c) {
+                    $ec->habilitado = true;
+                    if ($c->id == $idCarrera){
+                        array_push($edicionesCurso, $ec);
+                    }
+                }
+            }
+            
+            $idCursosExonerados       = array(); // ID de los cursos que se exoneraron
+            $idCursosAExamen          = array(); // ID de los cursos que se debe dar examen
+            $idCursosARecursar        = array(); // ID de los cursos que se debe recursar
+            $idCursosExamenAprobado   = array(); // ID de los cursos de los que se dio examen y se aprobo
+            $idCursosExamenNoAprobado = array(); // ID de los cursos de los que se dio examen y NO se aprobo
+
+            $cursosTomados = $est->NotasCarrera($idCarrera);
+            foreach ($cursosTomados as $value) {
+                $nota    = $value['nota'];
+                $idCurso = $value['curso_id'];
+                if ($nota >= 3){
+                    array_push($idCursosExonerados, $idCurso);
+                }elseif ($nota >= 2){
+                    array_push($idCursosAExamen, $idCurso);
+                }else{
+                    array_push($idCursosARecursar, $idCurso);
+                }
+            }
+            $examenesDados = $est->NotasExamenes($idCarrera);
+            foreach ($examenesDados as $value) {
+                $nota    = $value['nota'];
+                $idCurso = $value['curso_id'];
+                if ($nota >= 3){
+                    array_push($idCursosExamenAprobado, $idCurso);
+                }else{
+                    array_push($idCursosExamenNoAprobado, $idCurso);
+                }
+            }
+
+            // Ahora si viene lo chido... Verificar las previas...
+            // "curso"  significa que hay que haber llegado a 25/100 = 2.0
+            // "examen" significa que hay que haber llegado a 60/100 = 3.0
+            // se van recorriendo los EdicionCurso y se marcan con 'habilitado = false' los que correpondan
+            foreach ($edicionesCurso as $ec) {
+                $idCurso = $ec->curso->id;
+                error_log("-----------------------------");
+                error_log("Verificando curso $idCurso");
+
+                // si el curso ya está aprobado
+                if (in_array($idCurso, $idCursosExonerados) || in_array($idCurso, $idCursosExamenAprobado)){
+                    $ec->habilitado = false;
+                     error_log("El curso ha sido aprobado");
+                     // limpieza de datos para retornar
+                     unset($ec->curso->carreras);
+                     unset($ec->curso->previas);
+                    continue;
+                }
+                error_log("El curso NO ha sido aprobado");
+
+                // si se cumple con las previas
+                $previas = $ec->curso->previas;
+
+                error_log("previas:");
+                foreach ($previas as $p) {
+                    error_log("    requiere $p->tipo de " . $p->previa->id);
+
+                    if (strcmp($p->tipo, "curso") == 0 && 
+                        ! ( in_array($p->previa->id, $idCursosExonerados) || 
+                        in_array($p->previa->id, $idCursosAExamen) || 
+                        in_array($p->previa->id, $idCursosExamenAprobado))) {
+    
+                        error_log("      no se cumple con la previa");
+
+                        $ec->habilitado = false;
+                        break;
+                    }
+
+                    if (strcmp($p->tipo, "examen") == 0 && 
+                        ! (in_array($p->previa->id, $idCursosExonerados) || 
+                        in_array($p->previa->id, $idCursosExamenAprobado))){
+
+                        error_log("      no se cumple con la previa");
+
+                        $ec->habilitado = false;
+                        break;
+                    }
+                }
+
+                // limpieza de datos para retornar
+                unset($ec->curso->carreras);
+                unset($ec->curso->previas);
+            }
+
+            return response()->json($edicionesCurso, 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Error al obtener los cursos.' . $e->getMessage()], 500);
         }
     }
 }
