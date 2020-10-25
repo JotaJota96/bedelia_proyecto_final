@@ -458,7 +458,7 @@
                 }
             }
         },
-        "/edicionesCurso/{id}/inscripciones/{ciEstudiante}": {
+        "/edicionesCurso/{id}/estudiantes/{ciEstudiante}": {
             "post": {
                 "tags": [
                     "Ediciones Curso"

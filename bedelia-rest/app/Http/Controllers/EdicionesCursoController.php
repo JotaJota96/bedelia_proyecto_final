@@ -25,7 +25,7 @@ class EdicionesCursoController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/edicionesCurso/{id}/inscripciones/{ciEstudiante}",
+     *     path="/edicionesCurso/{id}/estudiantes/{ciEstudiante}",
      *     tags={"Ediciones Curso"},
      *     description="Inscribe a un estudiante a una edicion de curso",
      *     @OA\Parameter(
@@ -33,7 +33,7 @@ class EdicionesCursoController extends Controller
      *         in="path",
      *         description="ID de la edicion del curso",
      *         required=true,
-     *         @OA\Schema(type="number")
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
      *         name="ciEstudiante",
@@ -48,12 +48,12 @@ class EdicionesCursoController extends Controller
      *     ),
      * )
      */
-    public function asignarEstudiante($id, $idEstudiante){
+    public function asignarEstudiante($id, $ciEstudiante){
         try {
             DB::beginTransaction();
             $EdicionCurso = EdicionCurso::where('id', $id)->first();
             // return response()->json($EdicionCurso, 200);
-            $Usuario = Usuario::buscar($idEstudiante);
+            $Usuario = Usuario::buscar($ciEstudiante);
             $Usuario->estudiante;
             // return response()->json($Estudiante, 200);
             // return response()->json($Docente, 200);

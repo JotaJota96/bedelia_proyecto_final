@@ -63,12 +63,14 @@ $router->post('postulantes/{id}/aceptar',   'PostulantesController@aceptar');
 $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerSede');
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
 
-$router->post('edicionesCurso/{id}/inscripciones/{idEstudiante}', 'EdicionesCursoController@asignarEstudiante');
-$router->post('edicionesCurso/{id}/clasesDictada', 'EdicionesCursoController@Agregar');
-$router->put('edicionesCurso/{id}/docente/{ciDocente}', 'EdicionesCursoController@asignarDocente');
-$router->get('edicionesCurso/docente/{ciDocente}', 'EdicionesCursoController@CursosDocente');
-$router->get('edicionesCurso/{id}/estudiantes', 'EdicionesCursoController@estudiantes');
-$router->get('edicionesCurso/{ciEstudiante}/{idCarrera}', 'EdicionesCursoController@listarParaInscripcion');
+// Eliminar la siguiente linea cuando Lucas cambie la ruta desde el frontend
+$router->post('edicionesCurso/{id}/inscripciones/{ciEstudiante}', function ($id, $ciEstudiante) use ($router) { return redirect()->to("edicionesCurso/$id/estudiantes/$ciEstudiante"); });
+$router->post('edicionesCurso/{id}/estudiantes/{ciEstudiante}', 'EdicionesCursoController@asignarEstudiante');
+$router->post('edicionesCurso/{id}/clasesDictada',              'EdicionesCursoController@Agregar');
+$router->put('edicionesCurso/{id}/docente/{ciDocente}',         'EdicionesCursoController@asignarDocente');
+$router->get('edicionesCurso/docente/{ciDocente}',              'EdicionesCursoController@CursosDocente');
+$router->get('edicionesCurso/{id}/estudiantes',                 'EdicionesCursoController@estudiantes');
+$router->get('edicionesCurso/{ciEstudiante}/{idCarrera}',       'EdicionesCursoController@listarParaInscripcion');
 
 $router->post('examenes/{id}/inscripciones/{ciEstudiante}', 'ExamenController@asignarEstudiante');
 
