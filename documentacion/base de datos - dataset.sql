@@ -1,3 +1,39 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+TRUNCATE TABLE `admin`;
+TRUNCATE TABLE `administrativo`;
+TRUNCATE TABLE `area_estudio`;
+TRUNCATE TABLE `asistencia`;
+TRUNCATE TABLE `carrera`;
+TRUNCATE TABLE `carrera_area_estudio`;
+TRUNCATE TABLE `carrera_curso`;
+TRUNCATE TABLE `carrera_sede`;
+TRUNCATE TABLE `clase_dictada`;
+TRUNCATE TABLE `curso`;
+TRUNCATE TABLE `direccion`;
+TRUNCATE TABLE `docente`;
+TRUNCATE TABLE `edicion_curso`;
+TRUNCATE TABLE `escolaridad`;
+TRUNCATE TABLE `estudiante`;
+TRUNCATE TABLE `examen`;
+TRUNCATE TABLE `inscripcion_carrera`;
+TRUNCATE TABLE `inscripcion_curso`;
+TRUNCATE TABLE `inscripcion_examen`;
+TRUNCATE TABLE `periodo`;
+TRUNCATE TABLE `periodo_examen`;
+TRUNCATE TABLE `periodo_insc_curso`;
+TRUNCATE TABLE `periodo_insc_examen`;
+TRUNCATE TABLE `periodo_lectivo`;
+TRUNCATE TABLE `persona`;
+TRUNCATE TABLE `postulacion`;
+TRUNCATE TABLE `previa`;
+TRUNCATE TABLE `sede`;
+TRUNCATE TABLE `tipo_curso`;
+TRUNCATE TABLE `usuario`;
+
 -- ------------------------------------------------------------------------
 -- Base de datos: `bedelia`
 -- Orden en que se generaran los datos de prueba
@@ -18,42 +54,22 @@ curso                 hecho
 carrera_curso         hecho
 previa                hecho
 carrera_area_estudio  hecho
-
-
 periodo               hecho
 periodo_examen        hecho
 periodo_insc_curso    hecho
 periodo_insc_examen   hecho
 periodo_lectivo       hecho
-
-edicion_curso         (sin hacer)
-examen                (sin hacer)
-
-inscripcion_carrera   (sin hacer)
-inscripcion_curso     (sin hacer)
-inscripcion_examen    (sin hacer)
-
-clase_dictada         (sin hacer)
-asistencia            (sin hacer)
+edicion_curso         hecho
+examen                hecho
+inscripcion_carrera   hecho
+inscripcion_curso     hecho
+inscripcion_examen    hecho
+clase_dictada         hecho
+asistencia            hecho
 
 postulacion           (sin hacer)
-
 escolaridad           (sin hacer)
-
 */
-
-
--- ------------------------------------------------------------------------
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
--- ------------------------------------------------------------------------
--- 
--- Trunca todas las tablas de la base de datos
--- 
--- Codigo pendiente....
-
 
 
 -- ------------------------------------------------------------------------
@@ -187,6 +203,7 @@ INSERT INTO `area_estudio`(/*`id`,*/ `area`) VALUES
     (/*  ,*/ 'ciencias sociales'                     ),
     (/*  ,*/ 'programacion'                          ),
     (/*  ,*/ 'redes y arquitectura de computadoras'  );
+
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `tipo_curso`
@@ -731,4 +748,5 @@ UPDATE asistencia a SET a.asistencia = 0 WHERE (a.clase_dictada_id * a.estudiant
 
 
 -- ------------------------------------------------------------------------
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
