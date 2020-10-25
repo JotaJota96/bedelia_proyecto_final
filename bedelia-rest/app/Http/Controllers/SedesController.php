@@ -188,6 +188,9 @@ class SedesController extends Controller
             $idPeriodo = 0;
             $pla  = PeriodoLectivo::periodoActual();
             $pica = PeriodoLectivo::periodoProximo();
+            if ($$pla == null && $pica == null){
+                throw new \Exception("No se está en un periodo lectivo ni de inscripcion");
+            }
             if ($pla != null) {
                 $idPeriodo = $pla->id;
             } else if ($pica != null) {

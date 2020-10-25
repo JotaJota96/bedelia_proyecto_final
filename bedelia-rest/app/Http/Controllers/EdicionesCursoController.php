@@ -343,7 +343,7 @@ class EdicionesCursoController extends Controller
             foreach ($carrera->cursos as $value) $cursos[$value->id] = $value;
 
             // obtengo el ID del proximo PeriodoLectivo (semestre)
-            $perProx = PeriodoInscCurso::periodoProximo();
+            $perProx = PeriodoInscCurso::periodoActual();
             if ($perProx == null) throw new \Exception("Aún no se ha definido el próximo período lectivo");
             $idProxPerLec = $perProx->periodoLectivo->id;
             
