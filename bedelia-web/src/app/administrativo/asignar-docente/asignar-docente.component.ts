@@ -23,8 +23,7 @@ export class AsignarDocenteComponent implements OnInit {
   persona: PersonaDTO = new PersonaDTO;
   mostrarDatos: boolean = false;
   idSede: number;
-  ciLogeado: string = JSON.parse(localStorage.getItem("loginData")).cedula;
-
+  ciLogeado: string;
   public formularioBusqueda: FormGroup;
   public formularioAsignar: FormGroup;
 
@@ -35,7 +34,7 @@ export class AsignarDocenteComponent implements OnInit {
     protected usuServ: UsuariosService) { }
 
   ngOnInit(): void {
-
+    this.ciLogeado = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
     this.usuServ.getAllDocente().subscribe(
       (datos) => {
         this.listaDocente = datos;

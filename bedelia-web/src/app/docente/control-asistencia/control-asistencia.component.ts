@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { CursoDTO } from 'src/app/clases/curso-dto';
@@ -15,9 +16,9 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 export class ControlAsistenciaComponent implements OnInit {
   listaCurso: EdicionCursoDTO[] = [];
   mostrar:boolean = false;
-
+  public formulario: FormGroup;
    // columnas que se mostraran en la tabla
-   columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'fecha', 'accion'];
+   columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'accion'];
    // objeto que necesita la tabla para mostrar el contenido
    usuariosDataSource = new MatTableDataSource([]);
 
@@ -32,18 +33,18 @@ export class ControlAsistenciaComponent implements OnInit {
       }
     );
 
-    this.usuServ.getAll().subscribe(
-      (datos) => {
-        this.usuariosDataSource.data = datos;
-      }, (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
-      }
-    );
+    this.formulario = new FormGroup({
+      curso: new FormControl('', [Validators.required])
+    });
   }
 
-  confirmar(id:number){
+  confirmar(){
     this.mostrar = true;
-    console.log(id);
+    this.edicionServ.getEstudiantesCurso(this.formulario.controls['curso'].value).subscribe(
+      (datos)=>{
+        this.usuariosDataSource.data = datos.lista;
+      }
+    );
   }
 
   asistio(id:string){

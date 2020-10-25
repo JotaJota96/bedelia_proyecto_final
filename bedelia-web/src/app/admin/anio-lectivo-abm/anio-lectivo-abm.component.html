@@ -156,8 +156,8 @@
                 </form>
             </mat-card-content>
             <mat-card-actions align="end">
+                <button mat-raised-button *ngIf="!soloLectura" (click)="volver()">Volver</button>
                 <button mat-raised-button color="primary" *ngIf="!soloLectura" (click)="agregar()">Crear</button>
-                <button mat-raised-button color="primary" *ngIf="!soloLectura" (click)="volver()">Volver</button>
             </mat-card-actions>
         </mat-card>
     </div>

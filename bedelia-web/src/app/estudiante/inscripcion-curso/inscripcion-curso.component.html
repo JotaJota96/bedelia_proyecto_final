@@ -1,14 +1,28 @@
 <div class="container">
   <mat-card class="mt-5">
     <mat-card-content>
+      <form [formGroup]="formulario" class="row">
+        <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
+          <mat-select placeholder="Lista de carreras inscripto" name="carrera" formControlName="carrera">
+            <mat-option *ngFor="let carrera of listaCarrera" [value]="carrera.id">
+              {{carrera.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="col-12 col-md-2 m-auto" align="end">
+          <button mat-raised-button (click)="cargarMateria()" color="primary">Seleccionar carrera </button>
+        </div>
+      </form>
+
       <mat-selection-list class="curso" #curso [(ngModel)]="selectedOptions">
         <mat-list-option *ngFor="let curso of listaCurso" [disabled]="false" [value]="curso">
-          {{curso.nombre}}
+          {{curso.curso.nombre}}
         </mat-list-option>
       </mat-selection-list>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button  [routerLink]="['/']">Volver</button>
+      <button mat-button [routerLink]="['/']">Volver</button>
       <button mat-button (click)="confirmar()">Confirmar</button>
     </mat-card-actions>
   </mat-card>

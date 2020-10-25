@@ -1,14 +1,19 @@
 <div class="container">
     <mat-card class="mt-5">
         <mat-card-content>
-            <mat-selection-list class="curso" #curso [multiple]="false">
-                <mat-list-option *ngFor="let edCurso of listaCurso" [disabled]="false" [value]="curso">
-                    {{edCurso.curso.nombre}}
-                </mat-list-option>
-            </mat-selection-list>
-            <mat-card-actions align="end">
-                <button mat-button (click)="confirmar(curso.selectedOptions.selected[0]?.value.id)">Confirmar</button>
-            </mat-card-actions>
+            <form [formGroup]="formulario" class="row">
+                <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
+                  <mat-select placeholder="Lista de curso" name="curso" formControlName="curso">
+                    <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
+                      {{curso.curso.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+        
+                <div class="col-12 col-md-2 m-auto" align="end">
+                  <button mat-raised-button (click)="confirmar()" color="primary">Seleccionar carrera </button>
+                </div>
+              </form>
         </mat-card-content>
     </mat-card>
     <mat-card class="mt-2">

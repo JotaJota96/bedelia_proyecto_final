@@ -185,7 +185,7 @@ export class AnioLectivoABMComponent implements OnInit {
     console.log(anio);
     this.periodoServ.create(anio).subscribe(
       (datos) => {
-        this.soloLectura = false;
+        this.soloLectura = true;
       },
       (error) => {
         this.openSnackBar("Error al crear el año lectivo");
