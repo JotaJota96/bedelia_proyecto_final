@@ -2,8 +2,8 @@
     <mat-card class="mt-5">
         <mat-card-content>
             <mat-selection-list class="curso" #curso [multiple]="false">
-                <mat-list-option *ngFor="let curso of listaCurso" [disabled]="false" [value]="curso">
-                    {{curso.nombre}}
+                <mat-list-option *ngFor="let edCurso of listaCurso" [disabled]="false" [value]="curso">
+                    {{edCurso.curso.nombre}}
                 </mat-list-option>
             </mat-selection-list>
         </mat-card-content>

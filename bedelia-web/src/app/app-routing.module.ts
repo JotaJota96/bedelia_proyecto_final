@@ -32,6 +32,7 @@ import { ControlAsistenciaComponent } from './docente/control-asistencia/control
 import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
 import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
 import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
+import { JustificarInasistenciaComponent } from './administrativo/justificar-inasistencia/justificar-inasistencia.component';
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -90,6 +91,8 @@ const routes: Routes = [
   {path: 'administrativo/postulante/ver/:id', component: VerMasComponent},
   
   {path: 'administrativo/asignar-docente', component: AsignarDocenteComponent},
+
+  {path: 'administrativo/justificar-inasistencia', component: JustificarInasistenciaComponent},
   //Fin de componentes de administrativo
 
   //Inico de componentes de estudiante

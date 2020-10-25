@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { CursoDTO } from 'src/app/clases/curso-dto';
+import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { CursoService } from 'src/app/servicios/curso.service';
+import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { IngresarNotaComponent } from './ingresar-nota/ingresar-nota.component';
 
@@ -13,7 +15,7 @@ import { IngresarNotaComponent } from './ingresar-nota/ingresar-nota.component';
   styleUrls: ['./ingresar-resultado-curso.component.css']
 })
 export class IngresarResultadoCursoComponent implements OnInit {
-  listaCurso: CursoDTO[] = [];
+  listaCurso: EdicionCursoDTO[] = [];
   mostrar:boolean = false;
   notas:number[]=[];
 
@@ -22,10 +24,10 @@ export class IngresarResultadoCursoComponent implements OnInit {
    // objeto que necesita la tabla para mostrar el contenido
    usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar, protected usuServ: UsuariosService, protected cursoServ: CursoService) { }
+  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar, protected usuServ: UsuariosService, protected edicionServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
-    this.cursoServ.getAll().subscribe(
+    this.edicionServ.getEdicionesDocentes(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
       (datos) => {
         this.listaCurso = datos;
       }, (error) => {

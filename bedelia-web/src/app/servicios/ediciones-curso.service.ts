@@ -20,4 +20,8 @@ export class EdicionesCursoService {
   asignar(id: number, ci: string) {
     return this.http.put<EdicionCursoDTO[]>(this.apiURL + "/" + id + "/docente/" + ci, null);
   }
+
+  getEdicionesDocentes(ci:string){
+    return this.http.get<EdicionCursoDTO[]>(this.apiURL + "/docente/" + ci);
+  }
 }

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { CursoDTO } from 'src/app/clases/curso-dto';
+import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { CursoService } from 'src/app/servicios/curso.service';
+import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./control-asistencia.component.css']
 })
 export class ControlAsistenciaComponent implements OnInit {
-  listaCurso: CursoDTO[] = [];
+  listaCurso: EdicionCursoDTO[] = [];
   mostrar:boolean = false;
 
    // columnas que se mostraran en la tabla
@@ -19,10 +21,10 @@ export class ControlAsistenciaComponent implements OnInit {
    // objeto que necesita la tabla para mostrar el contenido
    usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService,protected cursoServ: CursoService) { }
+  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService,protected edicionServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
-    this.cursoServ.getAll().subscribe(
+    this.edicionServ.getEdicionesDocentes(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
       (datos) => {
         this.listaCurso = datos;
       }, (error) => {
