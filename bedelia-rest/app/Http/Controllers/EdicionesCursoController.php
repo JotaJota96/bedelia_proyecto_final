@@ -25,16 +25,9 @@ class EdicionesCursoController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/edicionesCurso/{id}/inscripciones/{ciEstudiante}",
+     *     path="/edicionesCurso/inscripciones/{ciEstudiante}",
      *     tags={"Ediciones Curso"},
      *     description="Inscribe a un estudiante a una edicion de curso",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID de la edicion del curso",
-     *         required=true,
-     *         @OA\Schema(type="number")
-     *     ),
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -42,31 +35,46 @@ class EdicionesCursoController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             type="array",
+     *             description="ID de los EdicionCurso a los que se inscribirá el estudiante",
+     *             @OA\Items(type="integer"),
+     *         ),
+     *     ),
      *     @OA\Response(
      *         response="default",
      *         description=""
      *     ),
      * )
      */
-    public function asignarEstudiante($id, $idEstudiante){
+    public function asignarEstudiante($ciEstudiante){
         try {
             DB::beginTransaction();
-            $EdicionCurso = EdicionCurso::where('id', $id)->first();
-            // return response()->json($EdicionCurso, 200);
-            $Usuario = Usuario::buscar($idEstudiante);
-            $Usuario->estudiante;
-            // return response()->json($Estudiante, 200);
-            // return response()->json($Docente, 200);
-            $datosTablaIntermedia = [
-                'nota' => 0,
-            ];
-            $Usuario->estudiante->edicionesCurso()->attach($EdicionCurso, $datosTablaIntermedia);
-            $Usuario->save();
+            $idEdicionesCurso = $this->request->json()->all();
+
+            $Usuario = Usuario::buscar($ciEstudiante);
+            if ($Usuario == null || $Usuario->estudiante == null) throw new \Exception("No se encontro el estudiante");
+
+            foreach ($idEdicionesCurso as $id) {
+                $EdicionCurso = EdicionCurso::where('id', $id)->first();
+                if ($EdicionCurso == null) throw new \Exception("No se encontro el EdicionCurso");
+
+                // return response()->json($EdicionCurso, 200);
+                //$Usuario->estudiante;
+                // return response()->json($Estudiante, 200);
+                // return response()->json($Docente, 200);
+                $datosTablaIntermedia = [
+                    'nota' => 0,
+                ];
+                $Usuario->estudiante->edicionesCurso()->attach($EdicionCurso, $datosTablaIntermedia);
+                $Usuario->save();
+            }
             DB::commit();
-            return response()->json(null, 200);
+            return response()->json($idEdicionesCurso, 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al registrar la inscripcion.' . $e->getMessage()], 500);
         }
     } 
     
