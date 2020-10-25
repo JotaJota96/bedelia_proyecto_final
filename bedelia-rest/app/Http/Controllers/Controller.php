@@ -81,8 +81,8 @@ class Controller extends BaseController
      /**
      * @OA\Schema(
      *     schema="UsuarioDTO",
-     *     @OA\Property(property="id", type="integer"),
-     *     @OA\Property(property="contrasenia", type="string"),
+     *     @OA\Property(property="id",               type="integer"),
+     *     @OA\Property(property="contrasenia",      type="string"),
      *     @OA\Property(
      *         property="roles",
      *         type="array",
@@ -121,7 +121,7 @@ class Controller extends BaseController
      *     schema="AreaEstudioDTO",
      *     @OA\Property(property="id",       type="integer"),
      *     @OA\Property(property="area",     type="string"),
-     *     @OA\Property(property="creditos", type="integer", description="Solo utilizado a veces para devolver informacion"),
+     *     @OA\Property(property="creditos", type="integer", description="Depende de la carrera"),
      * )
      */
 
@@ -134,8 +134,8 @@ class Controller extends BaseController
      *     @OA\Property(property="max_inasistencias", type="integer"),
      *     @OA\Property(property="cant_creditos",     type="integer"),
      *     @OA\Property(property="cant_clases",       type="integer"),
-     *     @OA\Property(property="semestre",          type="integer", description="Solo utilizado a veces para devolver informacion"),
-     *     @OA\Property(property="optativo",          type="integer", description="Solo utilizado a veces para devolver informacion"),
+     *     @OA\Property(property="semestre",          type="integer", description="Depende de la carrera"),
+     *     @OA\Property(property="optativo",          type="integer", description="Depende de la carrera"),
      *     @OA\Property(
      *         property="area_estudio",
      *         ref="#/components/schemas/AreaEstudioDTO",
@@ -267,6 +267,7 @@ class Controller extends BaseController
      *     schema="EdicionCursoDTO",
      *     @OA\Property(property="id",              type="integer"),
      *     @OA\Property(property="acta_confirmada", type="boolean"),
+     *     @OA\Property(property="habilitado",      type="integer", readOnly=true, description="1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas"),
      *     @OA\Property(
      *         property="sede",
      *         ref="#/components/schemas/SedeDTO",
@@ -283,7 +284,7 @@ class Controller extends BaseController
      */
 
 
-     /**
+    /**
      * @OA\Schema(
      *     schema="ExamenDTO",
      *     @OA\Property(property="id",              type="integer"),
@@ -303,6 +304,29 @@ class Controller extends BaseController
      *     ),
      * )
      */
+
+
+    /**
+     * @OA\Schema(
+     *     schema="ClaseDictadaDTO",
+     *     @OA\Property(property="id",              type="integer", readOnly=true),
+     *     @OA\Property(property="fecha",           type="string", readOnly=true),
+     *     @OA\Property(property="curso_id",        type="integer", readOnly=true),
+     *     @OA\Property(property="edicion_curso_id",type="integer", readOnly=true),
+     *     @OA\Property(
+     *         property="lista",
+     *         type="array",
+     *         @OA\Items(
+     *             @OA\Property(property="ciEstudiante",     type="string"),
+     *             @OA\Property(property="asistencia",       type="number", writeOnly=true),
+     *             @OA\Property(property="cant_asistencias", type="number", readOnly=true),
+     *             @OA\Property(property="nombre",           type="string", readOnly=true),
+     *             @OA\Property(property="apellido",         type="string", readOnly=true),
+     *         ),
+     *     ),
+     * )
+     */
+
 
     /**
      * @OA\Post(

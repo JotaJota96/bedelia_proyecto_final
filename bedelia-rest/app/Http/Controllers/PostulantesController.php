@@ -49,7 +49,7 @@ class PostulantesController extends Controller
         $Postulacion->Persona->direccion;
         $Postulacion->Sede;
         if ($Postulacion == null) {
-            return response()->json(['error' => 'Error al buscar la postulacion. '], 404);
+            return response()->json(['message' => 'Error al buscar la postulacion. '], 404);
         }
         return response()->json($Postulacion, 200);
     }
@@ -78,18 +78,49 @@ class PostulantesController extends Controller
             $Postulacion->img_escolaridad = $this->request->json('img_ci');
             $Postulacion->img_ci          = $this->request->json('img_escolaridad');
             $Postulacion->img_carne_salud = $this->request->json('img_carne_salud');
+
             $Persona = new Persona();
             $Direccion = new Direccion();
             $Persona->fill($this->request->json('persona'));
             $Direccion->fill($this->request->json(['persona', 'direccion']));
+
+            $reciclarPersona = false;
+            $perVerific1 = Persona::where('cedula', $Persona->cedula)->first();
+            $perVerific2 = Persona::where('correo', $Persona->correo)->first();
+            
+            if ($perVerific1 == null && $perVerific2 == null){
+                // si ni la cedula ni el correo se estaban usando
+                // no hago nada, que siga todo normal
+            }else if ($perVerific1 != null && $perVerific2 != null){
+                // si se encontraron usuarios tanto por cedula como por correo
+                // verifico si son el mismo
+                if ($perVerific1->id == $perVerific2->id){
+                    // si son el mismo usuario, puedo reciclarlo
+                    $reciclarPersona = true;
+                }else{
+                    // sino no se puede postular
+                    throw new \Exception("Ya existe un usuario con el correo o la cedula del postulante");
+                }
+            }else{
+                // sino no se puede postular
+                throw new \Exception("Ya existe un usuario con el correo o la cedula del postulante");
+            }
+
             $SedeID = $this->request->json(['sede', 'id']);
             $CarreraID = $this->request->json(['carrera', 'id']);
-            $Direccion->save();
-            $Persona->direccion()->associate($Direccion);
+
+            if ($reciclarPersona){
+                $Persona = Persona::where('cedula', $Persona->cedula)->first();
+            }else{
+                $Direccion->save();
+                $Persona->direccion()->associate($Direccion);
+                $Persona->save();
+            }
+
             $Sede = Sede::where('id', $SedeID)->first();
             $Carrera = Carrera::where('id', $CarreraID)->first();
+            
             if ($Postulacion != null && $Persona != null && $Sede != null && $Carrera != null) {
-                $Persona->save();
                 $Postulacion->Sede()->associate($Sede);
                 $Postulacion->Persona()->associate($Persona);
                 $Postulacion->Carrera()->associate($Carrera);
@@ -99,11 +130,11 @@ class PostulantesController extends Controller
             }
             else {
                 DB::rollBack();
-                return response()->json(['error' => 'Error al buscar los datos. '], 500);
+                return response()->json(['message' => 'Error al buscar los datos. '], 500);
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error al guardar el Postulante.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al guardar el Postulante.' . $e->getMessage()], 500);
         }
         return response()->json(['message' => 'Operacion no implementada aun'], 500);
     }
@@ -133,16 +164,13 @@ class PostulantesController extends Controller
         try {
             DB::beginTransaction();
             $Postulacion = Postulacion::where('id', $id)->first();
-            $Direccion = $Postulacion->Persona->direccion;
-            $Persona = $Postulacion->Persona;
-            $Postulacion->delete();
-            $Persona->delete();
-            $Direccion->delete();
+            $Postulacion->estado = 'R';
+            $Postulacion->save();
             DB::commit();
             return response()->json(null, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error al eliminar la postulacion.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al eliminar la postulacion.' . $e->getMessage()], 500);
         }
     }
     
@@ -191,7 +219,8 @@ class PostulantesController extends Controller
                 'mensaje'      => $this->request->json('mensaje'),
             ];
             CorreoPostulanteNotificacion::enviar($mailData);
-
+            $postu->estado = 'N';
+            $postu->save();
             return response()->json(['message' => "Correo enviado a $destinatario"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al enviar el correo.' . $e->getMessage()], 500);
@@ -234,39 +263,82 @@ class PostulantesController extends Controller
         try {
             DB::beginTransaction();
 
+            $reciclarUsuario = false;
+
             // obtengo la postulacion
             $postu = Postulacion::find($id);
             if ($postu == null){
                 return response()->json(['message' => 'Postulante no encontrado.'], 404);
             }
+            if (strcmp($postu->estado, "A") == 0){
+                throw new \Exception("No se puede aceptar la postulacion, ya fue aceptada anteriormente");
+            }
+
+            $usuVerific1 = Usuario::buscar($postu->persona->cedula);
+            $usuVerific2 = Usuario::buscar($postu->persona->correo);
             
-            // por las dudas verifico que voy a poder insertar el usuario sin problemas...
-            if (Usuario::buscar($postu->persona->cedula) != null || Usuario::buscar($postu->persona->correo) != null){
+            if ($usuVerific1 == null && $usuVerific2 == null){
+                // si ni la cedula ni el correo se estaban usando
+                // no hago nada, que siga todo normal
+            }else if ($usuVerific1 != null && $usuVerific2 != null){
+                // si se encontraron usuarios tanto por cedula como por correo
+                // verifico si son el mismo
+                if ($usuVerific1->id == $usuVerific2->id){
+                    // si son el mismo usuario, puedo reciclarlo
+                    $reciclarUsuario = true;
+                }else{
+                    // sino no se puede postular
+                    throw new \Exception("Ya existe un usuario con el correo o la cedula del postulante");
+                }
+            }else{
+                // sino no se puede postular
                 throw new \Exception("Ya existe un usuario con el correo o la cedula del postulante");
             }
 
-            // creo el Usuario y lo asocio a la Persona de la postulacion
-            $usu = new Usuario();
-            $usu->persona()->associate($postu->persona);
-            // establecer la contrasenia del Usuario
-            $usu->contrasenia = $usu->persona->cedula;
-            // para contraseña encriptada
-            //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
-            // guardar el Usuario y el Estudiante
-            $usu->save();
-            $est = new Estudiante();
-            $est->usuario()->associate($usu);
-            $est->save();
+            // si el usuario ya estaba registrado, solo le asigno el rol (si no lo tenia) y registro la inscripcion
+            if ($reciclarUsuario){
+                $usu = Usuario::buscar($postu->persona->cedula);
+                // si el usuario no tenia el rol de estudiante
+                $est = $usu->estudiante;
+                if ($est == null){
+                    // genero asocio y el Estudiante al Usuario
+                    $est = new Estudiante();
+                    $est->usuario()->associate($usu);
+                    $est->save();
+                }
 
-            // guardar la relacion entre usuario e inscripcion a carrera
-            $insc = new InscripcionCarrera();
-            $insc->estudiante()->associate(Estudiante::find($usu->id));
-            $insc->carrera()->associate(Carrera::find($postu->carrera->id));
-            $insc->sede()->associate(Sede::find($postu->sede->id));
-            $insc->save();
+                // guardar la relacion entre usuario e inscripcion a carrera
+                $insc = new InscripcionCarrera();
+                $insc->estudiante()->associate(Estudiante::find($usu->id));
+                $insc->carrera()->associate(Carrera::find($postu->carrera->id));
+                $insc->sede()->associate(Sede::find($postu->sede->id));
+                $insc->save();
+            }else{
+                // creo el Usuario y lo asocio a la Persona de la postulacion
+                $usu = new Usuario();
+                $usu->persona()->associate($postu->persona);
+                // establecer la contrasenia del Usuario
+                $usu->contrasenia = $usu->persona->cedula;
+                // para contraseña encriptada
+                //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+                
+                // guardar el Usuario y el Estudiante
+                $usu->save();
+                $est = new Estudiante();
+                $est->usuario()->associate($usu);
+                $est->save();
 
-            // eliminar la postulacion
-            $postu->delete();
+                // guardar la relacion entre usuario e inscripcion a carrera
+                $insc = new InscripcionCarrera();
+                $insc->estudiante()->associate(Estudiante::find($usu->id));
+                $insc->carrera()->associate(Carrera::find($postu->carrera->id));
+                $insc->sede()->associate(Sede::find($postu->sede->id));
+                $insc->save();
+            }
+
+            // marca la postulacion como aceptada
+            $postu->estado = 'A';
+            $postu->save();
 
             DB::commit();
 
@@ -274,18 +346,25 @@ class PostulantesController extends Controller
             try {
                 // enviar correo
                 $mailData = [
-                    'destinatario' => $usu->persona->correo,
-                    'nombre'       => $usu->persona->nombre,
+                    'destinatario'  => $usu->persona->correo,
+                    'nombre'        => $usu->persona->nombre,
                     'nombreCarrera' => $insc->carrera->nombre,
                     'usuario'       => $usu->persona->cedula,
                     'contrasenia'   => $usu->persona->cedula,
                 ];
+                if ($reciclarUsuario){
+                    $mailData = [
+                    'usuario'       => "(su usuario actual)",
+                    'contrasenia'   => "(su contrasenia actual)",
+                    ];
+                }
                 CorreoPostulanteAceptacion::enviar($mailData);
             } catch (\Exception $e) {
             }
 
             $est->usuario->persona->direccion;
             return response()->json($est->usuario, 200);
+
         } catch (\Exception $e) {
             DB::rollBack();
             // devuelve un estado HTTP 500 y un mensaje simple del error
@@ -295,3 +374,63 @@ class PostulantesController extends Controller
     
 
 }
+
+/*
+
+{
+  "img_ci": "string",
+  "img_escolaridad": "string",
+  "img_carne_salud": "string",
+  "sede": {
+    "id": 1
+  },
+  "carrera": {
+    "id": 1
+  },
+  "persona": {
+    "cedula": "47101475",
+    "nombre": "string",
+    "apellido": "string",
+    "correo": "jjap96@gmail.com",
+    "fecha_nac": "1992-05-12",
+    "sexo": "M",
+    "direccion": {
+      "departamento": "string",
+      "ciudad": "string",
+      "calle": "string",
+      "numero": "string"
+    }
+  }
+}
+
+
+-----
+
+
+{
+  "img_ci": "string",
+  "img_escolaridad": "string",
+  "img_carne_salud": "string",
+  "sede": {
+    "id": 1
+  },
+  "carrera": {
+    "id": 7
+  },
+  "persona": {
+    "cedula": "47101475",
+    "nombre": "string",
+    "apellido": "string",
+    "correo": "jjap96@gmail.com",
+    "fecha_nac": "1992-05-12",
+    "sexo": "M",
+    "direccion": {
+      "departamento": "string",
+      "ciudad": "string",
+      "calle": "string",
+      "numero": "string"
+    }
+  }
+}
+
+*/

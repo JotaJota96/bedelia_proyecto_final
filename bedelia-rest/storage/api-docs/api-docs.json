@@ -526,6 +526,158 @@
                 }
             }
         },
+        "/edicionesCurso/docente/{ciDocente}": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "devuelve los EdicionCurso que el docente dicta en el PeriodoLectivo actual",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::CursosDocente",
+                "parameters": [
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EdicionCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/edicionesCurso/{id}/estudiantes": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Devuelve los estudiantes inscritos al EdicionCurso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::estudiantes",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClaseDictadaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/edicionesCurso/{id}/clasesDictada": {
+            "post": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Registra una nueva ClaseDictada y la asistencias de los estudiantes",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::Agregar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClaseDictadaDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClaseDictadaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/edicionesCurso/{ciEstudiante}/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Los EdicionCurso a los que el estudiante puede inscribirse en el PeriodoLectivo actual",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::listarParaInscripcion",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EdicionCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/examenes/{id}/inscripciones/{ciEstudiante}": {
             "post": {
                 "tags": [
@@ -1321,7 +1473,7 @@
                         "type": "string"
                     },
                     "creditos": {
-                        "description": "Solo utilizado a veces para devolver informacion",
+                        "description": "Depende de la carrera",
                         "type": "integer"
                     }
                 },
@@ -1348,11 +1500,11 @@
                         "type": "integer"
                     },
                     "semestre": {
-                        "description": "Solo utilizado a veces para devolver informacion",
+                        "description": "Depende de la carrera",
                         "type": "integer"
                     },
                     "optativo": {
-                        "description": "Solo utilizado a veces para devolver informacion",
+                        "description": "Depende de la carrera",
                         "type": "integer"
                     },
                     "area_estudio": {
@@ -1584,6 +1736,11 @@
                     "acta_confirmada": {
                         "type": "boolean"
                     },
+                    "habilitado": {
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas",
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "sede": {
                         "$ref": "#/components/schemas/SedeDTO"
                     },
@@ -1615,6 +1772,54 @@
                     },
                     "docente": {
                         "$ref": "#/components/schemas/UsuarioDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "ClaseDictadaDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "fecha": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "curso_id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "edicion_curso_id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "lista": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "ciEstudiante": {
+                                    "type": "string"
+                                },
+                                "asistencia": {
+                                    "type": "number",
+                                    "writeOnly": true
+                                },
+                                "cant_asistencias": {
+                                    "type": "number",
+                                    "readOnly": true
+                                },
+                                "nombre": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "apellido": {
+                                    "type": "string",
+                                    "readOnly": true
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 },
                 "type": "object"
