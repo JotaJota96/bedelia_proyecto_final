@@ -1,3 +1,39 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+TRUNCATE TABLE `admin`;
+TRUNCATE TABLE `administrativo`;
+TRUNCATE TABLE `area_estudio`;
+TRUNCATE TABLE `asistencia`;
+TRUNCATE TABLE `carrera`;
+TRUNCATE TABLE `carrera_area_estudio`;
+TRUNCATE TABLE `carrera_curso`;
+TRUNCATE TABLE `carrera_sede`;
+TRUNCATE TABLE `clase_dictada`;
+TRUNCATE TABLE `curso`;
+TRUNCATE TABLE `direccion`;
+TRUNCATE TABLE `docente`;
+TRUNCATE TABLE `edicion_curso`;
+TRUNCATE TABLE `escolaridad`;
+TRUNCATE TABLE `estudiante`;
+TRUNCATE TABLE `examen`;
+TRUNCATE TABLE `inscripcion_carrera`;
+TRUNCATE TABLE `inscripcion_curso`;
+TRUNCATE TABLE `inscripcion_examen`;
+TRUNCATE TABLE `periodo`;
+TRUNCATE TABLE `periodo_examen`;
+TRUNCATE TABLE `periodo_insc_curso`;
+TRUNCATE TABLE `periodo_insc_examen`;
+TRUNCATE TABLE `periodo_lectivo`;
+TRUNCATE TABLE `persona`;
+TRUNCATE TABLE `postulacion`;
+TRUNCATE TABLE `previa`;
+TRUNCATE TABLE `sede`;
+TRUNCATE TABLE `tipo_curso`;
+TRUNCATE TABLE `usuario`;
+
 -- ------------------------------------------------------------------------
 -- Base de datos: `bedelia`
 -- Orden en que se generaran los datos de prueba
@@ -18,42 +54,22 @@ curso                 hecho
 carrera_curso         hecho
 previa                hecho
 carrera_area_estudio  hecho
-
-
 periodo               hecho
 periodo_examen        hecho
 periodo_insc_curso    hecho
 periodo_insc_examen   hecho
 periodo_lectivo       hecho
-
-edicion_curso         (sin hacer)
-examen                (sin hacer)
-
-inscripcion_carrera   (sin hacer)
-inscripcion_curso     (sin hacer)
-inscripcion_examen    (sin hacer)
-
-clase_dictada         (sin hacer)
-asistencia            (sin hacer)
+edicion_curso         hecho
+examen                hecho
+inscripcion_carrera   hecho
+inscripcion_curso     hecho
+inscripcion_examen    hecho
+clase_dictada         hecho
+asistencia            hecho
 
 postulacion           (sin hacer)
-
 escolaridad           (sin hacer)
-
 */
-
-
--- ------------------------------------------------------------------------
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
--- ------------------------------------------------------------------------
--- 
--- Trunca todas las tablas de la base de datos
--- 
--- Codigo pendiente....
-
 
 
 -- ------------------------------------------------------------------------
@@ -188,6 +204,7 @@ INSERT INTO `area_estudio`(/*`id`,*/ `area`) VALUES
     (/*  ,*/ 'programacion'                          ),
     (/*  ,*/ 'redes y arquitectura de computadoras'  );
 
+
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `tipo_curso`
 --
@@ -233,24 +250,24 @@ INSERT INTO `carrera_sede`(`carrera_id`, `sede_id`) VALUES
 -- Truncar tablas antes de insertar `curso`
 --
 INSERT INTO `curso`(/*`id`,*/ `nombre`, `descripcion`, `max_inasistencias`, `cant_creditos`, `cant_clases`, `area_estudio_id`, `tipo_curso_id`) VALUES
-    (/*  1 */ 'Principios de Programación',                   'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   0,  0*8,   4,  1),
-    (/*  2 */ 'Matemática Discreta y Lógica 1',               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     2,   12, 12*8,  1,  1),
-    (/*  3 */ 'Inglés Técnico',                               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     4,   8,  8*8,   2,  1),
-    (/*  4 */ 'Estructuras de Datos y Algoritmos',            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  1),
-    (/*  5 */ 'Matemática Discreta y Lógica 2',               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   6,  6*8,   1,  1),
-    (/*  6 */ 'Bases de Datos 1',                             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  1),
-    (/*  7 */ 'Programación Avanzada C++',                    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   16, 16*8,  4,  1),
-    (/*  8 */ 'Bases de Datos 2',                             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  1),
-    (/*  9 */ 'Contabilidad',                                 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     4,   4,  4*8,   1,  1),
-    (/* 10 */ 'Programación de Aplicaciones Java',            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   16, 16*8,  4,  1),
-    (/* 11 */ 'Ingeniería de Software',                       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  5,  1),
-    (/* 12 */ 'Probabilidad y Estadística',                   'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     2,   8,  8*8,   1,  1),
-    (/* 13 */ 'Pasantia Laboral',                             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   10, 10*8,  4,  4),
-    (/* 14 */ 'Desarrollo de Sitios Web con PHP',             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  3),
-    (/* 15 */ 'Taller de Aplicaciones de Internet Ricas',     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  3),
-    (/* 16 */ 'Taller de Sistemas de Información .NET',       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  3),
-    (/* 17 */ 'Taller de Aprender a gestionar una empresa',   'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 12*8,  4,  3),
-    (/* 18 */ 'Proyecto',                                     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   20, 20*8,  4,  3);
+    (/*  1 */ 'Principios de Programación',                   'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   0,  2*16,   4,  1),
+    (/*  2 */ 'Matemática Discreta y Lógica 1',               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     2,   12, 2*16,  1,  1),
+    (/*  3 */ 'Inglés Técnico',                               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     4,   8,  2*16,   2,  1),
+    (/*  4 */ 'Estructuras de Datos y Algoritmos',            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  1),
+    (/*  5 */ 'Matemática Discreta y Lógica 2',               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   6,  2*16,   1,  1),
+    (/*  6 */ 'Bases de Datos 1',                             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  1),
+    (/*  7 */ 'Programación Avanzada C++',                    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   16, 2*16,  4,  1),
+    (/*  8 */ 'Bases de Datos 2',                             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  1),
+    (/*  9 */ 'Contabilidad',                                 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     4,   4,  2*16,   1,  1),
+    (/* 10 */ 'Programación de Aplicaciones Java',            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   16, 2*16,  4,  1),
+    (/* 11 */ 'Ingeniería de Software',                       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  5,  1),
+    (/* 12 */ 'Probabilidad y Estadística',                   'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     2,   8,  2*16,   1,  1),
+    (/* 13 */ 'Pasantia Laboral',                             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   10, 2*16,  4,  4),
+    (/* 14 */ 'Desarrollo de Sitios Web con PHP',             'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  3),
+    (/* 15 */ 'Taller de Aplicaciones de Internet Ricas',     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  3),
+    (/* 16 */ 'Taller de Sistemas de Información .NET',       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  3),
+    (/* 17 */ 'Taller de Aprender a gestionar una empresa',   'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   12, 2*16,  4,  3),
+    (/* 18 */ 'Proyecto',                                     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit mollitia perspiciatis commodi voluptatem quibusdam quasi harum magni amet quaerat architecto, expedita, ipsa, quo numquam nam! Necessitatibus error sunt fugiat autem.',     3,   20, 2*16,  4,  3);
 
 
 -- ------------------------------------------------------------------------
@@ -419,8 +436,6 @@ INSERT INTO `inscripcion_carrera`(/* `id` */ `carrera_id`, `sede_id`, `estudiant
 ;
 
 
--- ##############################################################################3
-
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `inscripcion_curso`
 --
@@ -440,7 +455,7 @@ INSERT INTO `inscripcion_curso`(`edicion_curso_id`, `estudiante_id`, `nota`) VAL
     ( 2, 4, 4.15),
     ( 2, 5, 4.55),
     ( 2, 6, 4.13),
-    ( 2, 7, 4.12),
+    ( 2, 7, 1.57),
     ( 2, 8, 2.98),
     ( 2, 9, 4.15),
     ( 3, 1, 4.11),
@@ -449,7 +464,7 @@ INSERT INTO `inscripcion_curso`(`edicion_curso_id`, `estudiante_id`, `nota`) VAL
     ( 3, 4, 3.95),
     ( 3, 5, 4.15),
     ( 3, 6, 3.03),
-    ( 3, 7, 4.12),
+    ( 3, 7, 2.12),
     ( 3, 8, 4.98),
     ( 3, 9, 4.15),
     (10, 1, 4.11),
@@ -458,7 +473,7 @@ INSERT INTO `inscripcion_curso`(`edicion_curso_id`, `estudiante_id`, `nota`) VAL
     (10, 4, 2.15),
     (10, 5, 4.15),
     (10, 6, 4.13),
-    (10, 7, 5.02),
+    (10, 7, 1.57),
     (10, 8, 4.18),
     (10, 9, 4.15),
     (11, 1, 2.11),
@@ -481,8 +496,7 @@ INSERT INTO `inscripcion_curso`(`edicion_curso_id`, `estudiante_id`, `nota`) VAL
     (12, 9, 4.15)
 ;
 
-UPDATE edicion_curso SET acta_confirmada = true WHERE id IN (1,2,3,7,8,9);
-
+UPDATE edicion_curso SET acta_confirmada = true WHERE id IN (1,2,3,10,11,12);
 
 
 -- ------------------------------------------------------------------------
@@ -504,12 +518,224 @@ UPDATE examen SET acta_confirmada = true WHERE id IN (19,20,41,42,60);
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `clase_dictada`
 --
+INSERT INTO `clase_dictada`(/*`id`,*/ `fecha`, `edicion_curso_id`) VALUES
+    ('2018-03-05',  1),
+    ('2018-03-07',  1),
+    ('2018-03-12',  1),
+    ('2018-03-14',  1),
+    ('2018-03-19',  1),
+    ('2018-03-21',  1),
+    ('2018-03-26',  1),
+    ('2018-03-28',  1),
+    ('2018-04-09',  1),
+    ('2018-04-11',  1),
+    ('2018-04-16',  1),
+    ('2018-04-18',  1),
+    ('2018-04-23',  1),
+    ('2018-04-25',  1),
+    ('2018-04-30',  1),
+    ('2018-04-02',  1),
+    ('2018-05-07',  1),
+    ('2018-05-09',  1),
+    ('2018-05-14',  1),
+    ('2018-05-16',  1),
+    ('2018-05-21',  1),
+    ('2018-05-23',  1),
+    ('2018-05-28',  1),
+    ('2018-05-30',  1),
+    ('2018-06-04',  1),
+    ('2018-06-06',  1),
+    ('2018-06-11',  1),
+    ('2018-06-13',  1),
+    ('2018-06-18',  1),
+    ('2018-06-20',  1),
+    ('2018-06-25',  1),
+    ('2018-06-27',  1),
 
+    ('2018-03-06',  2),
+    ('2018-03-08',  2),
+    ('2018-03-13',  2),
+    ('2018-03-15',  2),
+    ('2018-03-20',  2),
+    ('2018-03-22',  2),
+    ('2018-03-27',  2),
+    ('2018-03-29',  2),
+    ('2018-04-10',  2),
+    ('2018-04-12',  2),
+    ('2018-04-17',  2),
+    ('2018-04-18',  2),
+    ('2018-04-24',  2),
+    ('2018-04-26',  2),
+    ('2018-04-01',  2),
+    ('2018-04-03',  2),
+    ('2018-05-08',  2),
+    ('2018-05-10',  2),
+    ('2018-05-15',  2),
+    ('2018-05-17',  2),
+    ('2018-05-22',  2),
+    ('2018-05-24',  2),
+    ('2018-05-29',  2),
+    ('2018-05-21',  2),
+    ('2018-06-05',  2),
+    ('2018-06-07',  2),
+    ('2018-06-12',  2),
+    ('2018-06-14',  2),
+    ('2018-06-19',  2),
+    ('2018-06-21',  2),
+    ('2018-06-26',  2),
+    ('2018-06-28',  2),
+
+    ('2018-03-06',  3),
+    ('2018-03-09',  3),
+    ('2018-03-13',  3),
+    ('2018-03-16',  3),
+    ('2018-03-20',  3),
+    ('2018-03-23',  3),
+    ('2018-03-27',  3),
+    ('2018-03-30',  3),
+    ('2018-04-10',  3),
+    ('2018-04-13',  3),
+    ('2018-04-17',  3),
+    ('2018-04-19',  3),
+    ('2018-04-24',  3),
+    ('2018-04-27',  3),
+    ('2018-04-01',  3),
+    ('2018-04-04',  3),
+    ('2018-05-08',  3),
+    ('2018-05-11',  3),
+    ('2018-05-15',  3),
+    ('2018-05-18',  3),
+    ('2018-05-22',  3),
+    ('2018-05-25',  3),
+    ('2018-05-29',  3),
+    ('2018-05-22',  3),
+    ('2018-06-05',  3),
+    ('2018-06-08',  3),
+    ('2018-06-12',  3),
+    ('2018-06-15',  3),
+    ('2018-06-19',  3),
+    ('2018-06-22',  3),
+    ('2018-06-26',  3),
+    ('2018-06-29',  3),
+
+    ('2018-08-06', 10),
+    ('2018-08-07', 10),
+    ('2018-08-13', 10),
+    ('2018-08-14', 10),
+    ('2018-08-20', 10),
+    ('2018-08-21', 10),
+    ('2018-08-27', 10),
+    ('2018-08-28', 10),
+    ('2018-09-03', 10),
+    ('2018-09-04', 10),
+    ('2018-09-10', 10),
+    ('2018-09-11', 10),
+    ('2018-09-17', 10),
+    ('2018-09-18', 10),
+    ('2018-10-01', 10),
+    ('2018-10-02', 10),
+    ('2018-10-08', 10),
+    ('2018-10-09', 10),
+    ('2018-10-15', 10),
+    ('2018-10-16', 10),
+    ('2018-10-22', 10),
+    ('2018-10-23', 10),
+    ('2018-10-29', 10),
+    ('2018-10-30', 10),
+    ('2018-11-05', 10),
+    ('2018-11-06', 10),
+    ('2018-11-12', 10),
+    ('2018-11-13', 10),
+    ('2018-11-19', 10),
+    ('2018-11-20', 10),
+    ('2018-11-26', 10),
+    ('2018-11-27', 10),
+
+    ('2018-08-07', 11),
+    ('2018-08-08', 11),
+    ('2018-08-14', 11),
+    ('2018-08-15', 11),
+    ('2018-08-21', 11),
+    ('2018-08-22', 11),
+    ('2018-08-28', 11),
+    ('2018-08-29', 11),
+    ('2018-09-04', 11),
+    ('2018-09-05', 11),
+    ('2018-09-11', 11),
+    ('2018-09-12', 11),
+    ('2018-09-18', 11),
+    ('2018-09-19', 11),
+    ('2018-10-02', 11),
+    ('2018-10-03', 11),
+    ('2018-10-09', 11),
+    ('2018-10-10', 11),
+    ('2018-10-16', 11),
+    ('2018-10-17', 11),
+    ('2018-10-23', 11),
+    ('2018-10-24', 11),
+    ('2018-10-30', 11),
+    ('2018-10-31', 11),
+    ('2018-11-06', 11),
+    ('2018-11-07', 11),
+    ('2018-11-13', 11),
+    ('2018-11-14', 11),
+    ('2018-11-20', 11),
+    ('2018-11-21', 11),
+    ('2018-11-27', 11),
+    ('2018-11-28', 11),
+
+    ('2018-08-07', 12),
+    ('2018-08-09', 12),
+    ('2018-08-14', 12),
+    ('2018-08-16', 12),
+    ('2018-08-21', 12),
+    ('2018-08-23', 12),
+    ('2018-08-28', 12),
+    ('2018-08-30', 12),
+    ('2018-09-04', 12),
+    ('2018-09-06', 12),
+    ('2018-09-11', 12),
+    ('2018-09-13', 12),
+    ('2018-09-18', 12),
+    ('2018-09-20', 12),
+    ('2018-10-02', 12),
+    ('2018-10-04', 12),
+    ('2018-10-09', 12),
+    ('2018-10-11', 12),
+    ('2018-10-16', 12),
+    ('2018-10-18', 12),
+    ('2018-10-23', 12),
+    ('2018-10-25', 12),
+    ('2018-10-30', 12),
+    ('2018-10-01', 12),
+    ('2018-11-06', 12),
+    ('2018-11-08', 12),
+    ('2018-11-13', 12),
+    ('2018-11-15', 12),
+    ('2018-11-20', 12),
+    ('2018-11-21', 12),
+    ('2018-11-27', 12),
+    ('2018-11-29', 12)
+;
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `asistencia`
---
+-- 
+-- Pone asistencia a todos en todas las clases
+INSERT INTO `asistencia`(`clase_dictada_id`, `estudiante_id`, `asistencia`)
+    SELECT cd.id AS 'clase_dictada_id', ic.estudiante_id AS 'estudiante_id', 1.0 AS 'asistencia'
+    FROM clase_dictada cd
+        JOIN edicion_curso ec ON ec.id = cd.edicion_curso_id
+        JOIN inscripcion_curso ic ON ic.edicion_curso_id = ec.id 
+    WHERE ic.estudiante_id BETWEEN 1 AND 9
+;
+-- a algunos le cambio por media asistencia
+UPDATE asistencia a SET a.asistencia = 0.5 WHERE (a.clase_dictada_id * a.estudiante_id) % (a.clase_dictada_id + a.estudiante_id) = 8;
+-- a algunos le cambio por falta completa
+UPDATE asistencia a SET a.asistencia = 0 WHERE (a.clase_dictada_id * a.estudiante_id) % (a.clase_dictada_id + a.estudiante_id) = 102;
 
+
+-- ##############################################################################3
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `postulacion`
@@ -522,4 +748,5 @@ UPDATE examen SET acta_confirmada = true WHERE id IN (19,20,41,42,60);
 
 
 -- ------------------------------------------------------------------------
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
