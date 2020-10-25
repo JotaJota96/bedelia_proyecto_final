@@ -63,9 +63,7 @@ $router->post('postulantes/{id}/aceptar',   'PostulantesController@aceptar');
 $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerSede');
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
 
-// Eliminar la siguiente linea cuando Lucas cambie la ruta desde el frontend
-$router->post('edicionesCurso/{id}/inscripciones/{ciEstudiante}', function ($id, $ciEstudiante) use ($router) { return redirect()->to("edicionesCurso/$id/estudiantes/$ciEstudiante"); });
-$router->post('edicionesCurso/{id}/estudiantes/{ciEstudiante}', 'EdicionesCursoController@asignarEstudiante');
+$router->post('edicionesCurso/inscripciones/{ciEstudiante}',    'EdicionesCursoController@asignarEstudiante');
 $router->post('edicionesCurso/{id}/clasesDictada',              'EdicionesCursoController@Agregar');
 $router->put('edicionesCurso/{id}/docente/{ciDocente}',         'EdicionesCursoController@asignarDocente');
 $router->get('edicionesCurso/docente/{ciDocente}',              'EdicionesCursoController@CursosDocente');

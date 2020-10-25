@@ -333,7 +333,10 @@ class Controller extends BaseController
      *     path="/foo",
      *     tags={"Foo"},
      *     @OA\RequestBody(
-     *         @OA\JsonContent(ref="#/components/schemas/AnioLectivoDTO"),
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(type="integer"),
+     *         ),
      *     ),
      *     @OA\Response(
      *         response="200",

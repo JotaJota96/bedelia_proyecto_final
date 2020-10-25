@@ -358,7 +358,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AnioLectivoDTO"
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
                             }
                         }
                     }
@@ -458,7 +461,7 @@
                 }
             }
         },
-        "/edicionesCurso/{id}/estudiantes/{ciEstudiante}": {
+        "/edicionesCurso/inscripciones/{ciEstudiante}": {
             "post": {
                 "tags": [
                     "Ediciones Curso"
@@ -466,15 +469,6 @@
                 "description": "Inscribe a un estudiante a una edicion de curso",
                 "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarEstudiante",
                 "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la edicion del curso",
-                        "required": true,
-                        "schema": {
-                            "type": "number"
-                        }
-                    },
                     {
                         "name": "ciEstudiante",
                         "in": "path",
@@ -485,6 +479,19 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "ID de los EdicionCurso a los que se inscribirá el estudiante",
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "default": {
                         "description": ""
