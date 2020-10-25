@@ -63,12 +63,12 @@ $router->post('postulantes/{id}/aceptar',   'PostulantesController@aceptar');
 $router->get('administrativos/{ci}/sede',    'AdministrativosController@obtenerSede');
 $router->post('administrativos/{ci}/sede',   'AdministrativosController@establecerSede');
 
-$router->get('edicionesCurso/{ciEstudiante}/{idCarrera}', 'EdicionesCursoController@listarParaInscripcion');
 $router->post('edicionesCurso/{id}/inscripciones/{idEstudiante}', 'EdicionesCursoController@asignarEstudiante');
-$router->post('edicionesCurso/{id}/clasesDictada', 'EdicionesCursoController@claseDictada');
+$router->post('edicionesCurso/{id}/clasesDictada', 'EdicionesCursoController@Agregar');
 $router->put('edicionesCurso/{id}/docente/{ciDocente}', 'EdicionesCursoController@asignarDocente');
 $router->get('edicionesCurso/docente/{ciDocente}', 'EdicionesCursoController@CursosDocente');
 $router->get('edicionesCurso/{id}/estudiantes', 'EdicionesCursoController@estudiantes');
+$router->get('edicionesCurso/{ciEstudiante}/{idCarrera}', 'EdicionesCursoController@listarParaInscripcion');
 
 $router->post('examenes/{id}/inscripciones/{ciEstudiante}', 'ExamenController@asignarEstudiante');
 

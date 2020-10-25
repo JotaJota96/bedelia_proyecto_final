@@ -118,65 +118,209 @@ class EdicionesCursoController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/edicionesCurso/docente/{ciDocente}",
+     *     tags={"Ediciones Curso"},
+     *     description="devuelve los EdicionCurso que el docente dicta en el PeriodoLectivo actual",
+     *     @OA\Parameter(
+     *         name="ciDocente",
+     *         in="path",
+     *         description="CI del docente",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/EdicionCursoDTO"),
+     *         ),
+     *     ),
+     * )
+     */
     public function CursosDocente($ciDocente) {
+        // devuelve un array de las EdicionCurso que el docente dicta en el PeriodoLectivo actual
         try {
-            $Docente=Docente::find($ciDocente);
+            $Usuario = Usuario::buscar($ciDocente);
+            if ($Usuario == null){
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+            $Docente = $Usuario->docente;
             $Cursos = $Docente->edicionesCursoActuales();
             return response()->json($Cursos, 200);
         } catch (Exception $e) {
-            return response()->json($e->getMessage(), 404);
+            return response()->json($e->getMessage(), 500);
         }
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/edicionesCurso/{id}/estudiantes",
+     *     tags={"Ediciones Curso"},
+     *     description="Devuelve los estudiantes inscritos al EdicionCurso",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del edicion curso",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/ClaseDictadaDTO"),
+     *     ),
+     * )
+     */
     public function estudiantes($id) {
+        // {id} ID del EdicionCurso
+        // devuelve un array con los estudiantes inscritos al EdicionCurso especificado
         try {
+            // array asociativo que al ser retornado se transforma en un JSON
+            $ret = [
+                "lista" => [], // lista de datos de alumnos
+            ]; 
+
             $EdicionCurso=EdicionCurso::find($id);
-            foreach ($EdicionCurso->estudiantes as $estudiante) {
-                $estudiante->usuario->persona;
+            if ($EdicionCurso == null){
+                return response()->json(['message' => 'EdicionCurso no encontrado'], 404);
             }
-            return response()->json($EdicionCurso->estudiantes, 200);
+            
+
+            $ret['curso_id']         = $EdicionCurso->curso->id;
+            $ret['edicion_curso_id'] = $EdicionCurso->id;
+
+            foreach ($EdicionCurso->estudiantes as $estudiante) {
+                //$estudiante->usuario->persona;
+                // agrego al array 'lista' (dentro del array $ret), los datos de cada estudiante inscripto
+                array_push($ret['lista'], array(
+                    'ciEstudiante'     => $estudiante->usuario->persona->cedula,
+                    'nombre'           => $estudiante->usuario->persona->nombre,
+                    'apellido'         => $estudiante->usuario->persona->apellido,
+                    'cant_asistencias' => $EdicionCurso->contarAsistidas($estudiante->id),
+                ));
+            }
+            return response()->json($ret, 200);
         } catch (Exception $e) {
-            return response()->json($e->getMessage(), 404);
+            return response()->json($e->getMessage(), 500);
         }
     }
     
-    public function claseDictada($id) {
+    /**
+     * @OA\Post(
+     *     path="/edicionesCurso/{id}/clasesDictada",
+     *     tags={"Ediciones Curso"},
+     *     description="Registra una nueva ClaseDictada y la asistencias de los estudiantes",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del edicion curso",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/ClaseDictadaDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/ClaseDictadaDTO"),
+     *     ),
+     * )
+     */
+    public function Agregar($id) {
         try {
             DB::beginTransaction();
             $Hoy = date('Y-m-d');
             $EdicionCurso=EdicionCurso::find($id);
-            $data = $this->request->json('asistencias');
+            if ($EdicionCurso == null){
+                return response()->json(['message' => 'EdicionCurso no encontrado'], 404);
+            }
+            $data = $this->request->json('lista');
             $ClaseDictada = new ClaseDictada();
             $ClaseDictada->fecha=$Hoy;
             $ClaseDictada->EdicionCurso()->associate($EdicionCurso);
             $ClaseDictada->save();
-            foreach ($data as $asistencia) {
+            foreach ($data as &$asistencia) {
                 $datosTablaIntermedia = [
                     'asistencia' => $asistencia['asistencia']
                 ];
-                $estudiante = Usuario::buscar($asistencia['ciEstudiante']);
+                $usu = Usuario::buscar($asistencia['ciEstudiante']);
+                if ($usu == null){
+                    throw new \Exception('Usuario ' . $asistencia['ciEstudiante'] . ' no encontrado');
+                }
+                $estudiante = $usu->estudiante;
                 $ClaseDictada->estudiantes()->attach($estudiante, $datosTablaIntermedia);
                 // $ClaseDictada->pivot->asistencia=$asistencia['asistencia'];
+
+                // carga datos para devolver
+                $asistencia['nombre']           = $estudiante->usuario->persona->nombre;
+                $asistencia['apellido']         = $estudiante->usuario->persona->apellido;
+                $asistencia['cant_asistencias'] = $EdicionCurso->contarAsistidas($estudiante->id);
             }
             $ClaseDictada->save();
-            foreach ($ClaseDictada->estudiantes as $asistencia) {
-                $asistencia->pivot->asistencia;
-            }
             DB::commit();
-            return $ClaseDictada;
+
+            // foreach ($ClaseDictada->estudiantes as $asistencia) {
+            //     $asistencia->pivot->asistencia;
+            // }
+
+            // datos para devolver
+            $ret = [
+                'id'                => $ClaseDictada->id,
+                'fecha'             => $ClaseDictada->fecha,
+                'curso_id'          => $ClaseDictada->edicionCurso->curso->id,
+                'edicion_curso_id'  => $ClaseDictada->edicionCurso->id,
+                'lista'             => $data,
+            ];
+            return response()->json($ret, 201);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json($e->getMessage(), 404);
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/edicionesCurso/{ciEstudiante}/{idCarrera}",
+     *     tags={"Ediciones Curso"},
+     *     description="Los EdicionCurso a los que el estudiante puede inscribirse en el PeriodoLectivo actual",
+     *     @OA\Parameter(
+     *         name="ciEstudiante",
+     *         in="path",
+     *         description="CI del estudiante",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="idCarrera",
+     *         in="path",
+     *         description="ID de la carrera",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/EdicionCursoDTO"),
+     *         ),
+     *     ),
+     * )
+     */
     public function listarParaInscripcion($ciEstudiante, $idCarrera){
         try{
+            // obtengo y verifico el Usuario y el Estudiante
             $usu = Usuario::buscar($ciEstudiante);
             if ($usu == null) return response()->json(['message' => 'No se encontró el usuario.'], 404);
             $est = $usu->estudiante;
             if ($est == null) throw new \Exception("El usuario no es estudiante");
 
+            // obtengo la sede
             $idSede = 0;
             foreach ($est->inscripcionesCarrera as $insc) {
                 if ($insc->carrera->id == $idCarrera){
@@ -184,23 +328,31 @@ class EdicionesCursoController extends Controller
                 }
             }
 
+            // obtengo los cursos y los guardo en un array asociativo (id => curso)
             $carrera = Carrera::find($idCarrera);
             if ($carrera == null) return response()->json(['message' => 'No se encontro la carrera.'], 404);
             $cursos = array();
             foreach ($carrera->cursos as $value) $cursos[$value->id] = $value;
 
+            // obtengo el ID del proximo PeriodoLectivo (semestre)
+            $perProx = PeriodoInscCurso::periodoProximo();
+            if ($perProx == null) throw new \Exception("Aún no se ha definido el próximo período lectivo");
+            $idProxPerLec = $perProx->periodoLectivo->id;
+            
+            // obtengo todos los EdicionCurso para el proximo PeriodoLectivo (semestre) y me quedo solo con los de la carrera especificada
             $edicionesCurso = array();
-            $edicionesCursoPreFiltro = EdicionCurso::where('periodo_lectivo_id', PeriodoInscCurso::periodoProximo()->periodoLectivo->id)
+            $edicionesCursoPreFiltro = EdicionCurso::where('periodo_lectivo_id', $idProxPerLec)
                 ->where('sede_id', $idSede)->get();
             foreach ($edicionesCursoPreFiltro as $ec) {
                 foreach ($ec->curso->carreras as $c) {
-                    $ec->habilitado = true;
+                    $ec->habilitado = 1;
                     if ($c->id == $idCarrera){
                         array_push($edicionesCurso, $ec);
                     }
                 }
             }
             
+            // para cada curso y examen tomado, clasifico segun nota obtenida
             $idCursosExonerados       = array(); // ID de los cursos que se exoneraron
             $idCursosAExamen          = array(); // ID de los cursos que se debe dar examen
             $idCursosARecursar        = array(); // ID de los cursos que se debe recursar
@@ -239,9 +391,9 @@ class EdicionesCursoController extends Controller
                 // error_log("-----------------------------");
                 // error_log("Verificando curso $idCurso");
 
-                // si el curso ya está aprobado
+                // para cada EdicionCurso a listar, se verifican si el curso ya fuá aprobado
                 if (in_array($idCurso, $idCursosExonerados) || in_array($idCurso, $idCursosExamenAprobado)){
-                    $ec->habilitado = false;
+                    $ec->habilitado = 0;
                      // error_log("El curso ha sido aprobado");
                      // limpieza de datos para retornar
                      unset($ec->curso->carreras);
@@ -250,32 +402,35 @@ class EdicionesCursoController extends Controller
                 }
                 // error_log("El curso NO ha sido aprobado");
 
-                // si se cumple con las previas
+                // para cada EdicionCurso a listar, se verifican las previas
                 $previas = $ec->curso->previas;
                 // error_log("previas:");
                 foreach ($previas as $p) {
                     // error_log("    requiere $p->tipo de " . $p->previa->id);
 
+                    // si se encuentra que no se aprobó el curso para un curso que lo requería
                     if (strcmp($p->tipo, "curso") == 0 && 
                         ! ( in_array($p->previa->id, $idCursosExonerados) || 
                         in_array($p->previa->id, $idCursosAExamen) || 
                         in_array($p->previa->id, $idCursosExamenAprobado))) {
     
                         // error_log("      no se cumple con la previa");
-                        $ec->habilitado = false;
+                        $ec->habilitado = -1;
                         break;
                     }
 
+                    // si se encuentra que no se exoneró el curso o no se aprobó el examen para un curso que lo requería
                     if (strcmp($p->tipo, "examen") == 0 && 
                         ! (in_array($p->previa->id, $idCursosExonerados) || 
                         in_array($p->previa->id, $idCursosExamenAprobado))){
 
-                            // error_log("      no se cumple con la previa");
-                        $ec->habilitado = false;
+                        // error_log("      no se cumple con la previa");
+                        $ec->habilitado = -1;
                         break;
                     }
                 }
 
+                // si llego hasta aca es porque se cumple con todas las previas
                 // limpieza de datos para retornar
                 unset($ec->curso->carreras);
                 unset($ec->curso->previas);
