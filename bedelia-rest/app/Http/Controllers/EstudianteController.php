@@ -27,9 +27,9 @@ class ExampleController extends Controller
     //         $Usuario->save();
     //         DB::commit();
     //         return response()->json(null, 200);
-    //     } catch (Exception $e) {
+    //     } catch (\Exception $e) {
     //         DB::rollBack();
-    //         return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+    //         return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
     //     }
     // }
 
@@ -46,9 +46,9 @@ class ExampleController extends Controller
     //         $Usuario->save();
     //         DB::commit();
     //         return response()->json(null, 200);
-    //     } catch (Exception $e) {
+    //     } catch (\Exception $e) {
     //         DB::rollBack();
-    //         return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+    //         return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
     //     }
     // }
 }

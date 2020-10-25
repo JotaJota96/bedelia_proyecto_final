@@ -64,9 +64,9 @@ class EdicionesCursoController extends Controller
             $Usuario->save();
             DB::commit();
             return response()->json(null, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
     } 
     
@@ -112,9 +112,9 @@ class EdicionesCursoController extends Controller
             $EdicionCurso->save();
             DB::commit();
             return response()->json(null, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
     }
 
@@ -150,8 +150,8 @@ class EdicionesCursoController extends Controller
             $Docente = $Usuario->docente;
             $Cursos = $Docente->edicionesCursoActuales();
             return response()->json($Cursos, 200);
-        } catch (Exception $e) {
-            return response()->json($e->getMessage(), 500);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -204,8 +204,8 @@ class EdicionesCursoController extends Controller
                 ));
             }
             return response()->json($ret, 200);
-        } catch (Exception $e) {
-            return response()->json($e->getMessage(), 500);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
     
@@ -277,9 +277,9 @@ class EdicionesCursoController extends Controller
                 'lista'             => $data,
             ];
             return response()->json($ret, 201);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e->getMessage(), 404);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -437,7 +437,7 @@ class EdicionesCursoController extends Controller
             }
 
             return response()->json($edicionesCurso, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener los cursos.' . $e->getMessage()], 500);
         }
     }

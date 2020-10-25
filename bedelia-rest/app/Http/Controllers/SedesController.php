@@ -108,9 +108,9 @@ class SedesController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e, 500);
+            //return response()->json(['message' => $e->getMessage()], 500);
             // devuelve un estado HTTP 500 y un mensaje simple del error
-            return response()->json(['error' => 'Error al guardar los datos'], 500);
+            return response()->json(['message' => 'Error al guardar los datos'], 500);
         }
 
         return response()->json($sede, 200);
@@ -151,7 +151,7 @@ class SedesController extends Controller
             }
             return response()->json($postulaciones, 200);
         }
-        return response()->json(['error' => 'Error al buscar las postulaciones. '], 404);
+        return response()->json(['message' => 'Error al buscar las postulaciones. '], 404);
         // devuelve la lista de postulantes asociados a una sede especifica
         // para cada postulante recordar devolver la persona asociada y su direccion. Tambien la sede, la carrera
 
@@ -205,8 +205,8 @@ class SedesController extends Controller
             // ----
             
             return response()->json($retEdicionesCursos, 200);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
         // devuelve un array de EdicionCurso que correspondan a la Sede especificada
         // devlver Sede, Persona (el docente) y curso de cada EdicionCurso
@@ -274,8 +274,8 @@ class SedesController extends Controller
             //    }
             //}
             return response()->json($RES, 200);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
         return response()->json(["message" => "No implementado aun"], 501);
     }

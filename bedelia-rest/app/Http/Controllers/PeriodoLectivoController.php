@@ -76,8 +76,8 @@ class PeriodoLectivoController extends Controller
             json_encode($items);     
             
             return response()->json($items, 200);
-        } catch (Exception $e) {
-            return response()->json($e->getMessage(), 404);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
@@ -225,9 +225,9 @@ class PeriodoLectivoController extends Controller
             DB::commit();
 
             return response()->json(null, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error al guardar el año lectivo. ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al guardar el año lectivo. ' . $e->getMessage()], 500);
         }
     }
 

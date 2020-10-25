@@ -49,7 +49,7 @@ class PostulantesController extends Controller
         $Postulacion->Persona->direccion;
         $Postulacion->Sede;
         if ($Postulacion == null) {
-            return response()->json(['error' => 'Error al buscar la postulacion. '], 404);
+            return response()->json(['message' => 'Error al buscar la postulacion. '], 404);
         }
         return response()->json($Postulacion, 200);
     }
@@ -168,9 +168,9 @@ class PostulantesController extends Controller
             $Postulacion->save();
             DB::commit();
             return response()->json(null, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error al eliminar la postulacion.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al eliminar la postulacion.' . $e->getMessage()], 500);
         }
     }
     
