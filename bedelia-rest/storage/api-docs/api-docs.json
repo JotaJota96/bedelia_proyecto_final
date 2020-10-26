@@ -471,7 +471,7 @@
                 "tags": [
                     "Ediciones Curso"
                 ],
-                "description": "Inscribe a un estudiante a una edicion de curso",
+                "description": "Inscribe a un estudiante a ediciones de curso",
                 "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarEstudiante",
                 "parameters": [
                     {
@@ -865,23 +865,14 @@
                 }
             }
         },
-        "/examenes/{id}/inscripciones/{ciEstudiante}": {
+        "/examenes/inscripciones/{ciEstudiante}": {
             "post": {
                 "tags": [
                     "Exámenes"
                 ],
-                "description": "Inscribe a un estudiante a un exámen",
+                "description": "Inscribe a un estudiante a exámenes",
                 "operationId": "App\\Http\\Controllers\\ExamenController::asignarEstudiante",
                 "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID del exámen",
-                        "required": true,
-                        "schema": {
-                            "type": "number"
-                        }
-                    },
                     {
                         "name": "ciEstudiante",
                         "in": "path",
@@ -892,9 +883,66 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "ID de los Examenes a los que se inscribirá el estudiante",
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "default": {
                         "description": ""
+                    }
+                }
+            }
+        },
+        "/examenes/{ciEstudiante}/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Devuelve los Examenes a los que el estudiante puede inscribirse en el PeriodoExamen actual",
+                "operationId": "App\\Http\\Controllers\\ExamenController::listarParaInscripcion",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamenDTO"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2051,6 +2099,11 @@
                     },
                     "acta_confirmada": {
                         "type": "boolean"
+                    },
+                    "habilitado": {
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen",
+                        "type": "integer",
+                        "readOnly": true
                     },
                     "sede": {
                         "$ref": "#/components/schemas/SedeDTO"
