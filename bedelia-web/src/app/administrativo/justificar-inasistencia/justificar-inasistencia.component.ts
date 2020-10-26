@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { PersonaDTO } from 'src/app/clases/persona-dto';
+import { UsuarioDTO } from 'src/app/clases/usuario-dto';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -10,12 +12,11 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./justificar-inasistencia.component.css']
 })
 export class JustificarInasistenciaComponent implements OnInit {
-
-  columnasAMostrar: string[] = ['cedula', 'accion', 'accion'];
-  // objeto que necesita la tabla para mostrar el contenido
-  usuariosDataSource = new MatTableDataSource([]);
+  mostrarDatos:boolean = false
+  persona:PersonaDTO;
 
   public formulario: FormGroup;
+  public formularioJustificar: FormGroup;
   constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService) { }
 
   ngOnInit(): void {
@@ -23,10 +24,28 @@ export class JustificarInasistenciaComponent implements OnInit {
     this.formulario = new FormGroup({
       ci: new FormControl('', [Validators.required]),
     });
+
+    this.formularioJustificar = new FormGroup({
+      fechaInicio: new FormControl('', [Validators.required]),
+      fechaFin: new FormControl('', [Validators.required]),
+    });
   }
 
-  justificar(ci:string){
+  buscar(){
+    this.mostrarDatos = true;
+    this.usuServ.get(this.formulario.controls['ci'].value).subscribe(
+      (datos)=>{
+        this.persona = datos.persona;
+      },
+      (error)=>{
+        this.openSnackBar("Error al traer los datos del estudiante");
+      }
+    );
+  }
 
+  justificar(){
+    this.formulario.controls['fechaInicio'].value
+    this.formulario.controls['fechaFin'].value
   }
 
   openSnackBar(mensaje: string) {
