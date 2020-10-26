@@ -64,12 +64,12 @@ class EstudianteController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
-    *      @OA\RequestBody(
-    *          @OA\JsonContent(
-    *              @OA\Property(property="fecha_inicio", type="string"),
-    *              @OA\Property(property="fecha_fin",    type="string"),
-    *          ),
-    *      ),
+     *      @OA\RequestBody(
+     *          @OA\JsonContent(
+     *              @OA\Property(property="fecha_inicio", type="string"),
+     *              @OA\Property(property="fecha_fin",    type="string"),
+     *          ),
+     *      ),
      *     @OA\Response(
      *         response="default",
      *         description=""
@@ -132,4 +132,106 @@ class EstudianteController extends Controller
     //         return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
     //     }
     // }
+    
+
+    /**
+     * @OA\Get(
+     *     path="/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}",
+     *     tags={"Estudiantes"},
+     *     description="Devuelve la escolaridad de un estudiante para ser mostraa en frontend",
+     *     @OA\Parameter(
+     *         name="ciEstudiante",
+     *         in="path",
+     *         description="CI del estudiante",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="idCarrera",
+     *         in="path",
+     *         description="ID de la carrera",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Datos de la escolaridad del estudiante",
+     *         @OA\JsonContent(ref="#/components/schemas/EscolaridadDTO"),
+     *     ),
+     * )
+     */
+    public function obtenerEscolaridad(){
+        // Devuelve la escolaridad de un estudiante para ser mostraa en frontend
+        return response()->json(['message' => 'No implementado aun'], 500);
+    }
+    
+    /**
+     * @OA\Get(
+     *     path="/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf",
+     *     tags={"Estudiantes"},
+     *     description="Devuelve la escolaridad de un estudiante como PDF",
+     *     @OA\Parameter(
+     *         name="ciEstudiante",
+     *         in="path",
+     *         description="CI del estudiante",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="idCarrera",
+     *         in="path",
+     *         description="ID de la carrera",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Todavía no se ha definido el objeto"
+     *     ),
+     * )
+     */
+    public function obtenerEscolaridadPDF(){
+        // Devuelve la escolaridad de un estudiante como PDF
+        return response()->json(['message' => 'No implementado aun'], 500);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/estudiantes/escolaridad/{codigo}",
+     *     tags={"Estudiantes"},
+     *     description="Devuelve la escolaridad basandose en su código de identificacion",
+     *     @OA\Parameter(
+     *         name="codigo",
+     *         in="path",
+     *         description="Código de la escolaridad",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Todavía no se ha definido el objeto"
+     *     ),
+     * )
+     */
+    public function verificarEscolaridad(){
+        // Devuelve la escolaridad basandose en su código de identificacion
+        return response()->json(['message' => 'No implementado aun'], 500);
+    }
+    
+
 }
+
+// Formato para devolver y trabajar las escolaridades
+// 
+// $escolaridad = [
+//     "usuario"       => null, // objeto Usuario
+//     "nota_promedio" => 0.0, // nota promedio
+//     "semestres"     => [
+//         [
+//             "curso"   => null, // objeto Curso
+//             "tipo"    => "", / / "EX" si se trata de un examen o "LE" si se trata de un edicion curso
+//             "periodo" => "",   // formato: "2019-1S" para periodo lectivo o "2019-Julio" para periodo examen
+//             "nota"    => 0.0,  // nota obtenida
+//         ],
+//     ],
+// ];

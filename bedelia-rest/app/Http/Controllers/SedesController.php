@@ -246,6 +246,9 @@ class SedesController extends Controller
             $idPeriodo = 0;
             $pea  = PeriodoExamen::periodoActual();
             $piea = PeriodoExamen::periodoProximo();
+            if ($$pea == null && $piea == null){
+                throw new \Exception("No se está en un periodo de exámenes ni de inscripcion");
+            }
             if ($pea != null) {
                 $idPeriodo = $pea->id;
             } else if ($piea != null) {
