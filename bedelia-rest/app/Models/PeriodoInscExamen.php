@@ -16,22 +16,24 @@ class PeriodoInscExamen extends Model
         return $this->belongsTo('App\Models\Periodo', 'id', 'id');
     }
 
+    // devuelve el PeriodoExamen para el que se realizan las inscripciones en este periodo
     public function periodoExamen() {
-        // devuelve el PeriodoExamen para el que se realizan las inscripciones en este periodo
         $fecha = $this->periodo->fecha_inicio;
-        $PeriodoEX = Periodo::where('tipo', 'EX')->where('fecha_inicio', '>', $fecha)->orderby('id', 'asc')->first();
+        $PeriodoEX = Periodo::where('tipo', 'EX')->where('fecha_inicio', '>=', $fecha)->orderby('id', 'asc')->first();
         return $PeriodoEX->periodoExamen();
     }
 
+    // Devuelve el periodo actual segun la fecha, o null si no se encontro ninguno
     public static function periodoActual(){
         $hoy = date('Y-m-d');
-        $PeriodoActual = Periodo::where('tipo', 'IE')->where('fecha_inicio', '<', $hoy)->where('fecha_fin', '>', $hoy)->orderby('id', 'desc')->first();
+        $PeriodoActual = Periodo::where('tipo', 'IE')->where('fecha_inicio', '<=', $hoy)->where('fecha_fin', '>=', $hoy)->orderby('id', 'desc')->first();
         if ($PeriodoActual == null) {
             return null;
         }
         return $PeriodoActual->periodoInscExamen;
     }
 
+    // Devuelve el proximo periodo segun la fecha, o null si no se encontro ninguno
     public static function periodoProximo(){
         $hoy = date('Y-m-d');
         $PeriodoProximo = Periodo::where('tipo', 'IE')->where('fecha_inicio', '>', $hoy)->orderby('id', 'asc')->first();

@@ -42,12 +42,21 @@ class EdicionCurso extends Model
         return $this->belongsToMany('App\Models\Estudiante','inscripcion_curso')->withPivot('nota');
     }
 
-    public function contarAsistidas($idEstudiante){
+    public function contarAsistidas($idEstudiante, $valor = null){
+        // si valor = null: suma todo
+        // si valor = {0, 0.5, 1}: suma solo las asistencias que tengan ese valor
         $cont = 0;
         foreach ($this->clasesDictada as $claseDictada) {
             foreach ($claseDictada->estudiantes as $estudiante) {
                 if ($estudiante->id == $idEstudiante) {
-                    $cont += $estudiante->pivot->asistencia;
+                    $valorAsistencia = $estudiante->pivot->asistencia;
+
+                    // comparo con triple = para distinguir un null de un 0
+                    if ($valor === null){
+                        $cont += $valorAsistencia;
+                    }else if ($valorAsistencia == $valor){
+                        $cont++;
+                    }
                 }
             }
         }
