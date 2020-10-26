@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
+import { ExamenDTO } from 'src/app/clases/examen-dto';
 import { CursoService } from 'src/app/servicios/curso.service';
+import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { ExamenesService } from 'src/app/servicios/examenes.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -12,19 +16,41 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 })
 export class InscripcionExamenComponent implements OnInit {
   selectedOptions: CursoDTO[] = [];
-  listaExamen: CursoDTO[] = [];
-  
+  listaExamen: ExamenDTO[] = [];
+  listaCarrera: CarreraDTO[] = [];
+  ciEstudiante: string;
+
+
+  public formulario: FormGroup;
+
   constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService, 
-    protected cursoServ: CursoService, protected examenServ: ExamenesService) { }
+    protected estudianteServis: EstudianteService , protected examenServ: ExamenesService) { }
 
   ngOnInit(): void {
-    this.cursoServ.getAll().subscribe(
+    this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
+
+    this.estudianteServis.getCarreras(this.ciEstudiante).subscribe(
       (datos) => {
-        this.listaExamen = datos;
-      }, (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
+        this.listaCarrera = datos;
+      },
+      (error) => {
+        this.openSnackBar("Error al cargar las carreras del estudiante");
       }
     );
+    
+    this.formulario = new FormGroup({
+      carrera: new FormControl('', [Validators.required])
+    });
+  }
+
+  cargarMateria(){
+    this.examenServ.getEdicionesParaInscrivirse(this.ciEstudiante,this.formulario.controls['carrera'].value).subscribe(
+      (datos)=>{
+        this.listaExamen = datos;
+      },
+      (error)=>{
+        this.openSnackBar("Error al obtener los examenes para la carrera seleccionada");
+      });
   }
 
   confirmar(){

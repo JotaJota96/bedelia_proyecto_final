@@ -61,6 +61,7 @@ import { IngresarNotaExamenComponent } from './docente/ingresar-resultado-examen
 import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
 import { JustificarInasistenciaComponent } from './administrativo/justificar-inasistencia/justificar-inasistencia.component';
 import { InasistencaPipe } from './pipes/inasistenca.pipe';
+import { NotaPipe } from './pipes/nota.pipe';
 
 
 
@@ -101,7 +102,8 @@ import { InasistencaPipe } from './pipes/inasistenca.pipe';
     IngresarNotaExamenComponent,
     ConsultaEscolaridadComponent,
     JustificarInasistenciaComponent,
-    InasistencaPipe
+    InasistencaPipe,
+    NotaPipe
   ],
   imports: [
     MatStepperModule,

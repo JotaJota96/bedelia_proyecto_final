@@ -22,6 +22,7 @@ export class InscripcionCursoComponent implements OnInit {
 
 
   public formulario: FormGroup;
+  
   constructor(private router:Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
     protected estudianteServis: EstudianteService, protected edicionCursoServ: EdicionesCursoService) { }
 

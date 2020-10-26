@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ActaDTO } from '../clases/acta-dto';
 import { ClaseDictadaDTO } from '../clases/clase-dictada-dto';
 import { EdicionCursoDTO } from '../clases/edicion-curso-dto';
 import { PersonaDTO } from '../clases/persona-dto';
@@ -36,5 +37,17 @@ export class EdicionesCursoService {
 
   getEdicionesParaInscrivirse(ci:string,idCarrera:number){
     return this.http.get<EdicionCursoDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
+  }
+//--
+  getEdicionesParaActa(idCurso:number){
+    return this.http.get<ActaDTO>(this.apiURL + "/" + idCurso + "/notas/");
+  }
+
+  confirmarActa(idCurso: number, acta:ActaDTO) {
+    return this.http.put(this.apiURL + "/" + idCurso + "/notas/", acta);
+  }
+
+  registrarNotasActa(idEdicionCurso: number, acta:ActaDTO) {
+    return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/notas/", acta);
   }
 }
