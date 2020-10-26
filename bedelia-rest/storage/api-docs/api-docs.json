@@ -1808,20 +1808,28 @@
                                 "ciEstudiante": {
                                     "type": "string"
                                 },
-                                "asistencia": {
-                                    "type": "number",
-                                    "writeOnly": true
-                                },
-                                "cant_asistencias": {
-                                    "type": "number",
-                                    "readOnly": true
-                                },
                                 "nombre": {
                                     "type": "string",
                                     "readOnly": true
                                 },
                                 "apellido": {
                                     "type": "string",
+                                    "readOnly": true
+                                },
+                                "asistencia": {
+                                    "type": "number",
+                                    "writeOnly": true
+                                },
+                                "total_asistencias": {
+                                    "type": "number",
+                                    "readOnly": true
+                                },
+                                "total_llegadas_tarde": {
+                                    "type": "number",
+                                    "readOnly": true
+                                },
+                                "total_inasistencias": {
+                                    "type": "number",
                                     "readOnly": true
                                 }
                             },

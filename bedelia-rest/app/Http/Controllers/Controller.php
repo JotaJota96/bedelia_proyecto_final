@@ -317,11 +317,13 @@ class Controller extends BaseController
      *         property="lista",
      *         type="array",
      *         @OA\Items(
-     *             @OA\Property(property="ciEstudiante",     type="string"),
-     *             @OA\Property(property="asistencia",       type="number", writeOnly=true),
-     *             @OA\Property(property="cant_asistencias", type="number", readOnly=true),
-     *             @OA\Property(property="nombre",           type="string", readOnly=true),
-     *             @OA\Property(property="apellido",         type="string", readOnly=true),
+     *             @OA\Property(property="ciEstudiante",         type="string"),
+     *             @OA\Property(property="nombre",               type="string", readOnly=true),
+     *             @OA\Property(property="apellido",             type="string", readOnly=true),
+     *             @OA\Property(property="asistencia",           type="number", writeOnly=true),
+     *             @OA\Property(property="total_asistencias",    type="number", readOnly=true),
+     *             @OA\Property(property="total_llegadas_tarde", type="number", readOnly=true),
+     *             @OA\Property(property="total_inasistencias",  type="number", readOnly=true),
      *         ),
      *     ),
      * )
