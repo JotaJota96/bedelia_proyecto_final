@@ -45,7 +45,9 @@ export class ControlAsistenciaComponent implements OnInit {
   }
   
   calculCantidadAsis(c_inasis:number,t_llegada:number):number{
-    return this.cursoSeleccionado.max_inasistencias - (c_inasis + t_llegada);
+    var llegadasTardes = t_llegada * 0.5
+    var retorno = this.cursoSeleccionado.max_inasistencias - (c_inasis + llegadasTardes)
+    return retorno;
   }
 
   confirmar(){

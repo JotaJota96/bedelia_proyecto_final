@@ -6,6 +6,7 @@ import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
+import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -22,12 +23,12 @@ export class InscripcionCursoComponent implements OnInit {
 
   public formulario: FormGroup;
   constructor(private router:Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
-    protected carreraServis: CarreraService, protected edicionCursoServ: EdicionesCursoService) { }
+    protected estudianteServis: EstudianteService, protected edicionCursoServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
     this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
 
-    this.carreraServis.getAll().subscribe(
+    this.estudianteServis.getCarreras(this.ciEstudiante).subscribe(
       (datos) => {
         this.listaCarrera = datos;
       },
