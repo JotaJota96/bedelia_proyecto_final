@@ -99,28 +99,28 @@ class ExamenController extends Controller
      * )
      */
     public function asignarDocente($id, $ciDocente){
-
-        return response()->json(['message' => 'No implementado aun'], 500);
-
         // asocia a un Examen (ya existente) con un Docente (ya existente)
-        // try {
-        //     DB::beginTransaction();
-        //     $EdicionCurso = EdicionCurso::where('id', $id)->first();
-        //     $Usuario = Usuario::buscar($ciDocente);
-        //     //$UsuarioDTO = new persona();
-        //     //$UsuarioDTO->fill($this->request->json(['persona']));
-        //     // return response()->json($EdicionCurso, 200);
-        //     $Docente = $Usuario->docente;
+        try {
+            DB::beginTransaction();
+            $examen = Examen::where('id', $id)->first();
+            $Usuario = Usuario::buscar($ciDocente);
+            if ($Usuario == null || $Usuario->docente == null){
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+            //$UsuarioDTO = new persona();
+            //$UsuarioDTO->fill($this->request->json(['persona']));
+            // return response()->json($examen, 200);
+            $Docente = $Usuario->docente;
                         
-        //     // return response()->json($Docente, 200);
-        //     $EdicionCurso->docente()->associate($Docente);
-        //     $EdicionCurso->save();
-        //     DB::commit();
-        //     return response()->json(null, 200);
-        // } catch (\Exception $e) {
-        //     DB::rollBack();
-        //     return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
-        // }
+            // return response()->json($Docente, 200);
+            $examen->docente()->associate($Docente);
+            $examen->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -146,21 +146,18 @@ class ExamenController extends Controller
      * )
      */
     public function ExamenessDocente($ciDocente) {
-
-        return response()->json(['message' => 'No implementado aun'], 500);
-
-        // // devuelve un array de las EdicionCurso que el docente dicta en el PeriodoLectivo actual
-        // try {
-        //     $Usuario = Usuario::buscar($ciDocente);
-        //     if ($Usuario == null){
-        //         return response()->json(['message' => 'Usuario no encontrado'], 404);
-        //     }
-        //     $Docente = $Usuario->docente;
-        //     $Cursos = $Docente->edicionesCursoActuales();
-        //     return response()->json($Cursos, 200);
-        // } catch (\Exception $e) {
-        //     return response()->json(['message' => $e->getMessage()], 500);
-        // }
+        // devuelve un array de las EdicionCurso que el docente dicta en el PeriodoLectivo actual
+        try {
+            $Usuario = Usuario::buscar($ciDocente);
+            if ($Usuario == null || $Usuario->docente == null){
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+            $Docente = $Usuario->docente;
+            $Cursos = $Docente->examenesActuales();
+            return response()->json($Cursos, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
 
