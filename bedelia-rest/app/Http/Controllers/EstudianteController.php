@@ -18,6 +18,25 @@ class EstudianteController extends Controller
         $this->request = $request;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/estudiantes/{ciEstudiante}/carreras",
+     *     tags={"Estudiantes"},
+     *     description="Devuelve las carreras a las que está inscripto el estudiante",
+     *     @OA\Parameter(
+     *         name="ciEstudiante",
+     *         in="path",
+     *         description="CI del estudiante",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Devuelve un usuario correctamente",
+     *         @OA\JsonContent(ref="#/components/schemas/CarreraDTO"),
+     *     ),
+     * )
+     */
     public function Careras($ciEstudiante){
         try {
             $RES = [];
@@ -32,6 +51,31 @@ class EstudianteController extends Controller
         }
     }
 
+
+    /**
+     * @OA\Put(
+     *     path="/estudiantes/{ciEstudiante}/asistencias",
+     *     tags={"Estudiantes"},
+     *     description="justifica las inasistencias del estudiante para las clases dictadas dentro del rango de fechas",
+     *     @OA\Parameter(
+     *         name="ciEstudiante",
+     *         in="path",
+     *         description="CI del estudiante",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+    *      @OA\RequestBody(
+    *          @OA\JsonContent(
+    *              @OA\Property(property="fecha_inicio", type="string"),
+    *              @OA\Property(property="fecha_fin",    type="string"),
+    *          ),
+    *      ),
+     *     @OA\Response(
+     *         response="default",
+     *         description=""
+     *     ),
+     * )
+     */
     public function JustificarInasistencias($ciEstudiante){
         try {
             $RES = [];

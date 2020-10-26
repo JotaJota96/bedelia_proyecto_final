@@ -358,10 +358,15 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "array",
-                                "items": {
-                                    "type": "integer"
-                                }
+                                "properties": {
+                                    "fecha_inicio": {
+                                        "type": "string"
+                                    },
+                                    "fecha_fin": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -681,6 +686,80 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/estudiantes/{ciEstudiante}/carreras": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve las carreras a las que está inscripto el estudiante",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::Careras",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve un usuario correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/estudiantes/{ciEstudiante}/asistencias": {
+            "put": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "justifica las inasistencias del estudiante para las clases dictadas dentro del rango de fechas",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::JustificarInasistencias",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fecha_inicio": {
+                                        "type": "string"
+                                    },
+                                    "fecha_fin": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": ""
                     }
                 }
             }
