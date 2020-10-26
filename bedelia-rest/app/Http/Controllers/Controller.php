@@ -342,12 +342,45 @@ class Controller extends BaseController
      *         type="array",
      *         @OA\Items(
      *             @OA\Property(property="ciEstudiante", type="string"),
+     *             @OA\Property(property="nombre",       type="string", readOnly=true),
+     *             @OA\Property(property="apellido",     type="string", readOnly=true),
      *             @OA\Property(property="nota",         type="number"),
      *         ),
      *     ),
      * )
      */
 
+     
+    /**
+     * @OA\Schema(
+     *     schema="EscolaridadDTO",
+     *     @OA\Property(
+     *         property="usuario",
+     *         ref="#/components/schemas/UsuarioDTO",
+     *     ),
+     *     @OA\Property(property="nota_promedio", type="number"),
+     *     @OA\Property(
+     *         property="semestres",
+     *         type="array",
+     *         @OA\Items(
+     *             @OA\Property(property="numero", type="integer"),
+     *             @OA\Property(
+     *                 property="detalle",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(
+     *                         property="curso",
+     *                         ref="#/components/schemas/CursoDTO"
+     *                     ),
+     *                     @OA\Property(property="tipo",    type="string"),
+     *                     @OA\Property(property="periodo", type="string"),
+     *                     @OA\Property(property="nota",    type="number"),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
 
     /**
      * @OA\Post(
@@ -366,6 +399,9 @@ class Controller extends BaseController
      *     ),
      * )
      */
+
+
+
 
 }
 

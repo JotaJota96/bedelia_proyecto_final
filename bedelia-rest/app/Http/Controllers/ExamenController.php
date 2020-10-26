@@ -73,6 +73,93 @@ class ExamenController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     *     path="/examenes/{id}/docente/{ciDocente}",
+     *     tags={"Exámenes"},
+     *     description="Asigna un docente a una exámen",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del exámen",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="ciDocente",
+     *         in="path",
+     *         description="CI del docente",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="",
+     *     ),
+     * )
+     */
+    public function asignarDocente($id, $ciDocente){
+        // asocia a un Examen (ya existente) con un Docente (ya existente)
+        try {
+            DB::beginTransaction();
+            $examen = Examen::where('id', $id)->first();
+            $Usuario = Usuario::buscar($ciDocente);
+            if ($Usuario == null || $Usuario->docente == null){
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+            //$UsuarioDTO = new persona();
+            //$UsuarioDTO->fill($this->request->json(['persona']));
+            // return response()->json($examen, 200);
+            $Docente = $Usuario->docente;
+                        
+            // return response()->json($Docente, 200);
+            $examen->docente()->associate($Docente);
+            $examen->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/examenes/docente/{ciDocente}",
+     *     tags={"Exámenes"},
+     *     description="devuelve los Examen que el docente toma en el PeriodoExamen actual",
+     *     @OA\Parameter(
+     *         name="ciDocente",
+     *         in="path",
+     *         description="CI del docente",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/ExamenDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function ExamenessDocente($ciDocente) {
+        // devuelve un array de las EdicionCurso que el docente dicta en el PeriodoLectivo actual
+        try {
+            $Usuario = Usuario::buscar($ciDocente);
+            if ($Usuario == null || $Usuario->docente == null){
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+            $Docente = $Usuario->docente;
+            $Cursos = $Docente->examenesActuales();
+            return response()->json($Cursos, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
 
     /**
      * @OA\Get(
@@ -237,7 +324,25 @@ class ExamenController extends Controller
      */
     public function ObtenerNotas($id){
         // devuelve las notas obtenidas por los estudiantes del Examen
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            $Examen = Examen::where('id', $id)->first();
+            $res = array (
+                "id" => $Examen->id,
+                "tipo" => 'LE',
+                "fecha" => '',
+                "notas" => array(),
+            );
+            foreach ($Examen->estudiantes as $estudiante) {
+                $nota = array (
+                    "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                    "nota" => $estudiante->pivot->nota,
+                );
+                array_push($res['notas'], $nota);
+            }
+            return response()->json($res, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
+        }
     }
     
     /**
@@ -264,7 +369,21 @@ class ExamenController extends Controller
      */
     public function IngresarNotas($id){
         // guarda las notas obtenidas por los estudiantes del Examen
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $Examen = Examen::where('id', $id)->first();
+            $notas = $this->request->json('notas');
+            foreach ($notas as $nota) {
+                $usu = Usuario::buscar($nota['ciEstudiante']);
+                $Examen->estudiantes->where('id',$usu->id)->first()->pivot->nota=$nota['nota'];
+                $Examen->estudiantes->where('id',$usu->id)->first()->pivot->save();
+            }
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al ingresar las notas.' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -288,7 +407,17 @@ class ExamenController extends Controller
      */
     public function ConfirmarActa($id){
         // actualiza 'acta_confirmada' = true para el Examen especificado
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $Examen = Examen::where('id', $id)->first();
+            $Examen->acta_confirmada = true;
+            $Examen->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al confirmar el acta.' . $e->getMessage()], 500);
+        }
     }
 
 }

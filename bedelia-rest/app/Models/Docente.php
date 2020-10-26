@@ -28,8 +28,22 @@ class Docente extends Model
     public function edicionesCursoActuales() {
         $PeriodoLetivoActual = PeriodoLectivo::periodoActual();
         if ($PeriodoLetivoActual == null) {
+            $PeriodoLetivoActual = PeriodoLectivo::periodoProximo();
+        }
+        if ($PeriodoLetivoActual == null) {
             return [];
         }
         return $this->edicionesCurso->where('periodo_lectivo_id', $PeriodoLetivoActual->id);
+    }
+
+    public function examenesActuales() {
+        $PeriodoExamenActual = PeriodoExamen::periodoActual();
+        if ($PeriodoExamenActual == null) {
+            $PeriodoExamenActual = PeriodoExamen::periodoProximo();
+        }
+        if ($PeriodoExamenActual == null) {
+            return [];
+        }
+        return $this->examenes->where('periodo_examen_id', $PeriodoExamenActual->id);
     }
 }
