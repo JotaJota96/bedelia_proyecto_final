@@ -27,7 +27,7 @@ class EdicionesCursoController extends Controller
      * @OA\Post(
      *     path="/edicionesCurso/inscripciones/{ciEstudiante}",
      *     tags={"Ediciones Curso"},
-     *     description="Inscribe a un estudiante a una edicion de curso",
+     *     description="Inscribe a un estudiante a ediciones de curso",
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",

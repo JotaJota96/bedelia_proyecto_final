@@ -73,10 +73,11 @@ $router->get('edicionesCurso/docente/{ciDocente}',              'EdicionesCursoC
 $router->get('edicionesCurso/{id}/estudiantes',                 'EdicionesCursoController@estudiantes');
 $router->get('edicionesCurso/{ciEstudiante}/{idCarrera}',       'EdicionesCursoController@listarParaInscripcion');
 
-$router->post('examenes/{id}/inscripciones/{ciEstudiante}', 'ExamenController@asignarEstudiante');
-$router->get('examenes/{id}/notas',                         'ExamenController@ObtenerNotas');
-$router->post('examenes/{id}/notas',                        'ExamenController@IngresarNotas');
-$router->put('examenes/{id}/notas',                         'ExamenController@ConfirmarActa');
+$router->post('examenes/inscripciones/{ciEstudiante}',    'ExamenController@asignarEstudiante');
+$router->get('examenes/{id}/notas',                       'ExamenController@ObtenerNotas');
+$router->post('examenes/{id}/notas',                      'ExamenController@IngresarNotas');
+$router->put('examenes/{id}/notas',                       'ExamenController@ConfirmarActa');
+$router->get('examenes/{ciEstudiante}/{idCarrera}',       'ExamenController@listarParaInscripcion');
 
 $router->get('estudiantes/{ciEstudiante}/carreras', 'EstudianteController@Careras');
 $router->put('estudiantes/{ciEstudiante}/asistencias', 'EstudianteController@JustificarInasistencias');
