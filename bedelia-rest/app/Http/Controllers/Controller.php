@@ -331,15 +331,33 @@ class Controller extends BaseController
 
 
     /**
+     * @OA\Schema(
+     *     schema="ActaDTO",
+     *     @OA\Property(property="id",     type="integer", readOnly=true, description="ID del Examen o EdicionCurso (segun tipo"),
+     *     @OA\Property(property="tipo",   type="string",  readOnly=true, description="EX = examen, LE = cursos"),
+     *     @OA\Property(property="fecha",  type="string",  readOnly=true, description="Fecha del examen (si tipo = EX)"),
+     *     @OA\Property(
+     *         property="notas",
+     *         type="array",
+     *         @OA\Items(
+     *             @OA\Property(property="ciEstudiante", type="string"),
+     *             @OA\Property(property="nota",         type="number"),
+     *         ),
+     *     ),
+     * )
+     */
+
+
+    /**
      * @OA\Post(
      *     path="/foo",
      *     tags={"Foo"},
-     *     @OA\RequestBody(
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(type="integer"),
-     *         ),
-     *     ),
+    *      @OA\RequestBody(
+    *          @OA\JsonContent(
+    *              @OA\Property(property="fecha_inicio", type="string"),
+    *              @OA\Property(property="fecha_fin",    type="string"),
+    *          ),
+    *      ),
      *     @OA\Response(
      *         response="200",
      *         description="",
@@ -349,3 +367,5 @@ class Controller extends BaseController
      */
 
 }
+
+

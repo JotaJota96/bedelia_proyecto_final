@@ -358,10 +358,15 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "array",
-                                "items": {
-                                    "type": "integer"
-                                }
+                                "properties": {
+                                    "fecha_inicio": {
+                                        "type": "string"
+                                    },
+                                    "fecha_fin": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -685,6 +690,181 @@
                 }
             }
         },
+        "/edicionesCurso/{id}/notas": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Obtiene las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::ObtenerNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Marca como confirmada el acta del EdicionCurso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::ConfirmarActa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Registra las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::IngresarNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActaDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/estudiantes/{ciEstudiante}/carreras": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve las carreras a las que está inscripto el estudiante",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::Careras",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve un usuario correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/estudiantes/{ciEstudiante}/asistencias": {
+            "put": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "justifica las inasistencias del estudiante para las clases dictadas dentro del rango de fechas",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::JustificarInasistencias",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fecha_inicio": {
+                                        "type": "string"
+                                    },
+                                    "fecha_fin": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/examenes/{id}/inscripciones/{ciEstudiante}": {
             "post": {
                 "tags": [
@@ -715,6 +895,107 @@
                 "responses": {
                     "default": {
                         "description": ""
+                    }
+                }
+            }
+        },
+        "/examenes/{id}/notas": {
+            "get": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Obtiene las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\ExamenController::ObtenerNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Marca como confirmada el acta del Examen",
+                "operationId": "App\\Http\\Controllers\\ExamenController::ConfirmarActa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Registra las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\ExamenController::IngresarNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActaDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1831,6 +2112,40 @@
                                 "total_inasistencias": {
                                     "type": "number",
                                     "readOnly": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ActaDTO": {
+                "properties": {
+                    "id": {
+                        "description": "ID del Examen o EdicionCurso (segun tipo",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tipo": {
+                        "description": "EX = examen, LE = cursos",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "fecha": {
+                        "description": "Fecha del examen (si tipo = EX)",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "notas": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "ciEstudiante": {
+                                    "type": "string"
+                                },
+                                "nota": {
+                                    "type": "number"
                                 }
                             },
                             "type": "object"
