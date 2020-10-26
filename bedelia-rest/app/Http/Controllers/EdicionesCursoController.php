@@ -208,10 +208,12 @@ class EdicionesCursoController extends Controller
                 //$estudiante->usuario->persona;
                 // agrego al array 'lista' (dentro del array $ret), los datos de cada estudiante inscripto
                 array_push($ret['lista'], array(
-                    'ciEstudiante'     => $estudiante->usuario->persona->cedula,
-                    'nombre'           => $estudiante->usuario->persona->nombre,
-                    'apellido'         => $estudiante->usuario->persona->apellido,
-                    'cant_asistencias' => $EdicionCurso->contarAsistidas($estudiante->id),
+                    'ciEstudiante'         => $estudiante->usuario->persona->cedula,
+                    'nombre'               => $estudiante->usuario->persona->nombre,
+                    'apellido'             => $estudiante->usuario->persona->apellido,
+                    "total_asistencias"    => $EdicionCurso->contarAsistidas($estudiante->id, 1.0),
+                    "total_llegadas_tarde" => $EdicionCurso->contarAsistidas($estudiante->id, 0.5),
+                    "total_inasistencias"  => $EdicionCurso->contarAsistidas($estudiante->id, 0.0),
                 ));
             }
             return response()->json($ret, 200);
@@ -268,9 +270,11 @@ class EdicionesCursoController extends Controller
                 // $ClaseDictada->pivot->asistencia=$asistencia['asistencia'];
 
                 // carga datos para devolver
-                $asistencia['nombre']           = $estudiante->usuario->persona->nombre;
-                $asistencia['apellido']         = $estudiante->usuario->persona->apellido;
-                $asistencia['cant_asistencias'] = $EdicionCurso->contarAsistidas($estudiante->id);
+                $asistencia['nombre']               = $estudiante->usuario->persona->nombre;
+                $asistencia['apellido']             = $estudiante->usuario->persona->apellido;
+                $asistencia["total_asistencias"]    = $estudiante->contarAsistidas($estudiante->id, 1.0);
+                $asistencia["total_llegadas_tarde"] = $estudiante->contarAsistidas($estudiante->id, 0.5);
+                $asistencia["total_inasistencias"]  = $estudiante->contarAsistidas($estudiante->id, 0.0);
             }
             $ClaseDictada->save();
             DB::commit();
@@ -346,7 +350,7 @@ class EdicionesCursoController extends Controller
             foreach ($carrera->cursos as $value) $cursos[$value->id] = $value;
 
             // obtengo el ID del proximo PeriodoLectivo (semestre)
-            $perProx = PeriodoInscCurso::periodoProximo();
+            $perProx = PeriodoInscCurso::periodoActual();
             if ($perProx == null) throw new \Exception("Aún no se ha definido el próximo período lectivo");
             $idProxPerLec = $perProx->periodoLectivo->id;
             
