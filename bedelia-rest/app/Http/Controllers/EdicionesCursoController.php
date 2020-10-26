@@ -562,7 +562,17 @@ class EdicionesCursoController extends Controller
      */
     public function ConfirmarActa($id){
         // actualiza 'acta_confirmada' = true para el EdicionCurso especificado
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            $EdicionCurso->acta_confirmada = true;
+            $EdicionCurso->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al ingresar las notas.' . $e->getMessage()], 500);
+        }
     }
 
     
