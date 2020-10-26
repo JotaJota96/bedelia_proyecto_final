@@ -1,8 +1,8 @@
 export class ListaAlumnosDTO {
     public ciEstudiante : string
     public asistencia : number
-    public cant_asistencias : number
-    public cant_inasistencias : number
+    public total_asistencias : number
+    public total_inasistencias : number
     public total_llegada_tarde : number
     public nombre : string
     public apellido : string

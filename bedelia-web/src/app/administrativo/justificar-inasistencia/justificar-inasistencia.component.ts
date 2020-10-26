@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { error } from 'protractor';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -13,11 +16,11 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 })
 export class JustificarInasistenciaComponent implements OnInit {
   mostrarDatos:boolean = false
-  persona:PersonaDTO;
+  persona:PersonaDTO = new PersonaDTO;
 
   public formulario: FormGroup;
   public formularioJustificar: FormGroup;
-  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,protected estServ: EstudianteService) { }
 
   ngOnInit(): void {
     
@@ -44,8 +47,15 @@ export class JustificarInasistenciaComponent implements OnInit {
   }
 
   justificar(){
-    this.formulario.controls['fechaInicio'].value
-    this.formulario.controls['fechaFin'].value
+    this.estServ.justificarInasistencia(this.formulario.controls['ci'].value, this.formularioJustificar.controls['fechaInicio'].value, this.formularioJustificar.controls['fechaFin'].value).subscribe(
+      (datos)=>{
+        this.router.navigate(['/']);
+      },
+      (error)=>{
+        this.openSnackBar("Error al justificar las inasistencias")
+      }
+    );
+    
   }
 
   openSnackBar(mensaje: string) {
