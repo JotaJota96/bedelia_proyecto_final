@@ -52,7 +52,8 @@ export class IngresarResultadoCursoComponent implements OnInit {
           element.nota = 0
         });
         this.usuariosDataSource.data = datos.notas;
-      }, (error) => {
+      },
+      (error) => {
         this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
       }
     );
@@ -72,12 +73,16 @@ export class IngresarResultadoCursoComponent implements OnInit {
   ingresarNota(ciEstudiante : string){
     const dialogRef = this.dialog.open(IngresarNotaComponent,{width: '500px'});
     dialogRef.afterClosed().subscribe(result => {
-      //Se tiene que crear el dto para nota y agregarlo en el array
-      var nota = result;
-      console.log(this.notas);
+
+      this.acta.notas.forEach(element => {
+        if(element.ciEstudiante == ciEstudiante){
+          element.nota = result;
+        }
+      });
+
       this.usuariosDataSource.data.forEach(element => {
-        if(element.ci == ciEstudiante){
-          element.nota = nota;
+        if(element.cedula == ciEstudiante){
+          element.nota = result;
         }
       });
     });

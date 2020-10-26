@@ -1,14 +1,19 @@
 <div class="container">
     <mat-card class="mt-5">
         <mat-card-content>
-            <mat-selection-list class="curso" #curso [multiple]="false">
-                <mat-list-option *ngFor="let curso of listaCurso" [disabled]="false" [value]="curso">
-                    {{curso.nombre}}
-                </mat-list-option>
-            </mat-selection-list>
-            <mat-card-actions align="end">
-                <button mat-button (click)="buscar(curso.selectedOptions.selected[0]?.value.id)">Buscar</button>
-            </mat-card-actions>
+            <form [formGroup]="formulario" class="row">
+                <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
+                    <mat-select placeholder="Lista de examen" name="examen" formControlName="examen">
+                        <mat-option *ngFor="let examen of listaExamen" [value]="examen.id">
+                            {{examen.curso.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="col-12 col-md-2 m-auto" align="end">
+                    <button mat-raised-button (click)="buscar()" color="primary">Seleccionar curso </button>
+                </div>
+            </form>
         </mat-card-content>
     </mat-card>
     <mat-card class="mt-2">
@@ -21,20 +26,33 @@
                 <!-- Columna -->
                 <ng-container matColumnDef="cedula">
                     <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                    <td mat-cell *matCellDef="let element"> {{element.persona.cedula}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
                 </ng-container>
 
                 <!-- Columna -->
                 <ng-container matColumnDef="nombre">
                     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> {{element.persona.nombre}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                </ng-container>
+
+                <!-- Columna -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+                </ng-container>
+
+                <!-- Columna -->
+                <ng-container matColumnDef="nota">
+                    <th mat-header-cell *matHeaderCellDef> Nota </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nota | nota}} </td>
                 </ng-container>
 
                 <!-- Columna -->
                 <ng-container matColumnDef="accion">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element" align="end">
-                        <button class="mx-1" (click)="ingresarNota()" mat-raised-button>Ingresar nota</button>
+                        <button class="mx-1" (click)="ingresarNota(element.ciEstudiante)" mat-raised-button>Ingresar
+                            nota</button>
                     </td>
                 </ng-container>
 

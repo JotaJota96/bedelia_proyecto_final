@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ActaDTO } from '../clases/acta-dto';
 import { ExamenDTO } from '../clases/examen-dto';
 
 @Injectable({
@@ -16,8 +17,23 @@ export class ExamenesService {
     return this.http.post(this.apiURL + "/inscripciones/" + ciEstudiante, examen);
   }
 
-  getEdicionesParaInscrivirse(ci:string,idCarrera:number){
+  getEdicionesParaInscrivirse(ci:string, idCarrera:number){
     return this.http.get<ExamenDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
   }
 
+  getExamenesDocente(ciDocente:string){
+    return this.http.get<ExamenDTO[]>(this.apiURL + "/docente/" + ciDocente);
+  }
+
+  getNotasDeEstudiante(idExamen:number){
+    return this.http.get<ActaDTO>(this.apiURL + "/" + idExamen + "/notas/");
+  }
+
+  confirmarActa(idExamen:number){
+    return this.http.put<ActaDTO  >(this.apiURL + "/" + idExamen + "/notas/", null);
+  }
+
+  registrarNotas(idExamen:number, acta:ActaDTO) {
+    return this.http.post(this.apiURL + "/" + idExamen + "/notas/", acta);
+  }
 }

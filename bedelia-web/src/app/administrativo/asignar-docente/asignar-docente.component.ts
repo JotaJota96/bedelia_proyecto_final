@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { ExamenDTO } from 'src/app/clases/examen-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
@@ -19,6 +20,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 export class AsignarDocenteComponent implements OnInit {
 
   listaCurso: EdicionCursoDTO[] = [];
+  listaExamen: ExamenDTO[] = [];
   listaDocente: UsuarioDTO[];
   persona: PersonaDTO = new PersonaDTO;
   mostrarDatos: boolean = false;
@@ -59,6 +61,19 @@ export class AsignarDocenteComponent implements OnInit {
               this.openSnackBar("Error al traer los cursos de la base de dato");
             }
           )
+
+          this.sedeServ.getExamen(datos.id).subscribe(
+            (datos) => {
+              datos.forEach(element => {
+                if(element.docente == null){
+                  this.listaExamen.push(element);
+                }
+              });
+            },
+            (error) => {
+              this.openSnackBar("Error al traer los examenes de la base de dato");
+            }
+          )
         }
       }
     );
@@ -66,8 +81,10 @@ export class AsignarDocenteComponent implements OnInit {
     this.formularioBusqueda = new FormGroup({
       ci: new FormControl('', [Validators.required]),
     });
+    
     this.formularioAsignar = new FormGroup({
       curso: new FormControl('', [Validators.required]),
+      examen: new FormControl('', [Validators.required]),
     })
   }
 
@@ -80,7 +97,20 @@ export class AsignarDocenteComponent implements OnInit {
     });
   }
 
-  asignar() {
+  asignarCurso() {
+    this.edicionCurServ.asignar(this.formularioAsignar.controls['curso'].value, this.persona.cedula).subscribe(
+      (datos) => {
+        this.openSnackBar("El docente fue asignado correctamente");
+        this.formularioAsignar.controls['curso'].setValue(undefined);
+      },
+      (error) => {
+        this.openSnackBar("Error al asignar el docente");
+        this.mostrarDatos = false;
+      }
+    )
+  }
+
+  asignarExamen() {
     this.edicionCurServ.asignar(this.formularioAsignar.controls['curso'].value, this.persona.cedula).subscribe(
       (datos) => {
         this.openSnackBar("El docente fue asignado correctamente");

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { CursoDTO } from 'src/app/clases/curso-dto';
-import { CursoService } from 'src/app/servicios/curso.service';
+import { Router } from '@angular/router';
+import { ActaDTO } from 'src/app/clases/acta-dto';
+import { ExamenDTO } from 'src/app/clases/examen-dto';
+import { ExamenesService } from 'src/app/servicios/examenes.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { IngresarNotaExamenComponent } from './ingresar-nota-examen/ingresar-nota-examen.component';
 
@@ -13,53 +16,77 @@ import { IngresarNotaExamenComponent } from './ingresar-nota-examen/ingresar-not
   styleUrls: ['./ingresar-resultado-examen.component.css']
 })
 export class IngresarResultadoExamenComponent implements OnInit {
-  listaCurso: CursoDTO[] = [];
+  listaExamen: ExamenDTO[] = [];
   mostrar: boolean = false;
+  acta:ActaDTO;
   notas:number[]=[];
+  ciEstudiante : string;
   
+  public formulario: FormGroup;
   // columnas que se mostraran en la tabla
-  columnasAMostrar: string[] = ['cedula', 'nombre', 'accion'];
+  columnasAMostrar: string[] = ['cedula', 'nombre', 'nota' ,'accion'];
   // objeto que necesita la tabla para mostrar el contenido
   usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar, protected usuServ: UsuariosService, protected cursoServ: CursoService) { }
+  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar, 
+    protected examenServ: ExamenesService, protected usuServ: UsuariosService) { }
 
   ngOnInit(): void {
-    this.cursoServ.getAll().subscribe(
+    this.examenServ.getExamenesDocente(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
       (datos) => {
-        this.listaCurso = datos;
+        this.listaExamen = datos;
       }, (error) => {
         this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
       }
     );
+    
+    this.formulario = new FormGroup({
+      examen: new FormControl('', [Validators.required])
+    });
   }
 
-  buscar(id:number){
-    this.mostrar = true;
-    this.usuServ.getAll().subscribe(
+  buscar(){
+    this.examenServ.getNotasDeEstudiante(this.formulario.controls['examen'].value).subscribe(
       (datos) => {
-        this.usuariosDataSource.data = datos;
-      }, (error) => {
+        this.acta = datos;
+        datos.notas.forEach(element => {
+          element.nota = 0
+        });
+        this.usuariosDataSource.data = datos.notas;
+      },
+      (error) => {
         this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
       }
     );
   }
 
   confirmar(){
-
+    this.examenServ.registrarNotas(this.formulario.controls['curso'].value, this.acta).subscribe(
+      (datos)=>{
+        this.router.navigate(['/']);
+      },
+      (error)=>{
+        this.openSnackBar("Error al registrar las notas");
+      }
+    );
   }
 
-  ingresarNota(){
+  ingresarNota(ciEstudiante : string){
     const dialogRef = this.dialog.open(IngresarNotaExamenComponent,{width: '500px'});
     dialogRef.afterClosed().subscribe(result => {
-      //Se tiene que crear el dto para nota y agregarlo en el array
-      this.notas.push(result);
-      console.log(this.notas);
-    });
-  }
+      
+      this.acta.notas.forEach(element => {
+        if(element.ciEstudiante == ciEstudiante){
+          element.nota = result;
+        }
+      });
 
-  aceptar(){
-    
+      this.usuariosDataSource.data.forEach(element => {
+        if(element.cedula == ciEstudiante){
+          element.nota = result;
+        }
+      });
+    });
   }
 
   openSnackBar(mensaje: string) {

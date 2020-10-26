@@ -25,7 +25,20 @@
             </div>
             
             <div align="center" class="col-12 col-md-2 m-auto">
-                <button [disabled]="!(formularioAsignar.valid && mostrarDatos)" mat-raised-button color="primary" (click)="asignar()">Asignar</button>
+                <button [disabled]="!(formularioAsignar.valid && mostrarDatos)" mat-raised-button color="primary" (click)="asignarCurso()">Asignar curso</button>
+            </div>
+
+            <div class="col-12 col-md-10">
+                <mat-form-field [style.width.%]=100>
+                    <mat-select placeholder="Lista de examenes sin docentes" name="examen" formControlName="examen">
+                        <mat-option *ngFor="let examen of listaExamen" [value]="examen.id">
+                            {{examen.curso.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div align="center" class="col-12 col-md-2 m-auto">
+                <button [disabled]="!(formularioAsignar.valid && mostrarDatos)" mat-raised-button color="primary" (click)="asignarCurso()">Asignar examen</button>
             </div>
         </form>
     </mat-card>
