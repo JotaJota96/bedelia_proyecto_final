@@ -487,6 +487,8 @@ class EdicionesCursoController extends Controller
             foreach ($EdicionCurso->estudiantes as $estudiante) {
                 $nota = array (
                     "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                    "Nombre" => $estudiante->usuario->persona->nombre,
+                    "Apellido" => $estudiante->usuario->persona->apellido,
                     "nota" => $estudiante->pivot->nota,
                 );
                 array_push($res['notas'], $nota);
@@ -568,7 +570,7 @@ class EdicionesCursoController extends Controller
             return response()->json(null, 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Error al ingresar las notas.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al confirmar el acta.' . $e->getMessage()], 500);
         }
     }
 
