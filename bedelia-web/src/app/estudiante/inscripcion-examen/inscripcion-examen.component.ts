@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { ExamenDTO } from 'src/app/clases/examen-dto';
@@ -15,7 +16,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./inscripcion-examen.component.css']
 })
 export class InscripcionExamenComponent implements OnInit {
-  selectedOptions: CursoDTO[] = [];
+  selectedOptions: number[] = [];
   listaExamen: ExamenDTO[] = [];
   listaCarrera: CarreraDTO[] = [];
   ciEstudiante: string;
@@ -23,8 +24,8 @@ export class InscripcionExamenComponent implements OnInit {
 
   public formulario: FormGroup;
 
-  constructor(private _snackBar: MatSnackBar, protected usuServ: UsuariosService, 
-    protected estudianteServis: EstudianteService , protected examenServ: ExamenesService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
+    protected estudianteServis: EstudianteService, protected examenServ: ExamenesService) { }
 
   ngOnInit(): void {
     this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
@@ -37,35 +38,31 @@ export class InscripcionExamenComponent implements OnInit {
         this.openSnackBar("Error al cargar las carreras del estudiante");
       }
     );
-    
+
     this.formulario = new FormGroup({
       carrera: new FormControl('', [Validators.required])
     });
   }
 
-  cargarMateria(){
-    this.examenServ.getEdicionesParaInscrivirse(this.ciEstudiante,this.formulario.controls['carrera'].value).subscribe(
-      (datos)=>{
+  cargarExamenes() {
+    this.examenServ.getEdicionesParaInscrivirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
+      (datos) => {
         this.listaExamen = datos;
       },
-      (error)=>{
-        this.openSnackBar("Error al obtener los examenes para la carrera seleccionada");
+      (error) => {
+        this.openSnackBar("Error al obtener los examenes para este periodo lectivo");
       });
   }
 
-  confirmar(){
-    console.log(this.selectedOptions)
-    let usu = this.usuServ.obtenerDatosLoginAlmacenado();
-    this.selectedOptions.forEach(element => {
-      this.examenServ.inscripciones(element.id, usu.cedula).subscribe(
-        (datos)=>{
-  
-        },
-        (error)=>{
-  
-        }
-      );
-    });
+  confirmar() {
+    this.examenServ.inscripciones(this.ciEstudiante, this.selectedOptions).subscribe(
+      (datos) => {
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        this.openSnackBar("Error al inscrivirse a una examen");
+      }
+    );
   }
 
   openSnackBar(mensaje: string) {

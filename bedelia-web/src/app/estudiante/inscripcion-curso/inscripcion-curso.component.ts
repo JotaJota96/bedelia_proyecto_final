@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
-import { CarreraService } from 'src/app/servicios/carrera.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';

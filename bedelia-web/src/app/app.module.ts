@@ -62,6 +62,7 @@ import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/
 import { JustificarInasistenciaComponent } from './administrativo/justificar-inasistencia/justificar-inasistencia.component';
 import { InasistencaPipe } from './pipes/inasistenca.pipe';
 import { NotaPipe } from './pipes/nota.pipe';
+import { FechaNullPipe } from './pipes/fecha-null.pipe';
 
 
 
@@ -103,7 +104,8 @@ import { NotaPipe } from './pipes/nota.pipe';
     ConsultaEscolaridadComponent,
     JustificarInasistenciaComponent,
     InasistencaPipe,
-    NotaPipe
+    NotaPipe,
+    FechaNullPipe
   ],
   imports: [
     MatStepperModule,

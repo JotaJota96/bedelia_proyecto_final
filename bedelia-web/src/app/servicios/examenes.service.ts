@@ -12,11 +12,12 @@ export class ExamenesService {
 
   constructor(protected http: HttpClient) { }
 
+  inscripciones(ciEstudiante: string, examen:number[]) {
+    return this.http.post(this.apiURL + "/inscripciones/" + ciEstudiante, examen);
+  }
+
   getEdicionesParaInscrivirse(ci:string,idCarrera:number){
     return this.http.get<ExamenDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
   }
 
-  inscripciones(idExamen: number, ciEstudiante: string) {
-    return this.http.post(this.apiURL + "/" + idExamen + "/inscripciones/" + ciEstudiante, null);
-  }
 }

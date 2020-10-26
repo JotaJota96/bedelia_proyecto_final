@@ -11,13 +11,14 @@
         </mat-form-field>
 
         <div class="col-12 col-md-2 m-auto" align="end">
-          <button mat-raised-button (click)="cargarMateria()" color="primary">Seleccionar carrera </button>
+          <button mat-raised-button (click)="cargarExamenes()" color="primary">Seleccionar carrera </button>
         </div>
       </form>
 
       <mat-selection-list class="curso" #examen [(ngModel)]="selectedOptions">
-        <mat-list-option *ngFor="let examen of listaExamen" [value]="examen.id">
-          {{examen}}
+        <mat-list-option *ngFor="let examen of listaExamen" [disabled]="examen.habilitado != 1" [value]="examen.id">
+          Curso: {{examen.curso.nombre}} <br>
+          Fecha: {{examen.fecha | date:'dd/MM/yyyy' | fechaNull}}
         </mat-list-option>
       </mat-selection-list>
     </mat-card-content>
