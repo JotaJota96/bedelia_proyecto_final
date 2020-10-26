@@ -865,6 +865,106 @@
                 }
             }
         },
+        "/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve la escolaridad de un estudiante para ser mostraa en frontend",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::obtenerEscolaridad",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos de la escolaridad del estudiante",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EscolaridadDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve la escolaridad de un estudiante como PDF",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::obtenerEscolaridadPDF",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Todavía no se ha definido el objeto"
+                    }
+                }
+            }
+        },
+        "/estudiantes/escolaridad/{codigo}": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve la escolaridad basandose en su código de identificacion",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::verificarEscolaridad",
+                "parameters": [
+                    {
+                        "name": "codigo",
+                        "in": "path",
+                        "description": "Código de la escolaridad",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Todavía no se ha definido el objeto"
+                    }
+                }
+            }
+        },
         "/examenes/inscripciones/{ciEstudiante}": {
             "post": {
                 "tags": [
@@ -899,6 +999,75 @@
                 "responses": {
                     "default": {
                         "description": ""
+                    }
+                }
+            }
+        },
+        "/examenes/{id}/docente/{ciDocente}": {
+            "put": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Asigna un docente a una exámen",
+                "operationId": "App\\Http\\Controllers\\ExamenController::asignarDocente",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del exámen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/examenes/docente/{ciDocente}": {
+            "get": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "devuelve los Examen que el docente toma en el PeriodoExamen actual",
+                "operationId": "App\\Http\\Controllers\\ExamenController::ExamenessDocente",
+                "parameters": [
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamenDTO"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2197,8 +2366,58 @@
                                 "ciEstudiante": {
                                     "type": "string"
                                 },
+                                "nombre": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "apellido": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
                                 "nota": {
                                     "type": "number"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "EscolaridadDTO": {
+                "properties": {
+                    "usuario": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    },
+                    "nota_promedio": {
+                        "type": "number"
+                    },
+                    "semestres": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "numero": {
+                                    "type": "integer"
+                                },
+                                "detalle": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "curso": {
+                                                "$ref": "#/components/schemas/CursoDTO"
+                                            },
+                                            "tipo": {
+                                                "type": "string"
+                                            },
+                                            "periodo": {
+                                                "type": "string"
+                                            },
+                                            "nota": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
                                 }
                             },
                             "type": "object"

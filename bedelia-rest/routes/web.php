@@ -74,11 +74,17 @@ $router->get('edicionesCurso/{id}/estudiantes',                 'EdicionesCursoC
 $router->get('edicionesCurso/{ciEstudiante}/{idCarrera}',       'EdicionesCursoController@listarParaInscripcion');
 
 $router->post('examenes/inscripciones/{ciEstudiante}',    'ExamenController@asignarEstudiante');
+$router->get('examenes/docente/{ciDocente}',              'ExamenController@ExamenessDocente');
+$router->put('examenes/{id}/docente/{ciDocente}',         'ExamenController@asignarDocente');
 $router->get('examenes/{id}/notas',                       'ExamenController@ObtenerNotas');
 $router->post('examenes/{id}/notas',                      'ExamenController@IngresarNotas');
 $router->put('examenes/{id}/notas',                       'ExamenController@ConfirmarActa');
 $router->get('examenes/{ciEstudiante}/{idCarrera}',       'ExamenController@listarParaInscripcion');
 
-$router->get('estudiantes/{ciEstudiante}/carreras', 'EstudianteController@Careras');
-$router->put('estudiantes/{ciEstudiante}/asistencias', 'EstudianteController@JustificarInasistencias');
+$router->get('estudiantes/escolaridad/{codigo}',                       'EstudianteController@verificarEscolaridad');
+$router->get('estudiantes/{ciEstudiante}/escolaridad/{idCarrera}',     'EstudianteController@obtenerEscolaridad');
+$router->get('estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf', 'EstudianteController@obtenerEscolaridadPDF');
+$router->get('estudiantes/{ciEstudiante}/carreras',                    'EstudianteController@Careras');
+$router->put('estudiantes/{ciEstudiante}/asistencias',                 'EstudianteController@JustificarInasistencias');
+
 
