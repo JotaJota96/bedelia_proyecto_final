@@ -290,6 +290,7 @@ class Controller extends BaseController
      *     @OA\Property(property="id",              type="integer"),
      *     @OA\Property(property="fecha",           type="string"),
      *     @OA\Property(property="acta_confirmada", type="boolean"),
+     *     @OA\Property(property="habilitado",      type="integer", readOnly=true, description="1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen"),
      *     @OA\Property(
      *         property="sede",
      *         ref="#/components/schemas/SedeDTO",
