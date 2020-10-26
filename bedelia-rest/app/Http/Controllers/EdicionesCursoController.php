@@ -456,4 +456,83 @@ class EdicionesCursoController extends Controller
             return response()->json(['message' => 'Error al obtener los cursos.' . $e->getMessage()], 500);
         }
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="/edicionesCurso/{id}/notas",
+     *     tags={"Ediciones Curso"},
+     *     description="Obtiene las notas obtenidas por los estudiantes",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del edicion curso",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/ActaDTO"),
+     *     ),
+     * )
+     */
+    public function ObtenerNotas($id){
+        // devuelve las notas obtenidas por los estudiantes del EdicionCurso
+        return response()->json(['message' => 'No implementado aun'], 500);
+    }
+    
+    /**
+     * @OA\Post(
+     *     path="/edicionesCurso/{id}/notas",
+     *     tags={"Ediciones Curso"},
+     *     description="Registra las notas obtenidas por los estudiantes",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del edicion curso",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/ActaDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/ActaDTO"),
+     *     ),
+     * )
+     */
+    public function IngresarNotas($id){
+        // guarda las notas obtenidas por los estudiantes del EdicionCurso
+        return response()->json(['message' => 'No implementado aun'], 500);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/edicionesCurso/{id}/notas",
+     *     tags={"Ediciones Curso"},
+     *     description="Marca como confirmada el acta del EdicionCurso",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del edicion curso",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="",
+     *         @OA\JsonContent(ref="#/components/schemas/ActaDTO"),
+     *     ),
+     * )
+     */
+    public function ConfirmarActa($id){
+        // actualiza 'acta_confirmada' = true para el EdicionCurso especificado
+        return response()->json(['message' => 'No implementado aun'], 500);
+    }
+
+    
+
 }
