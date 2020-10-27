@@ -34,36 +34,48 @@ class Estudiante extends Model
         return $this->hasMany('App\Models\InscripcionCarrera');
     }
 
-    public function NotasCarrera($idCarrera){
+    public function NotasCarrera($idCarrera, $filtrar = true, $soloActasConfirmadas = false){
         $res = [];
         foreach ($this->edicionesCurso as $value) {
             if ($value->curso->carreras->find($idCarrera)!=null) {
-                $Item = array (
-                    "curso_id"        => $value->curso->id,
-                    "periodo_id"      => $value->periodoLectivo->id,
-                    "nota"            => $value->pivot->nota,
-                    "cant_asistencias"=> $value->contarAsistidas($this->id),
-                );
-                array_push($res, $Item);
+                if ( $soloActasConfirmadas == false || ($soloActasConfirmadas == true && $value->acta_confirmada == true)){
+                    $Item = array (
+                        "curso_id"         => $value->curso->id,
+                        "edicion_curso_id" => $value->id,
+                        "acta_confirmada"  => $value->acta_confirmada,
+                        "periodo_id"       => $value->periodoLectivo->id,
+                        "nota"             => $value->pivot->nota,
+                        "cant_asistencias" => $value->contarAsistidas($this->id),
+                    );
+                    array_push($res, $Item);
+                }
             }
         }
-        $res = $this->filtrarMasReciente($res);
+        if ($filtrar){
+            $res = $this->filtrarMasReciente($res);
+        }
         return $res;
     }
     //php artisan tinker
-    public function NotasExamenes($idCarrera){
+    public function NotasExamenes($idCarrera, $filtrar = true, $soloActasConfirmadas = false){
         $res = [];
         foreach ($this->examenes as $value) {
             if ($value->curso->carreras->find($idCarrera) != null) {
-                $Item = array (
-                    "curso_id"        => $value->curso->id,
-                    "periodo_id"      => $value->periodoExamen->id,
-                    "nota"            => $value->pivot->nota,
-                );
-                array_push($res, $Item);
+                if ( $soloActasConfirmadas == false || ($soloActasConfirmadas == true && $value->acta_confirmada == true)){
+                    $Item = array (
+                        "curso_id"        => $value->curso->id,
+                        "examen_id"       => $value->id,
+                        "acta_confirmada" => $value->acta_confirmada,
+                        "periodo_id"      => $value->periodoExamen->id,
+                        "nota"            => $value->pivot->nota,
+                    );
+                    array_push($res, $Item);
+                }
             }
         }
-        $res = $this->filtrarMasReciente($res);
+        if ($filtrar){
+            $res = $this->filtrarMasReciente($res);
+        }
         return $res;
     }
     private function filtrarMasReciente($arr){
