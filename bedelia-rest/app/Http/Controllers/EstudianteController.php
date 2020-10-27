@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Examen;
 use App\Models\Carrera;
+use App\Models\Curso;
 use App\Models\Persona;
 use App\Models\Usuario;
 use App\Models\Estudiante;
@@ -160,9 +161,14 @@ class EstudianteController extends Controller
      *     ),
      * )
      */
-    public function obtenerEscolaridad(){
+    public function obtenerEscolaridad($ciEstudiante, $idCarrera){
         // Devuelve la escolaridad de un estudiante para ser mostraa en frontend
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            $escolaridad = $this->calcularEscolaridad($ciEstudiante, $idCarrera);
+            return response()->json($escolaridad, 200);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
     }
     
     /**
@@ -190,9 +196,17 @@ class EstudianteController extends Controller
      *     ),
      * )
      */
-    public function obtenerEscolaridadPDF(){
+    public function obtenerEscolaridadPDF($ciEstudiante, $idCarrera){
         // Devuelve la escolaridad de un estudiante como PDF
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            $escolaridad = $this->calcularEscolaridad($ciEstudiante, $idCarrera);
+
+
+            //return response()->json($escolaridad, 200);
+            return response()->json(['message' => 'No implementado aun'], 500);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -213,25 +227,93 @@ class EstudianteController extends Controller
      *     ),
      * )
      */
-    public function verificarEscolaridad(){
+    public function verificarEscolaridad($codigo){
         // Devuelve la escolaridad basandose en su código de identificacion
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            return response()->json(['message' => 'No implementado aun'], 500);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        }
     }
     
+    private function calcularEscolaridad($ciEstudiante, $idCarrera){
+        return $this->fooEscolaridad("00000000", 1);
+    }
+
+    private function fooEscolaridad($ciEstudiante, $idCarrera){
+        return [
+            "usuario"       => Usuario::buscar($ciEstudiante),
+            "nota_promedio" => 4.3,
+            "semestres"     => [
+                [
+                    "numero"  => 1,
+                    "detalle" => [
+                        [
+                            "curso"   => Curso::find(1),
+                            "tipo"    => "LE",
+                            "periodo" => "2018-1S",
+                            "nota"    => 3.6,
+                        ], [
+                            "curso"   => Curso::find(2),
+                            "tipo"    => "LE",
+                            "periodo" => "2018-1S",
+                            "nota"    => 2.6,
+                        ], [
+                            "curso"   => Curso::find(2),
+                            "tipo"    => "EX",
+                            "periodo" => "2018-Julio",
+                            "nota"    => 2.6,
+                        ],
+                        // [], []
+                    ],
+                ], [
+                    "numero"  => 2,
+                    "detalle" => [
+                        [
+                            "curso"   => Curso::find(4),
+                            "tipo"    => "LE",
+                            "periodo" => "2018-2S",
+                            "nota"    => 4.8,
+                        ], [
+                            "curso"   => Curso::find(5),
+                            "tipo"    => "LE",
+                            "periodo" => "2018-2S",
+                            "nota"    => 3.67,
+                        ], [
+                            "curso"   => Curso::find(2),
+                            "tipo"    => "EX",
+                            "periodo" => "2018-Diciembre",
+                            "nota"    => 3.1,
+                        ],
+                        // [], []
+                    ],
+                ], 
+                // [], []
+            ],
+        ];
+    }
 
 }
-
+/*
 // Formato para devolver y trabajar las escolaridades
 // 
 // $escolaridad = [
 //     "usuario"       => null, // objeto Usuario
 //     "nota_promedio" => 0.0, // nota promedio
-//     "semestres"     => [
+//     "semestres"       => [
 //         [
-//             "curso"   => null, // objeto Curso
-//             "tipo"    => "", / / "EX" si se trata de un examen o "LE" si se trata de un edicion curso
-//             "periodo" => "",   // formato: "2019-1S" para periodo lectivo o "2019-Julio" para periodo examen
-//             "nota"    => 0.0,  // nota obtenida
-//         ],
+//             "numero"  => 0, // numero de semestre
+//             "detalle" => [
+//                 [
+//                     "curso"   => null, // objeto Curso
+//                     "tipo"    => "",   // "EX" si se trata de un examen o "LE" si se trata de un edicion curso
+//                     "periodo" => "",   // formato: "2019-1S" para periodo lectivo o "2019-Julio" para periodo examen
+//                     "nota"    => 0.0,  // nota obtenida
+//                 ], 
+//                 // [], []
+//             ],
+//         ], 
+//         // [], []
 //     ],
 // ];
+*/
