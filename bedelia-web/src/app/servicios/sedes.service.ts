@@ -35,6 +35,6 @@ export class SedesService {
     return this.http.get<EdicionCursoDTO[]>(this.apiURL + '/' + id + '/edicionesCurso');
   }
   getExamen(id:number){
-    return this.http.get<ExamenDTO[]>(this.apiURL + '/' + id + '/xamenes/');
+    return this.http.get<ExamenDTO[]>(this.apiURL + '/' + id + '/examenes/');
   }
 }

@@ -17,6 +17,10 @@ export class ExamenesService {
     return this.http.post(this.apiURL + "/inscripciones/" + ciEstudiante, examen);
   }
 
+  asignarDocente(idExamen:number,ciDocente:string){
+    return this.http.put(this.apiURL + "/" + idExamen + "/docente/" + ciDocente, null);
+  }
+
   getEdicionesParaInscrivirse(ci:string, idCarrera:number){
     return this.http.get<ExamenDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
   }
