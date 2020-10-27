@@ -478,9 +478,13 @@ class EdicionesCursoController extends Controller
         // devuelve las notas obtenidas por los estudiantes del EdicionCurso
         try {
             $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            if ($EdicionCurso == null){
+                throw new \Exception("EdicionCurso no encontrado");
+            }
             $res = array (
                 "id" => $EdicionCurso->id,
                 "tipo" => 'LE',
+                "acta_confirmada" => $EdicionCurso->acta_confirmada,
                 "fecha" => '',
                 "notas" => array(),
             );
@@ -526,6 +530,12 @@ class EdicionesCursoController extends Controller
         try {
             DB::beginTransaction();
             $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            if ($EdicionCurso == null){
+                throw new \Exception("EdicionCurso no encontrado");
+            }
+            if ($EdicionCurso->acta_confirmada == true){
+                throw new \Exception("No se pueden actualizar las notas, el acta ya fue confirmada");
+            }
             $notas = $this->request->json('notas');
             foreach ($notas as $nota) {
                 $usu = Usuario::buscar($nota['ciEstudiante']);

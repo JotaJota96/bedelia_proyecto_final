@@ -334,9 +334,10 @@ class Controller extends BaseController
     /**
      * @OA\Schema(
      *     schema="ActaDTO",
-     *     @OA\Property(property="id",     type="integer", readOnly=true, description="ID del Examen o EdicionCurso (segun tipo"),
-     *     @OA\Property(property="tipo",   type="string",  readOnly=true, description="EX = examen, LE = cursos"),
-     *     @OA\Property(property="fecha",  type="string",  readOnly=true, description="Fecha del examen (si tipo = EX)"),
+     *     @OA\Property(property="id",              type="integer", readOnly=true, description="ID del Examen o EdicionCurso (segun tipo"),
+     *     @OA\Property(property="tipo",            type="string",  readOnly=true, description="EX = examen, LE = cursos"),
+     *     @OA\Property(property="fecha",           type="string",  readOnly=true, description="Fecha del examen (si tipo = EX)"),
+     *     @OA\Property(property="acta_confirmada", type="boolean", readOnly=true),
      *     @OA\Property(
      *         property="notas",
      *         type="array",
