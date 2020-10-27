@@ -188,7 +188,7 @@ class SedesController extends Controller
             $idPeriodo = 0;
             $pla  = PeriodoLectivo::periodoActual();
             $pica = PeriodoLectivo::periodoProximo();
-            if ($$pla == null && $pica == null){
+            if ($pla == null && $pica == null) {
                 throw new \Exception("No se está en un periodo lectivo ni de inscripcion");
             }
             if ($pla != null) {
@@ -209,7 +209,7 @@ class SedesController extends Controller
             
             return response()->json($retEdicionesCursos, 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al obtener los EdicionCurso.' . $e->getMessage()], 500);
         }
         // devuelve un array de EdicionCurso que correspondan a la Sede especificada
         // devlver Sede, Persona (el docente) y curso de cada EdicionCurso
@@ -246,7 +246,7 @@ class SedesController extends Controller
             $idPeriodo = 0;
             $pea  = PeriodoExamen::periodoActual();
             $piea = PeriodoExamen::periodoProximo();
-            if ($$pea == null && $piea == null){
+            if ($pea == null && $piea == null){
                 throw new \Exception("No se está en un periodo de exámenes ni de inscripcion");
             }
             if ($pea != null) {
@@ -281,7 +281,7 @@ class SedesController extends Controller
             //}
             return response()->json($RES, 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al obtener los exámenes.' . $e->getMessage()], 500);
         }
         return response()->json(["message" => "No implementado aun"], 501);
     }
