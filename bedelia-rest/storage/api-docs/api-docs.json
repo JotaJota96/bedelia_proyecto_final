@@ -2389,6 +2389,9 @@
                     "usuario": {
                         "$ref": "#/components/schemas/UsuarioDTO"
                     },
+                    "carrera": {
+                        "$ref": "#/components/schemas/CarreraDTO"
+                    },
                     "nota_promedio": {
                         "type": "number"
                     },

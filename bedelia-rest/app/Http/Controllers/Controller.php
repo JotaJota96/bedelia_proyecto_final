@@ -358,6 +358,10 @@ class Controller extends BaseController
      *         property="usuario",
      *         ref="#/components/schemas/UsuarioDTO",
      *     ),
+     *     @OA\Property(
+     *         property="carrera",
+     *         ref="#/components/schemas/CarreraDTO",
+     *     ),
      *     @OA\Property(property="nota_promedio", type="number"),
      *     @OA\Property(
      *         property="semestres",
