@@ -329,10 +329,14 @@ class ExamenController extends Controller
         // devuelve las notas obtenidas por los estudiantes del Examen
         try {
             $Examen = Examen::where('id', $id)->first();
+            if ($Examen == null){
+                throw new \Exception("Examen no encontrado");
+            }
             $res = array (
                 "id" => $Examen->id,
                 "tipo" => 'EX',
                 "fecha" => $Examen->fecha,
+                "acta_confirmada" => $Examen->acta_confirmada,
                 "notas" => array(),
             );
             foreach ($Examen->estudiantes as $estudiante) {
@@ -377,6 +381,12 @@ class ExamenController extends Controller
         try {
             DB::beginTransaction();
             $Examen = Examen::where('id', $id)->first();
+            if ($Examen == null){
+                throw new \Exception("Examen no encontrado");
+            }
+            if ($Examen->acta_confirmada == true){
+                throw new \Exception("No se pueden actualizar las notas, el acta ya fue confirmada");
+            }
             $notas = $this->request->json('notas');
             foreach ($notas as $nota) {
                 $usu = Usuario::buscar($nota['ciEstudiante']);
