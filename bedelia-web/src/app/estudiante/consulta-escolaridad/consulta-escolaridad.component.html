@@ -18,7 +18,20 @@
             <mat-divider></mat-divider>
         </mat-card-content>
         <mat-card-content>
-            
+            <div class="row mx-auto">
+                <mat-card class="col-12 col-md-6">
+                    <h3>Usuario: {{escolaridad.usuario}}</h3>
+                </mat-card>
+                <mat-card class="col-12 col-md-6">
+                    <h3>Carrera: {{escolaridad.carrera}}</h3>
+                </mat-card>
+            </div>
+            <div *ngFor="let semestre of escolaridad.semestres">
+                <h3>Semestre</h3> {{semestre.numero}}
+                <div *ngFor="let curso of semestre.detalle">
+                    
+                </div>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>
