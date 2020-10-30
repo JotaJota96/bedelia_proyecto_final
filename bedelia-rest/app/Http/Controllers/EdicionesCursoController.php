@@ -481,23 +481,7 @@ class EdicionesCursoController extends Controller
             if ($EdicionCurso == null){
                 throw new \Exception("EdicionCurso no encontrado");
             }
-            $res = array (
-                "id" => $EdicionCurso->id,
-                "tipo" => 'LE',
-                "acta_confirmada" => $EdicionCurso->acta_confirmada,
-                "fecha" => '',
-                "notas" => array(),
-            );
-            foreach ($EdicionCurso->estudiantes as $estudiante) {
-                $nota = array (
-                    "ciEstudiante" => $estudiante->usuario->persona->cedula,
-                    "Nombre" => $estudiante->usuario->persona->nombre,
-                    "Apellido" => $estudiante->usuario->persona->apellido,
-                    "nota" => $estudiante->pivot->nota,
-                );
-                array_push($res['notas'], $nota);
-            }
-            return response()->json($res, 200);
+            return response()->json($EdicionCurso->obtenerActa(), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
         }

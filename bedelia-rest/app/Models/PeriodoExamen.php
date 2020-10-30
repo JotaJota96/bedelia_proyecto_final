@@ -40,4 +40,14 @@ class PeriodoExamen extends Model
         }
         return $PeriodoProximo->periodoExamen;
     }
+
+    // Devuelve el periodo anterior segun la fecha, o null si no se encontro ninguno
+    public static function periodoAnterior(){
+        $hoy = date('Y-m-d');
+        $PeriodoProximo = Periodo::where('tipo', 'EX')->where('fecha_fin', '<', $hoy)->orderby('id', 'desc')->first();
+        if ($PeriodoProximo == null) {
+            return null;
+        }
+        return $PeriodoProximo->periodoExamen;
+    }
 }

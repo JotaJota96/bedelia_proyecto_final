@@ -325,27 +325,11 @@ class ExamenController extends Controller
     public function ObtenerNotas($id){
         // devuelve las notas obtenidas por los estudiantes del Examen
         try {
-            $Examen = Examen::where('id', $id)->first();
+            $Examen = Examen::find($id);
             if ($Examen == null){
                 throw new \Exception("Examen no encontrado");
             }
-            $res = array (
-                "id" => $Examen->id,
-                "tipo" => 'LE',
-                "fecha" => $Examen->periodoExamen->periodo->fecha,
-                "acta_confirmada" => $Examen->acta_confirmada,
-                "notas" => array(),
-            );
-            foreach ($Examen->estudiantes as $estudiante) {
-                $nota = array (
-                    "ciEstudiante" => $estudiante->usuario->persona->cedula,
-                    "Nombre" => $estudiante->usuario->persona->nombre,
-                    "Apellido" => $estudiante->usuario->persona->apellido,
-                    "nota" => $estudiante->pivot->nota,
-                );
-                array_push($res['notas'], $nota);
-            }
-            return response()->json($res, 200);
+            return response()->json($Examen->obtenerActa(), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
         }
