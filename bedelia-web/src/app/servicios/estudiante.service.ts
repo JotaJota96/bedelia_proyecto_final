@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CarreraDTO } from '../clases/carrera-dto';
+import { EscolaridadDTO } from '../clases/escolaridad-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,17 @@ export class EstudianteService {
 
   justificarInasistencia(ciEstudiante:string, fechaInicio:string, fechaFin:string){
     return this.http.put(this.apiURL + '/' + ciEstudiante + "/asistencias/",{fecha_inicio:fechaInicio, fecha_fin:fechaFin});
+  }
+
+  getEscolaridad(ci:string, idCarrera: number){
+    return this.http.get<EscolaridadDTO>(this.apiURL + "/"+ ci+"/escolaridad/"+idCarrera);
+  }
+
+  getEscolaridadPDF(ci:string, idCarrera: number){
+    return this.http.get<EscolaridadDTO>(this.apiURL + "/"+ ci+"/escolaridad/"+idCarrera+"/pdf");
+  }
+
+  getEscolaridadPDFCodigo(codigo:string){
+    return this.http.get<EscolaridadDTO>(this.apiURL + "/escolaridad/"+ codigo);
   }
 }

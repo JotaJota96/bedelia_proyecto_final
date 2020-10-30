@@ -26,6 +26,7 @@ export class AsignarDocenteComponent implements OnInit {
   mostrarDatos: boolean = false;
   idSede: number;
   ciLogeado: string;
+  
   public formularioBusqueda: FormGroup;
   public formularioAsignar: FormGroup;
 
