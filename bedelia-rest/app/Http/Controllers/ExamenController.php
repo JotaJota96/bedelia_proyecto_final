@@ -324,7 +324,31 @@ class ExamenController extends Controller
      */
     public function ObtenerNotas($id){
         // devuelve las notas obtenidas por los estudiantes del Examen
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            $Examen = Examen::where('id', $id)->first();
+            if ($Examen == null){
+                throw new \Exception("Examen no encontrado");
+            }
+            $res = array (
+                "id" => $Examen->id,
+                "tipo" => 'LE',
+                "fecha" => $Examen->periodoExamen->periodo->fecha,
+                "acta_confirmada" => $Examen->acta_confirmada,
+                "notas" => array(),
+            );
+            foreach ($Examen->estudiantes as $estudiante) {
+                $nota = array (
+                    "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                    "Nombre" => $estudiante->usuario->persona->nombre,
+                    "Apellido" => $estudiante->usuario->persona->apellido,
+                    "nota" => $estudiante->pivot->nota,
+                );
+                array_push($res['notas'], $nota);
+            }
+            return response()->json($res, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
+        }
     }
     
     /**
@@ -351,7 +375,27 @@ class ExamenController extends Controller
      */
     public function IngresarNotas($id){
         // guarda las notas obtenidas por los estudiantes del Examen
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $Examen = Examen::where('id', $id)->first();
+            if ($Examen == null){
+                throw new \Exception("Examen no encontrado");
+            }
+            if ($Examen->acta_confirmada == true){
+                throw new \Exception("No se pueden actualizar las notas, el acta ya fue confirmada");
+            }
+            $notas = $this->request->json('notas');
+            foreach ($notas as $nota) {
+                $usu = Usuario::buscar($nota['ciEstudiante']);
+                $Examen->estudiantes->where('id',$usu->id)->first()->pivot->nota=$nota['nota'];
+                $Examen->estudiantes->where('id',$usu->id)->first()->pivot->save();
+            }
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al ingresar las notas.' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -375,7 +419,17 @@ class ExamenController extends Controller
      */
     public function ConfirmarActa($id){
         // actualiza 'acta_confirmada' = true para el Examen especificado
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $Examen = Examen::where('id', $id)->first();
+            $Examen->acta_confirmada = true;
+            $Examen->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al confirmar el acta.' . $e->getMessage()], 500);
+        }
     }
 
 }

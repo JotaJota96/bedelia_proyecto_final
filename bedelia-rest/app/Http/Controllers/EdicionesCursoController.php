@@ -476,7 +476,31 @@ class EdicionesCursoController extends Controller
      */
     public function ObtenerNotas($id){
         // devuelve las notas obtenidas por los estudiantes del EdicionCurso
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            if ($EdicionCurso == null){
+                throw new \Exception("EdicionCurso no encontrado");
+            }
+            $res = array (
+                "id" => $EdicionCurso->id,
+                "tipo" => 'LE',
+                "acta_confirmada" => $EdicionCurso->acta_confirmada,
+                "fecha" => '',
+                "notas" => array(),
+            );
+            foreach ($EdicionCurso->estudiantes as $estudiante) {
+                $nota = array (
+                    "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                    "Nombre" => $estudiante->usuario->persona->nombre,
+                    "Apellido" => $estudiante->usuario->persona->apellido,
+                    "nota" => $estudiante->pivot->nota,
+                );
+                array_push($res['notas'], $nota);
+            }
+            return response()->json($res, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
+        }
     }
     
     /**
@@ -503,7 +527,27 @@ class EdicionesCursoController extends Controller
      */
     public function IngresarNotas($id){
         // guarda las notas obtenidas por los estudiantes del EdicionCurso
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            if ($EdicionCurso == null){
+                throw new \Exception("EdicionCurso no encontrado");
+            }
+            if ($EdicionCurso->acta_confirmada == true){
+                throw new \Exception("No se pueden actualizar las notas, el acta ya fue confirmada");
+            }
+            $notas = $this->request->json('notas');
+            foreach ($notas as $nota) {
+                $usu = Usuario::buscar($nota['ciEstudiante']);
+                $EdicionCurso->estudiantes->where('id',$usu->id)->first()->pivot->nota=$nota['nota'];
+                $EdicionCurso->estudiantes->where('id',$usu->id)->first()->pivot->save();
+            }
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al ingresar las notas.' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -527,7 +571,17 @@ class EdicionesCursoController extends Controller
      */
     public function ConfirmarActa($id){
         // actualiza 'acta_confirmada' = true para el EdicionCurso especificado
-        return response()->json(['message' => 'No implementado aun'], 500);
+        try {
+            DB::beginTransaction();
+            $EdicionCurso = EdicionCurso::where('id', $id)->first();
+            $EdicionCurso->acta_confirmada = true;
+            $EdicionCurso->save();
+            DB::commit();
+            return response()->json(null, 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al confirmar el acta.' . $e->getMessage()], 500);
+        }
     }
 
     
