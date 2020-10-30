@@ -36,4 +36,26 @@ class Examen extends Model
     public function docente() {
         return $this->belongsTo('App\Models\Docente');
     }
+
+    // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+
+    public function obtenerActa(){
+        $res = array (
+            "id"              => $this->id,
+            "tipo"            => 'EX',
+            "acta_confirmada" => $this->acta_confirmada,
+            "fecha"           => $this->fecha,
+            "notas"           => array(),
+        );
+        foreach ($this->estudiantes as $estudiante) {
+            $nota = array (
+                "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                "nombre" =>       $estudiante->usuario->persona->nombre,
+                "apellido" =>     $estudiante->usuario->persona->apellido,
+                "nota" =>         $estudiante->pivot->nota,
+            );
+            array_push($res['notas'], $nota);
+        }
+        return $res;
+    }
 }
