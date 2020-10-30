@@ -39,11 +39,10 @@ const MENU_ADMINISTRATIVO:MenuSection[] = [
   {
     nombre: "Administración",
     items: [
-      {nombre: "Asignar docente",             link: "administrativo/asignar-docente"},
-      {nombre: "Revisar postulaciónes",       link: "administrativo/revicion-postulante"},
-      {nombre: "Revisar actas de exámenes",   link: "#"},
-      {nombre: "Revisar actas de cursos",     link: "#"},
-      {nombre: "Justificar inasistencias",    link: "administrativo/justificar-inasistencia"},
+      {nombre: "Asignar docente",                        link: "administrativo/asignar-docente"},
+      {nombre: "Revisar postulaciónes",                  link: "administrativo/revicion-postulante"},
+      {nombre: "Revisar actas de cursos / examenes",     link: "administrativo/revicion-acta"},
+      {nombre: "Justificar inasistencias",               link: "administrativo/justificar-inasistencia"},
     ],
   },
 ];

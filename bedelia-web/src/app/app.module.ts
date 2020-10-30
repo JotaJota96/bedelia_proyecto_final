@@ -63,7 +63,8 @@ import { JustificarInasistenciaComponent } from './administrativo/justificar-ina
 import { InasistencaPipe } from './pipes/inasistenca.pipe';
 import { NotaPipe } from './pipes/nota.pipe';
 import { FechaNullPipe } from './pipes/fecha-null.pipe';
-
+import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
+import { TipoActaPipe } from './pipes/tipo-acta.pipe';
 
 
 @NgModule({
@@ -105,7 +106,9 @@ import { FechaNullPipe } from './pipes/fecha-null.pipe';
     JustificarInasistenciaComponent,
     InasistencaPipe,
     NotaPipe,
-    FechaNullPipe
+    FechaNullPipe,
+    RevicionActaComponent,
+    TipoActaPipe,
   ],
   imports: [
     MatStepperModule,

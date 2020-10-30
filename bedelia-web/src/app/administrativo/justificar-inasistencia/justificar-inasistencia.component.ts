@@ -20,7 +20,8 @@ export class JustificarInasistenciaComponent implements OnInit {
 
   public formulario: FormGroup;
   public formularioJustificar: FormGroup;
-  constructor(private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,protected estServ: EstudianteService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
+    protected estServ: EstudianteService) { }
 
   ngOnInit(): void {
     

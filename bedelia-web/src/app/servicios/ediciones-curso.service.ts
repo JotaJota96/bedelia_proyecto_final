@@ -43,8 +43,8 @@ export class EdicionesCursoService {
     return this.http.get<ActaDTO>(this.apiURL + "/" + idCurso + "/notas/");
   }
 
-  confirmarActa(idCurso: number, acta:ActaDTO) {
-    return this.http.put(this.apiURL + "/" + idCurso + "/notas/", acta);
+  confirmarActa(idCurso: number) {
+    return this.http.put(this.apiURL + "/" + idCurso + "/notas/", null);
   }
 
   registrarNotasActa(idEdicionCurso: number, acta:ActaDTO) {

@@ -33,6 +33,8 @@ import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-cu
 import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
 import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
 import { JustificarInasistenciaComponent } from './administrativo/justificar-inasistencia/justificar-inasistencia.component';
+import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
+
 //Fin de componentes de admin
 
 //Inico de componentes de administrativo
@@ -93,6 +95,8 @@ const routes: Routes = [
   {path: 'administrativo/asignar-docente', component: AsignarDocenteComponent},
 
   {path: 'administrativo/justificar-inasistencia', component: JustificarInasistenciaComponent},
+
+  {path: 'administrativo/revicion-acta', component: RevicionActaComponent},
   //Fin de componentes de administrativo
 
   //Inico de componentes de estudiante
