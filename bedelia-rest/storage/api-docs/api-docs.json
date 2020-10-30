@@ -1598,6 +1598,40 @@
                 }
             }
         },
+        "/sedes/{id}/actas": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerActas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ActaDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/tiposCurso/{id}": {
             "get": {
                 "tags": [
@@ -2392,6 +2426,9 @@
                 "properties": {
                     "usuario": {
                         "$ref": "#/components/schemas/UsuarioDTO"
+                    },
+                    "carrera": {
+                        "$ref": "#/components/schemas/CarreraDTO"
                     },
                     "nota_promedio": {
                         "type": "number"

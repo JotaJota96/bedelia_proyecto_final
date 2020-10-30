@@ -42,6 +42,8 @@ class EdicionCurso extends Model
         return $this->belongsToMany('App\Models\Estudiante','inscripcion_curso')->withPivot('nota');
     }
 
+    // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+
     public function contarAsistidas($idEstudiante, $valor = null){
         // si valor = null: suma todo
         // si valor = {0, 0.5, 1}: suma solo las asistencias que tengan ese valor
@@ -61,5 +63,25 @@ class EdicionCurso extends Model
             }
         }
         return $cont;
+    }
+
+    public function obtenerActa(){
+        $res = array (
+            "id"              => $this->id,
+            "tipo"            => 'LE',
+            "acta_confirmada" => $this->acta_confirmada,
+            "fecha"           => null,
+            "notas"           => array(),
+        );
+        foreach ($this->estudiantes as $estudiante) {
+            $nota = array (
+                "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                "nombre" =>       $estudiante->usuario->persona->nombre,
+                "apellido" =>     $estudiante->usuario->persona->apellido,
+                "nota" =>         $estudiante->pivot->nota,
+            );
+            array_push($res['notas'], $nota);
+        }
+        return $res;
     }
 }

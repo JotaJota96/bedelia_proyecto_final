@@ -285,4 +285,65 @@ class SedesController extends Controller
         }
         return response()->json(["message" => "No implementado aun"], 501);
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="/sedes/{id}/actas",
+     *     tags={"Sedes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la sede",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/ActaDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerActas($id){
+        // devuelve un array de Actas que correspondan a la Sede especificada
+        // las actas son de Examen y de EdicionCurso
+
+        try {
+            $RES = [];
+            $idPeriodo = 0;
+
+            // obtengo la sede
+            $sede = Sede::find($id);
+            if ($sede == null){
+                return response()->json(['message' => 'Sede no encontrada.'], 404);
+            }
+
+            // obtengo el ID del PeriodoLectivo actual o anterior
+            $plActual   = PeriodoLectivo::periodoActual();
+            $plAnterior = PeriodoLectivo::periodoAnterior();
+            if      ($plActual != null)   $idPeriodo = $plActual->id;
+            else if ($plAnterior != null) $idPeriodo = $plAnterior->id;
+            else throw new \Exception("No se encontró ningun período lectivo válido");
+            
+            $RES = array_merge($RES, $sede->obtenerActas('LE', $idPeriodo));
+
+            // obtengo el ID del PeriodoExamen actual o anterior
+            $peActual   = PeriodoExamen::periodoActual();
+            $peAnterior = PeriodoExamen::periodoAnterior();
+            if      ($peActual != null)   $idPeriodo = $peActual->id;
+            else if ($peAnterior != null) $idPeriodo = $peAnterior->id;
+            else throw new \Exception("No se encontró ningun período lectivo válido");
+            
+            $RES = array_merge($RES, $sede->obtenerActas('EX', $idPeriodo));
+
+            return response()->json($RES, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al obtener los exámenes.' . $e->getMessage()], 500);
+        }
+    }
+    
 }
