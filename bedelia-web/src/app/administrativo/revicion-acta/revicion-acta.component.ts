@@ -18,7 +18,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./revicion-acta.component.css']
 })
 export class RevicionActaComponent implements OnInit {
-  listaActas : EdicionCursoDTO[]=[];
+  listaActas : ActaDTO[]=[];
   actaSeleccionada : ActaDTO = null;
   ciLogeado : string;
 
@@ -31,12 +31,12 @@ export class RevicionActaComponent implements OnInit {
     protected usuServ: UsuariosService, protected sedeServ: SedesService, protected examenServ: ExamenesService, protected edicionServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
-    
+    this.ciLogeado = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
     this.administrativoServ.get(this.ciLogeado).subscribe(
       (datos) => {
         let id = datos.id
         if (id != null) {
-          this.sedeServ.getCrsos(id).subscribe(
+          this.sedeServ.getActas(id).subscribe(
             (datos) => {
               this.listaActas = datos;
             }, (error) => {
@@ -55,24 +55,28 @@ export class RevicionActaComponent implements OnInit {
   }
 
   buscar(){
-    this.edicionServ.getEdicionesParaActa(1).subscribe(
-      (datos) => {
-        this.actaSeleccionada = datos;
-        this.usuariosDataSource.data = datos.notas;
-      },
-      (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
-      }
-    );
-   /* var idActa:number = this.formulario.controls['ActaCurso'].value
-    this.edicionServ.getEdicionesParaActa(idActa).subscribe(
-      (datos)=>{
-        this.actaSeleccionada = datos;
-      },
-      (error)=>{
-
-      }
-    );*/
+    var acta:ActaDTO = this.formulario.controls['ActaCurso'].value
+    if(acta.tipo == "LE"){
+      this.edicionServ.getEdicionesParaActa(acta.id).subscribe(
+        (datos)=>{
+          this.actaSeleccionada = datos;
+        },
+        (error)=>{
+          
+        }
+      );
+    }
+    if(acta.tipo == "EX"){
+      this.examenServ.getNotasDeEstudiante(acta.id).subscribe(
+        (datos)=>{
+          this.actaSeleccionada = datos;
+        },
+        (error)=>{
+          
+        }
+      );
+    }
+    
   }
 
   confirmar(){

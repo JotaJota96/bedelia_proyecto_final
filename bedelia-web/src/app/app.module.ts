@@ -65,6 +65,7 @@ import { NotaPipe } from './pipes/nota.pipe';
 import { FechaNullPipe } from './pipes/fecha-null.pipe';
 import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
 import { TipoActaPipe } from './pipes/tipo-acta.pipe';
+import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
 
 
 @NgModule({
@@ -109,6 +110,7 @@ import { TipoActaPipe } from './pipes/tipo-acta.pipe';
     FechaNullPipe,
     RevicionActaComponent,
     TipoActaPipe,
+    VerificacionEscolaridadComponent,
   ],
   imports: [
     MatStepperModule,

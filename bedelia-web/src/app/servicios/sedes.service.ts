@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ActaDTO } from '../clases/acta-dto';
 import { EdicionCursoDTO } from '../clases/edicion-curso-dto';
 import { ExamenDTO } from '../clases/examen-dto';
 import { PostulanteDTO } from '../clases/postulante-dto';
@@ -34,7 +35,13 @@ export class SedesService {
   getCrsos(id:number){
     return this.http.get<EdicionCursoDTO[]>(this.apiURL + '/' + id + '/edicionesCurso');
   }
+
   getExamen(id:number){
     return this.http.get<ExamenDTO[]>(this.apiURL + '/' + id + '/examenes/');
   }
+
+  getActas(id:number){
+    return this.http.get<ActaDTO[]>(this.apiURL + '/' + id + '/actas/');
+  }
+
 }

@@ -34,6 +34,7 @@ import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-e
 import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
 import { JustificarInasistenciaComponent } from './administrativo/justificar-inasistencia/justificar-inasistencia.component';
 import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
+import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
 
 //Fin de componentes de admin
 
@@ -59,6 +60,8 @@ const routes: Routes = [
   {path: 'ver/carrera/:id', component: CarreraVistaComponent},
 
   {path: 'inscripcion/carrera/:id', component: InscripcionCarreraComponent},
+
+  {path: 'verificarEscolaridad', component: VerificacionEscolaridadComponent},
   //Fin de componentes de acceso publico
 
   //Inico de componentes de admin
