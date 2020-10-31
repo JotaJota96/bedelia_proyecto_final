@@ -166,11 +166,21 @@ class EstudianteController extends Controller
     public function obtenerEscolaridad($ciEstudiante, $idCarrera){
         // Devuelve la escolaridad de un estudiante para ser mostraa en frontend
         try {
+            // obtengo y verifico Usuario Estudiante y Carrera
+            $usu = Usuario::buscar($ciEstudiante);
+            if ($usu == null || $usu->estudiante == null){
+                return response()->json(['message' => 'Usuario no encontrado.'], 404);
+            }
+            if (Carrera::find($idCarrera) == null){
+                return response()->json(['message' => 'Carrera no encontrada.'], 404);
+            }
+
             // obtengo la escolaridad con el formato que se muestra al final de este archivo
-            $escolaridad = $this->calcularEscolaridad($ciEstudiante, $idCarrera);
+            $escolaridad = $usu->estudiante->calcularEscolaridad($idCarrera);
+            
             return response()->json($escolaridad, 200);
         } catch (\Throwable $e) {
-            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al obtener la escolaridad. ' . $e->getMessage()], 500);
         }
     }
     
@@ -202,9 +212,18 @@ class EstudianteController extends Controller
     public function obtenerEscolaridadPDF($ciEstudiante, $idCarrera){
         // Devuelve la escolaridad de un estudiante como PDF
         try {
-            // obtengo la escolaridad con el formato que se muestra al final de este archivo
-            $escolaridad = $this->calcularEscolaridad($ciEstudiante, $idCarrera);
+            // obtengo y verifico Usuario Estudiante y Carrera
+            $usu = Usuario::buscar($ciEstudiante);
+            if ($usu == null || $usu->estudiante == null){
+                return response()->json(['message' => 'Usuario no encontrado.'], 404);
+            }
+            if (Carrera::find($idCarrera) == null){
+                return response()->json(['message' => 'Carrera no encontrada.'], 404);
+            }
 
+            // obtengo la escolaridad con el formato que se muestra al final de este archivo
+            $escolaridad = $usu->estudiante->calcularEscolaridad($idCarrera);
+            
             // convertir $escolaridad a PDF
             // devolverlo de alguna forma
 
@@ -248,101 +267,6 @@ class EstudianteController extends Controller
         }
     }
     
-    private function calcularEscolaridad($ciEstudiante, $idCarrera){
-        // obtengo y verifico Usuario y Carrera
-        $usu = Usuario::buscar($ciEstudiante);
-        if ($usu == null || $usu->estudiante == null) throw new \Exception("Usuario no encontrado");
-        $carrera = Carrera::find($idCarrera);
-        if ($carrera == null || $usu->estudiante->inscripcionesCarrera()->where('carrera_id', $idCarrera)->first() == null) throw new \Exception("Carrera no encontrada");
-        $cursos = array();
-        foreach ($carrera->cursos as $value) $cursos[$value->id] = $value;        
-
-        //----  obtener la informacion --------------------
-
-        // cargo los datos del usuario
-        $usu->persona->direccion;
-
-        // sera un array asociativo para asociar la actividad del estudiante al semestre correspondiente
-        // key: numero de semestre, value: array de notas
-        $semestres = array();
-        // obtengo los cursos y examenes a los que se inscribio el estudiante
-        $cursosYExamenesTomados = [
-            $usu->estudiante->NotasCarrera($idCarrera, false),
-            $usu->estudiante->NotasExamenes($idCarrera, false),
-        ];
-
-        foreach ($cursosYExamenesTomados as $coet) {
-            foreach ($coet as $value) {
-                $numSem = $cursos[$value['curso_id']]->pivot->semestre;
-                if ( ! array_key_exists($numSem, $semestres)){
-                    $semestres[$numSem] = array();
-                }
-                array_push($semestres[$numSem], $value);
-            }
-        }
-
-        // calculo el promedio
-        // obtengo las actas confirmadas mas recientes y las referencio por el ID del curso
-        // y despues hago el calculo
-        $notaPromedio = 0;
-        $promediar = array();
-        foreach ($usu->estudiante->NotasCarrera($idCarrera, true, true) as $value) {
-            $promediar[$value['curso_id']] = $value['nota'];
-        }
-        foreach ($usu->estudiante->NotasExamenes($idCarrera, true, true) as $value) {
-            $promediar[$value['curso_id']] = $value['nota'];
-        }
-        foreach ($promediar as $key => $value) {
-            $notaPromedio += $value;
-        }
-        $count = count($promediar);
-        $notaPromedio = $count == 0 ? 0.0 : $notaPromedio / count($promediar);
-        $notaPromedio = round($notaPromedio, 2);
-        
-        //----  formato y limpieza de la informacion --------------------
-        
-        $escolaridad = [
-            "usuario"       => $usu,          // objeto Usuario
-            "carrera"       => $carrera,      // objeto Carrera
-            "nota_promedio" => $notaPromedio, // nota promedio
-            "semestres"     => [],
-        ];
-        unset($escolaridad['carrera']->cursos);
-        unset($escolaridad['usuario']->estudiante);
-
-        foreach ($semestres as $numSem => $detalle) {
-            $sem = [
-                "numero"  => $numSem, // numero de semestre
-                "detalle" => [],
-            ];
-
-            foreach ($detalle as $value) {
-                $c = $cursos[$value['curso_id']];
-                unset($c->pivot);
-
-                $t = "-";
-                if (array_key_exists('edicion_curso_id', $value)) $t = 'LE';
-                if (array_key_exists('examen_id', $value)) $t = 'EX';
-                
-                $p = Periodo::find($value['periodo_id'])->toString();
-                
-                $n = $value['nota'];
-                
-                $linea = [
-                    "curso"   => $c, // objeto Curso
-                    "tipo"    => $t, // "EX" si se trata de un examen o "LE" si se trata de un edicion curso
-                    "periodo" => $p, // formato: "2019-1S" para periodo lectivo o "2019-Julio" para periodo examen
-                    "nota"    => $n, // nota obtenida
-                ];
-                array_push($sem['detalle'], $linea);
-            }
-
-            array_push($escolaridad['semestres'], $sem);
-        }
-        
-        return $escolaridad;
-    }
-
 }
 /*
 // Formato para devolver y trabajar las escolaridades
