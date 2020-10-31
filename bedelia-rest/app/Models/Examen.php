@@ -45,6 +45,7 @@ class Examen extends Model
             "tipo"            => 'EX',
             "acta_confirmada" => $this->acta_confirmada,
             "fecha"           => $this->fecha,
+            "curso"           => $this->curso,
             "notas"           => array(),
         );
         foreach ($this->estudiantes as $estudiante) {
