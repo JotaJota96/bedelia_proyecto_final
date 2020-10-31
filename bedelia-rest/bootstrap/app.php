@@ -25,6 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades(true, [
     'Illuminate\Support\Facades\Mail' => 'Mail',
+    'Barryvdh\DomPDF\Facade' => 'PDF',
 ]);
 
 $app->withEloquent();

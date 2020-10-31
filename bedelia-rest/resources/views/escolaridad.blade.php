@@ -1,1 +1,1 @@
-<h1>hola mundo</h1>
+<h1>Escolaridad foo de {{ $ciEstudiante }}</h1>
