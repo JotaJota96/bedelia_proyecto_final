@@ -19,31 +19,55 @@
             <mat-divider></mat-divider>
         </mat-card-content>
         <mat-card-content *ngIf="escolaridad != null">
-            <div class="mb-5 row mx-auto">
-                <mat-card class="col-12 col-md-4">
-                    <h3>Usuario: {{escolaridad.usuario.persona.nombre}} {{escolaridad.usuario.persona.apellido}}</h3>
-                </mat-card>
-                <mat-card class="col-12 col-md-4">
-                    <h3>Carrera: {{escolaridad.carrera.nombre}}</h3>
-                </mat-card>
-                <mat-card class="col-12 col-md-4">
-                    <h3>Nota promedio: {{escolaridad.nota_promedio}}</h3>
-                </mat-card>
-            </div>
-            <mat-card class="mt-1" *ngFor="let semestre of escolaridad.semestres">
-                <h3>Semestre {{semestre.numero}}</h3> 
+            <mat-card class="mb-5">
+                <h1>Informacion básica</h1> 
+                <div class=" row mx-auto">
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Cédula: </h2>
+                        <h3>{{escolaridad.usuario.persona.cedula}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-3">
+                        <h2>Nombre completo: </h2>
+                        <h3>{{escolaridad.usuario.persona.nombre}} {{escolaridad.usuario.persona.apellido}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-4">
+                        <h2>Carrera: </h2>
+                        <h3>{{escolaridad.carrera.nombre}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-3">
+                        <h2>Nota promedio: </h2>
+                        <h3>{{escolaridad.nota_promedio}}</h3>
+                    </mat-card>
+                </div>
+            </mat-card>
+            <mat-card class="mt-1 " *ngFor="let semestre of escolaridad.semestres">
+                <h1>Semestre {{semestre.numero}}</h1> 
+                <div class="p-2 row">
+                    <mat-card class="col-12 col-md-6">
+                        <h2>Curso</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Tipo</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Periodo</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Nota</h2>
+                    </mat-card>
+                </div>
                 <div class="p-2 row" *ngFor="let curso of semestre.detalle">
                     <mat-card class="col-12 col-md-6 mb-2">
-                        <h3>Curso: {{curso.curso.nombre}}</h3>
+                        <h3>{{curso.curso.nombre}}</h3>
                     </mat-card>
                     <mat-card class="col-12 col-md-2 mb-2">
-                        <h3>Tipo: {{curso.tipo | tipoActa}}</h3>
+                        <h3>{{curso.tipo | tipoActa}}</h3>
                     </mat-card>
                     <mat-card class="col-12 col-md-2 mb-2">
-                        <h3>Periodo: {{curso.periodo}}</h3>
+                        <h3>{{curso.periodo}}</h3>
                     </mat-card>
                     <mat-card class="col-12 col-md-2 mb-2">
-                        <h3>Nota: {{curso.nota | nota}}</h3>
+                        <h3>{{curso.nota | nota}}</h3>
                     </mat-card>
                 </div>
             </mat-card>
