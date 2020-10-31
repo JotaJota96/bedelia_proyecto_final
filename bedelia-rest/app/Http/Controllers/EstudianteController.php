@@ -11,6 +11,7 @@ use App\Models\Persona;
 use App\Models\Usuario;
 use App\Models\Estudiante;
 use App\Models\Periodo;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class EstudianteController extends Controller
 {
@@ -207,7 +208,14 @@ class EstudianteController extends Controller
             // convertir $escolaridad a PDF
             // devolverlo de alguna forma
 
-            return response()->json(['message' => 'No implementado aun'], 500);
+            $datos = [
+                'ciEstudiante' => $ciEstudiante,
+            ];
+
+            $pdf = PDF::loadView('escolaridad', $datos);
+
+            return $pdf->stream();
+
         } catch (\Throwable $e) {
             return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
