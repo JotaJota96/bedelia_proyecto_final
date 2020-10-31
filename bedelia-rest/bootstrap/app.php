@@ -105,6 +105,9 @@ $app->register(\SwaggerLume\ServiceProvider::class);
 $app->configure('mail');
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 
+$app->configure('dompdf');
+$app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

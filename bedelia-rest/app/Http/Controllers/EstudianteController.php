@@ -11,6 +11,7 @@ use App\Models\Persona;
 use App\Models\Usuario;
 use App\Models\Estudiante;
 use App\Models\Periodo;
+use Illuminate\Support\Facades\App;
 
 class EstudianteController extends Controller
 {
@@ -207,7 +208,11 @@ class EstudianteController extends Controller
             // convertir $escolaridad a PDF
             // devolverlo de alguna forma
 
-            return response()->json(['message' => 'No implementado aun'], 500);
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadView('escolaridad');
+            return $pdf->stream();
+
+            //return response()->json(['message' => 'No implementado aun'], 500);
         } catch (\Throwable $e) {
             return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
         }
