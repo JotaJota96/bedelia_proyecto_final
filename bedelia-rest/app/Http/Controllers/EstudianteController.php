@@ -224,15 +224,18 @@ class EstudianteController extends Controller
             // obtengo la escolaridad con el formato que se muestra al final de este archivo
             $escolaridad = $usu->estudiante->calcularEscolaridad($idCarrera);
             
-            // convertir $escolaridad a PDF
-            // devolverlo de alguna forma
+            $codigoVerificacion = "SGAE-ESCP-HHUT1139";
+            $fechaValidez = date('d/m/Y');
 
-            $datos = [
-                'ciEstudiante' => $ciEstudiante,
-            ];
+            // agrego datos a mostrar en el PDF
+            $escolaridad['fecha']              = date('d/m/Y');
+            $escolaridad['codigoVerificacion'] = $codigoVerificacion;
+            $escolaridad['fechaValidez']       = $fechaValidez;
+            $escolaridad['urlVerificar']       = env("WEB_URL_VERIFICAR");
 
-            $pdf = PDF::loadView('escolaridad', $datos);
+            //return view('escolaridad', $escolaridad);
 
+            $pdf = PDF::loadView('escolaridad', $escolaridad);
             return $pdf->stream();
 
         } catch (\Throwable $e) {
