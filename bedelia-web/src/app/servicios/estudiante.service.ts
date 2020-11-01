@@ -26,7 +26,7 @@ export class EstudianteService {
   }
 
   getEscolaridadPDF(ci:string, idCarrera: number){
-    return this.http.get<EscolaridadDTO>(this.apiURL + "/"+ ci+"/escolaridad/"+idCarrera+"/pdf");
+    return this.http.get(this.apiURL + "/"+ ci+"/escolaridad/"+idCarrera+"/pdf");
   }
 
   getEscolaridadPDFCodigo(codigo:string){

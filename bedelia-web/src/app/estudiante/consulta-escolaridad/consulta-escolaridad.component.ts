@@ -47,6 +47,11 @@ export class ConsultaEscolaridadComponent implements OnInit {
     );
   }
 
+  descargarEscolaridad():string{
+    return "http://localhost:8000/estudiantes/"+ this.ciLogeado +"/escolaridad/"+
+     this.formulario.controls['carrera'].value +"/pdf";
+  }
+
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
       duration: 3000,

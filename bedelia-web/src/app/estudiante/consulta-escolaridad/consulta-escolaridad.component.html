@@ -16,7 +16,12 @@
                     <button mat-raised-button color="primary" (click)="obtenerEscolaridad()">Obtener escolaridad</button>
                 </div>
             </form>
-            <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-divider *ngIf="escolaridad != null"></mat-divider>
+        <mat-card-content class="my-4" *ngIf="escolaridad != null">
+            <div>
+                <a mat-raised-button color="primary" target="_blank"  href="{{descargarEscolaridad()}}" >Obtener PDF escolaridad</a>
+            </div>
         </mat-card-content>
         <mat-card-content *ngIf="escolaridad != null">
             <mat-card class="mb-5">
