@@ -2397,6 +2397,9 @@
                         "type": "boolean",
                         "readOnly": true
                     },
+                    "curso": {
+                        "$ref": "#/components/schemas/CursoDTO"
+                    },
                     "notas": {
                         "type": "array",
                         "items": {
