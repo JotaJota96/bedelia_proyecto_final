@@ -6,7 +6,7 @@
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Lista de actas de curso" name="ActaCurso" formControlName="ActaCurso">
                         <mat-option *ngFor="let ActaCurso of listaActas" [value]="ActaCurso">
-                            {{ActaCurso.curso}} {{ActaCurso.tipo | tipoActa}}
+                            {{ActaCurso.curso.nombre}} {{ActaCurso.tipo | tipoActa}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
