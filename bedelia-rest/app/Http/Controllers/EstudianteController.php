@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Examen;
+use Illuminate\Support\Str;
 use App\Models\Carrera;
-use App\Models\Curso;
-use App\Models\Persona;
+use App\Models\Escolaridad;
 use App\Models\Usuario;
-use App\Models\Estudiante;
-use App\Models\Periodo;
 use Barryvdh\DomPDF\Facade as PDF;
 
 class EstudianteController extends Controller
@@ -179,7 +176,7 @@ class EstudianteController extends Controller
             $escolaridad = $usu->estudiante->calcularEscolaridad($idCarrera);
             
             return response()->json($escolaridad, 200);
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener la escolaridad. ' . $e->getMessage()], 500);
         }
     }
@@ -221,25 +218,50 @@ class EstudianteController extends Controller
                 return response()->json(['message' => 'Carrera no encontrada.'], 404);
             }
 
-            // obtengo la escolaridad con el formato que se muestra al final de este archivo
+            // ---- ---- obtengo la escolaridad con el formato que se muestra al final de este archivo ---- ----
             $escolaridad = $usu->estudiante->calcularEscolaridad($idCarrera);
             
-            $codigoVerificacion = "SGAE-ESCP-HHUT1139";
-            $fechaValidez = date('d/m/Y');
+            // ---- ---- procesamiento de datos para mostrar en PDF ---- ----
+            // le agrego 1 mes a la fecha actual
+            $fechaValidez = date("d/m/Y", strtotime("+1 month"));
+            
+            // genero codigos hasta que no se repita
+            $codigoVerificacion = "";
+            do {
+                $codigoVerificacion = Str::random(4) . "-" . Str::random(4) . "-" . Str::random(8);
+                $codigoVerificacion = strtoupper($codigoVerificacion);
+            } while (Escolaridad::find($codigoVerificacion) != null);
 
-            // agrego datos a mostrar en el PDF
-            $escolaridad['fecha']              = date('d/m/Y');
-            $escolaridad['codigoVerificacion'] = $codigoVerificacion;
-            $escolaridad['fechaValidez']       = $fechaValidez;
-            $escolaridad['urlVerificar']       = env("WEB_URL_VERIFICAR");
+            // ---- ---- agrego datos a mostrar en el PDF ---- ----
+            $escolaridad['fecha']              = date('d/m/Y');            // fecha de emision
+            $escolaridad['codigoVerificacion'] = $codigoVerificacion;      // código identificativo para verificacion
+            $escolaridad['fechaValidez']       = $fechaValidez;            // fecha limite para verificacion
+            $escolaridad['urlVerificar']       = env("WEB_URL_VERIFICAR"); //URL de la pagina para verificar
 
+            // descomentar el return para ver como pagina web
             //return view('escolaridad', $escolaridad);
 
-            $pdf = PDF::loadView('escolaridad', $escolaridad);
+            // ---- ---- Renderizo la escolaridad y obtengo su codigo HTML
+            $html = view('escolaridad', $escolaridad)->render();
+
+            // ---- ---- guardo escolaridad en la base de datos
+            DB::beginTransaction();
+            $esc = new Escolaridad();
+            $esc->clave   = $codigoVerificacion;
+            $esc->archivo = base64_encode($html);
+            $esc->fecha   = date("Y-m-d", strtotime("+1 month"));
+            $esc->save();
+
+            // renderizo el HTML como PDF
+            $pdf = PDF::loadHtml($html);
+
+            // si se renderizo bien, hago el commit y lo devuelvo
+            DB::commit();
             return $pdf->stream();
 
-        } catch (\Throwable $e) {
-            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error al obtener la escolaridad. ' . $e->getMessage()], 500);
         }
     }
 
@@ -264,9 +286,20 @@ class EstudianteController extends Controller
     public function verificarEscolaridad($codigo){
         // Devuelve la escolaridad basandose en su código de identificacion
         try {
-            return response()->json(['message' => 'No implementado aun'], 500);
-        } catch (\Throwable $e) {
-            return response()->json(['message' => 'Error al asignar el Docente.' . $e->getMessage()], 500);
+            $esc = Escolaridad::where("clave", $codigo)->where("fecha", ">=", date("Y-m-d"))->first();
+            if ($esc == null){
+                return response()->json(['message' => 'Escolaridad no encontrada.'], 404);
+            }
+
+            // decodifico el HTML almacenado
+            $html = base64_decode($esc->archivo);
+
+            $pdf = PDF::loadHtml($html);
+            
+            return $pdf->stream();
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al obtener la escolaridad. ' . $e->getMessage()], 500);
         }
     }
     
