@@ -44,7 +44,7 @@
             top: -80px;
             left: 0px;
             right: 0px;
-            height: 50px;
+            height: 60px;
             border-bottom: solid 1px rgb(163, 163, 163);
          }
         footer {
@@ -64,6 +64,16 @@
         hr{
             border-top: solid 1px rgb(219, 219, 219) !important;
         }
+        .logo-container{
+            /*height: 500px;*/
+            height: 50px;
+            overflow: hidden;
+        }
+        .logo{
+            /*height: 100%;*/
+            height: 70px;
+            margin: -3px 0 0 -0px;
+        }
     </style>
 </head>
 
@@ -72,8 +82,14 @@
     <header>
         <table class="w-100 mx-auto">
             <tr>
-                <td class="small text-left">UTEC - Universidad Tecnológica</td>
-                <td class="small text-right page-number ">Página: </td>
+                <td class="small text-left">
+                    <div class="logo-container">
+                        <img class="logo" src="https://red.utec.edu.uy/wp-content/uploads/2018/11/01-Isologotipo-4.jpg" alt="">
+                    </div>
+                </td>
+                <td class="small text-right page-number ">
+                    Página: 
+                </td>
             </tr>
         </table>
     </header>
