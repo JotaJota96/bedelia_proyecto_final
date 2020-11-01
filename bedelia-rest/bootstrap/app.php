@@ -25,6 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades(true, [
     'Illuminate\Support\Facades\Mail' => 'Mail',
+    'Barryvdh\DomPDF\Facade' => 'PDF',
 ]);
 
 $app->withEloquent();
@@ -104,6 +105,9 @@ $app->register(\SwaggerLume\ServiceProvider::class);
 
 $app->configure('mail');
 $app->register(Illuminate\Mail\MailServiceProvider::class);
+
+$app->configure('dompdf');
+$app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

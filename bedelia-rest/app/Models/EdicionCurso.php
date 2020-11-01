@@ -71,6 +71,7 @@ class EdicionCurso extends Model
             "tipo"            => 'LE',
             "acta_confirmada" => $this->acta_confirmada,
             "fecha"           => null,
+            "curso"           => $this->curso,
             "notas"           => array(),
         );
         foreach ($this->estudiantes as $estudiante) {
