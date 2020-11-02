@@ -26,10 +26,14 @@ export class EstudianteService {
   }
 
   getEscolaridadPDF(ci:string, idCarrera: number){
-    return this.http.get(this.apiURL + "/"+ ci+"/escolaridad/"+idCarrera+"/pdf");
+    window.open(this.apiURL + "/" + ci + "/escolaridad/" + idCarrera + "/pdf")
   }
 
   getEscolaridadPDFCodigo(codigo:string){
-    return this.http.get<EscolaridadDTO>(this.apiURL + "/escolaridad/"+ codigo);
+    window.open(this.apiURL + "/escolaridad/"+ codigo);
+  }
+
+  getEscolaridadPDFExiste(codigo:string){
+    return this.http.get(this.apiURL + "/escolaridad/"+ codigo + "/existe");
   }
 }

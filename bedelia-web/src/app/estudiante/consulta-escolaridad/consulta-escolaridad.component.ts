@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { error } from 'protractor';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EscolaridadDTO } from 'src/app/clases/escolaridad-dto';
-import { CarreraService } from 'src/app/servicios/carrera.service';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -47,9 +47,8 @@ export class ConsultaEscolaridadComponent implements OnInit {
     );
   }
 
-  descargarEscolaridad():string{
-    return "http://localhost:8000/estudiantes/"+ this.ciLogeado +"/escolaridad/"+
-     this.formulario.controls['carrera'].value +"/pdf";
+  descargarEscolaridad(){
+    this.estudianteServ.getEscolaridadPDF(this.ciLogeado, this.formulario.controls['carrera'].value);
   }
 
   openSnackBar(mensaje: string) {
