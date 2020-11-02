@@ -303,6 +303,38 @@ class EstudianteController extends Controller
         }
     }
     
+    /**
+     * @OA\Get(
+     *     path="/estudiantes/escolaridad/{codigo}/existe",
+     *     tags={"Estudiantes"},
+     *     description="Verifica si existe una escolaridad con ese codigo de verificacion",
+     *     @OA\Parameter(
+     *         name="codigo",
+     *         in="path",
+     *         description="Código de la escolaridad",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Todavía no se ha definido el objeto"
+     *     ),
+     * )
+     */
+    public function verificarCodigoEscolaridad($codigo){
+        // Devuelve la escolaridad basandose en su código de identificacion
+        try {
+            $esc = Escolaridad::where("clave", $codigo)->where("fecha", ">=", date("Y-m-d"))->first();
+            if ($esc == null){
+                return response()->json(['message' => 'Escolaridad no encontrada.'], 404);
+            }else{
+                return response()->json(null, 200);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al obtener la escolaridad. ' . $e->getMessage()], 500);
+        }
+    }
 }
 /*
 // Formato para devolver y trabajar las escolaridades
