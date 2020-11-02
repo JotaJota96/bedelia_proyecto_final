@@ -15,8 +15,19 @@ $router->get('/', function () use ($router) {
     // redirige a la documentacion de Swagger
     return redirect()->to('api/documentation');
 });
-// este es para probar los correos cuando se estan haciendo
-$router->post('correos',         'CorreosController@enviarCorreo');
+
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->get('/test', function () use ($router) {
+        return "hola test";
+    });
+    $router->get('/test/{nombre}', function ($nombre) use ($router) {
+        return "hola " . $nombre;
+    });
+    $router->get('/test/{nombre}/test', function ($nombre) use ($router) {
+        return "hola " . $nombre . " test";
+    });
+});
+
 
 $router->post('usuarios/login',   'UsuarioController@login');
 $router->put('usuarios/passReset', 'UsuarioController@cambiarContrasenia');
