@@ -965,6 +965,31 @@
                 }
             }
         },
+        "/estudiantes/escolaridad/{codigo}/existe": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Verifica si existe una escolaridad con ese codigo de verificacion",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::verificarCodigoEscolaridad",
+                "parameters": [
+                    {
+                        "name": "codigo",
+                        "in": "path",
+                        "description": "Código de la escolaridad",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Todavía no se ha definido el objeto"
+                    }
+                }
+            }
+        },
         "/examenes/inscripciones/{ciEstudiante}": {
             "post": {
                 "tags": [

@@ -83,6 +83,7 @@ $router->put('examenes/{id}/notas',                       'ExamenController@Conf
 $router->get('examenes/{ciEstudiante}/{idCarrera}',       'ExamenController@listarParaInscripcion');
 
 $router->get('estudiantes/escolaridad/{codigo}',                       'EstudianteController@verificarEscolaridad');
+$router->get('estudiantes/escolaridad/{codigo}/existe',                'EstudianteController@verificarCodigoEscolaridad');
 $router->get('estudiantes/{ciEstudiante}/escolaridad/{idCarrera}',     'EstudianteController@obtenerEscolaridad');
 $router->get('estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf', 'EstudianteController@obtenerEscolaridadPDF');
 $router->get('estudiantes/{ciEstudiante}/carreras',                    'EstudianteController@Careras');
