@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-//Inico de componentes de acceso publico
 import { ListaCarrerasComponent } from './acceso-publico/lista-carreras/lista-carreras.component';
 import { LoginComponent } from './acceso-publico/login/login.component';
-//Fin de componentes de acceso publico
-
-//Inico de componentes de admin
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
 import { SedesComponent } from './admin/sedes/sedes.component';
@@ -36,19 +31,12 @@ import { JustificarInasistenciaComponent } from './administrativo/justificar-ina
 import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
 import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
 
-//Fin de componentes de admin
-
-//Inico de componentes de administrativo
-//...
-//Fin de componentes de administrativo
-
-//Inico de componentes de estudiante
-//...
-//Fin de componentes de estudiante
-
-//Inico de componentes de docente
-//...
-//Fin de componentes de docente
+import { AuthGuard } from './guards/auth.guard';
+import { EstudianteService } from './servicios/estudiante.service';
+import { EstudianteGuard } from './guards/estudiante.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { AdministrativoGuard } from './guards/administrativo.guard';
+import { DocenteGuard } from './guards/docente.guard';
 
 
 const routes: Routes = [
@@ -65,58 +53,57 @@ const routes: Routes = [
   //Fin de componentes de acceso publico
 
   //Inico de componentes de admin
-  {path: 'admin/usuarios', component: UsuariosComponent},
-  {path: 'admin/usuarios/abm', component: UsuarioABMComponent},
-  {path: 'admin/usuarios/abm/:id', component: UsuarioABMComponent},
+  {path: 'admin/usuarios', component: UsuariosComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/usuarios/abm', component: UsuarioABMComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/usuarios/abm/:id', component: UsuarioABMComponent, canActivate:[AuthGuard,AdminGuard]},
   
-  {path: 'admin/sede', component: SedesComponent},
-  {path: 'admin/sede/abm', component: SedeABMComponent},
-  {path: 'admin/sede/abm/:id', component: SedeABMComponent},
+  {path: 'admin/sede', component: SedesComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/sede/abm', component: SedeABMComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/sede/abm/:id', component: SedeABMComponent, canActivate:[AuthGuard,AdminGuard]},
   
-  {path: 'admin/area', component: AreaEstudioComponent},
-  {path: 'admin/area/abm', component: AreaEstudioABMComponent},
+  {path: 'admin/area', component: AreaEstudioComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/area/abm', component: AreaEstudioABMComponent, canActivate:[AuthGuard,AdminGuard]},
   
-  {path: 'admin/tipo', component: TipoCursoComponent},
-  {path: 'admin/tipo/abm', component: TipoCursoABMComponent},
+  {path: 'admin/tipo', component: TipoCursoComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/tipo/abm', component: TipoCursoABMComponent, canActivate:[AuthGuard,AdminGuard]},
   
-  {path: 'admin/curso', component: CursoComponent},
-  {path: 'admin/curso/abm', component: CursoABMComponent},
-  {path: 'admin/curso/abm/:id', component: CursoABMComponent},
+  {path: 'admin/curso', component: CursoComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/curso/abm', component: CursoABMComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/curso/abm/:id', component: CursoABMComponent, canActivate:[AuthGuard,AdminGuard]},
   
-  {path: 'admin/periodos', component: AnioLectivoABMComponent},
+  {path: 'admin/periodos', component: AnioLectivoABMComponent, canActivate:[AuthGuard,AdminGuard]},
 
-  {path: 'admin/carrera', component: CarreraComponent},
-  {path: 'admin/carrera/abm', component: CarreraABMComponent},
-  
+  {path: 'admin/carrera', component: CarreraComponent, canActivate:[AuthGuard,AdminGuard]},
+  {path: 'admin/carrera/abm', component: CarreraABMComponent, canActivate:[AuthGuard,AdminGuard]},
   //Fin de componentes de admin
 
   //Inico de componentes de administrativo
-  {path: 'administrativo/revicion-postulante', component: RevicionInscripcionesPostulantesComponent},
+  {path: 'administrativo/revicion-postulante', component: RevicionInscripcionesPostulantesComponent, canActivate:[AuthGuard,AdministrativoGuard]},
   
-  {path: 'administrativo/postulante/ver/:id', component: VerMasComponent},
+  {path: 'administrativo/postulante/ver/:id', component: VerMasComponent, canActivate:[AuthGuard,AdministrativoGuard]},
   
-  {path: 'administrativo/asignar-docente', component: AsignarDocenteComponent},
+  {path: 'administrativo/asignar-docente', component: AsignarDocenteComponent, canActivate:[AuthGuard,AdministrativoGuard]},
 
-  {path: 'administrativo/justificar-inasistencia', component: JustificarInasistenciaComponent},
+  {path: 'administrativo/justificar-inasistencia', component: JustificarInasistenciaComponent, canActivate:[AuthGuard,AdministrativoGuard]},
 
-  {path: 'administrativo/revicion-acta', component: RevicionActaComponent},
+  {path: 'administrativo/revicion-acta', component: RevicionActaComponent, canActivate:[AuthGuard,AdministrativoGuard]},
   //Fin de componentes de administrativo
 
   //Inico de componentes de estudiante
-  {path: 'estudiante/inscripcion/curso', component: InscripcionCursoComponent},
+  {path: 'estudiante/inscripcion/curso', component: InscripcionCursoComponent, canActivate:[AuthGuard,EstudianteGuard]},
   
-  {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent},
+  {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent, canActivate:[AuthGuard,EstudianteGuard]},
 
-  {path: 'estudiante/cambiar/contrasenia', component: CambirContraseniaComponent},
+  {path: 'estudiante/cambiar/contrasenia', component: CambirContraseniaComponent, canActivate:[AuthGuard,EstudianteGuard]},
 
-  {path: 'estudiante/consultar-escolaridad', component: ConsultaEscolaridadComponent},
+  {path: 'estudiante/consultar-escolaridad', component: ConsultaEscolaridadComponent, canActivate:[AuthGuard,EstudianteGuard]},
   //Fin de componentes de estudiante
 
   //Inico de componentes de docente
-  {path: 'docente/control-asistencia', component: ControlAsistenciaComponent},
+  {path: 'docente/control-asistencia', component: ControlAsistenciaComponent, canActivate:[AuthGuard,DocenteGuard]},
   
-  {path: 'docente/ingreso/resultados-curso', component: IngresarResultadoCursoComponent},
-  {path: 'docente/ingreso/resultados-examen', component: IngresarResultadoExamenComponent},
+  {path: 'docente/ingreso/resultados-curso', component: IngresarResultadoCursoComponent, canActivate:[AuthGuard,DocenteGuard]},
+  {path: 'docente/ingreso/resultados-examen', component: IngresarResultadoExamenComponent, canActivate:[AuthGuard,DocenteGuard]},
   //Fin de componentes de docente
 
 ];
