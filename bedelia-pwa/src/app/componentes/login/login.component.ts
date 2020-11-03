@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
-import { UsuariosService } from 'src/app/servicios/usuarios.service';
+import { AccountService } from 'src/app/servis/account.service';
 
 @Component({
   selector: 'app-login',
@@ -12,16 +12,12 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  public titulo:string = "Iniciar sesión";
   public formulario: FormGroup;
-  public formularioRol: FormGroup;
 
-  public roles: String[];
   public datosLogin:LoginResponseDTO;
 
   constructor(private _snackBar: MatSnackBar,
-    protected accServ:UsuariosService, 
+    protected accServ: AccountService, 
     private router:Router) {
   }
 
@@ -30,22 +26,13 @@ export class LoginComponent implements OnInit {
       usuario:     new FormControl('', [Validators.required]),
       contrasenia: new FormControl('', [Validators.required]),
     });
-    this.formularioRol = new FormGroup({
-      rol:     new FormControl('', [Validators.required]),
-    });
-    this.datosLogin = undefined;
   }
 
   vaciarCampos(){
     this.formulario.controls['usuario'].setValue("");
     this.formulario.controls['contrasenia'].setValue("");
-    this.formularioRol.controls['rol'].setValue("");
   }
-  eleguirRol(){
-    let rol:String = this.formularioRol.controls['rol'].value;
-    this.accServ.almacenarDatosLogin(this.datosLogin, rol);
-    this.router.navigate(['/']);
-  }
+
 
   login(){
     // extrae los datos del formulario
@@ -57,16 +44,16 @@ export class LoginComponent implements OnInit {
       (retorno)=>{
         // si login es correcto
         this.datosLogin = retorno;
-        this.roles = retorno.roles
-
         this.vaciarCampos();
-        this.titulo = "Seleccione un rol"
 
-        // si tiene un solo rol, se lo selecciona automaticamente
-        if (this.roles.length == 1){
-          this.formularioRol.controls['rol'].setValue(this.roles[0]);
-          this.eleguirRol();
-        }
+        retorno.roles.forEach(element => {
+          if(element == "estudiante"){
+            this.accServ.almacenarDatosLogin(this.datosLogin,"estudiante");
+            this.router.navigate(['/']);
+            return;
+          }
+        });
+        
       },
       (error)=>{
         this.openSnackBar("Los datos del usuario son incorrectos");
