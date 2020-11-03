@@ -294,6 +294,51 @@ class PeriodoLectivoController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/periodos/actual/{tipo}",
+     *     tags={"Periodos"},
+     *     @OA\Parameter(
+     *         name="tipo",
+     *         in="path",
+     *         description="Tipo de periodo. Puede ser 'IE', 'EX', 'IC' o 'LE'",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Si se está en un periodo del tipo especificado",
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Si NO se está en un periodo del tipo especificado",
+     *     ),
+     * )
+     */
+    public function actual($tipo){
+        $tiposPosibles = ['IE', 'EX', 'IC', 'LE'];
+        try {
+            $hoy = date('Y-m-d');
+            $tipo = strtoupper($tipo);
+            if ( ! in_array($tipo, $tiposPosibles)){
+                throw new \Exception($tipo . " no es un tipo válido");
+            }
+
+            $res = Periodo::where('tipo', $tipo)
+            ->where('fecha_inicio', '<=', $hoy)
+            ->where('fecha_fin',    '>=', $hoy)
+            ->get();
+
+            if (count($res) > 0){
+                return response()->json(null, 200);
+            }else{
+                return response()->json(['message' => 'No se está en un periodo de tipo ' . $tipo], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
 
     /*
     {
