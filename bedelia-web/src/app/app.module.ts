@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 import {MatButtonModule} from '@angular/material/button';
@@ -66,6 +66,7 @@ import { FechaNullPipe } from './pipes/fecha-null.pipe';
 import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
 import { TipoActaPipe } from './pipes/tipo-acta.pipe';
 import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
+import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
 
 
 @NgModule({
@@ -138,7 +139,13 @@ import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorTokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
