@@ -1282,6 +1282,33 @@
                 }
             }
         },
+        "/periodos/actual/{tipo}": {
+            "get": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::actual",
+                "parameters": [
+                    {
+                        "name": "tipo",
+                        "in": "path",
+                        "description": "Tipo de periodo. Puede ser 'IE', 'EX', 'IC' o 'LE'",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Si se está en un periodo del tipo especificado"
+                    },
+                    "404": {
+                        "description": "Si NO se está en un periodo del tipo especificado"
+                    }
+                }
+            }
+        },
         "/postulantes/{id}": {
             "get": {
                 "tags": [
