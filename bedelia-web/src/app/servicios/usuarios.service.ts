@@ -25,9 +25,17 @@ export class UsuariosService {
   get(id:string){
     return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
   }
+  
+  getAllDocente(){
+    return this.http.get<UsuarioDTO[]>(this.apiURL + '/docentes');
+  }
 
   create(datos:UsuarioDTO){
     return this.http.post<UsuarioDTO>(this.apiURL, datos);
+  }
+
+  passReset(idUsuario:string, pass:string){
+    return this.http.put<LoginDTO>(this.apiURL + "/passReset", {id:idUsuario,contrasenia:pass});
   }
 
   /** Funciones relacionadas a la sesion del usuario **************************** **/
@@ -55,7 +63,7 @@ export class UsuariosService {
   /**
    * Devuelve los datos del usuario guardado en localstorage, o NULL si no hay ninguno
    */
-  private obtenerDatosLoginAlmacenado():LoginResponseDTO{
+  public obtenerDatosLoginAlmacenado():LoginResponseDTO{
     return JSON.parse(localStorage.getItem(this.loginDataStoreKey))
   }
 

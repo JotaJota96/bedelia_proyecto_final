@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AreaEstudio extends Model
 {
     protected $table = "area_estudio";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'area',
     ];

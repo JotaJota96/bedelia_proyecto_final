@@ -1,0 +1,12 @@
+<mat-card class="container mt-3">
+    <form [formGroup]="formulario" class="row">
+        <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
+            <mat-label>Ingresar codigo</mat-label>
+            <input matInput value="Codigo" name="codigo" formControlName="codigo">
+        </mat-form-field>
+                    
+        <div class="col-12 col-md-2 m-auto">
+            <button mat-raised-button (click)="verificar()" color="primary" [disabled]="!formulario.valid">Acceder</button>
+        </div>
+    </form>
+</mat-card>

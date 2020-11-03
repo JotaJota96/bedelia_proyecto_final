@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Curso extends Model
 {
     protected $table = "curso";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'nombre', 'descripcion', 'max_inasistencias', 'cant_creditos', 'cant_clases',
     ];
@@ -23,7 +23,7 @@ class Curso extends Model
     public function previaDe() {
         return $this->hasMany('App\Models\Previa', 'curso_id_previa', 'id');
     }
-    
+
 	// devuelve uno
     public function areaEstudio() {
         return $this->belongsTo('App\Models\AreaEstudio');
@@ -48,4 +48,32 @@ class Curso extends Model
     public function examenes() {
         return $this->hasMany('App\Models\Examen');
     }
+
+    //--------------------------------------------
+    public function seDictaEnSemestreParOInpar(){
+        // devuelve 0 si el curso se dicta en ambos semestres
+        // devuelve 1 si el curso se dicta solo en semestres inpares
+        // devuelve 2 si el curso se dicta solo en semestres pares
+
+        $seDictaEnInpares = false;
+        $seDictaEnPares   = false;
+
+        foreach ($this->carreras as $carrera) {
+            if ($carrera->pivot->semestre % 2 == 0){
+                $seDictaEnPares   = true;
+            }else{
+                $seDictaEnInpares = true;
+            }
+        }
+        if ($seDictaEnPares && $seDictaEnInpares){
+            return 0;
+        }elseif ($seDictaEnInpares){
+            return 1;
+        }elseif ($seDictaEnPares){
+            return 2;
+        }else{
+            throw new \Exception("Error al calcular si la carrera se dicta en semestres pares, inpares o en ambos");
+        }
+    }
+
 }

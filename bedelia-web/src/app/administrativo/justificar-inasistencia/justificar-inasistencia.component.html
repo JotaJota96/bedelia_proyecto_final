@@ -1,0 +1,61 @@
+<div class="container">
+    <mat-card class="mt-5">
+        <form [formGroup]="formulario" class="row">
+            <mat-form-field class="col-12 col-md-10">
+                <mat-label>Cedula del estudiante</mat-label>
+                <input matInput name="ci" formControlName="ci">
+            </mat-form-field>
+
+            <div align="center" class="col-12 col-md-2 m-auto">
+                <button [disabled]="!formulario.valid" (click)="buscar()" mat-raised-button
+                    color="primary">Buscar</button>
+            </div>
+        </form>
+        <form [formGroup]="formularioJustificar" class="row">
+            <mat-form-field [style.width.%]=100 class="col-12 col-md-5 m-auto">
+                <mat-label>Inicio primer periodo incripcion examen</mat-label>
+                <input matInput [matDatepicker]="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                <mat-datepicker #fechaInicio></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100 class="col-12 col-md-5 m-auto">
+                <mat-label>Inicio primer periodo examen</mat-label>
+                <input matInput [matDatepicker]="fechaFin" name="fechaFin" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                <mat-datepicker #fechaFin></mat-datepicker>
+            </mat-form-field>
+
+            <div align="center" class="col-12 col-md-2 m-auto">
+                <button [disabled]="!formularioJustificar.valid" (click)="justificar()" mat-raised-button
+                    color="primary">Justificar</button>
+            </div>
+        </form>
+    </mat-card>
+    
+    <mat-card *ngIf="mostrarDatos" class="mt-2">
+        <div class="row">
+            <div class="col-6">
+                <mat-list role="list" class="m-auto">
+                    <mat-list-item role="listitem">Cedula: </mat-list-item>
+                    <mat-list-item role="listitem">Nombre: </mat-list-item>
+                    <mat-list-item role="listitem">Apellido: </mat-list-item>
+                    <mat-list-item role="listitem">Correo: </mat-list-item>
+                    <mat-list-item role="listitem">Sexo: </mat-list-item>
+                    <mat-list-item role="listitem">Fecha Nacimiento: </mat-list-item>
+                </mat-list>
+            </div>
+            <div class="col-6">
+                <mat-list role="list" class="m-auto">
+                    <mat-list-item role="listitem">{{persona.cedula}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.nombre}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.apellido}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.correo}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.sexo | sexo}}</mat-list-item>
+                    <mat-list-item role="listitem">{{persona.fecha_nac | date:'dd/MM/yyyy'}}
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+    </mat-card>
+</div>

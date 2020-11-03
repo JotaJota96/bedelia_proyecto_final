@@ -17,6 +17,7 @@ class CreatePeriodoTable extends Migration
             $table->id();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
+            $table->integer('numero');
             // LE = periodo lectivo
             // EX = periodo examenes
             // IC = periodo inscripcion a cursos

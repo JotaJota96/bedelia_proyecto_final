@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class InscripcionCarrera extends Model
 {
     protected $table = "inscripcion_carrera";
-
+    protected $primaryKey = "id";
     protected $fillable = [];
 
 

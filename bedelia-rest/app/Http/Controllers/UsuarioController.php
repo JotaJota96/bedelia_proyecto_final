@@ -136,34 +136,40 @@ class UsuarioController extends Controller
      * )
      */
     public function agregar(){
-        // Para agregar un usuario se recibe: un Usuario, que adentro tiene un objeto Persona, y este adentro tiene un objeto Direccion
-        // Creo instancias vacias para cada objeto
-        $usu = new Usuario();
-        $per = new Persona();
-        $dir = new Direccion();
+        try {
+            // Para agregar un usuario se recibe: un Usuario, que adentro tiene un objeto Persona, y este adentro tiene un objeto Direccion
+            // Creo instancias vacias para cada objeto
+            $usu = new Usuario();
+            $per = new Persona();
+            $dir = new Direccion();
 
-        // Extraigo los datos del JSON
-        // el $this->request->json()->all() devuelve un array con todos los datos del JSON que viene en la request
-        // el $usu->fill(..) asigna los datos del objeto Usuario extrayendolos de un array asociativo que se le pase por parametro
-        $usu->fill($this->request->json()->all());
+            // Extraigo los datos del JSON
+            // el $this->request->json()->all() devuelve un array con todos los datos del JSON que viene en la request
+            // el $usu->fill(..) asigna los datos del objeto Usuario extrayendolos de un array asociativo que se le pase por parametro
+            $usu->fill($this->request->json()->all());
 
-        // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
-        $per->fill($this->request->json('persona'));
-        $usu->contrasenia = $per->cedula;
+            // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
+            $per->fill($this->request->json('persona'));
+            $usu->contrasenia = $per->cedula;
+            // para contraseña encriptada
+            //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
 
-        // obtengo los roles (son un simple array de strings)
-        $roles = $this->request->json('roles');
+            // obtengo los roles (son un simple array de strings)
+            $roles = $this->request->json('roles');
 
-        // lo mismo que lo anterior pero 'direccion' es un objeto dentro del objeto 'persona' que viene dentro del objeto principal
-        $dir->fill($this->request->json(['persona', 'direccion']));
+            // lo mismo que lo anterior pero 'direccion' es un objeto dentro del objeto 'persona' que viene dentro del objeto principal
+            $dir->fill($this->request->json(['persona', 'direccion']));
 
-        // Los objetos instanciados al principio ya tienen los valores recibidos en la peticion pero no estan asociados entre si
-        // La asociacion debe aserse mientras se van guardando en la DB porque se necesitan los ID autoincrementales
+            // Los objetos instanciados al principio ya tienen los valores recibidos en la peticion pero no estan asociados entre si
+            // La asociacion debe aserse mientras se van guardando en la DB porque se necesitan los ID autoincrementales
 
-        // Asociacion entre usuario y persona
-        $usu->persona()->associate($per);
-        // Asociacion entre la persona asociada y direccion
-        $usu->persona->direccion()->associate($dir);
+            // Asociacion entre usuario y persona
+            $usu->persona()->associate($per);
+            // Asociacion entre la persona asociada y direccion
+            $usu->persona->direccion()->associate($dir);
+        } catch (\Exception $e) {
+            return response()->json(["message" => "Error al procesar los datos recibidos. $e->getMessage()"], 500);
+        }
 
         // en este caso hay que insertar varias cosas a la vez, asi que hay que usar una transaccion
         // para que funcione el "BD::" hay que agregar el "use Illuminate\Support\Facades\DB;" al principio del archivo
@@ -210,15 +216,97 @@ class UsuarioController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e, 500);
             // devuelve un estado HTTP 500 y un mensaje simple del error
-            return response()->json(['error' => 'Error al guardar los datos'], 500);
+            return response()->json(["message" => "Error al guardar los datos. $e->getMessage()"], 500);
         }
 
         $usu->roles = $usu->roles();
 
+        // se envia un correo al nuevo usuario
+        $mailData = [
+            'destinatario' => $usu->persona->correo,
+            'nombre'       => $usu->persona->nombre,
+            'usuario'      => $usu->persona->cedula,
+            'contrasenia'  => $usu->contrasenia,
+        ];
+        \App\Mail\CorreoBienvenida::enviar($mailData);
+
         // si no hubo nngun problema, devuelve el usuario (que ya tiene encadenado la persona y la direccion)
         return response()->json($usu, 200);
+    }
+
+    
+    /**
+     * @OA\Get(
+     *     path="/usuarios/docentes",
+     *     tags={"Usuarios"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/UsuarioDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerDocentes(){
+        // devuelve todos los usuarios con rol 'docente'
+        // revisar en el modelo \App\Models\Usuario que que hay una funcion que devuelve un string[] con los roles
+        $Docentes = docente::all();
+        $usus = array();
+        foreach ($Docentes as $id => $Docente) {
+            $Docente->usuario->persona->direccion;
+            array_push($usus, $Docente->usuario);
+        }
+
+        return response()->json($usus, 200);
+    }
+    /**
+     * @OA\Put(
+     *     path="/usuarios/passReset",
+     *     tags={"Usuarios"},
+     *     description="Actualiza la contraseña del usuario",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Devuelve datos del usuario logueado",
+     *         @OA\JsonContent(ref="#/components/schemas/LoginResponseDTO"),
+     *     ),
+     * )
+     */
+    public function cambiarContrasenia(){
+        $id          = $this->request->input("id");
+        $contrasenia = $this->request->input("contrasenia");
+
+        $usu = Usuario::buscar($id);
+
+        // verifica existencia de usuario y su contrasenia
+        if ($usu == null){
+            return response()->json(null, 401);
+        }
+        $usu->contrasenia = $contrasenia;
+        // para contraseña encriptada
+        //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+
+        $usu->remember_token = \Illuminate\Support\Str::random(100);
+        $usu->save();
+
+        $ret = [
+            "cedula" => $usu->persona->cedula,
+            "correo" => $usu->persona->correo,
+            "token" => $usu->remember_token,
+            "roles" => $usu->roles()
+        ];
+        /**
+         * Para las siguientes peticiones se deberá añadir el Header con clave 'Authorization' y valor el token devuelto
+         * Para obtener el usuario autenticado dentro de cualquier funcion, usar:
+         * $request->user()
+         */
+
+        return response()->json($ret, 200);
     }
 
 

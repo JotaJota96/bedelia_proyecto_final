@@ -23,7 +23,10 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->withFacades();
+$app->withFacades(true, [
+    'Illuminate\Support\Facades\Mail' => 'Mail',
+    'Barryvdh\DomPDF\Facade' => 'PDF',
+]);
 
 $app->withEloquent();
 
@@ -80,9 +83,10 @@ $app->middleware([
     App\Http\Middleware\CorsMiddleware::class
 ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'rol' => App\Http\Middleware\RolMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -96,9 +100,15 @@ $app->middleware([
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(\SwaggerLume\ServiceProvider::class);
+
+$app->configure('mail');
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+
+$app->configure('dompdf');
+$app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

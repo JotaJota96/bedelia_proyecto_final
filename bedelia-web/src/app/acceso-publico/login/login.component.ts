@@ -17,11 +17,10 @@ export class LoginComponent implements OnInit {
   public formulario: FormGroup;
   public formularioRol: FormGroup;
 
-  public mostrarErrorLogin: boolean = false;
   public roles: String[];
   public datosLogin:LoginResponseDTO;
 
-  constructor(
+  constructor(private _snackBar: MatSnackBar,
     protected usuServ:UsuariosService, 
     private router:Router) {
   }
@@ -61,7 +60,6 @@ export class LoginComponent implements OnInit {
         this.roles = retorno.roles
 
         this.vaciarCampos();
-        this.mostrarErrorLogin = false;
         this.titulo = "Seleccione un rol"
 
         // si tiene un solo rol, se lo selecciona automaticamente
@@ -71,10 +69,17 @@ export class LoginComponent implements OnInit {
         }
       },
       (error)=>{
-        //datos incorrectos
+        this.openSnackBar("Los datos del usuario son incorrectos");
         this.vaciarCampos();
-        this.mostrarErrorLogin = true;
       }
     );
+  }
+
+  openSnackBar(mensaje : string) {
+    this._snackBar.open(mensaje,'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
   }
 }

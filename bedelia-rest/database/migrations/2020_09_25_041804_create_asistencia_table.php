@@ -16,7 +16,7 @@ class CreateAsistenciaTable extends Migration
         Schema::create('asistencia', function (Blueprint $table) {
             $table->foreignId('clase_dictada_id');
             $table->foreignId('estudiante_id');
-            $table->float('asistencia', 1, 1);
+            $table->float('asistencia', 2, 1);
             $table->timestamps();
 
             $table->primary(['clase_dictada_id', 'estudiante_id']);

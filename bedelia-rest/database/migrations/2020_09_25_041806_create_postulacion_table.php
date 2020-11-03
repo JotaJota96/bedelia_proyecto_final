@@ -18,9 +18,11 @@ class CreatePostulacionTable extends Migration
             $table->foreignId('carrera_id');
             $table->foreignId('sede_id');
             $table->foreignId('persona_id');
-            $table->text('img_ci');
-            $table->text('img_escolaridad');
-            $table->text('img_carne_salud');
+            $table->longText('img_ci');
+            $table->longText('img_escolaridad');
+            $table->longText('img_carne_salud');
+            // A = Aceptada, R = Rechazada, N = NotificacionEnviada, null = ninguna de las anteriores
+            $table->enum('estado', ['A', 'R', 'N'])->nullable();
             $table->timestamps();
 
             $table->unique(['carrera_id', 'persona_id']);

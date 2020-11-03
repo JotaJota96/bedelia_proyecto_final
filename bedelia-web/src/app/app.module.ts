@@ -36,7 +36,37 @@ import { TipoCursoComponent } from './admin/tipo-curso/tipo-curso.component';
 import { TipoCursoABMComponent } from './admin/tipo-curso/tipo-curso-abm/tipo-curso-abm.component';
 import { CursoComponent } from './admin/curso/curso.component';
 import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
-
+import { AnioLectivoABMComponent } from './admin/anio-lectivo-abm/anio-lectivo-abm.component';
+import { CarreraComponent } from './admin/carrera/carrera.component';
+import { CarreraABMComponent } from './admin/carrera/carrera-abm/carrera-abm.component';
+import { CarreraVistaComponent } from './acceso-publico/carrera-vista/carrera-vista.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { ModalPreviaComponent } from './admin/carrera/carrera-abm/modal-previa/modal-previa.component';
+import { RevicionInscripcionesPostulantesComponent } from './administrativo/revicion-inscripciones-postulantes/revicion-inscripciones-postulantes.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SexoPipe } from './pipes/sexo.pipe';
+import { InscripcionCarreraComponent } from './acceso-publico/inscripcion-carrera/inscripcion-carrera.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ModalInformarComponent } from './administrativo/revicion-inscripciones-postulantes/modal-informar/modal-informar.component';
+import { VerMasComponent } from './administrativo/revicion-inscripciones-postulantes/ver-mas/ver-mas.component';
+import { AsignarDocenteComponent } from './administrativo/asignar-docente/asignar-docente.component';
+import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
+import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
+import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
+import { ControlAsistenciaComponent } from './docente/control-asistencia/control-asistencia.component';
+import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
+import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
+import { IngresarNotaComponent } from './docente/ingresar-resultado-curso/ingresar-nota/ingresar-nota.component';
+import { IngresarNotaExamenComponent } from './docente/ingresar-resultado-examen/ingresar-nota-examen/ingresar-nota-examen.component';
+import { ConsultaEscolaridadComponent } from './estudiante/consulta-escolaridad/consulta-escolaridad.component';
+import { JustificarInasistenciaComponent } from './administrativo/justificar-inasistencia/justificar-inasistencia.component';
+import { InasistencaPipe } from './pipes/inasistenca.pipe';
+import { NotaPipe } from './pipes/nota.pipe';
+import { FechaNullPipe } from './pipes/fecha-null.pipe';
+import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-acta.component';
+import { TipoActaPipe } from './pipes/tipo-acta.pipe';
+import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
+import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
 
 
 @NgModule({
@@ -54,9 +84,39 @@ import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
     TipoCursoComponent,
     TipoCursoABMComponent,
     CursoComponent,
-    CursoABMComponent
+    CursoABMComponent,
+    AnioLectivoABMComponent,
+    CarreraComponent,
+    CarreraABMComponent,
+    CarreraVistaComponent,
+    ModalPreviaComponent,
+    RevicionInscripcionesPostulantesComponent,
+    SexoPipe,
+    InscripcionCarreraComponent,
+    ModalInformarComponent,
+    VerMasComponent,
+    AsignarDocenteComponent,
+    InscripcionCursoComponent,
+    InscripcionExamenComponent,
+    CambirContraseniaComponent,
+    ControlAsistenciaComponent,
+    IngresarResultadoCursoComponent,
+    IngresarResultadoExamenComponent,
+    IngresarNotaComponent,
+    IngresarNotaExamenComponent,
+    ConsultaEscolaridadComponent,
+    JustificarInasistenciaComponent,
+    InasistencaPipe,
+    NotaPipe,
+    FechaNullPipe,
+    RevicionActaComponent,
+    TipoActaPipe,
+    VerificacionEscolaridadComponent,
   ],
   imports: [
+    MatStepperModule,
+    MatProgressSpinnerModule,
+    NgxGraphModule,
     MatChipsModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -79,7 +139,13 @@ import { CursoABMComponent } from './admin/curso/curso-abm/curso-abm.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorTokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

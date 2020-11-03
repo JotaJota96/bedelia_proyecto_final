@@ -84,4 +84,34 @@ class AreaEstudioController extends Controller
         }
         return response()->json(404);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/areasEstudio/{id}/cursos",
+     *     tags={"Areas de estudio"},
+     *     description="Devuelve los cursos que pertenecen al area de estudio",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/AreaEstudioDTO"),
+     *         ),
+     *     ),
+     * )
+     */
+    public function obtenerCursosPertenecientesAUnArea(int $Id){
+        $AreaEstudio = AreaEstudio::find($Id);
+        if ($AreaEstudio == null){
+            return response()->json(null, 404);
+        }
+        return response()->json($AreaEstudio->cursos, 200);
+    }
 }
