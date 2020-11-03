@@ -16,16 +16,8 @@ $router->get('/', function () use ($router) {
     return redirect()->to('api/documentation');
 });
 
-$router->group(['middleware' => 'auth'], function () use ($router) {
-    $router->get('/test', function () use ($router) {
-        return "hola test";
-    });
-    $router->get('/test/{nombre}', function ($nombre) use ($router) {
-        return "hola " . $nombre;
-    });
-    $router->get('/test/{nombre}/test', function ($nombre) use ($router) {
-        return "hola " . $nombre . " test";
-    });
+$router->group(['middleware' => ['auth', 'rol:sade']], function () use ($router) {
+    // ...
 });
 
 

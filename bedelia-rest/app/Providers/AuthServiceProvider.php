@@ -37,37 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             }
 
             if ($token) {
-                $usu = Usuario::where('remember_token', $token)->first();
-                if ($usu == null) return null;
-
-                if ($usu->admin){
-                    foreach ($this->admin as $value) {
-                        if ($request->is($value)) {
-                            return $usu;
-                        }
-                    }
-                }
-                if ($usu->administrativo){
-                    foreach ($this->administrativo as $value) {
-                        if ($request->is($value)) {
-                            return $usu;
-                        }
-                    }
-                }
-                if ($usu->docente){
-                    foreach ($this->docente as $value) {
-                        if ($request->is($value)) {
-                            return $usu;
-                        }
-                    }
-                }
-                if ($usu->estudiante){
-                    foreach ($this->estudiante as $value) {
-                        if ($request->is($value)) {
-                            return $usu;
-                        }
-                    }
-                }
+                return Usuario::where('remember_token', $token)->first();
             }
             return null;
         });
