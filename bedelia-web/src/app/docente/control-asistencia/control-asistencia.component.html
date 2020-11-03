@@ -1,6 +1,12 @@
 <div class="container">
     <mat-card class="mt-5">
-        <mat-card-content>
+        <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
+        
+        <mat-card-content *ngIf="periodoOk == false">
+          <p>Actualmente no hay ningun período de cursos vigente.</p>
+        </mat-card-content>
+    
+        <mat-card-content *ngIf="periodoOk == true">
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Lista de curso" name="curso" formControlName="curso">
@@ -16,7 +22,7 @@
             </form>
         </mat-card-content>
     </mat-card>
-    <mat-card class="mt-2">
+    <mat-card class="mt-2" *ngIf="periodoOk == true">
         <!-- Tabla -->
         <table mat-table [dataSource]="usuariosDataSource" class="col-12">
             <!-- Columna -->

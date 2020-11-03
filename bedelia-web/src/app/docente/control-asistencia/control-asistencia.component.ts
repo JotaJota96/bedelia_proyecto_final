@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ClaseDictadaDTO } from 'src/app/clases/clase-dictada-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -20,6 +21,7 @@ export class ControlAsistenciaComponent implements OnInit {
   mostrar:boolean = false;
   claseDictada : ClaseDictadaDTO;
   cursoSeleccionado: CursoDTO;
+  periodoOk:boolean = undefined;
 
   public formulario: FormGroup;
    // columnas que se mostraran en la tabla
@@ -28,9 +30,15 @@ export class ControlAsistenciaComponent implements OnInit {
    usuariosDataSource = new MatTableDataSource([]);
 
   constructor(private router:Router, private _snackBar: MatSnackBar, 
-    protected usuServ: UsuariosService,protected edicionServ: EdicionesCursoService) { }
+    protected usuServ: UsuariosService,protected edicionServ: EdicionesCursoService,
+    protected alecServ:AnioLectivoService) { }
 
   ngOnInit(): void {
+    this.alecServ.enPeriodo('LE').subscribe(
+      (data) => { this.periodoOk = true; },
+      (error) => { this.periodoOk = false; }
+    );
+    
     this.edicionServ.getEdicionesDocentes(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
       (datos) => {
         this.listaCurso = datos;
