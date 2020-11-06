@@ -62,8 +62,16 @@
       </div>
 
       <div class="col-12 col-md-6">
-        <mat-spinner class="m-auto" *ngIf="!(links.length != 0 && semestre.length != 0 && nodes.length != 0)"></mat-spinner>
-        <div *ngIf="links.length != 0 && semestre.length != 0 && nodes.length != 0">
+        
+        <mat-spinner class="m-auto" *ngIf="mostrarGrafo() == undefined"></mat-spinner>
+        
+        <div *ngIf="mostrarGrafo() == false">
+          <span class="m-auto">
+            No se han definido las previas para los cursos de esta carrera
+          </span>
+        </div>
+        
+        <div *ngIf="mostrarGrafo() == true">
           <ngx-graph class="chart-container" [view]="[500, 500]" [links]="links" [nodes]="nodes" [clusters]="semestre" layout="dagreCluster">
             <ng-template #defsTemplate>
               <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4"
@@ -73,16 +81,14 @@
             </ng-template>
   
             <ng-template #clusterTemplate let-cluster>
-              <svg:g class="node cluster" ngx-tooltip [tooltipPlacement]="'top'" [tooltipType]="'tooltip'"
-                [tooltipTitle]="cluster.label">
+              <svg:g class="node cluster" ngx-tooltip>
                 <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height"
                   [attr.fill]="cluster.data.color" />
               </svg:g>
             </ng-template>
   
             <ng-template #nodeTemplate let-node>
-              <svg:g class="node" ngx-tooltip [tooltipPlacement]="'top'" [tooltipType]="'tooltip'"
-                [tooltipTitle]="node.label">
+              <svg:g class="node" ngx-tooltip>
                 <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
                   [attr.fill]="node.data.color" />
                 <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
