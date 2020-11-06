@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TipoCursoDTO } from 'src/app/clases/tipo-curso-dto';
@@ -14,6 +15,7 @@ export class TipoCursoABMComponent implements OnInit {
   public formulario: FormGroup;
 
   constructor(private _snackBar: MatSnackBar, protected tipoServ: TipoCursoService,
+    private dialogRef: MatDialogRef<TipoCursoABMComponent>,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class TipoCursoABMComponent implements OnInit {
         this.openSnackBar("No se pudo crear los tipos de curso");
       }
     );
+    this.dialogRef.close();
   }
 
   openSnackBar(mensaje: string) {
