@@ -28,7 +28,7 @@ export class ModalPreviaComponent implements OnInit {
   ngOnInit(): void {
 
     this.formularioPrevia = new FormGroup({
-      idPrevia: new FormControl('', [Validators.required]),
+      cursoPrevio: new FormControl('', [Validators.required]),
       tipoPrevia: new FormControl('', [Validators.required]),
     });
     
@@ -38,12 +38,12 @@ export class ModalPreviaComponent implements OnInit {
     let salir = false;
     let previa : PreviaDTO = new PreviaDTO();
     previa.curso_id = this.curso.id;
-    previa.nombre_carrera_previa = (this.formularioPrevia.controls['idPrevia'].value).nombre;
-    previa.curso_id_previa = (this.formularioPrevia.controls['idPrevia'].value).id;
+    previa.nombre_carrera_previa = (this.formularioPrevia.controls['cursoPrevio'].value).nombre;
+    previa.curso_id_previa = (this.formularioPrevia.controls['cursoPrevio'].value).id;
     previa.tipo = this.formularioPrevia.controls['tipoPrevia'].value;
 
     this.listaPrevia.forEach(element => {
-      if(element.curso_id_previa == previa.curso_id_previa) {
+      if(element.curso_id_previa == previa.curso_id_previa && element.curso_id == previa.curso_id) {
         salir = true;
       }
     });
@@ -51,14 +51,14 @@ export class ModalPreviaComponent implements OnInit {
     if(salir){
       return;
     }
-    
-    
     this.listaPrevia.push(previa);
-    
   }
 
   aceptar(){
     this.dialogRef.close(this.data);
+  }
+  cerrar(){
+    this.dialogRef.close();
   }
 }
 

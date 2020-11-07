@@ -8,22 +8,27 @@
                 <mat-card-content>
                     <div class="row">
                         <div class=" col-12 pl-5 pr-5">
-                            <!-- datos de la persona -->
+                            <!-- datos de la carrera -->
+
+                            <p class="my-3">Información general</p>
+
                             <mat-form-field [style.width.%]=100>
                                 <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
                             </mat-form-field>
 
                             <mat-form-field [style.width.%]=100>
-                                <textarea matInput placeholder="Descripcion" name="descripcion"
+                                <textarea rows="4" matInput placeholder="Descripcion" name="descripcion"
                                     formControlName="descripcion"></textarea>
                             </mat-form-field>
 
                             <mat-divider></mat-divider>
 
+                            <p class="my-3">Sedes en las que se dicta</p>
+
                             <form [formGroup]="formularioSede" class="mt-4">
                                 <div class="row">
                                     <mat-form-field class="col-12 col-md-9" [style.width.%]=100>
-                                        <mat-select placeholder="Lista de sedes" name="sede" formControlName="sede">
+                                        <mat-select placeholder="Seleccione una sedes" name="sede" formControlName="sede">
                                             <mat-option *ngFor="let sede of listaSedes" [value]="sede">
                                                 {{sede.direccion.departamento}}
                                             </mat-option>
@@ -45,11 +50,15 @@
                                 </div>
                             </form>
 
+                            <mat-divider></mat-divider>
+
+                            <p class="my-3">Áreas de estudio</p>
+
                             <form [formGroup]="formularioArea">
 
                                 <div class="row">
                                     <mat-form-field class="col-12 col-md-6" [style.width.%]=100>
-                                        <mat-select placeholder="Lista de areas de estudio" name="area"
+                                        <mat-select placeholder="Seleccione un áreas" name="area"
                                             formControlName="area">
                                             <mat-option *ngFor="let area of listaAreasEstudio" [value]="area">
                                                 {{area.area}}
@@ -64,8 +73,7 @@
 
                                     <div class="col-12 col-md-3 m-auto" align="end">
                                         <button mat-raised-button (click)="asignarArea()"
-                                            [disabled]="!formularioArea.valid" color="primary">Agregar area de
-                                            estudio</button>
+                                            [disabled]="!formularioArea.valid" color="primary">Agregar area de estudio</button>
                                     </div>
                                 </div>
 
@@ -87,7 +95,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-5">
                                         <mat-form-field [style.width.%]=100>
-                                            <mat-select placeholder="Lista de curso" name="curso"
+                                            <mat-select placeholder="Seleccione un curso" name="curso"
                                                 formControlName="curso">
                                                 <mat-option *ngFor="let curso of listaCurso" [value]="curso">
                                                     {{curso.nombre}}
@@ -108,14 +116,12 @@
 
                                     <div class="col-12 col-md-2 m-auto" align="end">
                                         <button  class="mt-2" mat-raised-button (click)="asignarCurso()"
-                                            [disabled]="!formularioCurso.valid" color="primary">Agregar
-                                            cursos</button>
+                                            [disabled]="!formularioCurso.valid" color="primary">Agregar curso</button>
                                     </div>
 
                                     <div class="col-12 col-md-2 m-auto" align="end">
                                         <button class="mt-2" mat-raised-button (click)="crearSemestre()"
-                                            [disabled]="listaCursoSeleccionados.length == 0" color="primary">Agregar
-                                            semestre</button>
+                                            [disabled]="listaCursoSeleccionados.length == 0" color="primary">Confirmar semestre</button>
                                     </div>
                                 </div>
 
@@ -150,6 +156,7 @@
 
                 </mat-card-content>
                 <mat-card-actions align="end" class="pr-5">
+                    <button mat-raised-button color="primary" [routerLink]="['/admin/carrera']">Volver</button>
                     <button [disabled]="!validarForm()" (click)="crear()" mat-raised-button color="primary">Acceder</button>
                 </mat-card-actions>
             </form>
