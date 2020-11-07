@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,11 +28,26 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { LoginComponent } from './componentes/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConsultaEscolaridadComponent } from './componentes/consulta-escolaridad/consulta-escolaridad.component';
+import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
+import { TipoActaPipe } from './pipe/tipo-acta.pipe';
+import { NotaPipe } from './pipe/nota.pipe';
+import { InscripcionCursoComponent } from './componentes/inscripcion-curso/inscripcion-curso.component';
+import { InscripcionExamenComponent } from './componentes/inscripcion-examen/inscripcion-examen.component';
+import { FechaNullPipe } from './pipe/fecha-null.pipe';
+import { InicioComponent } from './componentes/inicio/inicio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ConsultaEscolaridadComponent,
+    TipoActaPipe,
+    NotaPipe,
+    InscripcionCursoComponent,
+    InscripcionExamenComponent,
+    FechaNullPipe,
+    InicioComponent
   ],
   imports: [
     HttpClientModule,
@@ -62,7 +77,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorTokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

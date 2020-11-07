@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountService } from './servis/account.service';
+import { UsuariosService } from './servis/usuarios.service';
 
 // MenuSection y MenuItem sirven para estructurar el menú de la izquierda
 export interface MenuItem {
@@ -14,17 +14,11 @@ export interface MenuSection {
 
 const MENU_ESTUDIANTE:MenuSection[] = [
   {
-    nombre: "Datos",
-    items: [
-      {nombre: "Cambiar contraseña ",   link: "estudiante/cambiar/contrasenia"},
-    ],
-  }, {
     nombre: "Académico",
     items: [
       {nombre: "Escolaridad",            link: "estudiante/consultar-escolaridad"},
       {nombre: "Inscripcion a cursos",   link: "estudiante/inscripcion/curso"},
-      {nombre: "Inscripcion a exámenes", link: "estudiante/inscripcion/examen"},
-      {nombre: "Año lectivo",            link: "#"},
+      {nombre: "Inscripcion a exámenes", link: "estudiante/inscripcion/examen"}
     ],
   },
 ];
@@ -36,7 +30,7 @@ const MENU_ESTUDIANTE:MenuSection[] = [
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(protected AccServ:AccountService,
+  constructor(protected AccServ:UsuariosService,
     private router:Router) { }
   
   ngOnInit(): void {

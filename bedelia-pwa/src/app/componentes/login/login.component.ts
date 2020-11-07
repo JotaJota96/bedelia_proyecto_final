@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
-import { AccountService } from 'src/app/servis/account.service';
+import { UsuariosService } from 'src/app/servis/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   public datosLogin:LoginResponseDTO;
 
   constructor(private _snackBar: MatSnackBar,
-    protected accServ: AccountService, 
+    protected accServ: UsuariosService, 
     private router:Router) {
   }
 

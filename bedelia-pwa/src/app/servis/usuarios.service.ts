@@ -3,17 +3,40 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { LoginDTO } from '../clases/login-dto';
 import { LoginResponseDTO } from '../clases/login-response-dto';
+import { UsuarioDTO } from '../clases/usuario-dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class UsuariosService {
 
   private apiURL: string = environment.apiURL + '/usuarios';
   private loginDataStoreKey:string = "loginData"; // clave para almacenar datos del login en local
   private rolDataStoreKey:string = "rolSeleccionado"; // clave para almacenar rol del login en local
   
   constructor(protected http:HttpClient) { }
+
+  getAll(){
+    return this.http.get<UsuarioDTO[]>(this.apiURL);
+  }
+
+  get(id:string){
+    return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
+  }
+  
+  getAllDocente(){
+    return this.http.get<UsuarioDTO[]>(this.apiURL + '/docentes');
+  }
+
+  create(datos:UsuarioDTO){
+    return this.http.post<UsuarioDTO>(this.apiURL, datos);
+  }
+
+  passReset(idUsuario:string, pass:string){
+    return this.http.put<LoginDTO>(this.apiURL + "/passReset", {id:idUsuario,contrasenia:pass});
+  }
+
+  /** Funciones relacionadas a la sesion del usuario **************************** **/
 
   login(datos:LoginDTO){
     return this.http.post<LoginResponseDTO>(this.apiURL + '/login', datos);

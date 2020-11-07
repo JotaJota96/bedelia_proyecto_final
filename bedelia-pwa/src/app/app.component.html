@@ -14,16 +14,16 @@
 </mat-toolbar>
 
 <mat-drawer-container class="row example-container">
-  <mat-drawer class="col-12" #drawer mode="over" [opened]="logeado()">
+  <mat-drawer [style.width.%]=100 #drawer mode="over" [opened]="false">
     <mat-accordion multi *ngFor="let seccion of menuAMostrar()">
       <mat-expansion-panel hideToggle expanded>
         <mat-expansion-panel-header>
-          <mat-panel-title >
+          <mat-panel-title>
             {{seccion.nombre}}
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-selection-list [multiple]="false">
-          <mat-list-option  *ngFor="let item of seccion.items" [routerLink]="[item.link]">
+          <mat-list-option  *ngFor="let item of seccion.items" [routerLink]="[item.link]" (click)="drawer.opened = false">
             {{item.nombre}}
           </mat-list-option>
         </mat-selection-list>
