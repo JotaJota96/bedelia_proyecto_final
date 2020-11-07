@@ -72,6 +72,7 @@ class UsuarioController extends Controller
      * @OA\Get(
      *     path="/usuarios/{ci}",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ci",
      *         in="path",
@@ -101,6 +102,7 @@ class UsuarioController extends Controller
      * @OA\Get(
      *     path="/usuarios/",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="Todos los usuarios",
@@ -125,6 +127,7 @@ class UsuarioController extends Controller
      * @OA\Post(
      *     path="/usuarios",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/UsuarioDTO"),
      *     ),
@@ -240,6 +243,7 @@ class UsuarioController extends Controller
      * @OA\Get(
      *     path="/usuarios/docentes",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="",
@@ -267,6 +271,7 @@ class UsuarioController extends Controller
      *     path="/usuarios/passReset",
      *     tags={"Usuarios"},
      *     description="Actualiza la contraseña del usuario",
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
      *     ),

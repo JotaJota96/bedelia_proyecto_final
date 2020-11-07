@@ -25,6 +25,7 @@ class ExamenController extends Controller
      *     path="/examenes/inscripciones/{ciEstudiante}",
      *     tags={"Exámenes"},
      *     description="Inscribe a un estudiante a exámenes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -78,6 +79,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/docente/{ciDocente}",
      *     tags={"Exámenes"},
      *     description="Asigna un docente a una exámen",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -128,6 +130,7 @@ class ExamenController extends Controller
      *     path="/examenes/docente/{ciDocente}",
      *     tags={"Exámenes"},
      *     description="devuelve los Examen que el docente toma en el PeriodoExamen actual",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciDocente",
      *         in="path",
@@ -166,6 +169,7 @@ class ExamenController extends Controller
      *     path="/examenes/{ciEstudiante}/{idCarrera}",
      *     tags={"Exámenes"},
      *     description="Devuelve los Examenes a los que el estudiante puede inscribirse en el PeriodoExamen actual",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -308,6 +312,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/notas",
      *     tags={"Exámenes"},
      *     description="Obtiene las notas obtenidas por los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -340,6 +345,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/notas",
      *     tags={"Exámenes"},
      *     description="Registra las notas obtenidas por los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -387,6 +393,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/notas",
      *     tags={"Exámenes"},
      *     description="Marca como confirmada el acta del Examen",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

@@ -53,7 +53,7 @@ $router->post('carreras',              ['middleware' => ['auth'],  'uses' => 'Ca
 
 $router->post('periodos',              ['middleware' => ['auth'],  'uses' => 'PeriodoLectivoController@agregar']);
 $router->get('periodos/actual/{tipo}', ['middleware' => [],        'uses' => 'PeriodoLectivoController@actual']);
-$router->get('periodos',               ['middleware' => ['auth'],  'uses' => 'PeriodoLectivoController@obtenerLista']);
+$router->get('periodos',               ['middleware' => [],        'uses' => 'PeriodoLectivoController@obtenerLista']);
 
 $router->get('postulantes/{id}',            ['middleware' => ['auth'],  'uses' => 'PostulantesController@obtenerUno']);
 $router->post('postulantes',                ['middleware' => [],        'uses' => 'PostulantesController@agregar']);

@@ -23,7 +23,7 @@ class Controller extends BaseController
      *     type="apiKey",
      *     in="header",
      *     name="Authorization",
-     *     description="Token de autenticacion conformato como '<token>'",
+     *     description="Token de autenticacion con formato 'bearer <token>'",
      * )
      */
 
@@ -390,26 +390,6 @@ class Controller extends BaseController
      *     ),
      * )
      */
-
-    /**
-     * @OA\Post(
-     *     path="/foo",
-     *     tags={"Foo"},
-    *      @OA\RequestBody(
-    *          @OA\JsonContent(
-    *              @OA\Property(property="fecha_inicio", type="string"),
-    *              @OA\Property(property="fecha_fin",    type="string"),
-    *          ),
-    *      ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="",
-     *         @OA\JsonContent(ref="#/components/schemas/CursoDTO"),
-     *     ),
-     * )
-     */
-
-
 
 
 }

@@ -32,8 +32,12 @@ class AuthServiceProvider extends ServiceProvider
             $token  = "";
             $header = $request->header('Authorization');
             
-            if (Str::startsWith($header, 'Bearer ')) {
-                $token = Str::substr($header, 7);
+            $posiblesInicios = ['Bearer ', 'bearer ', 'BEARER '];
+
+            foreach ($posiblesInicios as $value) {
+                if (Str::startsWith($header, $value)) {
+                    $token = Str::substr($header, 7);
+                }
             }
 
             if ($token) {

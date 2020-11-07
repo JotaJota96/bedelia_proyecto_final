@@ -28,6 +28,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/inscripciones/{ciEstudiante}",
      *     tags={"Ediciones Curso"},
      *     description="Inscribe a un estudiante a ediciones de curso",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -83,6 +84,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{id}/docente/{ciDocente}",
      *     tags={"Ediciones Curso"},
      *     description="Asigna un docente a una edicion de curso",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -131,6 +133,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/docente/{ciDocente}",
      *     tags={"Ediciones Curso"},
      *     description="devuelve los EdicionCurso que el docente dicta en el PeriodoLectivo actual",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciDocente",
      *         in="path",
@@ -169,6 +172,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{id}/estudiantes",
      *     tags={"Ediciones Curso"},
      *     description="Devuelve los estudiantes inscritos al EdicionCurso",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -224,6 +228,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{id}/clasesDictada",
      *     tags={"Ediciones Curso"},
      *     description="Registra una nueva ClaseDictada y la asistencias de los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -300,6 +305,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{ciEstudiante}/{idCarrera}",
      *     tags={"Ediciones Curso"},
      *     description="Los EdicionCurso a los que el estudiante puede inscribirse en el PeriodoLectivo actual",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -460,6 +466,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{id}/notas",
      *     tags={"Ediciones Curso"},
      *     description="Obtiene las notas obtenidas por los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -492,6 +499,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{id}/notas",
      *     tags={"Ediciones Curso"},
      *     description="Registra las notas obtenidas por los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -539,6 +547,7 @@ class EdicionesCursoController extends Controller
      *     path="/edicionesCurso/{id}/notas",
      *     tags={"Ediciones Curso"},
      *     description="Marca como confirmada el acta del EdicionCurso",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

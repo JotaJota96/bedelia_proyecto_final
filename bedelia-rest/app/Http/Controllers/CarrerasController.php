@@ -167,6 +167,7 @@ class CarrerasController extends Controller
      * @OA\Post(
      *     path="/carreras/",
      *     tags={"Carreras"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/CarreraCreateDTO"),
      *     ),
