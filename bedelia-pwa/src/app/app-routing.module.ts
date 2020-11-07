@@ -5,14 +5,16 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 import { InscripcionCursoComponent } from './componentes/inscripcion-curso/inscripcion-curso.component';
 import { InscripcionExamenComponent } from './componentes/inscripcion-examen/inscripcion-examen.component';
 import { LoginComponent } from './componentes/login/login.component';
+import { AuthGuard } from './Guard/auth.guard';
 
 const routes: Routes = [
   //Inico de componentes de acceso publico,
   {path: '', component: InicioComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'estudiante/consultar-escolaridad', component: ConsultaEscolaridadComponent},
-  {path: 'estudiante/inscripcion/curso', component: InscripcionCursoComponent},
-  {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent},
+
+  {path: 'estudiante/consultar-escolaridad', component: ConsultaEscolaridadComponent,canActivate:[AuthGuard]},
+  {path: 'estudiante/inscripcion/curso', component: InscripcionCursoComponent,canActivate:[AuthGuard]},
+  {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent,canActivate:[AuthGuard]},
 ];
 
 @NgModule({
