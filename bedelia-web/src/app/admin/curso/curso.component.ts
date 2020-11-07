@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { filter } from 'rxjs/operators';
 import { CursoService } from 'src/app/servicios/curso.service';
 
 @Component({
@@ -25,6 +26,12 @@ export class CursoComponent implements OnInit {
         this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
       }
     );
+  }
+
+  aplicarFiltro(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.cursoDataSource.filter = filterValue.trim().toLowerCase();
+
   }
 
   openSnackBar(mensaje: string) {

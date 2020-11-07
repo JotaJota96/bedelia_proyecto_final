@@ -1,7 +1,13 @@
 <div class="container">
     <h1 class="mt-2">Carrera</h1>
     <div class="row d-flex">
-        <div class="col-12 mb-2">
+        <!-- Campo para escrbir un filtro -->
+        <mat-form-field class="col-6">
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="aplicarFiltro($event)" placeholder="Cédula, correo, nombre o apellido" #input>
+        </mat-form-field>
+    
+        <div class="col-6 mb-2">
             <button mat-raised-button color="primary" [routerLink]="['/admin/carrera/abm']">Agregar</button>
         </div>
     </div>
