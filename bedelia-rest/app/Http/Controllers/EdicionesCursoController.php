@@ -160,6 +160,9 @@ class EdicionesCursoController extends Controller
             }
             $Docente = $Usuario->docente;
             $Cursos = $Docente->edicionesCursoActuales();
+            foreach ($Cursos as $value) {
+                $value->curso;
+            }
             return response()->json($Cursos, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);

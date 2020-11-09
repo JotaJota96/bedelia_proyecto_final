@@ -63,7 +63,7 @@ class AreaEstudioController extends Controller
         $AreasEstudio = AreaEstudio::all();
         return response()->json($AreasEstudio, 200);
     }
-    
+
     /**
      * @OA\Post(
      *     path="/areasEstudio",
@@ -115,6 +115,10 @@ class AreaEstudioController extends Controller
         $AreaEstudio = AreaEstudio::find($Id);
         if ($AreaEstudio == null){
             return response()->json(null, 404);
+        }
+        foreach ($AreaEstudio->cursos as $Id => $value) {
+            $value->AreaEstudio;
+            $value->TipoCurso;
         }
         return response()->json($AreaEstudio->cursos, 200);
     }

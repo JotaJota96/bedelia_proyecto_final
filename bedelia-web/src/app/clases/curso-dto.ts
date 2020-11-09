@@ -8,6 +8,9 @@ export class CursoDTO {
     public max_inasistencias    :number;
     public cant_creditos        :number;
     public cant_clases          :number;
+    public semestre             :number;
+    public optativo             :boolean;
+    
     public area_estudio         :AreaEstudioDTO;
     public tipo_curso           :TipoCursoDTO;    
 }
@@ -19,6 +22,9 @@ export class CursoDTO {
   "max_inasistencias": 0,
   "cant_creditos": 0,
   "cant_clases": 0,
+  "semestre": 0,
+  "optativo": 0,
+
   "area_estudio": {
     "id": 0,
     "area": "string"

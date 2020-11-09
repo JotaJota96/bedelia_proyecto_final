@@ -156,8 +156,11 @@ class ExamenController extends Controller
                 return response()->json(['message' => 'Usuario no encontrado'], 404);
             }
             $Docente = $Usuario->docente;
-            $Cursos = $Docente->examenesActuales();
-            return response()->json($Cursos, 200);
+            $Examenes = $Docente->examenesActuales();
+            foreach ($Examenes as $e) {
+                $e->curso;
+            }
+            return response()->json($Examenes, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }

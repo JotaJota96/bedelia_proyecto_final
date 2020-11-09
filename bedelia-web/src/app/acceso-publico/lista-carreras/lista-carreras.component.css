@@ -1,0 +1,7 @@
+.mat-card-content{
+    height: 100px;
+    overflow: hidden;
+}
+.mat-card-header{
+    min-height: 75px;
+}

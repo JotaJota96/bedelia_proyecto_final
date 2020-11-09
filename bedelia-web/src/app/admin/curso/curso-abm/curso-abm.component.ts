@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
@@ -15,12 +16,12 @@ import { TipoCursoService } from 'src/app/servicios/tipo-curso.service';
 })
 export class CursoABMComponent implements OnInit {
   soloLectura: boolean = false;
-  listaArea: AreaEstudioDTO[] = [];
-  listaTipo: TipoCursoDTO[] = [];
+  listaArea: AreaEstudioDTO[];
+  listaTipo: TipoCursoDTO[];
 
   public formulario: FormGroup;
 
-  constructor(protected cursoServ: CursoService, protected areaServ: AreaEstudioService, protected tipoServ: TipoCursoService,
+  constructor(private _snackBar: MatSnackBar, protected cursoServ: CursoService, protected areaServ: AreaEstudioService, protected tipoServ: TipoCursoService,
     private router: Router, private rutaActiva: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -30,7 +31,7 @@ export class CursoABMComponent implements OnInit {
         this.listaArea = datos;
       },
       (error) => {
-        alert("Error");
+        this.openSnackBar("No se pudieron cargar las areas de estudio de la base de dato");
       }
     )
 
@@ -64,15 +65,16 @@ export class CursoABMComponent implements OnInit {
       // curso
       nombre: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required]),
-      max_inasistencias: new FormControl('', [Validators.required]),
-      cant_creditos: new FormControl('', [Validators.required]),
-      cant_clases: new FormControl('', [Validators.required]),
+      max_inasistencias: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+      cant_creditos: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"),]),
+      cant_clases: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"),]),
 
       // areaEstudio / tipoCurso
       area_estudio: new FormControl('', [Validators.required]),
       tipo_curso: new FormControl('', [Validators.required])
     });
   }
+
   cargaDeDatos(curso: CursoDTO) {
     // curso
     this.formulario.controls['nombre'].setValue(curso.nombre);
@@ -81,10 +83,11 @@ export class CursoABMComponent implements OnInit {
     this.formulario.controls['cant_creditos'].setValue(curso.cant_creditos);
     this.formulario.controls['cant_clases'].setValue(curso.cant_clases);
     // areaEstudio / tipoCurso
-    this.formulario.controls['area_estudio'].setValue(curso.area_estudio);
-    this.formulario.controls['tipo_curso'].setValue(curso.tipo_curso);
+    this.formulario.controls['area_estudio'].setValue(curso.area_estudio.id);
+    this.formulario.controls['tipo_curso'].setValue(curso.tipo_curso.id);
 
   }
+
   vaciarDatos() {
     // curso
     this.formulario.controls['nombre'].setValue("");
@@ -107,17 +110,36 @@ export class CursoABMComponent implements OnInit {
     sede.cant_creditos = this.formulario.controls['cant_creditos'].value;
     sede.cant_clases = this.formulario.controls['cant_clases'].value;
 
-    sede.area_estudio = this.formulario.controls['area_estudio'].value;
-    sede.tipo_curso = this.formulario.controls['tipo_curso'].value;
+    let idArea = this.formulario.controls['area_estudio'].value;
+    let idTipo = this.formulario.controls['tipo_curso'].value;
+
+    this.listaArea.forEach(element => {
+      if(element.id == idArea){
+        sede.area_estudio = element;
+      }
+    });
+
+    this.listaTipo.forEach(element => {
+      if(element.id == idTipo){
+        sede.tipo_curso = element;
+      }
+    });
 
     this.cursoServ.create(sede).subscribe(
       (datos) => {
-        alert("Hecho");
         this.router.navigate(['/admin/curso']);
       },
       (error) => {
-        alert("Error");
+        this.openSnackBar("No se pudo crear el curso");
       }
     );
+  }
+
+  openSnackBar(mensaje: string) {
+    this._snackBar.open(mensaje, 'Salir', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: "bottom",
+    });
   }
 }
