@@ -7,11 +7,11 @@ import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
-  selector: 'app-cambir-contrasenia',
-  templateUrl: './cambir-contrasenia.component.html',
-  styleUrls: ['./cambir-contrasenia.component.css']
+  selector: 'app-cambiar-contrasenia',
+  templateUrl: './cambiar-contrasenia.component.html',
+  styleUrls: ['./cambiar-contrasenia.component.css']
 })
-export class CambirContraseniaComponent implements OnInit {
+export class CambiarContraseniaComponent implements OnInit {
   login: LoginResponseDTO;
   public formulario: FormGroup;
 
@@ -28,11 +28,24 @@ export class CambirContraseniaComponent implements OnInit {
   }
 
   confirmar() {
-    this.usuService.passReset(this.login.cedula, this.formulario.controls['contrasenia'].value).subscribe(
+    let ca:string = this.formulario.controls['contraseniaActual'].value;
+    let ci:string = this.login.cedula;
+    let cn:string = this.formulario.controls['contrasenia'].value
+
+    this.usuService.passChk(ci, ca).subscribe(
       (datos) => {
-        this.router.navigate(['/']);
+        this.usuService.passReset(ci, cn).subscribe(
+          (datos) => {
+            this.router.navigate(['/']);
+          },
+          (error) => {
+            this.formulario.controls['contraseniaActual'].setErrors({'incorrecto': true});
+            this.openSnackBar("No se pudo cambiar la contraseña");
+          }
+        );
       },
       (error) => {
+        this.formulario.controls['contraseniaActual'].setErrors({'incorrecto': true});
         this.openSnackBar("No se pudo cambiar la contraseña");
       }
     );

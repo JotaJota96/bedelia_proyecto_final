@@ -33,7 +33,12 @@ const MENU_ADMIN:MenuSection[] = [
       {nombre: "Año lectivo",   link: "admin/periodos"},
       {nombre: "Sedes",         link: "admin/sede"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 const MENU_ADMINISTRATIVO:MenuSection[] = [
   {
@@ -44,7 +49,12 @@ const MENU_ADMINISTRATIVO:MenuSection[] = [
       {nombre: "Revisar actas de cursos / examenes",     link: "administrativo/revicion-acta"},
       {nombre: "Justificar inasistencias",               link: "administrativo/justificar-inasistencia"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 const MENU_DOCENTE:MenuSection[] = [
   {
@@ -54,22 +64,27 @@ const MENU_DOCENTE:MenuSection[] = [
       {nombre: "Ingresar resultados de cursos",   link: "docente/ingreso/resultados-curso"},
       {nombre: "Control de asistencia",           link: "docente/control-asistencia"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 const MENU_ESTUDIANTE:MenuSection[] = [
   {
-    nombre: "Datos",
-    items: [
-      {nombre: "Cambiar contraseña ",   link: "estudiante/cambiar/contrasenia"},
-    ],
-  }, {
     nombre: "Académico",
     items: [
       {nombre: "Escolaridad",            link: "estudiante/consultar-escolaridad"},
       {nombre: "Inscripcion a cursos",   link: "estudiante/inscripcion/curso"},
       {nombre: "Inscripcion a exámenes", link: "estudiante/inscripcion/examen"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 
 @Component({
