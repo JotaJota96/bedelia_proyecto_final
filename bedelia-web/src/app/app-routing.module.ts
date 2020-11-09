@@ -37,13 +37,14 @@ import { EstudianteGuard } from './guards/estudiante.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { AdministrativoGuard } from './guards/administrativo.guard';
 import { DocenteGuard } from './guards/docente.guard';
+import { LoginGuard } from './guards/login.guard';
 
 
 const routes: Routes = [
   //Inico de componentes de acceso publico
   {path: '', component: ListaCarrerasComponent},
   
-  {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent, canActivate:[LoginGuard]},
   
   {path: 'ver/carrera/:id', component: CarreraVistaComponent},
 
