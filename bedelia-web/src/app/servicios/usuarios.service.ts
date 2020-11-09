@@ -38,6 +38,10 @@ export class UsuariosService {
     return this.http.put<LoginDTO>(this.apiURL + "/passReset", {id:idUsuario,contrasenia:pass});
   }
 
+  passChk(idUsuario:string, pass:string){
+    return this.http.post(this.apiURL + "/passChk", {id:idUsuario,contrasenia:pass});
+  }
+
   /** Funciones relacionadas a la sesion del usuario **************************** **/
 
   login(datos:LoginDTO){

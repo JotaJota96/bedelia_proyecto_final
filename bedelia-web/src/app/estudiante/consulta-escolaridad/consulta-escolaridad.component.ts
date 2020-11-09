@@ -17,6 +17,7 @@ export class ConsultaEscolaridadComponent implements OnInit {
   listaCarrera : CarreraDTO[] = [];
   escolaridad: EscolaridadDTO = null;
   ciLogeado: string;
+  mostrarSpinner = false;
 
   constructor(private router: Router, private _snackBar: MatSnackBar,
      protected estudianteServ: EstudianteService,protected usuServ: UsuariosService) { }
@@ -48,7 +49,22 @@ export class ConsultaEscolaridadComponent implements OnInit {
   }
 
   descargarEscolaridad(){
-    this.estudianteServ.getEscolaridadPDF(this.ciLogeado, this.formulario.controls['carrera'].value);
+    //this.estudianteServ.getEscolaridadPDF(this.ciLogeado, this.formulario.controls['carrera'].value);
+    
+    this.mostrarSpinner = true;
+    let idCarrera = this.formulario.controls['carrera'].value;
+    this.estudianteServ.getEscolaridadPDF(this.ciLogeado, idCarrera).subscribe(
+      (res) => {
+        let file = new Blob([res], { type: 'application/pdf' });
+        var fileURL = URL.createObjectURL(file);
+        this.mostrarSpinner = false;
+        window.location.assign(fileURL);
+      },
+      (error)=>{
+        this.mostrarSpinner = false;
+        this.openSnackBar("El codigo de verificacion no es valido");
+      }
+    );
   }
 
   openSnackBar(mensaje: string) {

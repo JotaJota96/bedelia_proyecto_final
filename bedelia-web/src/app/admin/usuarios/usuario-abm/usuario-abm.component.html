@@ -71,29 +71,27 @@
                             </mat-select>
                         </mat-form-field>
                         
-                       
                         <button class="mb-2" *ngIf="!soloLectura" mat-raised-button color="primary" (click)="agregarRol()">Asignar</button>
                        
                         <mat-chip-list aria-label="Fish selection">
                             <mat-chip *ngFor="let rol of rolesSeleccionados">{{rol}}</mat-chip>
                         </mat-chip-list>
+
+                        <mat-form-field [style.width.%]=100 class="mt-2" *ngIf="esAdministrativo">
+                            <mat-select name="sede" formControlName="sede" placeholder="Sede en la que va a trabajar como administrativo">
+                              <mat-option *ngFor="let sede of listaSedes" [value]="sede">
+                                {{sede.direccion.departamento}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
 
-                    <mat-form-field class="col-12 col-md-6" *ngIf="esAdministrativo">
-                        <mat-select name="sede" formControlName="sede" placeholder="Elegir la sede que va a trabajar de administrativo">
-                          <mat-option *ngFor="let sede of listaSedes" [value]="sede">
-                            {{sede.direccion.departamento}}
-                          </mat-option>
-                        </mat-select>
-                    </mat-form-field>
                 </form>
 
             </mat-card-content>
             <mat-card-actions align="end">
-                <button mat-raised-button *ngIf="!soloLectura" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
+                <button mat-raised-button color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
                 <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Crear</button>
-    
-                <button mat-raised-button *ngIf="soloLectura" color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
             </mat-card-actions>
         </mat-card>
     </div>

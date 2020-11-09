@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
@@ -65,9 +65,9 @@ export class CursoABMComponent implements OnInit {
       // curso
       nombre: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required]),
-      max_inasistencias: new FormControl('', [Validators.required]),
-      cant_creditos: new FormControl('', [Validators.required]),
-      cant_clases: new FormControl('', [Validators.required]),
+      max_inasistencias: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+      cant_creditos: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"),]),
+      cant_clases: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"),]),
 
       // areaEstudio / tipoCurso
       area_estudio: new FormControl('', [Validators.required]),
@@ -120,7 +120,7 @@ export class CursoABMComponent implements OnInit {
     });
 
     this.listaTipo.forEach(element => {
-      if(element.id == idArea){
+      if(element.id == idTipo){
         sede.tipo_curso = element;
       }
     });

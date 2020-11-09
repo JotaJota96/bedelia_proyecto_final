@@ -2,3 +2,11 @@
     max-height: 500px;
     overflow: auto;
 }
+
+.descripcion{
+    color: grey !important;
+}
+
+.mat-selection-list{
+    max-height: none !important;
+}

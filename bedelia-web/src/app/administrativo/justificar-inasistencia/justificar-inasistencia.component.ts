@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -17,13 +18,19 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 export class JustificarInasistenciaComponent implements OnInit {
   mostrarDatos:boolean = false
   persona:PersonaDTO = new PersonaDTO;
+  periodoOk:boolean = undefined;
 
   public formulario: FormGroup;
   public formularioJustificar: FormGroup;
+  
   constructor(private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
-    protected estServ: EstudianteService) { }
+    protected estServ: EstudianteService, protected alecServ:AnioLectivoService) { }
 
   ngOnInit(): void {
+    this.alecServ.enPeriodo('LE').subscribe(
+      (data) => { this.periodoOk = true; },
+      (error) => { this.periodoOk = false; }
+    );
     
     this.formulario = new FormGroup({
       ci: new FormControl('', [Validators.required]),

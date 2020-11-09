@@ -23,6 +23,7 @@ class EstudianteController extends Controller
      *     path="/estudiantes/{ciEstudiante}/carreras",
      *     tags={"Estudiantes"},
      *     description="Devuelve las carreras a las que está inscripto el estudiante",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -57,6 +58,7 @@ class EstudianteController extends Controller
      *     path="/estudiantes/{ciEstudiante}/asistencias",
      *     tags={"Estudiantes"},
      *     description="justifica las inasistencias del estudiante para las clases dictadas dentro del rango de fechas",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -139,6 +141,7 @@ class EstudianteController extends Controller
      *     path="/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}",
      *     tags={"Estudiantes"},
      *     description="Devuelve la escolaridad de un estudiante para ser mostraa en frontend",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -186,6 +189,7 @@ class EstudianteController extends Controller
      *     path="/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf",
      *     tags={"Estudiantes"},
      *     description="Devuelve la escolaridad de un estudiante como PDF",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",

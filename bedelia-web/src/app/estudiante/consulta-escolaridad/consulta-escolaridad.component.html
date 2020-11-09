@@ -13,14 +13,15 @@
                 </mat-form-field>
 
                 <div class="col-12 col-md-2 mb-2 m-auto">
-                    <button mat-raised-button color="primary" (click)="obtenerEscolaridad()">Obtener escolaridad</button>
+                    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="obtenerEscolaridad()">Consultar</button>
                 </div>
             </form>
         </mat-card-content>
         <mat-divider *ngIf="escolaridad != null"></mat-divider>
         <mat-card-content class="my-4" *ngIf="escolaridad != null">
             <div>
-                <button mat-raised-button color="primary" (click)="descargarEscolaridad()">Obtener PDF escolaridad</button>
+                <button class="d-inline" mat-raised-button color="primary" (click)="descargarEscolaridad()">Obtener PDF escolaridad</button>
+                <mat-spinner class="d-inline ml-3" *ngIf="mostrarSpinner" diameter="25"></mat-spinner>
             </div>
         </mat-card-content>
         <mat-card-content *ngIf="escolaridad != null">
@@ -61,7 +62,7 @@
                         <h2>Nota</h2>
                     </mat-card>
                 </div>
-                <div class="p-2 row" *ngFor="let curso of semestre.detalle">
+                <div class="row" *ngFor="let curso of semestre.detalle">
                     <mat-card class="col-12 col-md-6 mb-2">
                         <h3>{{curso.curso.nombre}}</h3>
                     </mat-card>
@@ -77,5 +78,8 @@
                 </div>
             </mat-card>
         </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+        </mat-card-actions>
     </mat-card>
 </div>

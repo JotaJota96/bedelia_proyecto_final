@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -17,6 +18,11 @@ export class AnioLectivoService {
   }
 
   create(datos:AnioLectivoDTO){
-    return this.http.post<AnioLectivoDTO>(this.apiURL, datos);
+    return this.http.post<AnioLectivoDTO>(this.apiURL, datos) ;
   }
+
+  enPeriodo(tipo:string){
+    return this.http.get<AnioLectivoDTO>(this.apiURL + "/actual/" + tipo);
+  }
+
 }

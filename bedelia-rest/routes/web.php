@@ -11,13 +11,9 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    // redirige a la documentacion de Swagger
-    return redirect()->to('api/documentation');
-});
-
 
 $router->post('usuarios/login',    ['middleware' => [], 'uses' => 'UsuarioController@login']);
+$router->post('usuarios/passChk',  ['middleware' => ['auth'],  'uses' => 'UsuarioController@verificarContrasenia']);
 $router->put('usuarios/passReset', ['middleware' => ['auth'],  'uses' => 'UsuarioController@cambiarContrasenia']);
 $router->get('usuarios/docentes',  ['middleware' => ['auth'],  'uses' => 'UsuarioController@obtenerDocentes']);
 $router->get('usuarios/{ci}',      ['middleware' => ['auth'],  'uses' => 'UsuarioController@obtenerUno']);
@@ -51,8 +47,9 @@ $router->get('carreras/{Id}/cursos',   ['middleware' => [],        'uses' => 'Ca
 $router->get('carreras/{Id}/previas',  ['middleware' => [],        'uses' => 'CarrerasController@obtenerPreviasEntreCursosDeCarrera']);
 $router->post('carreras',              ['middleware' => ['auth'],  'uses' => 'CarrerasController@agregar']);
 
-$router->post('periodos',   ['middleware' => ['auth'],  'uses' => 'PeriodoLectivoController@agregar']);
-$router->get('periodos',    ['middleware' => ['auth'],  'uses' => 'PeriodoLectivoController@obtenerLista']);
+$router->post('periodos',              ['middleware' => ['auth'],  'uses' => 'PeriodoLectivoController@agregar']);
+$router->get('periodos/actual/{tipo}', ['middleware' => [],        'uses' => 'PeriodoLectivoController@actual']);
+$router->get('periodos',               ['middleware' => [],        'uses' => 'PeriodoLectivoController@obtenerLista']);
 
 $router->get('postulantes/{id}',            ['middleware' => ['auth'],  'uses' => 'PostulantesController@obtenerUno']);
 $router->post('postulantes',                ['middleware' => [],        'uses' => 'PostulantesController@agregar']);
