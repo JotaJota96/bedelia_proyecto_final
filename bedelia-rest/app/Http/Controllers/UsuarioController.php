@@ -12,6 +12,7 @@ use App\Models\Admin;
 use App\Models\Administrativo;
 use App\Models\Docente;
 use App\Models\Estudiante;
+use App\Providers\AuthServiceProvider;
 
 class UsuarioController extends Controller
 {
@@ -42,15 +43,11 @@ class UsuarioController extends Controller
         $usu = Usuario::buscar($id);
 
         // verifica existencia de usuario y su contrasenia
-        if ($usu == null || strcmp($contrasenia, $usu->contrasenia) != 0){
+        if ($usu == null || strcmp($contrasenia, Crypt::decrypt($usu->contrasenia)) != 0){
             return response()->json(null, 401);
         }
-        // para contraseña encriptada
-        // if ($usu == null || strcmp($contrasenia, Crypt::decrypt($usu->contrasenia)) != 0){
-        //     return response()->json(null, 401);
-        // }
 
-        $usu->remember_token = \Illuminate\Support\Str::random(100);
+        $usu->remember_token = AuthServiceProvider::generarToken($usu);
         $usu->save();
 
         $ret = [
@@ -72,6 +69,7 @@ class UsuarioController extends Controller
      * @OA\Get(
      *     path="/usuarios/{ci}",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ci",
      *         in="path",
@@ -101,6 +99,7 @@ class UsuarioController extends Controller
      * @OA\Get(
      *     path="/usuarios/",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="Todos los usuarios",
@@ -125,6 +124,7 @@ class UsuarioController extends Controller
      * @OA\Post(
      *     path="/usuarios",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/UsuarioDTO"),
      *     ),
@@ -151,8 +151,7 @@ class UsuarioController extends Controller
             // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
             $per->fill($this->request->json('persona'));
             $usu->contrasenia = $per->cedula;
-            // para contraseña encriptada
-            //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+            $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
 
             // obtengo los roles (son un simple array de strings)
             $roles = $this->request->json('roles');
@@ -240,6 +239,7 @@ class UsuarioController extends Controller
      * @OA\Get(
      *     path="/usuarios/docentes",
      *     tags={"Usuarios"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="",
@@ -262,11 +262,13 @@ class UsuarioController extends Controller
 
         return response()->json($usus, 200);
     }
+
     /**
      * @OA\Put(
      *     path="/usuarios/passReset",
      *     tags={"Usuarios"},
      *     description="Actualiza la contraseña del usuario",
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
      *     ),
@@ -288,10 +290,9 @@ class UsuarioController extends Controller
             return response()->json(null, 401);
         }
         $usu->contrasenia = $contrasenia;
-        // para contraseña encriptada
-        //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+        $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
 
-        $usu->remember_token = \Illuminate\Support\Str::random(100);
+        $usu->remember_token = AuthServiceProvider::generarToken($usu);
         $usu->save();
 
         $ret = [
@@ -309,5 +310,37 @@ class UsuarioController extends Controller
         return response()->json($ret, 200);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/usuarios/passChk",
+     *     tags={"Usuarios"},
+     *     description="Verifica si la contrasenia actual es correcta",
+     *     security={{"api_key": {}}},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Contraseña correcta",
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Contraseña incorrecta",
+     *     ),
+     * )
+     */
+    public function verificarContrasenia(){
+        $id          = $this->request->input("id");
+        $contrasenia = $this->request->input("contrasenia");
 
+        // obtengo el usuario autenticado mediante token
+        $usu = $this->request->user();
+
+        // verifica existencia de usuario y su contrasenia
+        if ($usu == null || strcmp($contrasenia, Crypt::decrypt($usu->contrasenia)) != 0){
+            return response()->json(null, 401);
+        }else{
+            return response()->json(null, 200);
+        }
+    }
 }

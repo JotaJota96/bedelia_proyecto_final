@@ -24,6 +24,7 @@ class CursoController extends Controller
      * @OA\Get(
      *     path="/cursos/{id}",
      *     tags={"Cursos"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -53,6 +54,7 @@ class CursoController extends Controller
      * @OA\Get(
      *     path="/cursos",
      *     tags={"Cursos"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="",
@@ -78,6 +80,7 @@ class CursoController extends Controller
      * @OA\Post(
      *     path="/cursos",
      *     tags={"Cursos"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/CursoDTO"),
      *     ),

@@ -124,22 +124,22 @@ INSERT INTO `persona` (/*`id`,*/ `cedula`, `nombre`, `apellido`, `correo`, `fech
 -- Truncar tablas antes de insertar `usuario`
 --
 INSERT INTO `usuario`(/*`id`,*/ `contrasenia`, `persona_id`) VALUES
-    (/* 1,*/ '1234',  1),
-    (/* 2,*/ '1234',  2),
-    (/* 3,*/ '1234',  3),
-    (/* 4,*/ '1234',  4),
-    (/* 5,*/ '1234',  5),
-    (/* 6,*/ '1234',  6),
-    (/* 7,*/ '1234',  7),
-    (/* 8,*/ '1234',  8),
-    (/* 9,*/ '1234',  9),
-    (/*10,*/ '1234', 10),
-    (/*11,*/ '1234', 11),
-    (/*12,*/ '1234', 12),
-    (/*13,*/ '1234', 13),
-    (/*14,*/ '1234', 14),
-    (/*15,*/ '1234', 15),
-    (/*16,*/ '1234', 16);
+    (/* 1,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  1),
+    (/* 2,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  2),
+    (/* 3,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  3),
+    (/* 4,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  4),
+    (/* 5,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  5),
+    (/* 6,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  6),
+    (/* 7,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  7),
+    (/* 8,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  8),
+    (/* 9,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9',  9),
+    (/*10,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 10),
+    (/*11,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 11),
+    (/*12,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 12),
+    (/*13,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 13),
+    (/*14,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 14),
+    (/*15,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 15),
+    (/*16,*/ 'eyJpdiI6IlJTQlB6eEdnemtxMWgrdzl2RkxQYnc9PSIsInZhbHVlIjoic0tkWkxSQkRTL2I0YWRXN0Z0aVpjUT09IiwibWFjIjoiZDE5OTFkNmY1YjliNjVlYWE5MmYzN2Q1NzNjZmZkZmFlYWYwNmI1NzUxNmM1NWRiZDU4NDhkMDQ3ZDZkYmJlNyJ9', 16);
 
 
 -- ------------------------------------------------------------------------
