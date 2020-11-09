@@ -20,7 +20,8 @@
         <mat-divider *ngIf="escolaridad != null"></mat-divider>
         <mat-card-content class="my-4" *ngIf="escolaridad != null">
             <div>
-                <button mat-raised-button color="primary" (click)="descargarEscolaridad()">Obtener PDF escolaridad</button>
+                <button class="d-inline" mat-raised-button color="primary" (click)="descargarEscolaridad()">Obtener PDF escolaridad</button>
+                <mat-spinner class="d-inline ml-3" *ngIf="mostrarSpinner" diameter="25"></mat-spinner>
             </div>
         </mat-card-content>
         <mat-card-content *ngIf="escolaridad != null">

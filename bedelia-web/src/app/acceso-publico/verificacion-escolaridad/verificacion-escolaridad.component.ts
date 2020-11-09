@@ -13,6 +13,8 @@ import { EstudianteService } from 'src/app/servicios/estudiante.service';
 export class VerificacionEscolaridadComponent implements OnInit {
 
   public formulario: FormGroup;
+  public mostrarSpinner = false;
+
   constructor(private router: Router, private _snackBar: MatSnackBar,
     protected estudianteServ : EstudianteService) { }
 
@@ -23,12 +25,30 @@ export class VerificacionEscolaridadComponent implements OnInit {
   }
 
   verificar(){
-    
+    // this.estudianteServ.getEscolaridadPDFExiste(this.formulario.controls['codigo'].value).subscribe(
+    //   (datos)=>{
+    //     this.estudianteServ.getEscolaridadPDFCodigo(this.formulario.controls['codigo'].value);
+    //   },
+    //   (error)=>{
+    //     this.openSnackBar("El codigo de verificacion no es valido");
+    //   }
+    // );
+    this.mostrarSpinner = true;
+    let codigo = this.formulario.controls['codigo'].value;
+
     this.estudianteServ.getEscolaridadPDFExiste(this.formulario.controls['codigo'].value).subscribe(
       (datos)=>{
-        this.estudianteServ.getEscolaridadPDFCodigo(this.formulario.controls['codigo'].value);
+        this.estudianteServ.getEscolaridadPDFCodigo(codigo).subscribe(
+          (res) => {
+            let file = new Blob([res], { type: 'application/pdf' });
+            var fileURL = URL.createObjectURL(file);
+            this.mostrarSpinner = false;
+            window.location.assign(fileURL);
+          }
+        );
       },
       (error)=>{
+        this.mostrarSpinner = false;
         this.openSnackBar("El codigo de verificacion no es valido");
       }
     );
