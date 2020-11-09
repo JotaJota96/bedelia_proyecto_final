@@ -262,6 +262,7 @@ class UsuarioController extends Controller
 
         return response()->json($usus, 200);
     }
+
     /**
      * @OA\Put(
      *     path="/usuarios/passReset",
@@ -309,5 +310,37 @@ class UsuarioController extends Controller
         return response()->json($ret, 200);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/usuarios/passChk",
+     *     tags={"Usuarios"},
+     *     description="Verifica si la contrasenia actual es correcta",
+     *     security={{"api_key": {}}},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/LoginDTO"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Contraseña correcta",
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Contraseña incorrecta",
+     *     ),
+     * )
+     */
+    public function verificarContrasenia(){
+        $id          = $this->request->input("id");
+        $contrasenia = $this->request->input("contrasenia");
 
+        // obtengo el usuario autenticado mediante token
+        $usu = $this->request->user();
+
+        // verifica existencia de usuario y su contrasenia
+        if ($usu == null || strcmp($contrasenia, Crypt::decrypt($usu->contrasenia)) != 0){
+            return response()->json(null, 401);
+        }else{
+            return response()->json(null, 200);
+        }
+    }
 }

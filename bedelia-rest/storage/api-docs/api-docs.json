@@ -2143,6 +2143,37 @@
                     }
                 ]
             }
+        },
+        "/usuarios/passChk": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "description": "Verifica si la contrasenia actual es correcta",
+                "operationId": "App\\Http\\Controllers\\UsuarioController::verificarContrasenia",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña correcta"
+                    },
+                    "401": {
+                        "description": "Contraseña incorrecta"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
         }
     },
     "components": {

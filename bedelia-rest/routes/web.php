@@ -13,6 +13,7 @@
 
 
 $router->post('usuarios/login',    ['middleware' => [], 'uses' => 'UsuarioController@login']);
+$router->post('usuarios/passChk',  ['middleware' => ['auth'],  'uses' => 'UsuarioController@verificarContrasenia']);
 $router->put('usuarios/passReset', ['middleware' => ['auth'],  'uses' => 'UsuarioController@cambiarContrasenia']);
 $router->get('usuarios/docentes',  ['middleware' => ['auth'],  'uses' => 'UsuarioController@obtenerDocentes']);
 $router->get('usuarios/{ci}',      ['middleware' => ['auth'],  'uses' => 'UsuarioController@obtenerUno']);
