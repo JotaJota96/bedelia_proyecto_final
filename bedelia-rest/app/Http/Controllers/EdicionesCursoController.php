@@ -409,6 +409,16 @@ class EdicionesCursoController extends Controller
                 // error_log("-----------------------------");
                 // error_log("Verificando curso $idCurso");
 
+                // para cada EdicionCurso a listar, se verifican si el estudiante ya esta inscrito
+                if ($ec->estudiantes->where("id", $est->id)->first() != null){
+                    $ec->habilitado = -2;
+                     // error_log("Ya se ha inscrito en el curso");
+                     // limpieza de datos para retornar
+                     unset($ec->curso->carreras);
+                     unset($ec->curso->previas);
+                    continue;
+                }
+
                 // para cada EdicionCurso a listar, se verifican si el curso ya fuá aprobado
                 if (in_array($idCurso, $idCursosExonerados) || in_array($idCurso, $idCursosExamenAprobado)){
                     $ec->habilitado = 0;

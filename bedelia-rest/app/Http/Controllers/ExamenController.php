@@ -273,6 +273,16 @@ class ExamenController extends Controller
                 // error_log("-----------------------------");
                 // error_log("Verificando curso $idCurso");
 
+                // para cada Examen a listar, se verifican si el estudiante ya esta inscrito
+                if ($ex->estudiantes->where("id", $est->id)->first() != null){
+                    $ex->habilitado = -2;
+                     // error_log("Ya se ha inscrito en el examen");
+                     // limpieza de datos para retornar
+                     unset($ex->curso->carreras);
+                     unset($ex->curso->previas);
+                    continue;
+                }
+
                 // para cada Examen a listar, se verifican si el curso ya fuá aprobado
                 if (in_array($idCurso, $idCursosExonerados) || in_array($idCurso, $idCursosExamenAprobado)) {
                     $ex->habilitado = 0;

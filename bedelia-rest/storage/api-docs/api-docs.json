@@ -2542,7 +2542,7 @@
                         "type": "boolean"
                     },
                     "habilitado": {
-                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas",
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas, -2 = ya se está inscrito",
                         "type": "integer",
                         "readOnly": true
                     },
@@ -2570,7 +2570,7 @@
                         "type": "boolean"
                     },
                     "habilitado": {
-                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen",
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen, -2 = ya se está inscrito",
                         "type": "integer",
                         "readOnly": true
                     },
