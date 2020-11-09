@@ -133,8 +133,8 @@ class Estudiante extends Model
         $semestres = array();
         // obtengo los cursos y examenes a los que se inscribio el estudiante
         $cursosYExamenesTomados = [
-            $this->NotasCarrera($idCarrera, false),
-            $this->NotasExamenes($idCarrera, false),
+            $this->NotasCarrera($idCarrera, false, true),
+            $this->NotasExamenes($idCarrera, false, true),
         ];
 
         foreach ($cursosYExamenesTomados as $coet) {
