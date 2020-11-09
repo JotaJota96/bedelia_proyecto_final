@@ -12,6 +12,7 @@ use App\Models\Admin;
 use App\Models\Administrativo;
 use App\Models\Docente;
 use App\Models\Estudiante;
+use App\Providers\AuthServiceProvider;
 
 class UsuarioController extends Controller
 {
@@ -42,15 +43,11 @@ class UsuarioController extends Controller
         $usu = Usuario::buscar($id);
 
         // verifica existencia de usuario y su contrasenia
-        if ($usu == null || strcmp($contrasenia, $usu->contrasenia) != 0){
+        if ($usu == null || strcmp($contrasenia, Crypt::decrypt($usu->contrasenia)) != 0){
             return response()->json(null, 401);
         }
-        // para contraseña encriptada
-        // if ($usu == null || strcmp($contrasenia, Crypt::decrypt($usu->contrasenia)) != 0){
-        //     return response()->json(null, 401);
-        // }
 
-        $usu->remember_token = \Illuminate\Support\Str::random(100);
+        $usu->remember_token = AuthServiceProvider::generarToken($usu);
         $usu->save();
 
         $ret = [
@@ -154,8 +151,7 @@ class UsuarioController extends Controller
             // lo mismo que lo anterior pero 'persona' es un objeto dentro del objeto principal
             $per->fill($this->request->json('persona'));
             $usu->contrasenia = $per->cedula;
-            // para contraseña encriptada
-            //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+            $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
 
             // obtengo los roles (son un simple array de strings)
             $roles = $this->request->json('roles');
@@ -293,10 +289,9 @@ class UsuarioController extends Controller
             return response()->json(null, 401);
         }
         $usu->contrasenia = $contrasenia;
-        // para contraseña encriptada
-        //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+        $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
 
-        $usu->remember_token = \Illuminate\Support\Str::random(100);
+        $usu->remember_token = AuthServiceProvider::generarToken($usu);
         $usu->save();
 
         $ret = [

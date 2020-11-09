@@ -323,8 +323,7 @@ class PostulantesController extends Controller
                 $usu->persona()->associate($postu->persona);
                 // establecer la contrasenia del Usuario
                 $usu->contrasenia = $usu->persona->cedula;
-                // para contraseña encriptada
-                //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+                $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
                 
                 // guardar el Usuario y el Estudiante
                 $usu->save();

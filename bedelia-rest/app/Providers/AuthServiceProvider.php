@@ -55,4 +55,16 @@ class AuthServiceProvider extends ServiceProvider
         }
         return false;
     }
+
+    /**
+     * Genera un token unico, para el usuario especificado 
+     */
+    public static function generarToken($usu = null){
+        $token = null;
+        do {
+            $token = Str::random((100));
+        } while (Usuario::where('remember_token', $token)->first() != null);
+        return $token;
+    }
+
 }
