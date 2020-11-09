@@ -67,6 +67,8 @@ import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-a
 import { TipoActaPipe } from './pipes/tipo-acta.pipe';
 import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
 import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
+import { DescripcionInscripcionCursoPipe } from './pipes/descripcion-inscripcion-curso.pipe';
+import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcion-examen.pipe';
 
 
 @NgModule({
@@ -112,6 +114,8 @@ import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.i
     RevicionActaComponent,
     TipoActaPipe,
     VerificacionEscolaridadComponent,
+    DescripcionInscripcionCursoPipe,
+    DescripcionInscripcionExamenPipe,
   ],
   imports: [
     MatStepperModule,
