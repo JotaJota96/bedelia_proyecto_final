@@ -25,6 +25,7 @@ class ExamenController extends Controller
      *     path="/examenes/inscripciones/{ciEstudiante}",
      *     tags={"Exámenes"},
      *     description="Inscribe a un estudiante a exámenes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -78,6 +79,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/docente/{ciDocente}",
      *     tags={"Exámenes"},
      *     description="Asigna un docente a una exámen",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -128,6 +130,7 @@ class ExamenController extends Controller
      *     path="/examenes/docente/{ciDocente}",
      *     tags={"Exámenes"},
      *     description="devuelve los Examen que el docente toma en el PeriodoExamen actual",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciDocente",
      *         in="path",
@@ -166,6 +169,7 @@ class ExamenController extends Controller
      *     path="/examenes/{ciEstudiante}/{idCarrera}",
      *     tags={"Exámenes"},
      *     description="Devuelve los Examenes a los que el estudiante puede inscribirse en el PeriodoExamen actual",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ciEstudiante",
      *         in="path",
@@ -269,6 +273,16 @@ class ExamenController extends Controller
                 // error_log("-----------------------------");
                 // error_log("Verificando curso $idCurso");
 
+                // para cada Examen a listar, se verifican si el estudiante ya esta inscrito
+                if ($ex->estudiantes->where("id", $est->id)->first() != null){
+                    $ex->habilitado = -2;
+                     // error_log("Ya se ha inscrito en el examen");
+                     // limpieza de datos para retornar
+                     unset($ex->curso->carreras);
+                     unset($ex->curso->previas);
+                    continue;
+                }
+
                 // para cada Examen a listar, se verifican si el curso ya fuá aprobado
                 if (in_array($idCurso, $idCursosExonerados) || in_array($idCurso, $idCursosExamenAprobado)) {
                     $ex->habilitado = 0;
@@ -308,6 +322,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/notas",
      *     tags={"Exámenes"},
      *     description="Obtiene las notas obtenidas por los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -340,6 +355,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/notas",
      *     tags={"Exámenes"},
      *     description="Registra las notas obtenidas por los estudiantes",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -387,6 +403,7 @@ class ExamenController extends Controller
      *     path="/examenes/{id}/notas",
      *     tags={"Exámenes"},
      *     description="Marca como confirmada el acta del Examen",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

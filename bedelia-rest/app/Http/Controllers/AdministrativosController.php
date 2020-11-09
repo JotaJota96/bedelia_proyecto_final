@@ -20,6 +20,7 @@ class AdministrativosController extends Controller
      *     path="/administrativos/{ci}/sede/",
      *     tags={"Administrativos"},
      *     description="Devuelve la sede en la que trabaja el usuario administrativo",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ci",
      *         in="path",
@@ -55,6 +56,7 @@ class AdministrativosController extends Controller
      *     path="/administrativos/{ci}/sede/",
      *     tags={"Administrativos"},
      *     description="Establece la sede en la que trabaja el usuario administrativo",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="ci",
      *         in="path",

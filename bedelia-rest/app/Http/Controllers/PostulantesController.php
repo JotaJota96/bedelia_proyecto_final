@@ -29,6 +29,7 @@ class PostulantesController extends Controller
      *     path="/postulantes/{id}",
      *     tags={"Postulante"},
      *     description="devuelve una postulacion especifica, incluyendo la persona asociada y su direccion",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -146,6 +147,7 @@ class PostulantesController extends Controller
      *     path="/postulantes/{id}",
      *     tags={"Postulante"},
      *     description="Elimina la postulacion especifica",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -180,6 +182,7 @@ class PostulantesController extends Controller
      *     path="/postulantes/{id}/notificar",
      *     tags={"Postulante"},
      *     description="Envia un email al postulante",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -233,6 +236,7 @@ class PostulantesController extends Controller
      *     path="/postulantes/{id}/aceptar",
      *     tags={"Postulante"},
      *     description="Acepta al postulante generandole una cuenta de estudiante",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -319,8 +323,7 @@ class PostulantesController extends Controller
                 $usu->persona()->associate($postu->persona);
                 // establecer la contrasenia del Usuario
                 $usu->contrasenia = $usu->persona->cedula;
-                // para contraseña encriptada
-                //$usu->contrasenia = Crypt::decrypt($usu->contrasenia);
+                $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
                 
                 // guardar el Usuario y el Estudiante
                 $usu->save();

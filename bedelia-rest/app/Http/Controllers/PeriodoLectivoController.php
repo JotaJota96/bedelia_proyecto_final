@@ -86,6 +86,7 @@ class PeriodoLectivoController extends Controller
      * @OA\Post(
      *     path="/periodos",
      *     tags={"Periodos"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/AnioLectivoDTO"),
      *     ),

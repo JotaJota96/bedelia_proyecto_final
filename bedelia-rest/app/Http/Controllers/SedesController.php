@@ -27,6 +27,7 @@ class SedesController extends Controller
      * @OA\Get(
      *     path="/sedes/{id}",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -55,6 +56,7 @@ class SedesController extends Controller
      * @OA\Get(
      *     path="/sedes/",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="Todas las sedes",
@@ -78,6 +80,7 @@ class SedesController extends Controller
      * @OA\Post(
      *     path="/sedes",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/SedeDTO"),
      *     ),
@@ -121,6 +124,7 @@ class SedesController extends Controller
      * @OA\Get(
      *     path="/sedes/{id}/postulantes",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -162,6 +166,7 @@ class SedesController extends Controller
      * @OA\Get(
      *     path="/sedes/{id}/edicionesCurso",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -219,6 +224,7 @@ class SedesController extends Controller
      * @OA\Get(
      *     path="/sedes/{id}/examenes",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -291,6 +297,7 @@ class SedesController extends Controller
      * @OA\Get(
      *     path="/sedes/{id}/actas",
      *     tags={"Sedes"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
