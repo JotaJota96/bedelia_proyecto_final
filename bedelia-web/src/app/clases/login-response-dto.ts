@@ -1,9 +1,8 @@
 export class LoginResponseDTO {
-    
-    public cedula:String;
-    public correo:String;
-    public token:String;
-    public roles:String[];
+    public cedula:  string;
+    public correo:  string;
+    public token:   string;
+    public roles:   string[];
 
     constructor() {}
 

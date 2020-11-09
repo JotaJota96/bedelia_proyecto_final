@@ -1,0 +1,97 @@
+<div class="container">
+    <form [formGroup]="formulario" class="row mt-5">
+
+        <div class="col-12">
+            <mat-form-field [style.width.%]=100>
+                <mat-select placeholder="Lista de sedes" name="sede" formControlName="sede">
+                    <mat-option *ngFor="let sede of listaSedes" [value]="sede">
+                        {{sede.direccion.departamento}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- datos de la persona -->
+        <div class="col-12 col-md-6">
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Cédula" name="cedula" formControlName="cedula" [readonly]="soloLectura">
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Nombre" name="nombre" formControlName="nombre" [readonly]="soloLectura">
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Apellido" name="apellido" formControlName="apellido"
+                    [readonly]="soloLectura">
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Correo" name="correo" formControlName="correo" [readonly]="soloLectura">
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput [matDatepicker]="fecha" name="fechaNac" formControlName="fechaNac"
+                    [readonly]="soloLectura">
+                <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fecha"></mat-datepicker-toggle>
+                <mat-datepicker #fecha></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <mat-select placeholder="Sexo" name="sexo" formControlName="sexo">
+                    <mat-option *ngFor="let sex of listaSexos" [value]="sex.clave" [disabled]="soloLectura">
+                        {{sex.texto}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- datos de la direccion -->
+        <div class="col-12 col-md-6">
+            <mat-form-field [style.width.%]=100>
+                <mat-select placeholder="Departamento" formControlName="departamento">
+                    <mat-option *ngFor="let dep of listaDepartamentos" [value]="dep" [disabled]="soloLectura">
+                        {{dep}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Ciudad" name="ciudad" formControlName="ciudad" [readonly]="soloLectura">
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Calle" name="calle" formControlName="calle" [readonly]="soloLectura">
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]=100>
+                <input matInput placeholder="Número" name="numero" formControlName="numero" [readonly]="soloLectura">
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6 ml-1 row">
+
+            <div class="col-12 my-1 custom-input-file">
+                <input class="input-file" type="file" (change)="alCargarImagen($event, 0)"
+                    accept=".png, .jpg, .jpeg," />
+                    Subir imagen Cedula
+            </div>
+
+            <div class="col-12 my-1 custom-input-file">
+                <input class="my-auto input-file" type="file" (change)="alCargarImagen($event, 1)"
+                    accept=".png, .jpg, .jpeg," />
+                    Subir imagen Escolaridad
+            </div>
+
+            <div class="col-12 my-1 custom-input-file">
+                <input class="input-file" type="file" (change)="alCargarImagen($event, 2)"
+                    accept=".png, .jpg, .jpeg," />
+                    Subir imagen Carne de salud
+            </div>
+
+        </div>
+    </form>
+    <div align="end">
+        <button [disabled]="!formulario.valid" (click)="enviar()" mat-raised-button color="primary">Enviar</button>
+    </div>
+
+</div>

@@ -261,7 +261,7 @@ class EstudianteController extends Controller
 
             // si se renderizo bien, hago el commit y lo devuelvo
             DB::commit();
-            return $pdf->stream();
+            return $pdf->download();
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -300,7 +300,7 @@ class EstudianteController extends Controller
 
             $pdf = PDF::loadHtml($html);
             
-            return $pdf->stream();
+            return $pdf->download();
 
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener la escolaridad. ' . $e->getMessage()], 500);

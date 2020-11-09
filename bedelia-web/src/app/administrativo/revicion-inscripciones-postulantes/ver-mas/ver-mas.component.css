@@ -1,0 +1,23 @@
+.enlaceboton {    
+   font-family: verdana, arial, sans-serif;
+   font-size: 10pt;
+   font-weight: bold;
+   padding: 4px;
+   background-color: #3f51b5;
+   color: #ffffff;
+   text-decoration: none;
+   text-align: center;
+ }
+ .enlaceboton:link,
+ .enlaceboton:visited {
+   border-top: 1px solid #ffffff;
+   border-bottom: 2px solid #3f51b5;
+   border-left: 1px solid #ffffff;
+   border-right: 2px solid #3f51b5;
+ }
+ .enlaceboton:hover {
+   border-bottom: 1px solid #ffffff;
+   border-top: 2px solid #3f51b5;
+   border-right: 1px solid #ffffff;
+   border-left: 2px solid #3f51b5;
+ }
