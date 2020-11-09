@@ -17,19 +17,14 @@ export class CambirContraseniaComponent implements OnInit {
   ngOnInit(): void {
 
     this.formulario = new FormGroup({
-      contrasenia: new FormControl('', [Validators.required]),
-      confirmarContrasenia: new FormControl('', [Validators.required]),
+      contrasenia:          new FormControl('', [Validators.required, Validators.minLength(4)]),
+      confirmarContrasenia: new FormControl('', [Validators.required, Validators.minLength(4)]),
     });
   }
 
   confirmar() {
     var login = this.usuService.obtenerDatosLoginAlmacenado();
     
-    if (this.formulario.controls['contrasenia'].value != this.formulario.controls['confirmarContrasenia'].value) {
-      this.openSnackBar("Las contraseña nueva no es igual a la confirmacion de la misma");
-      return;
-    }
-
     this.usuService.passReset(login.cedula, this.formulario.controls['contrasenia'].value).subscribe(
       (datos) => {
         this.router.navigate(['/']);
@@ -38,6 +33,15 @@ export class CambirContraseniaComponent implements OnInit {
         this.openSnackBar("No se pudo cambiar la contraseña");
       }
     );
+  }
+
+  formularioValido(){
+    if ( ! this.formulario.valid) return false;
+
+    if (this.formulario.controls['contrasenia'].value != this.formulario.controls['confirmarContrasenia'].value) {
+      return false;
+    }
+    return true;
   }
 
   openSnackBar(mensaje: string) {

@@ -13,7 +13,7 @@
                 </mat-form-field>
 
                 <div class="col-12 col-md-2 mb-2 m-auto">
-                    <button mat-raised-button color="primary" (click)="obtenerEscolaridad()">Obtener escolaridad</button>
+                    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="obtenerEscolaridad()">Consultar</button>
                 </div>
             </form>
         </mat-card-content>
@@ -77,5 +77,8 @@
                 </div>
             </mat-card>
         </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+        </mat-card-actions>
     </mat-card>
 </div>
