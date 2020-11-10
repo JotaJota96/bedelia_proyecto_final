@@ -24,17 +24,6 @@ export class UsuariosService {
     return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
   }
   
-  getAllDocente(){
-    return this.http.get<UsuarioDTO[]>(this.apiURL + '/docentes');
-  }
-
-  create(datos:UsuarioDTO){
-    return this.http.post<UsuarioDTO>(this.apiURL, datos);
-  }
-
-  passReset(idUsuario:string, pass:string){
-    return this.http.put<LoginDTO>(this.apiURL + "/passReset", {id:idUsuario,contrasenia:pass});
-  }
 
   /** Funciones relacionadas a la sesion del usuario **************************** **/
 
@@ -84,31 +73,4 @@ export class UsuariosService {
     let rolSeleccionado = localStorage.getItem(this.rolDataStoreKey)
     return rolSeleccionado == "estudiante";
   }
-
-   /**
-   * Devueve true si el rol del usuario logueado es Estudiante
-   */
-  isDocente():boolean{
-    let rolSeleccionado:string = localStorage.getItem(this.rolDataStoreKey)
-    return rolSeleccionado == "docente";
-  }
-
-   /**
-   * Devueve true si el rol del usuario logueado es Estudiante
-   */
-  isAdministrativo():boolean{
-    let rolSeleccionado:string = localStorage.getItem(this.rolDataStoreKey)
-    return rolSeleccionado == "administrativo";
-  }
-
-   /**
-   * Devueve true si el rol del usuario logueado es Estudiante
-   */
-  isAdmin():boolean{
-    let rolSeleccionado:string = localStorage.getItem(this.rolDataStoreKey)
-    return rolSeleccionado == "admin";
-  }
-
-  
-  
 }

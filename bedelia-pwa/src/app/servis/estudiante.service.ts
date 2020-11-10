@@ -16,23 +16,7 @@ export class EstudianteService {
     return this.http.get<CarreraDTO[]>(this.apiURL + "/"+ ci+"/carreras/");
   }
 
-  justificarInasistencia(ciEstudiante:string, fechaInicio:string, fechaFin:string){
-    return this.http.put(this.apiURL + '/' + ciEstudiante + "/asistencias/",{fecha_inicio:fechaInicio, fecha_fin:fechaFin});
-  }
-
   getEscolaridad(ci:string, idCarrera: number){
     return this.http.get<EscolaridadDTO>(this.apiURL + "/"+ ci+"/escolaridad/"+idCarrera);
-  }
-
-  getEscolaridadPDF(ci:string, idCarrera: number){
-    window.open(this.apiURL + "/" + ci + "/escolaridad/" + idCarrera + "/pdf")
-  }
-
-  getEscolaridadPDFCodigo(codigo:string){
-    window.open(this.apiURL + "/escolaridad/"+ codigo);
-  }
-
-  getEscolaridadPDFExiste(codigo:string){
-    return this.http.get(this.apiURL + "/escolaridad/"+ codigo + "/existe");
   }
 }

@@ -10,7 +10,7 @@
             </mat-select>
           </mat-form-field>
   
-          <button mat-raised-button (click)="cargarMateria()" [disabled]="!formulario.valid" color="primary">Seleccionar carrera </button>          
+          <button class="col-12" mat-raised-button (click)="cargarMateria()" [disabled]="!formulario.valid" color="primary">Seleccionar carrera </button>          
         </form>
   
         <mat-selection-list class="curso" #curso [(ngModel)]="selectedOptions">
@@ -20,9 +20,8 @@
           </mat-list-option>
         </mat-selection-list>
       </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
-        <button mat-raised-button color="primary" (click)="confirmar()" *ngIf="listaCurso.length > 0" [disabled]="selectedOptions.length < 1" >Confirmar</button>
+      <mat-card-actions align="end" class="row">
+        <button mat-raised-button class="col-12" color="primary" (click)="confirmar()" *ngIf="listaCurso.length > 0" [disabled]="selectedOptions.length < 1" >Confirmar</button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -9,7 +9,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button (click)="cargarExamenes()" [disabled]="!formulario.valid" color="primary">Seleccionar
+        <button class="col-12" mat-raised-button (click)="cargarExamenes()" [disabled]="!formulario.valid" color="primary">Seleccionar
           carrera </button>
       </form>
 
@@ -22,9 +22,8 @@
         </mat-list-option>
       </mat-selection-list>
     </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
-      <button mat-raised-button color="primary" (click)="confirmar()" *ngIf="listaExamen.length > 0"
+    <mat-card-actions align="end" class="row">
+      <button mat-raised-button class="col-12" color="primary" (click)="confirmar()" *ngIf="listaExamen.length > 0"
         [disabled]="selectedOptions.length < 1">Confirmar</button>
     </mat-card-actions>
   </mat-card>

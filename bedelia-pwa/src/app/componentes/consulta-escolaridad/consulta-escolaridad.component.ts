@@ -62,9 +62,6 @@ export class ConsultaEscolaridadComponent implements OnInit {
     );
   }
 
-  descargarEscolaridad(){
-    this.estudianteServ.getEscolaridadPDF(this.ciLogeado, this.formulario.controls['carrera'].value);
-  }
 
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
