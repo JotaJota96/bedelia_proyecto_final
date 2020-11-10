@@ -43,12 +43,25 @@ export class JustificarInasistenciaComponent implements OnInit {
   }
 
   buscar(){
-    this.mostrarDatos = true;
     this.usuServ.get(this.formulario.controls['ci'].value).subscribe(
       (datos)=>{
-        this.persona = datos.persona;
+        let esEstudiante = false;
+        datos.roles.forEach(element => {
+          if(element == "estudiante"){
+            esEstudiante = true;
+          }
+        });
+
+        if(esEstudiante){
+          this.persona = datos.persona;
+          this.mostrarDatos = true;
+        }else{
+          this.mostrarDatos = false;
+          this.openSnackBar("Error al traer los datos del estudiante");
+        }
       },
       (error)=>{
+        this.mostrarDatos = false;
         this.openSnackBar("Error al traer los datos del estudiante");
       }
     );
