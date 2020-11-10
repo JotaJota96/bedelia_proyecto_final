@@ -21,22 +21,25 @@ export class RevicionActaComponent implements OnInit {
   listaActas : ActaDTO[]=[];
   actaSeleccionada : ActaDTO = null;
   ciLogeado : string;
+  sedeOk:boolean = undefined;
 
   public formulario: FormGroup;
   // columnas que se mostraran en la tabla
   columnasAMostrar: string[] = ['cedula', 'nombre', 'apellido', 'nota'];
   // objeto que necesita la tabla para mostrar el contenido
-  usuariosDataSource = new MatTableDataSource([]);
+  notasDataSource = new MatTableDataSource([]);
+
+
   constructor(protected administrativoServ: AdministrativosService, private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar,
     protected usuServ: UsuariosService, protected sedeServ: SedesService, protected examenServ: ExamenesService, protected edicionServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
     this.ciLogeado = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
     this.administrativoServ.get(this.ciLogeado).subscribe(
-      (datos) => {
-        let id = datos.id
-        if (id != null) {
-          this.sedeServ.getActas(id).subscribe(
+      (datosSede) => {
+        this.sedeOk = datosSede.id != null;
+        if (this.sedeOk) {
+          this.sedeServ.getActas(datosSede.id).subscribe(
             (datos) => {
               this.listaActas = datos;
             }, (error) => {
@@ -60,6 +63,7 @@ export class RevicionActaComponent implements OnInit {
       this.edicionServ.getEdicionesParaActa(acta.id).subscribe(
         (datos)=>{
           this.actaSeleccionada = datos;
+          this.notasDataSource.data = this.actaSeleccionada.notas;
         },
         (error)=>{
           
@@ -70,6 +74,7 @@ export class RevicionActaComponent implements OnInit {
       this.examenServ.getNotasDeEstudiante(acta.id).subscribe(
         (datos)=>{
           this.actaSeleccionada = datos;
+          this.notasDataSource.data = this.actaSeleccionada.notas;
         },
         (error)=>{
           
