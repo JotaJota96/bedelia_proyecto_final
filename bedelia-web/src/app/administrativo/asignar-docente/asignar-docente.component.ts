@@ -8,6 +8,7 @@ import { ExamenDTO } from 'src/app/clases/examen-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
+import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { ExamenesService } from 'src/app/servicios/examenes.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
@@ -26,27 +27,60 @@ export class AsignarDocenteComponent implements OnInit {
   mostrarDatos: boolean = false;
   idSede: number;
   ciLogeado: string;
+  periodoLeOk:boolean = undefined;
+  periodoExOk:boolean = undefined;
+  sedeOk:boolean = undefined;
   
   public formularioBusqueda: FormGroup;
-  public formularioAsignar: FormGroup;
+  public formularioAsignarACurso: FormGroup;
+  public formularioAsignarAExamen: FormGroup;
 
   constructor(private router: Router, private _snackBar: MatSnackBar,
     protected edicionCurServ: EdicionesCursoService,
     protected examenServ: ExamenesService,
     protected administrativoServ: AdministrativosService,
     protected sedeServ: SedesService,
-    protected usuServ: UsuariosService) { }
+    protected usuServ: UsuariosService,
+    protected alecServ:AnioLectivoService) { }
 
   ngOnInit(): void {
     this.ciLogeado = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
-    
    
+    this.administrativoServ.get(this.ciLogeado).subscribe(
+      (datosSede) => {
+        this.sedeOk = datosSede.id != null;
+        if (this.sedeOk) {
+          this.setPeriodoLeOk();
+          this.setPeriodoExOk();
+
+          this.sedeServ.getCrsos(datosSede.id).subscribe(
+            (datos) => {
+              this.listaCurso = datos;
+            },
+            (error) => {
+              this.openSnackBar("Error al traer los cursos de la base de dato");
+            }
+          )
+
+          this.sedeServ.getExamen(datosSede.id).subscribe(
+            (datos) => {
+              this.listaExamen = datos;
+            },
+            (error) => {
+              this.openSnackBar("Error al traer los examenes de la base de dato");
+            }
+          )
+        }
+      }
+    );
+
     this.formularioBusqueda = new FormGroup({
       ci: new FormControl('', [Validators.required]),
     });
-    
-    this.formularioAsignar = new FormGroup({
+    this.formularioAsignarACurso = new FormGroup({
       curso: new FormControl('', [Validators.required]),
+    })
+    this.formularioAsignarAExamen = new FormGroup({
       examen: new FormControl('', [Validators.required]),
     })
   }
@@ -62,44 +96,10 @@ export class AsignarDocenteComponent implements OnInit {
             this.persona = datos.persona;
           }
         });
-
-        if(this.persona != null){
-
-          this.administrativoServ.get(this.ciLogeado).subscribe(
-            (datos) => {
-              if (datos.id != null) {
-                this.sedeServ.getCrsos(datos.id).subscribe(
-                  (datos) => {
-                    datos.forEach(element => {
-                      if(element.docente == null){
-                        this.listaCurso.push(element);
-                      }
-                    });
-                  },
-                  (error) => {
-                    this.openSnackBar("Error al traer los cursos de la base de dato");
-                  }
-                )
-      
-                this.sedeServ.getExamen(datos.id).subscribe(
-                  (datos) => {
-                    datos.forEach(element => {
-                      if(element.docente == null){
-                        this.listaExamen.push(element);
-                      }
-                    });
-                  },
-                  (error) => {
-                    this.openSnackBar("Error al traer los examenes de la base de dato");
-                  }
-                )
-              }
-            }
-          );
-      
-        }
       },
       (error)=>{
+        this.mostrarDatos = false;
+        this.persona = null;
         this.openSnackBar("La CI que se ingreso no es de un docente");
       }
     );
@@ -107,10 +107,10 @@ export class AsignarDocenteComponent implements OnInit {
   }
 
   asignarCurso() {
-    this.edicionCurServ.asignar(this.formularioAsignar.controls['curso'].value, this.persona.cedula).subscribe(
+    this.edicionCurServ.asignar(this.formularioAsignarACurso.controls['curso'].value, this.persona.cedula).subscribe(
       (datos) => {
         this.openSnackBar("El docente fue asignado correctamente");
-        this.formularioAsignar.controls['curso'].setValue(undefined);
+        this.formularioAsignarACurso.controls['curso'].setValue(undefined);
       },
       (error) => {
         this.openSnackBar("Error al asignar el docente");
@@ -120,16 +120,38 @@ export class AsignarDocenteComponent implements OnInit {
   }
 
   asignarExamen() {
-    this.examenServ.asignarDocente(this.formularioAsignar.controls['examen'].value, this.persona.cedula).subscribe(
+    this.examenServ.asignarDocente(this.formularioAsignarAExamen.controls['examen'].value, this.persona.cedula).subscribe(
       (datos) => {
         this.openSnackBar("El docente fue asignado correctamente");
-        this.formularioAsignar.controls['examen'].setValue(undefined);
+        this.formularioAsignarAExamen.controls['examen'].setValue(undefined);
       },
       (error) => {
         this.openSnackBar("Error al asignar el docente");
         this.mostrarDatos = false;
       }
     )
+  }
+
+  setPeriodoLeOk(){
+    this.alecServ.enPeriodo('LE').subscribe(
+      (data) => {  this.periodoLeOk = true; },
+      (error) => { this.periodoLeOk =  this.periodoLeOk == true ? true : false; }
+    );
+    this.alecServ.enPeriodo('IC').subscribe(
+      (data) => {  this.periodoLeOk = true; },
+      (error) => { this.periodoLeOk =  this.periodoLeOk == true ? true : false; }
+    );
+  }
+
+  setPeriodoExOk(){
+    this.alecServ.enPeriodo('EX').subscribe(
+      (data) => {  this.periodoExOk = true; },
+      (error) => { this.periodoExOk =  this.periodoExOk == true ? true : false; }
+    );
+    this.alecServ.enPeriodo('IE').subscribe(
+      (data) => {  this.periodoExOk = true; },
+      (error) => { this.periodoExOk =  this.periodoExOk == true ? true : false; }
+    );
   }
 
   openSnackBar(mensaje: string) {
