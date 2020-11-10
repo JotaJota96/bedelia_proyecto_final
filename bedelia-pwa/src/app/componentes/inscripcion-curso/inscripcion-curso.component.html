@@ -10,19 +10,19 @@
             </mat-select>
           </mat-form-field>
   
-        <button class="col-12" mat-raised-button (click)="cargarMateria()" color="primary">Seleccionar carrera </button>
-
+          <button mat-raised-button (click)="cargarMateria()" [disabled]="!formulario.valid" color="primary">Seleccionar carrera </button>          
         </form>
   
         <mat-selection-list class="curso" #curso [(ngModel)]="selectedOptions">
           <mat-list-option class="mt-2 mb-2" *ngFor="let curso of listaCurso" [disabled]="curso.habilitado != 1" [value]="curso.id">
-            {{curso.curso.nombre}}
+            <div mat-line>{{curso.curso.nombre}}</div>
+            <div mat-line class=" descripcion">{{ curso.habilitado | descripcionInscripcionCurso }}</div>  
           </mat-list-option>
         </mat-selection-list>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-button [routerLink]="['/']">Volver</button>
-        <button mat-button (click)="confirmar()">Confirmar</button>
+        <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+        <button mat-raised-button color="primary" (click)="confirmar()" *ngIf="listaCurso.length > 0" [disabled]="selectedOptions.length < 1" >Confirmar</button>
       </mat-card-actions>
     </mat-card>
   </div>

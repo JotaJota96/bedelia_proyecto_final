@@ -36,6 +36,8 @@ import { InscripcionCursoComponent } from './componentes/inscripcion-curso/inscr
 import { InscripcionExamenComponent } from './componentes/inscripcion-examen/inscripcion-examen.component';
 import { FechaNullPipe } from './pipe/fecha-null.pipe';
 import { InicioComponent } from './componentes/inicio/inicio.component';
+import { DescripcionInscripcionCursoPipe } from './pipe/descripcion-inscripcion-curso.pipe';
+import { DescripcionInscripcionExamenPipe } from './pipe/descripcion-inscripcion-examen.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
     InscripcionCursoComponent,
     InscripcionExamenComponent,
     FechaNullPipe,
-    InicioComponent
+    InicioComponent,
+    DescripcionInscripcionExamenPipe,
+    DescripcionInscripcionCursoPipe
   ],
   imports: [
     HttpClientModule,
