@@ -4,6 +4,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MAT_DRAWER_CONTAINER } from '@angular/material/sidenav/drawer';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ConnectionService } from 'ng-connection-service';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { ExamenDTO } from 'src/app/clases/examen-dto';
 import { EstudianteService } from 'src/app/servis/estudiante.service';
@@ -24,10 +25,23 @@ export class InscripcionExamenComponent implements OnInit {
 
   public formulario: FormGroup;
 
-  constructor(private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
+  constructor(private onlineService: ConnectionService, private router: Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
     protected estudianteServis: EstudianteService, protected examenServ: ExamenService) { }
 
   ngOnInit(): void {
+
+    if(!navigator.onLine){
+      this.router.navigate(['/desconectado']);
+      return;
+    }
+    this.onlineService.monitor().subscribe(
+      (conectado)=>{
+        if(!conectado){
+          this.router.navigate(['/desconectado']);
+          return;
+        }
+      }
+    );
 
     this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
 

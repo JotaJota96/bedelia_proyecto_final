@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "~10.1.0",
     "@angular/router": "~10.1.0",
     "@angular/service-worker": "~10.1.0",
+    "i": "^0.3.6",
+    "ng-connection-service": "^1.0.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

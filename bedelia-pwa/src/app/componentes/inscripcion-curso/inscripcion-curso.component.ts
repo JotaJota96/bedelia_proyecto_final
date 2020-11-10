@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ConnectionService } from 'ng-connection-service';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
 import { EdicionesCursoService } from 'src/app/servis/ediciones-curso.service';
@@ -22,10 +23,24 @@ export class InscripcionCursoComponent implements OnInit {
 
   public formulario: FormGroup;
   
-  constructor(private router:Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
+  constructor(private onlineService:ConnectionService ,private router:Router, private _snackBar: MatSnackBar, protected usuServ: UsuariosService,
     protected estudianteServis: EstudianteService, protected edicionCursoServ: EdicionesCursoService) { }
 
   ngOnInit(): void {
+
+    if(!navigator.onLine){
+      this.router.navigate(['/desconectado']);
+      return;
+    }
+    this.onlineService.monitor().subscribe(
+      (conectado)=>{
+        if(!conectado){
+          this.router.navigate(['/desconectado']);
+          return;
+        }
+      }
+    );
+
     this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
 
     this.estudianteServis.getCarreras(this.ciEstudiante).subscribe(

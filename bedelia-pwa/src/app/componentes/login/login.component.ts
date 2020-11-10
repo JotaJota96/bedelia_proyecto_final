@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ConnectionService } from 'ng-connection-service';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
 import { UsuariosService } from 'src/app/servis/usuarios.service';
@@ -18,10 +19,26 @@ export class LoginComponent implements OnInit {
 
   constructor(private _snackBar: MatSnackBar,
     protected accServ: UsuariosService, 
-    private router:Router) {
+    private router:Router,
+    private onlineService:ConnectionService) {
   }
 
   ngOnInit(): void {
+
+    if(!navigator.onLine){
+      this.router.navigate(['/desconectado']);
+      return;
+    }
+    
+    this.onlineService.monitor().subscribe(
+      (conectado)=>{
+        if(!conectado){
+          this.router.navigate(['/desconectado']);
+          return;
+        }
+      }
+    );
+
     this.formulario = new FormGroup({
       usuario:     new FormControl('', [Validators.required]),
       contrasenia: new FormControl('', [Validators.required]),
