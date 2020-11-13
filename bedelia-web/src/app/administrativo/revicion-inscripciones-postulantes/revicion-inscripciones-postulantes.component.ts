@@ -15,7 +15,7 @@ import { SedesService } from 'src/app/servicios/sedes.service';
   styleUrls: ['./revicion-inscripciones-postulantes.component.css']
 })
 export class RevicionInscripcionesPostulantesComponent implements OnInit {
-  columnasAMostrar: string[] = ['id', 'persona', 'accion'];
+  columnasAMostrar: string[] = ['id', 'cedula', 'nombre', 'apellido', 'carrera', 'accion'];
   sedeDataSource = new MatTableDataSource([]);
 
   Elusuario: UsuarioDTO;
@@ -24,18 +24,20 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
   ciLogeado: string = JSON.parse(localStorage.getItem("loginData")).cedula;
   verDocumentacion: boolean = false;
   postulanteSeleccionado: PostulanteDTO;
-
+  sedeOk: boolean = undefined;
+  
   constructor(protected administrativoServ: AdministrativosService, protected sedesServ: SedesService, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
 
   ngOnInit(): void {
     this.administrativoServ.get(this.ciLogeado).subscribe(
-      (datos) => {
-        let id = datos.id
-        if (id != null) {
-          this.sedesServ.getSedes(id).subscribe(
+      (datosSede) => {
+        this.sedeOk = datosSede.id != null;
+        if (this.sedeOk) {
+          this.sedesServ.getSedes(datosSede.id).subscribe(
             (datos) => {
               this.sedeDataSource.data = datos;
             }, (error) => {
+              this.openSnackBar("Error al obtener los postulantes de la sede");
             }
           );
         }
