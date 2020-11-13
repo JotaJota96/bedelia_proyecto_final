@@ -239,11 +239,11 @@ class Controller extends BaseController
      * )
      */
 
-
     /**
      * @OA\Schema(
      *     schema="PostulanteDTO",
      *     @OA\Property(property="id",              type="integer"),
+     *     @OA\Property(property="estado",          type="string", readOnly="true", description="A = Aceptada, R = Rechazada, N = NotificacionEnviada, null = ninguna de las anteriores"),
      *     @OA\Property(property="img_ci",          type="string"),
      *     @OA\Property(property="img_escolaridad", type="string"),
      *     @OA\Property(property="img_carne_salud", type="string"),

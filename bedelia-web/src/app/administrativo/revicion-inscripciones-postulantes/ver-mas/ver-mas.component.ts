@@ -16,9 +16,9 @@ export class VerMasComponent implements OnInit {
 
   constructor(private router: Router,private _snackBar: MatSnackBar, public dialog: MatDialog, private rutaActiva: ActivatedRoute, protected postulanteServis: PostulanteService) { }
 
-  elMensaje: string;
-  postulante: PostulanteDTO = new PostulanteDTO;
-  persona: PersonaDTO = new PersonaDTO;
+  postulante: PostulanteDTO = undefined;
+  persona: PersonaDTO = undefined;
+  permitirAcciones: boolean = false;
 
   ngOnInit(): void {
 
@@ -29,23 +29,23 @@ export class VerMasComponent implements OnInit {
         (datos) => {
           this.postulante = datos;
           this.persona = datos.persona;
+          this.permitirAcciones = this.postulante.estado == null || this.postulante.estado == 'N';
         }
       );
     }
 
   }
 
-  verDocumentos() {
-
-  }
-
   informarProblema() {
     const dialogRef = this.dialog.open(ModalInformarComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.elMensaje = result;
-      this.postulanteServis.notificar(this.postulante.id, this.elMensaje).subscribe(
+      if (result == undefined) return; // le dio 'Volver'
+      let elMensaje = result;
+      this.openSnackBar("Enviando mensaje...");
+
+      this.postulanteServis.notificar(this.postulante.id, elMensaje).subscribe(
         (datos) => {
-          this.openSnackBar("El mensaje fue enviado");
+          this.openSnackBar("El mensaje fue enviado correctamente");
         },
         (error) => {
           this.openSnackBar("No se pudo mandar el mensaje");

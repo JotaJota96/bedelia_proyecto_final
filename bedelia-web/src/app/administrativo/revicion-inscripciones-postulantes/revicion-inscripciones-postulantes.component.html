@@ -21,6 +21,12 @@
                 </ng-container>
                 
                 <!-- Columna -->
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef> Cedula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.estado | estadoPostulacion}} </td>
+                </ng-container>
+
+                <!-- Columna -->
                 <ng-container matColumnDef="carrera">
                     <th mat-header-cell *matHeaderCellDef> Carrera </th>
                     <td mat-cell *matCellDef="let element"> {{element.carrera.nombre}} </td>

@@ -15,7 +15,7 @@ import { SedesService } from 'src/app/servicios/sedes.service';
   styleUrls: ['./revicion-inscripciones-postulantes.component.css']
 })
 export class RevicionInscripcionesPostulantesComponent implements OnInit {
-  columnasAMostrar: string[] = ['id', 'cedula', 'nombre', 'apellido', 'carrera', 'accion'];
+  columnasAMostrar: string[] = ['id', 'cedula', 'carrera', 'estado', 'accion'];
   sedeDataSource = new MatTableDataSource([]);
 
   Elusuario: UsuarioDTO;
