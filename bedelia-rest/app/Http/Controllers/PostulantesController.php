@@ -76,8 +76,8 @@ class PostulantesController extends Controller
         try {
             DB::beginTransaction();
             $Postulacion = new Postulacion();
-            $Postulacion->img_escolaridad = $this->request->json('img_ci');
-            $Postulacion->img_ci          = $this->request->json('img_escolaridad');
+            $Postulacion->img_ci          = $this->request->json('img_ci');
+            $Postulacion->img_escolaridad = $this->request->json('img_escolaridad');
             $Postulacion->img_carne_salud = $this->request->json('img_carne_salud');
 
             $Persona = new Persona();
@@ -88,7 +88,7 @@ class PostulantesController extends Controller
             $reciclarPersona = false;
             $perVerific1 = Persona::where('cedula', $Persona->cedula)->first();
             $perVerific2 = Persona::where('correo', $Persona->correo)->first();
-            
+
             if ($perVerific1 == null && $perVerific2 == null){
                 // si ni la cedula ni el correo se estaban usando
                 // no hago nada, que siga todo normal
@@ -120,7 +120,7 @@ class PostulantesController extends Controller
 
             $Sede = Sede::where('id', $SedeID)->first();
             $Carrera = Carrera::where('id', $CarreraID)->first();
-            
+
             if ($Postulacion != null && $Persona != null && $Sede != null && $Carrera != null) {
                 $Postulacion->Sede()->associate($Sede);
                 $Postulacion->Persona()->associate($Persona);
@@ -175,7 +175,7 @@ class PostulantesController extends Controller
             return response()->json(['message' => 'Error al eliminar la postulacion.' . $e->getMessage()], 500);
         }
     }
-    
+
 
     /**
      * @OA\Post(
@@ -229,7 +229,7 @@ class PostulantesController extends Controller
             return response()->json(['message' => 'Error al enviar el correo.' . $e->getMessage()], 500);
         }
     }
-    
+
 
     /**
      * @OA\Post(
@@ -280,7 +280,7 @@ class PostulantesController extends Controller
 
             $usuVerific1 = Usuario::buscar($postu->persona->cedula);
             $usuVerific2 = Usuario::buscar($postu->persona->correo);
-            
+
             if ($usuVerific1 == null && $usuVerific2 == null){
                 // si ni la cedula ni el correo se estaban usando
                 // no hago nada, que siga todo normal
@@ -324,7 +324,7 @@ class PostulantesController extends Controller
                 // establecer la contrasenia del Usuario
                 $usu->contrasenia = $usu->persona->cedula;
                 $usu->contrasenia = Crypt::encrypt($usu->contrasenia);
-                
+
                 // guardar el Usuario y el Estudiante
                 $usu->save();
                 $est = new Estudiante();
@@ -363,6 +363,8 @@ class PostulantesController extends Controller
                 }
                 CorreoPostulanteAceptacion::enviar($mailData);
             } catch (\Exception $e) {
+                error_log("no se pudo enviar el correo a: " . $usu->persona->correo);
+                error_log("Excepcion: " . $e->getMessage());
             }
 
             $est->usuario->persona->direccion;
@@ -374,7 +376,7 @@ class PostulantesController extends Controller
             return response()->json(["message" => "Error al guardar los datos." . $e->getMessage()], 500);
         }
     }
-    
+
 
 }
 
