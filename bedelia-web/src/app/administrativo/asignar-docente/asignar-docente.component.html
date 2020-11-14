@@ -1,5 +1,6 @@
 <div class="container">
-    <mat-card class="mt-5">
+    <h1 class="mt-2">Asignar docentes</h1>
+    <mat-card class="mt-2">
         <mat-spinner class="mx-auto mt-5" *ngIf="sedeOk == undefined || (sedeOk == true && (periodoLeOk == undefined || periodoExOk == undefined))"></mat-spinner>
 
         <mat-card-content *ngIf="periodoLeOk == false && periodoExOk == false">
