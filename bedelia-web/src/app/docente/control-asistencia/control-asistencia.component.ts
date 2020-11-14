@@ -60,6 +60,7 @@ export class ControlAsistenciaComponent implements OnInit {
       }
     });
 
+    this.claseDictada = undefined;
     
     this.edicionServ.getEstudiantesCurso(this.formulario.controls['curso'].value).subscribe(
       (datos)=>{

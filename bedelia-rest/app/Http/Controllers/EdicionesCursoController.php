@@ -77,8 +77,8 @@ class EdicionesCursoController extends Controller
             DB::rollBack();
             return response()->json(['message' => 'Error al registrar la inscripcion.' . $e->getMessage()], 500);
         }
-    } 
-    
+    }
+
     /**
      * @OA\Put(
      *     path="/edicionesCurso/{id}/docente/{ciDocente}",
@@ -116,7 +116,7 @@ class EdicionesCursoController extends Controller
             //$UsuarioDTO->fill($this->request->json(['persona']));
             // return response()->json($EdicionCurso, 200);
             $Docente = $Usuario->docente;
-                        
+
             // return response()->json($Docente, 200);
             $EdicionCurso->docente()->associate($Docente);
             $EdicionCurso->save();
@@ -162,6 +162,7 @@ class EdicionesCursoController extends Controller
             $Cursos = $Docente->edicionesCursoActuales();
             foreach ($Cursos as $value) {
                 $value->curso;
+                $value->sede->direccion;
             }
             return response()->json($Cursos, 200);
         } catch (\Exception $e) {
@@ -197,13 +198,13 @@ class EdicionesCursoController extends Controller
             // array asociativo que al ser retornado se transforma en un JSON
             $ret = [
                 "lista" => [], // lista de datos de alumnos
-            ]; 
+            ];
 
             $EdicionCurso=EdicionCurso::find($id);
             if ($EdicionCurso == null){
                 return response()->json(['message' => 'EdicionCurso no encontrado'], 404);
             }
-            
+
 
             $ret['curso_id']         = $EdicionCurso->curso->id;
             $ret['edicion_curso_id'] = $EdicionCurso->id;
@@ -225,7 +226,7 @@ class EdicionesCursoController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Post(
      *     path="/edicionesCurso/{id}/clasesDictada",
@@ -277,9 +278,9 @@ class EdicionesCursoController extends Controller
                 // carga datos para devolver
                 $asistencia['nombre']               = $estudiante->usuario->persona->nombre;
                 $asistencia['apellido']             = $estudiante->usuario->persona->apellido;
-                $asistencia["total_asistencias"]    = $estudiante->contarAsistidas($estudiante->id, 1.0);
-                $asistencia["total_llegadas_tarde"] = $estudiante->contarAsistidas($estudiante->id, 0.5);
-                $asistencia["total_inasistencias"]  = $estudiante->contarAsistidas($estudiante->id, 0.0);
+                $asistencia["total_asistencias"]    = $EdicionCurso->contarAsistidas($estudiante->id, 1.0);
+                $asistencia["total_llegadas_tarde"] = $EdicionCurso->contarAsistidas($estudiante->id, 0.5);
+                $asistencia["total_inasistencias"]  = $EdicionCurso->contarAsistidas($estudiante->id, 0.0);
             }
             $ClaseDictada->save();
             DB::commit();
@@ -359,7 +360,7 @@ class EdicionesCursoController extends Controller
             $perProx = PeriodoInscCurso::periodoActual();
             if ($perProx == null) throw new \Exception("Aún no se ha definido el próximo período lectivo");
             $idProxPerLec = $perProx->periodoLectivo->id;
-            
+
             // obtengo todos los EdicionCurso para el proximo PeriodoLectivo (semestre) y me quedo solo con los de la carrera especificada
             $edicionesCurso = array();
             $edicionesCursoPreFiltro = EdicionCurso::where('periodo_lectivo_id', $idProxPerLec)
@@ -372,7 +373,7 @@ class EdicionesCursoController extends Controller
                     }
                 }
             }
-            
+
             // para cada curso y examen tomado, clasifico segun nota obtenida
             $idCursosExonerados       = array(); // ID de los cursos que se exoneraron
             $idCursosAExamen          = array(); // ID de los cursos que se debe dar examen
@@ -440,19 +441,19 @@ class EdicionesCursoController extends Controller
                     // error_log("    requiere $p->tipo de " . $p->previa->id);
 
                     // si se encuentra que no se aprobó el curso para un curso que lo requería
-                    if (strcmp($p->tipo, "curso") == 0 && 
-                        ! ( in_array($p->previa->id, $idCursosExonerados) || 
-                        in_array($p->previa->id, $idCursosAExamen) || 
+                    if (strcmp($p->tipo, "curso") == 0 &&
+                        ! ( in_array($p->previa->id, $idCursosExonerados) ||
+                        in_array($p->previa->id, $idCursosAExamen) ||
                         in_array($p->previa->id, $idCursosExamenAprobado))) {
-    
+
                         // error_log("      no se cumple con la previa");
                         $ec->habilitado = -1;
                         break;
                     }
 
                     // si se encuentra que no se exoneró el curso o no se aprobó el examen para un curso que lo requería
-                    if (strcmp($p->tipo, "examen") == 0 && 
-                        ! (in_array($p->previa->id, $idCursosExonerados) || 
+                    if (strcmp($p->tipo, "examen") == 0 &&
+                        ! (in_array($p->previa->id, $idCursosExonerados) ||
                         in_array($p->previa->id, $idCursosExamenAprobado))){
 
                         // error_log("      no se cumple con la previa");
@@ -506,7 +507,7 @@ class EdicionesCursoController extends Controller
             return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Post(
      *     path="/edicionesCurso/{id}/notas",
@@ -590,6 +591,6 @@ class EdicionesCursoController extends Controller
         }
     }
 
-    
+
 
 }
