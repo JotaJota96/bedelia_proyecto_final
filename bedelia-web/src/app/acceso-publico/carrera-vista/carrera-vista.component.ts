@@ -19,7 +19,7 @@ import { CarreraService } from 'src/app/servicios/carrera.service';
 })
 export class CarreraVistaComponent implements OnInit {
   // columnas que se mostraran en la tabla
-  columnasAMostrar: string[] = ['nombre'];
+  columnasAMostrar: string[] = ['nombre', 'semestre', 'creditos', 'optativo'];
   // objeto que necesita la tabla para mostrar el contenido
   cursoDataSource = new MatTableDataSource([]);
 
