@@ -1,164 +1,241 @@
 <div class="container">
-    <div class="row">
-        <mat-card class="col-12  mx-auto my-2 example-card">
-            <mat-card-content>
-                <div>
-                    <button class="mb-2" mat-raised-button color="primary" *ngIf="soloLectura" (click)="crearPeriodo()">Crear un prtiodo</button>
-                </div>
-                <form [formGroup]="formulario" class="row">
-                    <div class="col-12 col-md-6">
+    <h1 class="mt-2">Año lectivo</h1>
+    <div class="row d-flex">
+        <div class="col-12 mb-2">
+            <button mat-raised-button color="primary" *ngIf="soloLectura" (click)="crearPeriodo()">Crear un prtiodo</button>
+        </div>
+    </div>
+    <mat-card class="col-12  mx-auto example-card">
+        <mat-card-content>
+            <form [formGroup]="formulario" class="row mx-2">
+                <div class="col-12 ">
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio primer periodo incripcion examen</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de inscripción a exámnes (Enero)
+                        </h4>
+
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
                             <input matInput [matDatepicker]="ini_1er_per_insc_exam" name="ini_1er_per_insc_exam" formControlName="ini_1er_per_insc_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_1er_per_insc_exam"></mat-datepicker-toggle>
                             <mat-datepicker #ini_1er_per_insc_exam></mat-datepicker>
-                        </mat-form-field> 
+                        </mat-form-field>
 
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio primer periodo examen</mat-label>
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
+                            <input matInput [matDatepicker]="fin_1er_per_insc_exam" name="fin_1er_per_insc_exam" formControlName="fin_1er_per_insc_exam"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_1er_per_insc_exam"></mat-datepicker-toggle>
+                            <mat-datepicker #fin_1er_per_insc_exam></mat-datepicker>
+                        </mat-form-field>    
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de exámnes (Enero)
+                        </h4>
+                        
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
                             <input matInput [matDatepicker]="ini_1er_per_exam" name="ini_1er_per_exam" formControlName="ini_1er_per_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_1er_per_exam"></mat-datepicker-toggle>
                             <mat-datepicker #ini_1er_per_exam></mat-datepicker>
                         </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio primer periodo incripcion lectivo</mat-label>
-                            <input matInput [matDatepicker]="ini_1er_per_insc_lect" name="ini_1er_per_insc_lect" formControlName="ini_1er_per_insc_lect"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_1er_per_insc_lect"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_1er_per_insc_lect></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio primer periodo lectivo</mat-label>
-                            <input matInput [matDatepicker]="ini_1er_per_lect" name="ini_1er_per_lect" formControlName="ini_1er_per_lect"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_1er_per_lect"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_1er_per_lect></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio segundo periodo incripcion examen</mat-label>
-                            <input matInput [matDatepicker]="ini_2do_per_insc_exam" name="ini_2do_per_insc_exam" formControlName="ini_2do_per_insc_exam"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_insc_exam"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_2do_per_insc_exam></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio segundo periodo examen</mat-label>
-                            <input matInput [matDatepicker]="ini_2do_per_exam" name="ini_2do_per_exam" formControlName="ini_2do_per_exam"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_exam"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_2do_per_exam></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio segundo periodo incripcion lectivo</mat-label>
-                            <input matInput [matDatepicker]="ini_2do_per_insc_lect" name="ini_2do_per_insc_lect" formControlName="ini_2do_per_insc_lect"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_insc_lect"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_2do_per_insc_lect></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio segundo periodo lectivo</mat-label>
-                            <input matInput [matDatepicker]="ini_2do_per_lect" name="ini_2do_per_lect" formControlName="ini_2do_per_lect"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_lect"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_2do_per_lect></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio tercer periodo incripcion examen</mat-label>
-                            <input matInput [matDatepicker]="ini_3er_per_insc_exam" name="ini_3er_per_insc_exam" formControlName="ini_3er_per_insc_exam"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_3er_per_insc_exam"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_3er_per_insc_exam></mat-datepicker>
-                        </mat-form-field>
-                                            
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Inicio tercer periodo examen</mat-label>
-                            <input matInput [matDatepicker]="ini_3er_per_exam" name="ini_3er_per_exam" formControlName="ini_3er_per_exam"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_3er_per_exam"></mat-datepicker-toggle>
-                            <mat-datepicker #ini_3er_per_exam></mat-datepicker>
-                        </mat-form-field>
 
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                    
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin primer periodo incripcion examen</mat-label>
-                            <input matInput [matDatepicker]="fin_1er_per_insc_exam" name="fin_1er_per_insc_exam" formControlName="fin_1er_per_insc_exam"[readonly]="soloLectura">
-                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_1er_per_insc_exam"></mat-datepicker-toggle>
-                            <mat-datepicker #fin_1er_per_insc_exam></mat-datepicker>
-                        </mat-form-field>
-                    
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin primer periodo examen</mat-label>
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_1er_per_exam" name="fin_1er_per_exam" formControlName="fin_1er_per_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_1er_per_exam"></mat-datepicker-toggle>
                             <mat-datepicker #fin_1er_per_exam></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin primer periodo incripcion lectivo</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de inscripción a cursos (semestre 1)
+                        </h4>
+
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_1er_per_insc_lect" name="ini_1er_per_insc_lect" formControlName="ini_1er_per_insc_lect"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_1er_per_insc_lect"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_1er_per_insc_lect></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_1er_per_insc_lect" name="fin_1er_per_insc_lect" formControlName="fin_1er_per_insc_lect"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_1er_per_insc_lect"></mat-datepicker-toggle>
                             <mat-datepicker #fin_1er_per_insc_lect></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin primer periodo lectivo</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de cursos (semestre 1)
+                        </h4>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_1er_per_lect" name="ini_1er_per_lect" formControlName="ini_1er_per_lect"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_1er_per_lect"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_1er_per_lect></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_1er_per_lect" name="fin_1er_per_lect" formControlName="fin_1er_per_lect"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_1er_per_lect"></mat-datepicker-toggle>
                             <mat-datepicker #fin_1er_per_lect></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin segundo periodo incripcion examen</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de inscripción a exámnes (Julio)
+                        </h4>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_2do_per_insc_exam" name="ini_2do_per_insc_exam" formControlName="ini_2do_per_insc_exam"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_insc_exam"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_2do_per_insc_exam></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_2do_per_insc_exam" name="fin_2do_per_insc_exam" formControlName="fin_2do_per_insc_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_2do_per_insc_exam"></mat-datepicker-toggle>
                             <mat-datepicker #fin_2do_per_insc_exam></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin segundo periodo examen</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de exámnes (Julio)
+                        </h4>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_2do_per_exam" name="ini_2do_per_exam" formControlName="ini_2do_per_exam"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_exam"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_2do_per_exam></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_2do_per_exam" name="fin_2do_per_exam" formControlName="fin_2do_per_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_2do_per_exam"></mat-datepicker-toggle>
                             <mat-datepicker #fin_2do_per_exam></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin segundo periodo incripcion lectivo</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de inscripción a cursos (semestre 2)
+                        </h4>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_2do_per_insc_lect" name="ini_2do_per_insc_lect" formControlName="ini_2do_per_insc_lect"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_insc_lect"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_2do_per_insc_lect></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_2do_per_insc_lect" name="fin_2do_per_insc_lect" formControlName="fin_2do_per_insc_lect"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_2do_per_insc_lect"></mat-datepicker-toggle>
                             <mat-datepicker #fin_2do_per_insc_lect></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin segundo periodo lectivo</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de cursos (semestre 2)
+                        </h4>
+                        
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_2do_per_lect" name="ini_2do_per_lect" formControlName="ini_2do_per_lect"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_2do_per_lect"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_2do_per_lect></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_2do_per_lect" name="fin_2do_per_lect" formControlName="fin_2do_per_lect"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_2do_per_lect"></mat-datepicker-toggle>
                             <mat-datepicker #fin_2do_per_lect></mat-datepicker>
                         </mat-form-field>
+                    </div>
+
+                    <mat-divider></mat-divider>
                     
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin tercer periodo incripcion examen</mat-label>
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de inscripción a exámnes (Diciembre)
+                        </h4>
+
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_3er_per_insc_exam" name="ini_3er_per_insc_exam" formControlName="ini_3er_per_insc_exam"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_3er_per_insc_exam"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_3er_per_insc_exam></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_3er_per_insc_exam" name="fin_3er_per_insc_exam" formControlName="fin_3er_per_insc_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_3er_per_insc_exam"></mat-datepicker-toggle>
                             <mat-datepicker #fin_3er_per_insc_exam></mat-datepicker>
                         </mat-form-field>
+                    </div>
 
-                        <mat-form-field [style.width.%]=100>
-                            <mat-label>Fin tercer periodo examen</mat-label>
+                    <mat-divider></mat-divider>
+                    
+                    <div class="row mt-3">
+                        <h4 class="col-12 col-md-6 m-auto">
+                            Período de exámnes (Diciembre)
+                        </h4>
+
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput [matDatepicker]="ini_3er_per_exam" name="ini_3er_per_exam" formControlName="ini_3er_per_exam"[readonly]="soloLectura">
+                            <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="ini_3er_per_exam"></mat-datepicker-toggle>
+                            <mat-datepicker #ini_3er_per_exam></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
+                            <mat-label>Fecha de fin</mat-label>
                             <input matInput [matDatepicker]="fin_3er_per_exam" name="fin_3er_per_exam" formControlName="fin_3er_per_exam"[readonly]="soloLectura">
                             <mat-datepicker-toggle [disabled]="soloLectura" matSuffix [for]="fin_3er_per_exam"></mat-datepicker-toggle>
                             <mat-datepicker #fin_3er_per_exam></mat-datepicker>
                         </mat-form-field>
-                    
                     </div>
-                </form>
-            </mat-card-content>
-            <mat-card-actions align="end">
-                <button mat-raised-button *ngIf="!soloLectura" (click)="volver()">Volver</button>
-                <button mat-raised-button color="primary" *ngIf="!soloLectura" (click)="agregar()">Crear</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
+                    
+                    <mat-divider></mat-divider>
+                    
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button *ngIf="!soloLectura" (click)="volver()">Volver</button>
+            <button mat-raised-button color="primary" *ngIf="!soloLectura" [disabled]="!formulario.valid" (click)="agregar()">Crear</button>
+        </mat-card-actions>
+    </mat-card>
 </div>

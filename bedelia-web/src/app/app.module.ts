@@ -24,7 +24,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatChipsModule} from '@angular/material/chips'; 
-
+import { CambiarContraseniaComponent } from './usuarios/cambiar-contrasenia/cambiar-contrasenia.component';
 import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { RolesPipe } from './pipes/roles.pipe';
 import { UsuarioABMComponent } from './admin/usuarios/usuario-abm/usuario-abm.component';
@@ -52,7 +52,6 @@ import { VerMasComponent } from './administrativo/revicion-inscripciones-postula
 import { AsignarDocenteComponent } from './administrativo/asignar-docente/asignar-docente.component';
 import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
 import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
-import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
 import { ControlAsistenciaComponent } from './docente/control-asistencia/control-asistencia.component';
 import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
 import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
@@ -67,6 +66,8 @@ import { RevicionActaComponent } from './administrativo/revicion-acta/revicion-a
 import { TipoActaPipe } from './pipes/tipo-acta.pipe';
 import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-escolaridad/verificacion-escolaridad.component';
 import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
+import { DescripcionInscripcionCursoPipe } from './pipes/descripcion-inscripcion-curso.pipe';
+import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcion-examen.pipe';
 
 
 @NgModule({
@@ -98,7 +99,7 @@ import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.i
     AsignarDocenteComponent,
     InscripcionCursoComponent,
     InscripcionExamenComponent,
-    CambirContraseniaComponent,
+    CambiarContraseniaComponent,
     ControlAsistenciaComponent,
     IngresarResultadoCursoComponent,
     IngresarResultadoExamenComponent,
@@ -112,6 +113,8 @@ import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.i
     RevicionActaComponent,
     TipoActaPipe,
     VerificacionEscolaridadComponent,
+    DescripcionInscripcionCursoPipe,
+    DescripcionInscripcionExamenPipe,
   ],
   imports: [
     MatStepperModule,

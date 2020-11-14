@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AreaEstudioDTO } from '../clases/area-estudio-dto';
+import { CursoDTO } from '../clases/curso-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,9 @@ export class AreaEstudioService {
 
   create(datos:AreaEstudioDTO){
     return this.http.post<AreaEstudioDTO>(this.apiURL, datos);
+  }
+
+  getCursos(idArea:number){
+    return this.http.get<CursoDTO[]>(this.apiURL + '/' + idArea + '/cursos');
   }
 }

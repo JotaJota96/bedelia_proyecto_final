@@ -32,8 +32,12 @@ class AuthServiceProvider extends ServiceProvider
             $token  = "";
             $header = $request->header('Authorization');
             
-            if (Str::startsWith($header, 'Bearer ')) {
-                $token = Str::substr($header, 7);
+            $posiblesInicios = ['Bearer ', 'bearer ', 'BEARER '];
+
+            foreach ($posiblesInicios as $value) {
+                if (Str::startsWith($header, $value)) {
+                    $token = Str::substr($header, 7);
+                }
             }
 
             if ($token) {
@@ -51,4 +55,16 @@ class AuthServiceProvider extends ServiceProvider
         }
         return false;
     }
+
+    /**
+     * Genera un token unico, para el usuario especificado 
+     */
+    public static function generarToken($usu = null){
+        $token = null;
+        do {
+            $token = Str::random((100));
+        } while (Usuario::where('remember_token', $token)->first() != null);
+        return $token;
+    }
+
 }

@@ -23,7 +23,7 @@ class Controller extends BaseController
      *     type="apiKey",
      *     in="header",
      *     name="Authorization",
-     *     description="Token de autenticacion conformato como '<token>'",
+     *     description="Token de autenticacion con formato 'bearer <token>'",
      * )
      */
 
@@ -267,7 +267,7 @@ class Controller extends BaseController
      *     schema="EdicionCursoDTO",
      *     @OA\Property(property="id",              type="integer"),
      *     @OA\Property(property="acta_confirmada", type="boolean"),
-     *     @OA\Property(property="habilitado",      type="integer", readOnly=true, description="1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas"),
+     *     @OA\Property(property="habilitado",      type="integer", readOnly=true, description="1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas, -2 = ya se está inscrito"),
      *     @OA\Property(
      *         property="sede",
      *         ref="#/components/schemas/SedeDTO",
@@ -290,7 +290,7 @@ class Controller extends BaseController
      *     @OA\Property(property="id",              type="integer"),
      *     @OA\Property(property="fecha",           type="string"),
      *     @OA\Property(property="acta_confirmada", type="boolean"),
-     *     @OA\Property(property="habilitado",      type="integer", readOnly=true, description="1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen"),
+     *     @OA\Property(property="habilitado",      type="integer", readOnly=true, description="1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen, -2 = ya se está inscrito"),
      *     @OA\Property(
      *         property="sede",
      *         ref="#/components/schemas/SedeDTO",
@@ -390,26 +390,6 @@ class Controller extends BaseController
      *     ),
      * )
      */
-
-    /**
-     * @OA\Post(
-     *     path="/foo",
-     *     tags={"Foo"},
-    *      @OA\RequestBody(
-    *          @OA\JsonContent(
-    *              @OA\Property(property="fecha_inicio", type="string"),
-    *              @OA\Property(property="fecha_fin",    type="string"),
-    *          ),
-    *      ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="",
-     *         @OA\JsonContent(ref="#/components/schemas/CursoDTO"),
-     *     ),
-     * )
-     */
-
-
 
 
 }

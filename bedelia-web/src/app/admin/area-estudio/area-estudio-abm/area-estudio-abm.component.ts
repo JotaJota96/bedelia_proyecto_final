@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
@@ -14,6 +15,7 @@ export class AreaEstudioABMComponent implements OnInit {
   public formulario: FormGroup;
 
   constructor(private _snackBar: MatSnackBar, protected areaServ: AreaEstudioService,
+    private dialogRef: MatDialogRef<AreaEstudioABMComponent>,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class AreaEstudioABMComponent implements OnInit {
         this.openSnackBar("No se pudo crear el area de estudio");
       }
     );
+    this.dialogRef.close();
   }
 
   openSnackBar(mensaje: string) {

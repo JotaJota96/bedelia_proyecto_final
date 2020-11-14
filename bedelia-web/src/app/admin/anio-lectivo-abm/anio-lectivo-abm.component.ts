@@ -140,6 +140,11 @@ export class AnioLectivoABMComponent implements OnInit {
   agregar() {
     let anio: AnioLectivoDTO = new AnioLectivoDTO();
 
+    if (this.validarFechas() == false){
+      this.openSnackBar("Uno o más periodos ingresados no son válidos");
+      return;
+    }
+
     anio.ini_1er_per_insc_exam = this.formulario.controls['ini_1er_per_insc_exam'].value;
     anio.fin_1er_per_insc_exam = this.formulario.controls['fin_1er_per_insc_exam'].value;
     anio.ini_1er_per_exam = this.formulario.controls['ini_1er_per_exam'].value;
@@ -199,5 +204,45 @@ export class AnioLectivoABMComponent implements OnInit {
       horizontalPosition: 'end',
       verticalPosition: "bottom",
     });
+  }
+
+  validarFechas(): boolean{
+    console.log("Vino a validar");
+
+    let ini_1er_per_insc_exam = Date.parse(this.formulario.controls['ini_1er_per_insc_exam'].value);
+    let fin_1er_per_insc_exam = Date.parse(this.formulario.controls['fin_1er_per_insc_exam'].value);
+    let ini_1er_per_exam      = Date.parse(this.formulario.controls['ini_1er_per_exam'].value);
+    let fin_1er_per_exam      = Date.parse(this.formulario.controls['fin_1er_per_exam'].value);
+    let ini_1er_per_insc_lect = Date.parse(this.formulario.controls['ini_1er_per_insc_lect'].value);
+    let fin_1er_per_insc_lect = Date.parse(this.formulario.controls['fin_1er_per_insc_lect'].value);
+    let ini_1er_per_lect      = Date.parse(this.formulario.controls['ini_1er_per_lect'].value);
+    let fin_1er_per_lect      = Date.parse(this.formulario.controls['fin_1er_per_lect'].value);
+    let ini_2do_per_insc_exam = Date.parse(this.formulario.controls['ini_2do_per_insc_exam'].value);
+    let fin_2do_per_insc_exam = Date.parse(this.formulario.controls['fin_2do_per_insc_exam'].value);
+    let ini_2do_per_exam      = Date.parse(this.formulario.controls['ini_2do_per_exam'].value);
+    let fin_2do_per_exam      = Date.parse(this.formulario.controls['fin_2do_per_exam'].value);
+    let ini_2do_per_insc_lect = Date.parse(this.formulario.controls['ini_2do_per_insc_lect'].value);
+    let fin_2do_per_insc_lect = Date.parse(this.formulario.controls['fin_2do_per_insc_lect'].value);
+    let ini_2do_per_lect      = Date.parse(this.formulario.controls['ini_2do_per_lect'].value);
+    let fin_2do_per_lect      = Date.parse(this.formulario.controls['fin_2do_per_lect'].value);
+    let ini_3er_per_insc_exam = Date.parse(this.formulario.controls['ini_3er_per_insc_exam'].value);
+    let fin_3er_per_insc_exam = Date.parse(this.formulario.controls['fin_3er_per_insc_exam'].value);
+    let ini_3er_per_exam      = Date.parse(this.formulario.controls['ini_3er_per_exam'].value);
+    let fin_3er_per_exam      = Date.parse(this.formulario.controls['fin_3er_per_exam'].value);
+
+    console.log("Vino a 2");
+
+    if      (ini_1er_per_insc_exam > fin_1er_per_insc_exam) return false;
+    else if (ini_1er_per_exam      > fin_1er_per_exam)      return false;
+    else if (ini_1er_per_insc_lect > fin_1er_per_insc_lect) return false;
+    else if (ini_1er_per_lect      > fin_1er_per_lect)      return false;
+    else if (ini_2do_per_insc_exam > fin_2do_per_insc_exam) return false;
+    else if (ini_2do_per_exam      > fin_2do_per_exam)      return false;
+    else if (ini_2do_per_insc_lect > fin_2do_per_insc_lect) return false;
+    else if (ini_2do_per_lect      > fin_2do_per_lect)      return false;
+    else if (ini_3er_per_insc_exam > fin_3er_per_insc_exam) return false;
+    else if (ini_3er_per_exam      > fin_3er_per_exam)      return false;
+    console.log("Vino a 3");
+    return true;
   }
 }

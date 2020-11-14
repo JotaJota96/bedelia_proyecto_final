@@ -1,6 +1,12 @@
 <div class="container">
   <mat-card class="mt-5">
-    <mat-card-content>
+    <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
+    
+    <mat-card-content *ngIf="periodoOk == false">
+      <p>Actualmente no hay ningun período de inscripcion a exámenes vigente.</p>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="periodoOk == true">
       <form [formGroup]="formulario" class="row">
         <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
           <mat-select placeholder="Lista de carreras inscripto" name="carrera" formControlName="carrera">
@@ -11,20 +17,21 @@
         </mat-form-field>
 
         <div class="col-12 col-md-2 m-auto" align="end">
-          <button mat-raised-button (click)="cargarExamenes()" color="primary">Seleccionar carrera </button>
+          <button mat-raised-button (click)="cargarExamenes()" [disabled]="!formulario.valid" color="primary">Seleccionar carrera </button>
         </div>
       </form>
 
       <mat-selection-list class="curso" #examen [(ngModel)]="selectedOptions">
         <mat-list-option *ngFor="let examen of listaExamen" [disabled]="examen.habilitado != 1" [value]="examen.id">
-          Curso: {{examen.curso.nombre}} <br>
-          Fecha: {{examen.fecha | date:'dd/MM/yyyy' | fechaNull}}
+          <div mat-line>{{examen.curso.nombre}}</div>
+          <div mat-line>{{examen.fecha | date:'dd/MM/yyyy' | fechaNull}}</div>
+          <div mat-line class=" descripcion">{{ examen.habilitado | descripcionInscripcionExamen }}</div>
         </mat-list-option>
       </mat-selection-list>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button [routerLink]="['/']">Volver</button>
-      <button mat-button (click)="confirmar()">Confirmar</button>
+      <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+      <button mat-raised-button color="primary" (click)="confirmar()" *ngIf="listaExamen.length > 0" [disabled]="selectedOptions.length < 1" >Confirmar</button>
     </mat-card-actions>
   </mat-card>
 </div>

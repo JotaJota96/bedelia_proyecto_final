@@ -22,7 +22,7 @@ import { VerMasComponent } from './administrativo/revicion-inscripciones-postula
 import { AsignarDocenteComponent } from './administrativo/asignar-docente/asignar-docente.component';
 import { InscripcionExamenComponent } from './estudiante/inscripcion-examen/inscripcion-examen.component';
 import { InscripcionCursoComponent } from './estudiante/inscripcion-curso/inscripcion-curso.component';
-import { CambirContraseniaComponent } from './estudiante/cambir-contrasenia/cambir-contrasenia.component';
+import { CambiarContraseniaComponent } from './usuarios/cambiar-contrasenia/cambiar-contrasenia.component';
 import { ControlAsistenciaComponent } from './docente/control-asistencia/control-asistencia.component';
 import { IngresarResultadoCursoComponent } from './docente/ingresar-resultado-curso/ingresar-resultado-curso.component';
 import { IngresarResultadoExamenComponent } from './docente/ingresar-resultado-examen/ingresar-resultado-examen.component';
@@ -37,13 +37,14 @@ import { EstudianteGuard } from './guards/estudiante.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { AdministrativoGuard } from './guards/administrativo.guard';
 import { DocenteGuard } from './guards/docente.guard';
+import { LoginGuard } from './guards/login.guard';
 
 
 const routes: Routes = [
   //Inico de componentes de acceso publico
   {path: '', component: ListaCarrerasComponent},
   
-  {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent, canActivate:[LoginGuard]},
   
   {path: 'ver/carrera/:id', component: CarreraVistaComponent},
 
@@ -51,6 +52,10 @@ const routes: Routes = [
 
   {path: 'verificarEscolaridad', component: VerificacionEscolaridadComponent},
   //Fin de componentes de acceso publico
+
+  //Inico de componentes de usuarios en general
+  {path: 'usuarios/cambiar/contrasenia', component: CambiarContraseniaComponent, canActivate:[AuthGuard]},
+  //Fin de componentes de usuarios en general
 
   //Inico de componentes de admin
   {path: 'admin/usuarios', component: UsuariosComponent, canActivate:[AuthGuard,AdminGuard]},
@@ -93,8 +98,6 @@ const routes: Routes = [
   {path: 'estudiante/inscripcion/curso', component: InscripcionCursoComponent, canActivate:[AuthGuard,EstudianteGuard]},
   
   {path: 'estudiante/inscripcion/examen', component: InscripcionExamenComponent, canActivate:[AuthGuard,EstudianteGuard]},
-
-  {path: 'estudiante/cambiar/contrasenia', component: CambirContraseniaComponent, canActivate:[AuthGuard,EstudianteGuard]},
 
   {path: 'estudiante/consultar-escolaridad', component: ConsultaEscolaridadComponent, canActivate:[AuthGuard,EstudianteGuard]},
   //Fin de componentes de estudiante

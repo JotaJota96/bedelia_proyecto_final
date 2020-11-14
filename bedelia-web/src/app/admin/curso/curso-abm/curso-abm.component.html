@@ -20,11 +20,6 @@
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Maximo de inasistencias" name="max_inasistencias"
-                                formControlName="max_inasistencias" [readonly]="soloLectura">
-                        </mat-form-field>
-
-                        <mat-form-field [style.width.%]=100>
                             <input matInput placeholder="Cantidad de creditos" name="cant_creditos"
                                 formControlName="cant_creditos" [readonly]="soloLectura">
                         </mat-form-field>
@@ -32,6 +27,11 @@
                         <mat-form-field [style.width.%]=100>
                             <input matInput placeholder="Cantidad de clases" name="cant_clases"
                                 formControlName="cant_clases" [readonly]="soloLectura">
+                        </mat-form-field>
+
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Maximo de inasistencias" name="max_inasistencias"
+                                formControlName="max_inasistencias" [readonly]="soloLectura">
                         </mat-form-field>
                     </div>
 
@@ -45,7 +45,7 @@
                         </mat-form-field>
                         
                         <mat-form-field [style.width.%]=100>
-                            <mat-select placeholder="Tipo de estudio" formControlName="tipo_curso">
+                            <mat-select placeholder="Tipo de curso" formControlName="tipo_curso">
                                 <mat-option *ngFor="let tipo of listaTipo" [value]="tipo.id" [disabled]="soloLectura">
                                     {{tipo.tipo}}
                                 </mat-option>

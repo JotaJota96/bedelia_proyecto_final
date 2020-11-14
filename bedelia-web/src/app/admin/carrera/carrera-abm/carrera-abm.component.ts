@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
 import { CarreraCreateDTO } from 'src/app/clases/carrera-create-dto';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
@@ -69,14 +70,15 @@ export class CarreraABMComponent implements OnInit {
         this.openSnackBar("No se pudieron traer las sedes desde la base de dato");
       }
     );
-
-    this.cursoServ.getAll().subscribe(
-      (datos) => {
-        this.listaCurso = datos;
-      },(error)=>{
-        this.openSnackBar("No se pudieron traer los cursos desde la base de dato");
-      }
-    );
+    
+    // Los cursos ya no se cargan al inicio
+    // this.cursoServ.getAll().subscribe(
+    //   (datos) => {
+    //     this.listaCurso = datos;
+    //   },(error)=>{
+    //     this.openSnackBar("No se pudieron traer los cursos desde la base de dato");
+    //   }
+    // );
 
     this.formulario = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
@@ -85,7 +87,7 @@ export class CarreraABMComponent implements OnInit {
 
     this.formularioArea = new FormGroup({
       area: new FormControl('', [Validators.required]),
-      creditos: new FormControl('', [Validators.required]),
+      creditos: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
     });
 
     this.formularioSede = new FormGroup({
@@ -114,11 +116,22 @@ export class CarreraABMComponent implements OnInit {
     let creditos: number = this.formularioArea.controls['creditos'].value
 
     this.formularioArea.controls['area'].value.creditos = creditos;
+    let idArea = this.formularioArea.controls['area'].value.id;
     this.listaAreaSeleccionada.push(this.formularioArea.controls['area'].value);
 
     this.formularioArea.controls['area'].setValue(undefined);
     this.formularioArea.controls['creditos'].setValue("");
 
+    // actualizo la lista de cursos para incluir los de la nueva area de estudio
+    this.areaServ.getCursos(idArea).subscribe(
+      (datos) => {
+        datos.forEach(element => {
+          this.listaCurso.push(element);
+        });
+      },(error)=>{
+        this.openSnackBar("No se pudieron traer los cursos desde la base de dato");
+      }
+    );
   }
 
   asignarCurso() {
@@ -129,8 +142,6 @@ export class CarreraABMComponent implements OnInit {
 
     let optativo:boolean = this.formularioCurso.controls['optativo'].value;
     (this.formularioCurso.controls['curso'].value).optativo = optativo;
-    
-    console.log(this.formularioCurso.controls['curso'].value);
     
     this.listaTodosCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
     this.listaCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
@@ -155,7 +166,7 @@ export class CarreraABMComponent implements OnInit {
   cargarListaPrevia(curso: CursoDTO, claveSemestre: number) {
     this.listaCursoPrevias = [];
     this.idCursoPrevia = curso.id;
-    let listaPrevia = [];
+    let listaPrevia:PreviaDTO[] = [];
     this.listaSemestre.forEach(element => {
       if (element.clave < claveSemestre) {
         element.cursos.forEach(cursos => {
@@ -163,6 +174,13 @@ export class CarreraABMComponent implements OnInit {
         });
       }
     });
+
+    this.listaPrevias.forEach(element => {
+      if (element.curso_id == curso.id){
+        listaPrevia.push(element);
+      }
+    });
+
     if (claveSemestre != 1) {
       const dialogRef = this.dialog.open(ModalPreviaComponent, {
         data: {
@@ -173,11 +191,20 @@ export class CarreraABMComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        result.listaPrevia.forEach(element => {
-          this.listaPrevias.push(element);
-        });
+        if (result != undefined){
+          result.listaPrevia.forEach(element => {
+            let agregar = true;
+            this.listaPrevias.forEach(elem => {
+              if (element.curso_id_previa == elem.curso_id_previa && element.curso_id == elem.curso_id) {
+                agregar = false;
+              }
+            });
+            if (agregar) {
+              this.listaPrevias.push(element);
+            }
+          });
+        }
       });
-
     } else {
       this.openSnackBar("No se puede agregar previas a las materias de primer semestre");
     }
@@ -190,7 +217,11 @@ export class CarreraABMComponent implements OnInit {
   }
 
   crear() {
-
+    let vsdc = this.verificarSumaDeCreditos();
+    if (vsdc != true ){
+      this.openSnackBar("El área de estudio '" + vsdc + "' requiere mas creditos que los entregados por los cursos de la carrera");
+      return;
+    }
     let carrera: CarreraCreateDTO = new CarreraCreateDTO();
     carrera.nombre = this.formulario.controls['nombre'].value;
     carrera.descripcion = this.formulario.controls['descripcion'].value;
@@ -200,7 +231,6 @@ export class CarreraABMComponent implements OnInit {
     carrera.areas_estudio = this.listaAreaSeleccionada;
     carrera.cursos = this.listaTodosCursoSeleccionados;
     carrera.previas = this.listaPrevias;
-    console.log(carrera)
 
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
@@ -212,6 +242,26 @@ export class CarreraABMComponent implements OnInit {
     );
   }
   
+  verificarSumaDeCreditos(){
+    let ret = undefined;
+    this.listaAreaSeleccionada.forEach(a => {
+      let suma:number = 0;
+      this.listaTodosCursoSeleccionados.forEach(c => {
+        if (c.area_estudio.id == a.id) {
+          suma += c.cant_creditos;
+        }
+      });
+      if (a.creditos > suma){
+        ret = a.area;
+      }
+    });
+    if (ret == undefined){
+      return true;
+    }else{
+      return ret;
+    }
+  }
+
   openSnackBar(mensaje : string) {
     this._snackBar.open(mensaje, 'Salir', {
       duration: 3000,

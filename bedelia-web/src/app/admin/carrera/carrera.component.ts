@@ -27,6 +27,11 @@ export class CarreraComponent implements OnInit {
     );
   }
 
+  aplicarFiltro(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.carreraDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
       duration: 3000,

@@ -21,6 +21,7 @@ class AreaEstudioController extends Controller
      * @OA\Get(
      *     path="/areasEstudio/{id}",
      *     tags={"Areas de estudio"},
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -47,6 +48,7 @@ class AreaEstudioController extends Controller
      * @OA\Get(
      *     path="/areasEstudio",
      *     tags={"Areas de estudio"},
+     *     security={{"api_key": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="",
@@ -61,11 +63,12 @@ class AreaEstudioController extends Controller
         $AreasEstudio = AreaEstudio::all();
         return response()->json($AreasEstudio, 200);
     }
-    
+
     /**
      * @OA\Post(
      *     path="/areasEstudio",
      *     tags={"Areas de estudio"},
+     *     security={{"api_key": {}}},
      *     @OA\RequestBody(
      *         @OA\JsonContent(ref="#/components/schemas/AreaEstudioDTO"),
      *     ),
@@ -90,6 +93,7 @@ class AreaEstudioController extends Controller
      *     path="/areasEstudio/{id}/cursos",
      *     tags={"Areas de estudio"},
      *     description="Devuelve los cursos que pertenecen al area de estudio",
+     *     security={{"api_key": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -111,6 +115,10 @@ class AreaEstudioController extends Controller
         $AreaEstudio = AreaEstudio::find($Id);
         if ($AreaEstudio == null){
             return response()->json(null, 404);
+        }
+        foreach ($AreaEstudio->cursos as $Id => $value) {
+            $value->AreaEstudio;
+            $value->TipoCurso;
         }
         return response()->json($AreaEstudio->cursos, 200);
     }

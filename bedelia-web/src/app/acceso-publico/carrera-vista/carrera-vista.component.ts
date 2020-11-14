@@ -34,6 +34,16 @@ export class CarreraVistaComponent implements OnInit {
   public nodes: Node[] = [];
   public links: Edge[] = [];
   public semestre: ClusterNode[] = [];
+  nodesOk: boolean = false;
+  linksOk: boolean = false;
+  semestreOk: boolean = false;
+
+  mostrarGrafo(): boolean{
+    if (this.linksOk && this.semestreOk && this.nodesOk){
+      return this.links.length != 0 && this.semestre.length != 0 && this.nodes.length != 0;
+    }
+    return undefined;
+  }
 
   constructor(protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
@@ -79,6 +89,7 @@ export class CarreraVistaComponent implements OnInit {
         label: element.nombre,
       });
     });
+    this.nodesOk = true;
   }
 
   CargarLinks(){
@@ -90,12 +101,11 @@ export class CarreraVistaComponent implements OnInit {
         label: element.tipo
       });
     });
+    this.linksOk = true;
   }
 
   crearSemestre(){
-    console.log(this.carrera.cant_semestres)
     for(let index = 1; index <= this.carrera.cant_semestres; index++){
-      console.log("1")
       let cursosSemestre : string[] = [];
       this.ListaCursos.forEach(element => {
         if(element.semestre == index){
@@ -109,7 +119,7 @@ export class CarreraVistaComponent implements OnInit {
         childNodeIds: cursosSemestre,
       });
     }
-
+    this.semestreOk = true;
   }
 
   openSnackBar(mensaje : string) {

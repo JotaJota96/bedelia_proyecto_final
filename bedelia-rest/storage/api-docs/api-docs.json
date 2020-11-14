@@ -38,7 +38,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -77,7 +82,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/areasEstudio/{id}": {
@@ -108,7 +118,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/areasEstudio": {
@@ -131,7 +146,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -158,7 +178,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/areasEstudio/{id}/cursos": {
@@ -193,7 +218,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/carreras/{id}": {
@@ -346,43 +376,12 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "/foo": {
-            "post": {
-                "tags": [
-                    "Foo"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "fecha_inicio": {
-                                        "type": "string"
-                                    },
-                                    "fecha_fin": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CursoDTO"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "api_key": []
                     }
-                }
+                ]
             }
         },
         "/cursos/{id}": {
@@ -413,7 +412,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/cursos": {
@@ -436,7 +440,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -463,7 +472,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/inscripciones/{ciEstudiante}": {
@@ -501,7 +515,12 @@
                     "default": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/{id}/docente/{ciDocente}": {
@@ -535,7 +554,12 @@
                     "default": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/docente/{ciDocente}": {
@@ -570,7 +594,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/{id}/estudiantes": {
@@ -602,7 +631,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/{id}/clasesDictada": {
@@ -643,7 +677,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/{ciEstudiante}/{idCarrera}": {
@@ -687,7 +726,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/edicionesCurso/{id}/notas": {
@@ -719,7 +763,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -749,7 +798,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -788,7 +842,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/estudiantes/{ciEstudiante}/carreras": {
@@ -820,7 +879,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/estudiantes/{ciEstudiante}/asistencias": {
@@ -862,7 +926,12 @@
                     "default": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}": {
@@ -903,7 +972,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf": {
@@ -937,7 +1011,12 @@
                     "default": {
                         "description": "Todavía no se ha definido el objeto"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/estudiantes/escolaridad/{codigo}": {
@@ -1025,7 +1104,12 @@
                     "default": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/examenes/{id}/docente/{ciDocente}": {
@@ -1059,7 +1143,12 @@
                     "default": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/examenes/docente/{ciDocente}": {
@@ -1094,7 +1183,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/examenes/{ciEstudiante}/{idCarrera}": {
@@ -1138,7 +1232,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/examenes/{id}/notas": {
@@ -1170,7 +1269,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -1200,7 +1304,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1239,7 +1348,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/periodos": {
@@ -1279,6 +1393,38 @@
                     "201": {
                         "description": "No devuelve nada, ya es bastante que funcione xD"
                     }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/periodos/actual/{tipo}": {
+            "get": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::actual",
+                "parameters": [
+                    {
+                        "name": "tipo",
+                        "in": "path",
+                        "description": "Tipo de periodo. Puede ser 'IE', 'EX', 'IC' o 'LE'",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Si se está en un periodo del tipo especificado"
+                    },
+                    "404": {
+                        "description": "Si NO se está en un periodo del tipo especificado"
+                    }
                 }
             }
         },
@@ -1311,7 +1457,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1334,7 +1485,12 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/postulantes": {
@@ -1403,7 +1559,12 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/postulantes/{id}/aceptar": {
@@ -1435,7 +1596,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes/{id}": {
@@ -1466,7 +1632,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes/": {
@@ -1489,7 +1660,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes": {
@@ -1518,7 +1694,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes/{id}/postulantes": {
@@ -1552,7 +1733,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes/{id}/edicionesCurso": {
@@ -1586,7 +1772,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes/{id}/examenes": {
@@ -1620,7 +1811,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/sedes/{id}/actas": {
@@ -1654,7 +1850,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/tiposCurso/{id}": {
@@ -1685,7 +1886,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/tiposCurso": {
@@ -1708,7 +1914,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1735,7 +1946,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios/login": {
@@ -1795,7 +2011,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios/": {
@@ -1818,7 +2039,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios": {
@@ -1847,7 +2073,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios/docentes": {
@@ -1870,7 +2101,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios/passReset": {
@@ -1900,7 +2136,43 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/usuarios/passChk": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "description": "Verifica si la contrasenia actual es correcta",
+                "operationId": "App\\Http\\Controllers\\UsuarioController::verificarContrasenia",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña correcta"
+                    },
+                    "401": {
+                        "description": "Contraseña incorrecta"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         }
     },
@@ -2301,7 +2573,7 @@
                         "type": "boolean"
                     },
                     "habilitado": {
-                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas",
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas, -2 = ya se está inscrito",
                         "type": "integer",
                         "readOnly": true
                     },
@@ -2329,7 +2601,7 @@
                         "type": "boolean"
                     },
                     "habilitado": {
-                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen",
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen, -2 = ya se está inscrito",
                         "type": "integer",
                         "readOnly": true
                     },
@@ -2499,7 +2771,7 @@
         "securitySchemes": {
             "api_key": {
                 "type": "apiKey",
-                "description": "Token de autenticacion conformato como '<token>'",
+                "description": "Token de autenticacion con formato 'bearer <token>'",
                 "name": "Authorization",
                 "in": "header"
             }

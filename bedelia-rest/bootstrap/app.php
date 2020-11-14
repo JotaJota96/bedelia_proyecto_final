@@ -30,9 +30,6 @@ $app->withFacades(true, [
 
 $app->withEloquent();
 
-$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
-
-$app->configure('swagger-lume');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -66,6 +63,13 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('mail');
+$app->configure('dompdf');
+
+// aplica la siguiente configuracion solo si NO se esta en modo de produccion
+if (strcmp(env('APP_ENV'), 'prod') != 0){
+    $app->configure('swagger-lume');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -100,15 +104,18 @@ $app->routeMiddleware([
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(\SwaggerLume\ServiceProvider::class);
 
-$app->configure('mail');
+
+$app->register(App\Providers\AuthServiceProvider::class);
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
-
-$app->configure('dompdf');
 $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+
+// aplica la siguiente configuracion solo si NO se esta en modo de produccion
+if (strcmp(env('APP_ENV'), 'prod') != 0){
+    $app->register(\SwaggerLume\ServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------
