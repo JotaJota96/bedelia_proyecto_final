@@ -47,6 +47,13 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  keyDownFunction(event, accion:string) {
+    if (event.keyCode === 13) {
+      if (accion == 'login') this.login();
+      if (accion == 'eleguirRol') this.eleguirRol();
+    }
+  }
+
   login(){
     // extrae los datos del formulario
     let datosLogin = new LoginDTO();
