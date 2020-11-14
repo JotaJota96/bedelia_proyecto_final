@@ -22,7 +22,7 @@ export class InscripcionExamenComponent implements OnInit {
   listaExamen: ExamenDTO[] = [];
   listaCarrera: CarreraDTO[] = [];
   ciEstudiante: string;
-
+  periodoOk:boolean = undefined;
 
   public formulario: FormGroup;
 
@@ -42,6 +42,11 @@ export class InscripcionExamenComponent implements OnInit {
           return;
         }
       }
+    );
+
+    this.usuServ.enPeriodo('IE').subscribe(
+      (data) => { this.periodoOk = true; },
+      (error) => { this.periodoOk = false; }
     );
 
     this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;

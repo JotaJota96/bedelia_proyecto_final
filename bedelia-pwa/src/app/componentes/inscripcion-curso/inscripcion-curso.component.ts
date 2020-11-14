@@ -19,6 +19,7 @@ export class InscripcionCursoComponent implements OnInit {
   listaCurso: EdicionCursoDTO[] = [];
   listaCarrera: CarreraDTO[] = [];
   ciEstudiante: string;
+  periodoOk:boolean = undefined;
 
 
   public formulario: FormGroup;
@@ -41,6 +42,10 @@ export class InscripcionCursoComponent implements OnInit {
       }
     );
 
+    this.usuServ.enPeriodo('IC').subscribe(
+      (data) => { this.periodoOk = true; },
+      (error) => { this.periodoOk = false; }
+    );
     this.ciEstudiante = this.usuServ.obtenerDatosLoginAlmacenado().cedula;
 
     this.estudianteServis.getCarreras(this.ciEstudiante).subscribe(

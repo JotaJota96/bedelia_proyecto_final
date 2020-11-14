@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AnioLectivoDTO } from '../clases/anio-lectivo-dto';
 import { LoginDTO } from '../clases/login-dto';
 import { LoginResponseDTO } from '../clases/login-response-dto';
 import { UsuarioDTO } from '../clases/usuario-dto';
@@ -24,6 +25,9 @@ export class UsuariosService {
     return this.http.get<UsuarioDTO>(this.apiURL + '/' + id);
   }
   
+  enPeriodo(tipo:string){
+    return this.http.get<AnioLectivoDTO>(environment.apiURL + '/periodos/actual/' + tipo);
+  }
 
   /** Funciones relacionadas a la sesion del usuario **************************** **/
 
