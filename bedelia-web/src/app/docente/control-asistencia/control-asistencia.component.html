@@ -84,7 +84,7 @@
 
         <mat-card-actions align="end">
             <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
-            <button mat-raised-button (click)="confirmarPasajeLista()" color="primary">Seleccionar carrera </button>
+            <button mat-raised-button (click)="confirmarPasajeLista()" [disabled]="cursoSeleccionado == undefined" color="primary">Confirmar </button>
         </mat-card-actions>
     </mat-card>
 </div>

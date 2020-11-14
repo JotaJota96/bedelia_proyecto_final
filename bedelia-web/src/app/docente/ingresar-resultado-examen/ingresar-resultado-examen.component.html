@@ -5,7 +5,7 @@
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Lista de examen" name="examen" formControlName="examen">
                         <mat-option *ngFor="let examen of listaExamen" [value]="examen.id">
-                            {{examen.curso.nombre}}
+                            {{examen.curso.nombre}} ( {{examen.sede.direccion.ciudad}} )
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
