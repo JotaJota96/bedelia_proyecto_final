@@ -44,6 +44,6 @@ export class AppComponent {
   }
   logout(){
     this.AccServ.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 }

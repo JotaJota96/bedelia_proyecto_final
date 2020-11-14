@@ -19,7 +19,7 @@ export class ConsultaEscolaridadComponent implements OnInit {
   ciLogeado: string;
 
   constructor(private onlineService: ConnectionService,private router: Router, private _snackBar: MatSnackBar,
-     protected estudianteServ: EstudianteService,protected usuServ: UsuariosService) { }
+     protected estudianteServ: EstudianteService, protected usuServ: UsuariosService) { }
 
   
   public formulario: FormGroup;
@@ -29,7 +29,7 @@ export class ConsultaEscolaridadComponent implements OnInit {
       this.router.navigate(['/desconectado']);
       return;
     }
-
+    
     this.onlineService.monitor().subscribe(
       (conectado)=>{
         if(!conectado){

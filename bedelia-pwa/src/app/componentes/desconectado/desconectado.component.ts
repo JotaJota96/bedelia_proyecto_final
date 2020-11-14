@@ -10,6 +10,6 @@ export class DesconectadoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
 
+  }
 }

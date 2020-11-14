@@ -16,6 +16,7 @@ import { UsuariosService } from 'src/app/servis/usuarios.service';
   templateUrl: './inscripcion-examen.component.html',
   styleUrls: ['./inscripcion-examen.component.css']
 })
+
 export class InscripcionExamenComponent implements OnInit {
   selectedOptions: number[] = [];
   listaExamen: ExamenDTO[] = [];
