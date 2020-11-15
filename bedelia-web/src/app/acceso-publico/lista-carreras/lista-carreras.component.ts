@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 
 @Component({
@@ -20,16 +21,9 @@ export class ListaCarrerasComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error)=>{
-        this.openSnackBar("No se pudieron las carreras desde la Base de dato");
+        openSnackBar(this._snackBar, "No se pudieron las carreras desde la Base de dato");
       }
     );
   }
   
-  openSnackBar(mensaje : string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

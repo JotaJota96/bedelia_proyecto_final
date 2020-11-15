@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TipoCursoDTO } from 'src/app/clases/tipo-curso-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { TipoCursoService } from 'src/app/servicios/tipo-curso.service';
 
 @Component({
@@ -37,17 +38,10 @@ export class TipoCursoABMComponent implements OnInit {
         this.router.navigate(['/admin/tipo']);
       },
       (error) => {
-        this.openSnackBar("No se pudo crear los tipos de curso");
+        openSnackBar(this._snackBar, "No se pudo crear los tipos de curso");
       }
     );
     this.dialogRef.close();
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

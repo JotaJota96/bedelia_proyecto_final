@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { openSnackBar } from 'src/app/global-functions';
 import { TipoCursoService } from 'src/app/servicios/tipo-curso.service';
 import { TipoCursoABMComponent } from './tipo-curso-abm/tipo-curso-abm.component';
 
@@ -23,7 +24,7 @@ export class TipoCursoComponent implements OnInit {
       (datos) => {
         this.tipoDataSource.data = datos;
       },(error)=>{
-        this.openSnackBar("No se pudieron cargar los tipos de curso desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar los tipos de curso desde la base de dato");
       }
     );
   }
@@ -33,7 +34,7 @@ export class TipoCursoComponent implements OnInit {
       (datos) => {
         this.tipoDataSource.data = datos;
       },(error)=>{
-        this.openSnackBar("No se pudo cargar los tipos de curso desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los tipos de curso desde la base de dato");
       }
     );
   }
@@ -46,11 +47,4 @@ export class TipoCursoComponent implements OnInit {
     });
   }
 
-  openSnackBar(mensaje : string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

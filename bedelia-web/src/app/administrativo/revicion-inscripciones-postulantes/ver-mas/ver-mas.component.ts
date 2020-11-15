@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { ModalInformarComponent } from '../modal-informar/modal-informar.component';
 
@@ -41,14 +42,14 @@ export class VerMasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) return; // le dio 'Volver'
       let elMensaje = result;
-      this.openSnackBar("Enviando mensaje...");
+      openSnackBar(this._snackBar, "Enviando mensaje...");
 
       this.postulanteServis.notificar(this.postulante.id, elMensaje).subscribe(
         (datos) => {
-          this.openSnackBar("El mensaje fue enviado correctamente");
+          openSnackBar(this._snackBar, "El mensaje fue enviado correctamente");
         },
         (error) => {
-          this.openSnackBar("No se pudo mandar el mensaje");
+          openSnackBar(this._snackBar, "No se pudo mandar el mensaje");
         }
       )
     });
@@ -60,7 +61,7 @@ export class VerMasComponent implements OnInit {
         this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
-        this.openSnackBar("No se pudo rechasar la postulacion");
+        openSnackBar(this._snackBar, "No se pudo rechasar la postulacion");
       }
     )
   }
@@ -71,7 +72,7 @@ export class VerMasComponent implements OnInit {
         this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
-        this.openSnackBar("No se pudo aceptar la postulacion");
+        openSnackBar(this._snackBar, "No se pudo aceptar la postulacion");
       }
     );
   }
@@ -80,11 +81,4 @@ export class VerMasComponent implements OnInit {
     
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

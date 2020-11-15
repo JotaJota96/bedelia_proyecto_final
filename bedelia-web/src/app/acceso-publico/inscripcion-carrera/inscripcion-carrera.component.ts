@@ -8,6 +8,7 @@ import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { SedeDTO } from 'src/app/clases/sede-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
@@ -75,7 +76,7 @@ export class InscripcionCarreraComponent implements OnInit {
           this.urlVerCarrera = '/ver/carrera/' + this.carrera.id;
         },
         (error) => {
-          this.openSnackBar("Error al cargar la carrera de la base de dato");
+          openSnackBar(this._snackBar, "Error al cargar la carrera de la base de dato");
         }
       );
     }else{
@@ -187,18 +188,9 @@ export class InscripcionCarreraComponent implements OnInit {
       },
       (error) => {
         this.enviandoDatos = false;
-        this.openSnackBar("No se pudo mandar la inscripcion");
+        openSnackBar(this._snackBar, "No se pudo mandar la inscripcion");
       }
     );
-
   }
 
-
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

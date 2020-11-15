@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { openSnackBar } from 'src/app/global-functions';
 import { SedesService } from 'src/app/servicios/sedes.service';
 
 @Component({
@@ -22,16 +23,9 @@ export class SedesComponent implements OnInit {
       (datos) => {
         this.sedeDataSource.data = datos;
       }, (error) => {
-        this.openSnackBar("Error al cargar las sedes de la base de dato");
+        openSnackBar(this._snackBar, "Error al cargar las sedes de la base de dato");
       }
     );
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SedesService } from 'src/app/servicios/sedes.service';
 import { SedeDTO } from 'src/app/clases/sede-dto';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
+import { openSnackBar } from 'src/app/global-functions';
 
 
 const DEPARTAMENTOS: string[] = [
@@ -80,7 +81,7 @@ export class UsuarioABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) => {
-          this.openSnackBar("No se pudo cargar el usuario de la base de dato");
+          openSnackBar(this._snackBar, "No se pudo cargar el usuario de la base de dato");
         }
       );
     }
@@ -90,7 +91,7 @@ export class UsuarioABMComponent implements OnInit {
         this.listaSedes = datos;
       },
       (error) => {
-        this.openSnackBar("No se pudo cargar las sedes de la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar las sedes de la base de dato");
       }
     );
 
@@ -179,7 +180,7 @@ export class UsuarioABMComponent implements OnInit {
     
     if (this.esAdministrativo == true) {
       if(this.formulario.controls['sede'].value == undefined){
-        this.openSnackBar("Se deve seleccionar una sede")
+        openSnackBar(this._snackBar, "Se deve seleccionar una sede")
         return;
       }
     }
@@ -194,24 +195,17 @@ export class UsuarioABMComponent implements OnInit {
               this.formulario.controls['sede'].setValue(undefined);
             },
             (error) => {
-              this.openSnackBar("No se pudo asignar la sede")
+              openSnackBar(this._snackBar, "No se pudo asignar la sede")
             }
           );
         }
         this.router.navigate(['/admin/usuarios']);
       },
       (error) => {
-        this.openSnackBar("No se pudo crear el usuario")
+        openSnackBar(this._snackBar, "No se pudo crear el usuario")
       }
     );
 
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

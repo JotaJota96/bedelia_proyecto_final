@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EscolaridadDTO } from 'src/app/clases/escolaridad-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -62,16 +63,9 @@ export class ConsultaEscolaridadComponent implements OnInit {
       },
       (error)=>{
         this.mostrarSpinner = false;
-        this.openSnackBar("El codigo de verificacion no es valido");
+        openSnackBar(this._snackBar, "El codigo de verificacion no es valido");
       }
     );
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

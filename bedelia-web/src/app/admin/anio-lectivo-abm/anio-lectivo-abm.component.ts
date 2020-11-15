@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnioLectivoDTO } from 'src/app/clases/anio-lectivo-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 
 @Component({
@@ -58,7 +59,7 @@ export class AnioLectivoABMComponent implements OnInit {
         this.cargaDeDatos(datos);
       },
       (error) => {
-        this.openSnackBar("No se pudo cargar los años lectivos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los años lectivos desde la base de dato");
       }
     );
   }
@@ -141,7 +142,7 @@ export class AnioLectivoABMComponent implements OnInit {
     let anio: AnioLectivoDTO = new AnioLectivoDTO();
 
     if (this.validarFechas() == false){
-      this.openSnackBar("Uno o más periodos ingresados no son válidos");
+      openSnackBar(this._snackBar, "Uno o más periodos ingresados no son válidos");
       return;
     }
 
@@ -193,17 +194,9 @@ export class AnioLectivoABMComponent implements OnInit {
         this.soloLectura = true;
       },
       (error) => {
-        this.openSnackBar("Error al crear el año lectivo");
+        openSnackBar(this._snackBar, "Error al crear el año lectivo");
       }
     );
-  }
-
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
   }
 
   validarFechas(): boolean{

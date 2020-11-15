@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
@@ -37,22 +38,15 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
             (datos) => {
               this.sedeDataSource.data = datos;
             }, (error) => {
-              this.openSnackBar("Error al obtener los postulantes de la sede");
+              openSnackBar(this._snackBar, "Error al obtener los postulantes de la sede");
             }
           );
         }
       },
       (error) => {
-        this.openSnackBar("No se pudieron traer datos de la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron traer datos de la base de dato");
       }
     )
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

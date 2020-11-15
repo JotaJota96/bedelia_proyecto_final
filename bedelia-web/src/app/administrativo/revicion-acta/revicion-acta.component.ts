@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ActaDTO } from 'src/app/clases/acta-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { ExamenesService } from 'src/app/servicios/examenes.service';
@@ -48,7 +49,7 @@ export class RevicionActaComponent implements OnInit {
         }
       },
       (error) => {
-        this.openSnackBar("No se pudieron traer datos de la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron traer datos de la base de dato");
       }
     );
 
@@ -86,38 +87,31 @@ export class RevicionActaComponent implements OnInit {
 
   confirmar(){
     if(this.actaSeleccionada.acta_confirmada == true){
-      this.openSnackBar("El acta ya esta confirmada");
+      openSnackBar(this._snackBar, "El acta ya esta confirmada");
     }
     if(this.actaSeleccionada.tipo == "LE"){
       //CURSO
       this.edicionServ.confirmarActa(this.actaSeleccionada.id).subscribe(
         (datos)=>{
-          this.openSnackBar("El acta fue confirmada");
+          openSnackBar(this._snackBar, "El acta fue confirmada");
           this.router.navigate(['/']);
         },
         (error)=>{
-          this.openSnackBar("Error al confirmar el acta");  
+          openSnackBar(this._snackBar, "Error al confirmar el acta");  
         });
     }
     if(this.actaSeleccionada.tipo == "EX"){
       //EXAMEN
       this.examenServ.confirmarActa(this.actaSeleccionada.id).subscribe(
         (datos)=>{
-          this.openSnackBar("El acta fue confirmada");
+          openSnackBar(this._snackBar, "El acta fue confirmada");
           this.router.navigate(['/']);
         },
         (error)=>{
-          this.openSnackBar("Error al confirmar el acta");
+          openSnackBar(this._snackBar, "Error al confirmar el acta");
         });
     }
 
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

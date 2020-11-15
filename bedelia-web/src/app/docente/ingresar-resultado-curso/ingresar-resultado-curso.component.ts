@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ActaDTO } from 'src/app/clases/acta-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -42,7 +43,7 @@ export class IngresarResultadoCursoComponent implements OnInit {
       (datos) => {
         this.listaCurso = datos;
       }, (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos desde la base de dato");
       }
     );
     
@@ -59,7 +60,7 @@ export class IngresarResultadoCursoComponent implements OnInit {
         this.usuariosDataSource.data = datos.notas;
       },
       (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos desde la base de dato");
       }
     );
   }
@@ -70,7 +71,7 @@ export class IngresarResultadoCursoComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error)=>{
-        this.openSnackBar("Error al registrar las notas");
+        openSnackBar(this._snackBar, "Error al registrar las notas");
       }
     );
   }
@@ -81,7 +82,7 @@ export class IngresarResultadoCursoComponent implements OnInit {
       if (result == undefined) return; // se dio 'Volver'
 
       if(result > 5 || result < 1){
-        this.openSnackBar("La nota a ingresar debe estar entre 1.0 y 5.0");
+        openSnackBar(this._snackBar, "La nota a ingresar debe estar entre 1.0 y 5.0");
         return
       }
       this.acta.notas.forEach(element => {
@@ -98,11 +99,4 @@ export class IngresarResultadoCursoComponent implements OnInit {
     });
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }
