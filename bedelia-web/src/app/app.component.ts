@@ -60,8 +60,8 @@ const MENU_DOCENTE:MenuSection[] = [
   {
     nombre: "Área docente",
     items: [
-      {nombre: "Ingresar resultados de exámenes", link: "docente/ingreso/resultados-examen"},
       {nombre: "Ingresar resultados de cursos",   link: "docente/ingreso/resultados-curso"},
+      {nombre: "Ingresar resultados de exámenes", link: "docente/ingreso/resultados-examen"},
       {nombre: "Control de asistencia",           link: "docente/control-asistencia"},
     ],
   }, {

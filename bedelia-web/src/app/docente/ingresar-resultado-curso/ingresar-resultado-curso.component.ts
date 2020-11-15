@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ActaDTO } from 'src/app/clases/acta-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { IngresarNotaComponent } from './ingresar-nota/ingresar-nota.component';
@@ -17,9 +18,10 @@ import { IngresarNotaComponent } from './ingresar-nota/ingresar-nota.component';
 })
 export class IngresarResultadoCursoComponent implements OnInit {
   listaCurso: EdicionCursoDTO[] = [];
-  mostrar:boolean = false;
+  cursoSeleccionado:boolean = false;
   acta:ActaDTO;
   notas:number[]=[];
+  periodoOk:boolean = undefined;
 
   public formulario: FormGroup;
   // columnas que se mostraran en la tabla
@@ -27,9 +29,15 @@ export class IngresarResultadoCursoComponent implements OnInit {
   // objeto que necesita la tabla para mostrar el contenido
   usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar, protected usuServ: UsuariosService, protected edicionServ: EdicionesCursoService) { }
+  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar, 
+    protected usuServ: UsuariosService, protected edicionServ: EdicionesCursoService,
+    protected alecServ:AnioLectivoService) { }
 
   ngOnInit(): void {
+    this.alecServ.enPeriodo('LE').subscribe(
+      (data) => { this.periodoOk = true; },
+      (error) => { this.periodoOk = false; }
+    );
     this.edicionServ.getEdicionesDocentes(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
       (datos) => {
         this.listaCurso = datos;
@@ -44,8 +52,10 @@ export class IngresarResultadoCursoComponent implements OnInit {
   }
 
   buscar(){
+    this.cursoSeleccionado = true;
     this.edicionServ.getEdicionesParaActa(this.formulario.controls['curso'].value).subscribe(
       (datos) => {
+        console.log("acta confirmada: " + datos.acta_confirmada);
         this.acta = datos;
         this.usuariosDataSource.data = datos.notas;
       },
@@ -69,8 +79,10 @@ export class IngresarResultadoCursoComponent implements OnInit {
   ingresarNota(ciEstudiante : string){
     const dialogRef = this.dialog.open(IngresarNotaComponent,{width: '500px'});
     dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) return; // se dio 'Volver'
+
       if(result > 5 || result < 1){
-        this.openSnackBar("La nota a ingresar deve estar entre 1 y 5");
+        this.openSnackBar("La nota a ingresar debe estar entre 1.0 y 5.0");
         return
       }
       this.acta.notas.forEach(element => {
