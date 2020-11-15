@@ -52,10 +52,9 @@ export class IngresarResultadoCursoComponent implements OnInit {
   }
 
   buscar(){
-    this.cursoSeleccionado = true;
     this.edicionServ.getEdicionesParaActa(this.formulario.controls['curso'].value).subscribe(
       (datos) => {
-        console.log("acta confirmada: " + datos.acta_confirmada);
+        this.cursoSeleccionado = true;
         this.acta = datos;
         this.usuariosDataSource.data = datos.notas;
       },

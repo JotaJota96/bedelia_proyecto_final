@@ -4,7 +4,7 @@
         <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
         
         <mat-card-content *ngIf="periodoOk == false">
-          <p>Actualmente no hay ningun período de inscripcion a cursos vigente.</p>
+          <p>Actualmente no hay ningun período de cursos vigente.</p>
         </mat-card-content>
     
         <mat-card-content *ngIf="periodoOk == true">
@@ -30,6 +30,7 @@
                         {{ acta.curso.nombre }}
                     </mat-card-title>
                 </mat-card-header>
+                
                 <mat-card-content>
                     <div class="row">
                         <div class="col-6">
@@ -50,6 +51,11 @@
                         </div>
                     </div>
                 </mat-card-content>
+
+                <mat-divider></mat-divider>
+                
+                <h3 class="ml-3 mt-4">Estudiantes</h3>
+
                 <mat-card-content>
                     <!-- Tabla -->
                     <table mat-table [dataSource]="usuariosDataSource" class="col-12">
@@ -100,7 +106,7 @@
         
         <mat-card-actions align="end">
             <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
-            <button mat-raised-button color="primary" *ngIf="cursoSeleccionado" (click)="confirmar()">Confirmar</button>
+            <button mat-raised-button color="primary" *ngIf="cursoSeleccionado" [disabled]="usuariosDataSource.data.length == 0" (click)="confirmar()">Confirmar</button>
         </mat-card-actions>
     </mat-card>
 </div>

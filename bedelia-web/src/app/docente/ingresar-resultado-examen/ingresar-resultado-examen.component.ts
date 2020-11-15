@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ActaDTO } from 'src/app/clases/acta-dto';
 import { ExamenDTO } from 'src/app/clases/examen-dto';
+import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { ExamenesService } from 'src/app/servicios/examenes.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { IngresarNotaExamenComponent } from './ingresar-nota-examen/ingresar-nota-examen.component';
@@ -17,10 +18,10 @@ import { IngresarNotaExamenComponent } from './ingresar-nota-examen/ingresar-not
 })
 export class IngresarResultadoExamenComponent implements OnInit {
   listaExamen: ExamenDTO[] = [];
-  mostrar: boolean = false;
+  examenSeleccionado:boolean = false;
   acta:ActaDTO;
   notas:number[]=[];
-  ciEstudiante : string;
+  periodoOk: boolean = undefined;
   
   public formulario: FormGroup;
   // columnas que se mostraran en la tabla
@@ -28,9 +29,15 @@ export class IngresarResultadoExamenComponent implements OnInit {
   // objeto que necesita la tabla para mostrar el contenido
   usuariosDataSource = new MatTableDataSource([]);
 
-  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar,protected examenServ: ExamenesService, protected usuServ: UsuariosService) { }
+  constructor(private router:Router, public dialog: MatDialog, private _snackBar: MatSnackBar,
+    protected examenServ: ExamenesService, protected usuServ: UsuariosService,
+    protected alecServ:AnioLectivoService) { }
 
   ngOnInit(): void {
+    this.alecServ.enPeriodo('EX').subscribe(
+      (data) => { this.periodoOk = true; },
+      (error) => { this.periodoOk = false; }
+    );
     this.examenServ.getExamenesDocente(this.usuServ.obtenerDatosLoginAlmacenado().cedula).subscribe(
       (datos) => {
         this.listaExamen = datos;
@@ -47,6 +54,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
   buscar(){
     this.examenServ.getNotasDeEstudiante(this.formulario.controls['examen'].value).subscribe(
       (datos) => {
+        this.examenSeleccionado = true;
         this.acta = datos;
         this.usuariosDataSource.data = datos.notas;
       },
@@ -70,6 +78,8 @@ export class IngresarResultadoExamenComponent implements OnInit {
   ingresarNota(ciEstudiante : string){
     const dialogRef = this.dialog.open(IngresarNotaExamenComponent,{width: '500px'});
     dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) return; // se dio 'Volver'
+      
       if(result > 5 || result < 1){
         this.openSnackBar("La nota a ingresar deve estar entre 1 y 5");
         return
