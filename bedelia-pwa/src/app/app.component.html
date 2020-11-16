@@ -7,7 +7,7 @@
   <div *ngIf="logeado()" class="row m-0 p-0 justify-content-end col-2 col-sm-5 col-md-4">
   </div>
   <div class="row m-0 p-0 justify-content-center col-4 col-sm-2 col-md-4">
-    <a class="mt-2" href="/"><img src="\assets\img\UTEC.png" width="100"></a>
+    <a class="mt-2" [routerLink]="['/']"><img src="\assets\img\UTEC.png" width="100"></a>
   </div>
   <div class="row m-0 p-0 justify-content-end col-6 col-sm-5 col-md-4">
     <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Iniciar sesión</button>
