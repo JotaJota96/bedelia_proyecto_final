@@ -21,7 +21,7 @@ export class ListaCarrerasComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error)=>{
-        openSnackBar(this._snackBar, "No se pudieron las carreras desde la Base de dato");
+        openSnackBar(this._snackBar, "No se pudieron las carreras");
       }
     );
   }

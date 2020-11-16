@@ -63,7 +63,7 @@ export class ConsultaEscolaridadComponent implements OnInit {
       },
       (error)=>{
         this.mostrarSpinner = false;
-        openSnackBar(this._snackBar, "El codigo de verificacion no es valido");
+        openSnackBar(this._snackBar, "El codigo de verificacion no es válido");
       }
     );
   }

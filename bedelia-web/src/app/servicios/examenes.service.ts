@@ -21,7 +21,7 @@ export class ExamenesService {
     return this.http.put(this.apiURL + "/" + idExamen + "/docente/" + ciDocente, null);
   }
 
-  getEdicionesParaInscrivirse(ci:string, idCarrera:number){
+  getEdicionesParaInscribirse(ci:string, idCarrera:number){
     return this.http.get<ExamenDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
   }
 

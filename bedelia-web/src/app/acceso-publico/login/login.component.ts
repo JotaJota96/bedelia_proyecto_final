@@ -77,7 +77,11 @@ export class LoginComponent implements OnInit {
         }
       },
       (error)=>{
-        openSnackBar(this._snackBar, "Los datos del usuario son incorrectos");
+        if (error.status == 401){
+          openSnackBar(this._snackBar, "Los datos son incorrectos");
+        }else{
+          openSnackBar(this._snackBar, "Error en la comunicación con el servidor");
+        }
         this.vaciarCampos();
       }
     );

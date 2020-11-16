@@ -38,7 +38,7 @@ export class TipoCursoABMComponent implements OnInit {
         this.router.navigate(['/admin/tipo']);
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo crear los tipos de curso");
+        openSnackBar(this._snackBar, "No se pudo crear el tipo de curso");
       }
     );
     this.dialogRef.close();

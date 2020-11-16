@@ -60,7 +60,7 @@ export class CarreraABMComponent implements OnInit {
       (datos) => {
         this.listaAreasEstudio = datos;
       },(erro)=>{
-        openSnackBar(this._snackBar, "No se puediero traer las areas de estudio de la base de dato")
+        openSnackBar(this._snackBar, "No se pudiero cargar las áreas de estudio")
       }
     );
 
@@ -68,7 +68,7 @@ export class CarreraABMComponent implements OnInit {
       (datos) => {
         this.listaSedes = datos;
       },(error)=>{
-        openSnackBar(this._snackBar, "No se pudieron traer las sedes desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar las sedes");
       }
     );
     
@@ -77,7 +77,7 @@ export class CarreraABMComponent implements OnInit {
     //   (datos) => {
     //     this.listaCurso = datos;
     //   },(error)=>{
-    //     openSnackBar(this._snackBar, "No se pudieron traer los cursos desde la base de dato");
+    //     openSnackBar(this._snackBar, "No se pudo cargar los cursos");
     //   }
     // );
 
@@ -130,7 +130,7 @@ export class CarreraABMComponent implements OnInit {
           this.listaCurso.push(element);
         });
       },(error)=>{
-        openSnackBar(this._snackBar, "No se pudieron traer los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
       }
     );
   }

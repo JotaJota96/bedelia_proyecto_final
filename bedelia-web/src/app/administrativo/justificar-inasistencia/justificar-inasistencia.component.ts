@@ -58,12 +58,12 @@ export class JustificarInasistenciaComponent implements OnInit {
           this.mostrarDatos = true;
         }else{
           this.mostrarDatos = false;
-          openSnackBar(this._snackBar, "Error al traer los datos del estudiante");
+          openSnackBar(this._snackBar, "Error al cargar los datos del estudiante");
         }
       },
       (error)=>{
         this.mostrarDatos = false;
-        openSnackBar(this._snackBar, "Error al traer los datos del estudiante");
+        openSnackBar(this._snackBar, "Error al cargar los datos del estudiante");
       }
     );
   }

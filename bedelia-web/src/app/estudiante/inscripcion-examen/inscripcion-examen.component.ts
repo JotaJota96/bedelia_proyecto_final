@@ -44,7 +44,7 @@ export class InscripcionExamenComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "Error al cargar las carreras del estudiante");
+        openSnackBar(this._snackBar, "Error al cargar las carreras");
       }
     );
 
@@ -54,7 +54,7 @@ export class InscripcionExamenComponent implements OnInit {
   }
 
   cargarExamenes() {
-    this.examenServ.getEdicionesParaInscrivirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
+    this.examenServ.getEdicionesParaInscribirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
       (datos) => {
         this.listaExamen = datos;
       },
@@ -69,7 +69,7 @@ export class InscripcionExamenComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error) => {
-        openSnackBar(this._snackBar, "Error al inscrivirse a una examen");
+        openSnackBar(this._snackBar, "Error al inscribirse a una examen");
       }
     );
   }

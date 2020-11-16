@@ -35,7 +35,7 @@ export class EdicionesCursoService {
     return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/clasesDictada/", clasDic);
   }
 
-  getEdicionesParaInscrivirse(ci:string,idCarrera:number){
+  getEdicionesParaInscribirse(ci:string,idCarrera:number){
     return this.http.get<EdicionCursoDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
   }
 //--

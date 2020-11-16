@@ -59,7 +59,7 @@ export class AnioLectivoABMComponent implements OnInit {
         this.cargaDeDatos(datos);
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los años lectivos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los años lectivos");
       }
     );
   }

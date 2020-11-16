@@ -59,7 +59,7 @@ export class AsignarDocenteComponent implements OnInit {
               this.listaCurso = datos;
             },
             (error) => {
-              openSnackBar(this._snackBar, "Error al traer los cursos de la base de dato");
+              openSnackBar(this._snackBar, "Error al cargar los cursos");
             }
           )
 
@@ -68,7 +68,7 @@ export class AsignarDocenteComponent implements OnInit {
               this.listaExamen = datos;
             },
             (error) => {
-              openSnackBar(this._snackBar, "Error al traer los examenes de la base de dato");
+              openSnackBar(this._snackBar, "Error al cargar los examenes");
             }
           )
         }
@@ -110,7 +110,7 @@ export class AsignarDocenteComponent implements OnInit {
   asignarCurso() {
     this.edicionCurServ.asignar(this.formularioAsignarACurso.controls['curso'].value, this.persona.cedula).subscribe(
       (datos) => {
-        openSnackBar(this._snackBar, "El docente fue asignado correctamente");
+        openSnackBar(this._snackBar, "El docente fue asignado correctamente", 'ok');
         this.formularioAsignarACurso.controls['curso'].setValue(undefined);
       },
       (error) => {
@@ -123,7 +123,7 @@ export class AsignarDocenteComponent implements OnInit {
   asignarExamen() {
     this.examenServ.asignarDocente(this.formularioAsignarAExamen.controls['examen'].value, this.persona.cedula).subscribe(
       (datos) => {
-        openSnackBar(this._snackBar, "El docente fue asignado correctamente");
+        openSnackBar(this._snackBar, "El docente fue asignado correctamente", 'ok');
         this.formularioAsignarAExamen.controls['examen'].setValue(undefined);
       },
       (error) => {

@@ -43,7 +43,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
       (datos) => {
         this.listaExamen = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
       }
     );
     
@@ -60,7 +60,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
         this.usuariosDataSource.data = datos.notas;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
       }
     );
   }
@@ -82,7 +82,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
       if (result == undefined) return; // se dio 'Volver'
       
       if(result > 5 || result < 1){
-        openSnackBar(this._snackBar, "La nota a ingresar deve estar entre 1 y 5");
+        openSnackBar(this._snackBar, "La nota a ingresar debe estar entre 1.0 y 5.0");
         return
       }
       this.acta.notas.forEach(element => {

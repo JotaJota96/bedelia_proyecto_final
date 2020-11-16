@@ -81,7 +81,7 @@ export class UsuarioABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) => {
-          openSnackBar(this._snackBar, "No se pudo cargar el usuario de la base de dato");
+          openSnackBar(this._snackBar, "No se pudo cargar el usuario");
         }
       );
     }
@@ -91,7 +91,7 @@ export class UsuarioABMComponent implements OnInit {
         this.listaSedes = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar las sedes de la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar las sedes");
       }
     );
 
@@ -180,7 +180,7 @@ export class UsuarioABMComponent implements OnInit {
     
     if (this.esAdministrativo == true) {
       if(this.formulario.controls['sede'].value == undefined){
-        openSnackBar(this._snackBar, "Se deve seleccionar una sede")
+        openSnackBar(this._snackBar, "Se debe seleccionar una sede")
         return;
       }
     }

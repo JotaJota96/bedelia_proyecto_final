@@ -24,7 +24,7 @@ export class CursoComponent implements OnInit {
       (datos) => {
         this.cursoDataSource.data = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
       }
     );
   }

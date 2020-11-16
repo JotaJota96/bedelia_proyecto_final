@@ -42,11 +42,11 @@ export class VerMasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) return; // le dio 'Volver'
       let elMensaje = result;
-      openSnackBar(this._snackBar, "Enviando mensaje...");
+      openSnackBar(this._snackBar, "Enviando mensaje...", 'ok');
 
       this.postulanteServis.notificar(this.postulante.id, elMensaje).subscribe(
         (datos) => {
-          openSnackBar(this._snackBar, "El mensaje fue enviado correctamente");
+          openSnackBar(this._snackBar, "El mensaje fue enviado correctamente", 'ok');
         },
         (error) => {
           openSnackBar(this._snackBar, "No se pudo mandar el mensaje");

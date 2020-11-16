@@ -50,7 +50,7 @@ export class VerificacionEscolaridadComponent implements OnInit {
       },
       (error)=>{
         this.mostrarSpinner = false;
-        openSnackBar(this._snackBar, "El codigo de verificacion no es valido");
+        openSnackBar(this._snackBar, "El codigo de verificación no es válido");
       }
     );
   }

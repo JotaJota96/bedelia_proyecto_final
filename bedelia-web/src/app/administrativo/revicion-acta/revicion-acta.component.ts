@@ -49,7 +49,7 @@ export class RevicionActaComponent implements OnInit {
         }
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudieron traer datos de la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar datos");
       }
     );
 
@@ -93,7 +93,7 @@ export class RevicionActaComponent implements OnInit {
       //CURSO
       this.edicionServ.confirmarActa(this.actaSeleccionada.id).subscribe(
         (datos)=>{
-          openSnackBar(this._snackBar, "El acta fue confirmada");
+          openSnackBar(this._snackBar, "El acta fue confirmada", 'ok');
           this.router.navigate(['/']);
         },
         (error)=>{
@@ -104,7 +104,7 @@ export class RevicionActaComponent implements OnInit {
       //EXAMEN
       this.examenServ.confirmarActa(this.actaSeleccionada.id).subscribe(
         (datos)=>{
-          openSnackBar(this._snackBar, "El acta fue confirmada");
+          openSnackBar(this._snackBar, "El acta fue confirmada", 'ok');
           this.router.navigate(['/']);
         },
         (error)=>{

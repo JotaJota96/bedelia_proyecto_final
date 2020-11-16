@@ -23,7 +23,7 @@ export class SedesComponent implements OnInit {
       (datos) => {
         this.sedeDataSource.data = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "Error al cargar las sedes de la base de dato");
+        openSnackBar(this._snackBar, "Error al cargar las sedes");
       }
     );
   }

@@ -24,7 +24,7 @@ export class UsuariosComponent implements OnInit {
       (datos) => {
         this.usuariosDataSource.data = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar los usuarios de la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar los usuarios");
       }
     );
     // Defino una funcion de filtrado personalizada

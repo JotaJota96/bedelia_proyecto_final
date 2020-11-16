@@ -76,7 +76,7 @@ export class InscripcionCarreraComponent implements OnInit {
           this.urlVerCarrera = '/ver/carrera/' + this.carrera.id;
         },
         (error) => {
-          openSnackBar(this._snackBar, "Error al cargar la carrera de la base de dato");
+          openSnackBar(this._snackBar, "Error al cargar la carrera");
         }
       );
     }else{
@@ -188,7 +188,7 @@ export class InscripcionCarreraComponent implements OnInit {
       },
       (error) => {
         this.enviandoDatos = false;
-        openSnackBar(this._snackBar, "No se pudo mandar la inscripcion");
+        openSnackBar(this._snackBar, "Ocurrió un error al enviar la información");
       }
     );
   }
