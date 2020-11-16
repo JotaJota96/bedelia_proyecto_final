@@ -1,0 +1,56 @@
+<div class="container">
+    <mat-card class="mt-5">
+        <mat-card-content>
+            <!-- datos de la direccion -->
+            <form [formGroup]="formulario" class="row mb-2 px-2">
+                    
+                <mat-form-field class="col-12" [style.width.%]=100>
+                    <mat-select placeholder="Carrera" name="carrera" formControlName="carrera">
+                        <mat-option *ngFor="let carrera of listaCarrera" [value]="carrera.id">
+                            {{carrera.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="col-12 " mat-raised-button color="primary" (click)="obtenerEscolaridad()">Obtener escolaridad</button>
+
+            </form>
+        </mat-card-content>
+        <mat-divider *ngIf="escolaridad != null"></mat-divider>
+        <mat-card-content *ngIf="escolaridad != null">
+            <mat-card class="mt-5 mb-5">
+                <h1>Informacion básica</h1> 
+                <div class=" row mx-auto">
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Cédula: {{escolaridad.usuario.persona.cedula}}</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-3">
+                        <h2>Nombre completo: {{escolaridad.usuario.persona.nombre}} {{escolaridad.usuario.persona.apellido}}</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-4">
+                        <h2>Carrera: {{escolaridad.carrera.nombre}}</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-3">
+                        <h2>Nota promedio: {{escolaridad.nota_promedio}}</h2>
+                    </mat-card>
+                </div>
+            </mat-card>
+            <mat-card class="mt-1 " *ngFor="let semestre of escolaridad.semestres">
+                <h1>Semestre {{semestre.numero}}</h1>
+                <div class="curso p-2 row mx-0 my-3" *ngFor="let curso of semestre.detalle">
+                    <mat-card class="col-12 col-md-6 mb-2">
+                        <h3>{{curso.curso.nombre}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2 mb-2">
+                        <h3>{{curso.tipo | tipoActa}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2 mb-2">
+                        <h3>{{curso.periodo}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2 mb-2">
+                        <h3>{{curso.nota | nota}}</h3>
+                    </mat-card>
+                </div>
+            </mat-card>
+        </mat-card-content>
+    </mat-card>
+</div>

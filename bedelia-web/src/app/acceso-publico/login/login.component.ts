@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   public datosLogin:LoginResponseDTO;
 
   constructor(private _snackBar: MatSnackBar,
-    protected usuServ:UsuariosService, 
+    protected accServ:UsuariosService, 
     private router:Router) {
   }
 
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   }
   eleguirRol(){
     let rol:String = this.formularioRol.controls['rol'].value;
-    this.usuServ.almacenarDatosLogin(this.datosLogin, rol);
+    this.accServ.almacenarDatosLogin(this.datosLogin, rol);
     this.router.navigate(['/']);
   }
 
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     datosLogin.id = this.formulario.controls['usuario'].value;
     datosLogin.contrasenia = this.formulario.controls['contrasenia'].value;
 
-    this.usuServ.login(datosLogin).subscribe(
+    this.accServ.login(datosLogin).subscribe(
       (retorno)=>{
         // si login es correcto
         this.datosLogin = retorno;
