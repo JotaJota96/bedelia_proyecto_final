@@ -15,11 +15,16 @@ export class IngresarNotaExamenComponent implements OnInit {
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
-      nota: new FormControl('', [Validators.required])
+      nota: new FormControl('', [Validators.required, Validators.min(1), Validators.max(5)])
     });
   }
 
-  enviar(){
-    this.dialogRef.close(this.formulario.controls['nota'].value);
+  confirmar(){
+    let nota:number = this.formulario.controls['nota'].value;
+    this.dialogRef.close(nota);
+  }
+
+  cerrar(){
+    this.dialogRef.close();
   }
 }

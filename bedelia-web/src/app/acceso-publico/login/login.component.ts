@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -47,6 +48,13 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  keyDownFunction(event, accion:string) {
+    if (event.keyCode === 13) {
+      if (accion == 'login') this.login();
+      if (accion == 'eleguirRol') this.eleguirRol();
+    }
+  }
+
   login(){
     // extrae los datos del formulario
     let datosLogin = new LoginDTO();
@@ -69,17 +77,14 @@ export class LoginComponent implements OnInit {
         }
       },
       (error)=>{
-        this.openSnackBar("Los datos del usuario son incorrectos");
+        if (error.status == 401){
+          openSnackBar(this._snackBar, "Los datos son incorrectos");
+        }else{
+          openSnackBar(this._snackBar, "Error en la comunicación con el servidor");
+        }
         this.vaciarCampos();
       }
     );
   }
 
-  openSnackBar(mensaje : string) {
-    this._snackBar.open(mensaje,'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

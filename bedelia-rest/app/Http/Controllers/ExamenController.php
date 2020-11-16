@@ -46,7 +46,7 @@ class ExamenController extends Controller
      *     ),
      * )
      */
-    
+
     public function asignarEstudiante($ciEstudiante){
         try {
             DB::beginTransaction();
@@ -58,7 +58,7 @@ class ExamenController extends Controller
             foreach ($idExamenes as $id) {
                 $Examen = Examen::where('id', $id)->first();
                 if ($Examen == null) throw new \Exception("No se encontro el Examen");
-                
+
                 //$Usuario->estudiante;
                 $datosTablaIntermedia = [
                     'nota' => 0,
@@ -113,7 +113,7 @@ class ExamenController extends Controller
             //$UsuarioDTO->fill($this->request->json(['persona']));
             // return response()->json($examen, 200);
             $Docente = $Usuario->docente;
-                        
+
             // return response()->json($Docente, 200);
             $examen->docente()->associate($Docente);
             $examen->save();
@@ -159,6 +159,7 @@ class ExamenController extends Controller
             $Examenes = $Docente->examenesActuales();
             foreach ($Examenes as $e) {
                 $e->curso;
+                $e->sede->direccion;
             }
             return response()->json($Examenes, 200);
         } catch (\Exception $e) {
@@ -223,7 +224,7 @@ class ExamenController extends Controller
             $perProx = PeriodoInscExamen::periodoActual();
             if ($perProx == null) throw new \Exception("Aún no se ha definido el próximo período de exámenes");
             $idProxPerEx = $perProx->periodoExamen->id;
-            
+
             // obtengo todos los Examen para el proximo PeriodoExamen y me quedo solo con los de la carrera especificada
             $idExamenes = array();
             $idExamenesPreFiltro = Examen::where('periodo_examen_id', $idProxPerEx)
@@ -236,7 +237,7 @@ class ExamenController extends Controller
                     }
                 }
             }
-            
+
             // para cada curso y examen tomado, clasifico segun nota obtenida
             $idCursosExonerados       = array(); // ID de los cursos que se exoneraron
             $idCursosAExamen          = array(); // ID de los cursos que se debe dar examen
@@ -266,7 +267,7 @@ class ExamenController extends Controller
                     array_push($idCursosExamenNoAprobado, $idCurso);
                 }
             }
-            
+
             // Ahora si viene lo chido... Verificar...
             // "curso"  significa que hay que haber llegado a 25/100 = 2.0
             // "examen" significa que hay que haber llegado a 60/100 = 3.0
@@ -352,7 +353,7 @@ class ExamenController extends Controller
             return response()->json(['message' => 'Error al obtener notas.' . $e->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Post(
      *     path="/examenes/{id}/notas",

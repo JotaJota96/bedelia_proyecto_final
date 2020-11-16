@@ -3,6 +3,24 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* snackbar color original: #323232 */
+.mat-snack-bar-container-error{
+  background-color: #620101;
+}
+.mat-snack-bar-container-ok{
+  background-color: #0e1c65;
+}
+.mat-simple-snackbar-action{
+  color: rgba(255, 255, 255, 0.5);
+}
+.mat-snack-bar-container{
+  color: rgba(255, 255, 255, 0.8);
+}
+
 
 /******************************* Grid Bootstrap *****************************/
 /*!

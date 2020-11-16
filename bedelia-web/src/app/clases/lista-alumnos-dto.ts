@@ -3,7 +3,7 @@ export class ListaAlumnosDTO {
     public asistencia : number
     public total_asistencias : number
     public total_inasistencias : number
-    public total_llegada_tarde : number
+    public total_llegadas_tarde : number
     public nombre : string
     public apellido : string
 }

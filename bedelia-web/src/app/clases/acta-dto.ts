@@ -6,6 +6,7 @@ export class ActaDTO {
     public tipo            : string
     public fecha           : string
     public acta_confirmada : boolean
+    public periodo         : string
     public curso           : CursoDTO
     public notas           : ListaAlumnosActaDTO[]
 }

@@ -88,7 +88,7 @@ class EstudianteController extends Controller
             $clasesDictadas = $Estudiante->clasesDictada->where('fecha', '>=', $fecha_inicio)->where('fecha', '<=', $fecha_fin);
             foreach ($clasesDictadas as $claseDictada) {
                 if ($claseDictada->pivot->asistencia == 0){
-                    $claseDictada->pivot->asistencia = 1;
+                    $claseDictada->pivot->asistencia = 0.5;
                     $claseDictada->pivot->save();
                 }
             }

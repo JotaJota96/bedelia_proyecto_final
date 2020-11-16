@@ -8,6 +8,7 @@ import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { SedeDTO } from 'src/app/clases/sede-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
@@ -51,13 +52,14 @@ const DEPARTAMENTOS: string[] = [
   styleUrls: ['./inscripcion-carrera.component.css']
 })
 export class InscripcionCarreraComponent implements OnInit {
-
+  urlVerCarrera: string = "/";
   carrera: CarreraDTO;
   listaSedes: SedeDTO[];
   listaSexos: ISexo[] = SEXOS;
   soloLectura: boolean = false;
   listaDepartamentos: string[] = DEPARTAMENTOS;
   tipo: number =0;
+  enviandoDatos: boolean = false;
 
   public formulario: FormGroup;
   constructor(private router: Router, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService, protected carreraServ: CarreraService, private rutaActiva: ActivatedRoute) { }
@@ -71,11 +73,14 @@ export class InscripcionCarreraComponent implements OnInit {
         (datos) => {
           this.carrera = datos;
           this.listaSedes = datos.sedes;
+          this.urlVerCarrera = '/ver/carrera/' + this.carrera.id;
         },
         (error) => {
-          this.openSnackBar("Error al cargar la carrera de la base de dato");
+          openSnackBar(this._snackBar, "Error al cargar la carrera");
         }
       );
+    }else{
+      this.router.navigate(['/']);
     }
 
     this.formulario = new FormGroup({
@@ -95,12 +100,18 @@ export class InscripcionCarreraComponent implements OnInit {
       img_ci: new FormControl('', [Validators.required]),
       img_escolaridad: new FormControl('', [Validators.required]),
       img_carne_salud: new FormControl('', [Validators.required]),
+      
+      // nombres de archivos adjuntos, se usa solo para mostrarlos
+      img_ci_nombreArchivo: new FormControl(''),
+      img_escolaridad_nombreArchivo: new FormControl(''),
+      img_carne_salud_nombreArchivo: new FormControl(''),
     });
   }
 
   alCargarImagen(evt: any, tipo: number) {
     this.tipo = tipo;
     const archivo = evt.target.files[0];
+    let nombreArchivo = archivo.name;
     // Si realmente se cargo un archivo
     if (archivo) {
       const lector = new FileReader();
@@ -108,15 +119,20 @@ export class InscripcionCarreraComponent implements OnInit {
       lector.readAsBinaryString(archivo);
       // OJO que el string con la imagen demora unos milisegundos en cargarse
 
+      if (tipo == 0) {
+        this.formulario.controls['img_ci_nombreArchivo'].setValue(nombreArchivo);
+      }else if (tipo == 1) {
+        this.formulario.controls['img_escolaridad_nombreArchivo'].setValue(nombreArchivo);
+      }else if (tipo == 2) {
+        this.formulario.controls['img_carne_salud_nombreArchivo'].setValue(nombreArchivo);
+      }
     } else {
       // aca no se como hacer que entre, pero por las dudas le pongo esto...
       if (tipo == 0) {
         this.formulario.controls['img_ci'].setValue("");
-      }
-      if (tipo == 1) {
+      }else if (tipo == 1) {
         this.formulario.controls['img_escolaridad'].setValue("");
-      }
-      if (tipo == 2) {
+      }else if (tipo == 2) {
         this.formulario.controls['img_carne_salud'].setValue("");
       }
       //this.restablecerAImagenPorDefecto();
@@ -139,6 +155,8 @@ export class InscripcionCarreraComponent implements OnInit {
   }
 
   enviar() {
+    this.enviandoDatos = true;
+
     let postulante: PostulanteDTO = new PostulanteDTO();
     postulante.persona = new PersonaDTO();
     postulante.persona.direccion = new DireccionDTO();
@@ -162,27 +180,17 @@ export class InscripcionCarreraComponent implements OnInit {
     postulante.persona.direccion.calle = this.formulario.controls['calle'].value;
     postulante.persona.direccion.numero = this.formulario.controls['numero'].value;
 
-
-    console.log(postulante);
-
+    //console.log(postulante);
 
     this.postulanteServ.create(postulante).subscribe(
       (datos) => {
         this.router.navigate(['/']);
       },
       (error) => {
-        this.openSnackBar("No se pudo mandar la inscripcion");
+        this.enviandoDatos = false;
+        openSnackBar(this._snackBar, "Ocurrió un error al enviar la información");
       }
     );
-
   }
 
-
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

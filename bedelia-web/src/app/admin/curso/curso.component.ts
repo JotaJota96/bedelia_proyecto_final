@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { filter } from 'rxjs/operators';
+import { openSnackBar } from 'src/app/global-functions';
 import { CursoService } from 'src/app/servicios/curso.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class CursoComponent implements OnInit {
       (datos) => {
         this.cursoDataSource.data = datos;
       }, (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
       }
     );
   }
@@ -34,11 +35,4 @@ export class CursoComponent implements OnInit {
 
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

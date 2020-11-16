@@ -15,7 +15,7 @@
 </mat-toolbar>
 
 <mat-drawer-container class="main-container">
-  <mat-drawer #drawer mode="side" [opened]="logeado()">
+  <mat-drawer #drawer class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 p-0" [mode]="menuMode" [opened]="logeado()">
 
     <mat-accordion multi *ngFor="let seccion of menuAMostrar()">
       <mat-expansion-panel hideToggle expanded>

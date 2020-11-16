@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
@@ -15,7 +16,7 @@ import { SedesService } from 'src/app/servicios/sedes.service';
   styleUrls: ['./revicion-inscripciones-postulantes.component.css']
 })
 export class RevicionInscripcionesPostulantesComponent implements OnInit {
-  columnasAMostrar: string[] = ['id', 'persona', 'accion'];
+  columnasAMostrar: string[] = ['id', 'cedula', 'carrera', 'estado', 'accion'];
   sedeDataSource = new MatTableDataSource([]);
 
   Elusuario: UsuarioDTO;
@@ -24,33 +25,28 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
   ciLogeado: string = JSON.parse(localStorage.getItem("loginData")).cedula;
   verDocumentacion: boolean = false;
   postulanteSeleccionado: PostulanteDTO;
-
+  sedeOk: boolean = undefined;
+  
   constructor(protected administrativoServ: AdministrativosService, protected sedesServ: SedesService, private _snackBar: MatSnackBar, protected postulanteServ: PostulanteService) { }
 
   ngOnInit(): void {
     this.administrativoServ.get(this.ciLogeado).subscribe(
-      (datos) => {
-        let id = datos.id
-        if (id != null) {
-          this.sedesServ.getSedes(id).subscribe(
+      (datosSede) => {
+        this.sedeOk = datosSede.id != null;
+        if (this.sedeOk) {
+          this.sedesServ.getSedes(datosSede.id).subscribe(
             (datos) => {
               this.sedeDataSource.data = datos;
             }, (error) => {
+              openSnackBar(this._snackBar, "Error al obtener los postulantes de la sede");
             }
           );
         }
       },
       (error) => {
-        this.openSnackBar("No se pudieron traer datos de la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar los datos");
       }
     )
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

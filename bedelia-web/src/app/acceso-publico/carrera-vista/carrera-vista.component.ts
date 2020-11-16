@@ -9,6 +9,7 @@ import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { PreviasDTO } from 'src/app/clases/previas-dto';
 import { SedeDTO } from 'src/app/clases/sede-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 
 
@@ -19,7 +20,7 @@ import { CarreraService } from 'src/app/servicios/carrera.service';
 })
 export class CarreraVistaComponent implements OnInit {
   // columnas que se mostraran en la tabla
-  columnasAMostrar: string[] = ['nombre'];
+  columnasAMostrar: string[] = ['nombre', 'semestre', 'creditos', 'optativo'];
   // objeto que necesita la tabla para mostrar el contenido
   cursoDataSource = new MatTableDataSource([]);
 
@@ -74,7 +75,7 @@ export class CarreraVistaComponent implements OnInit {
           );
         },
         (error) => {
-          this.openSnackBar("No se pudo cargar los datos desde la Base de dato");
+          openSnackBar(this._snackBar, "No se pudo cargar los datos");
           this.carrera = null;
         }
       );
@@ -122,11 +123,4 @@ export class CarreraVistaComponent implements OnInit {
     this.semestreOk = true;
   }
 
-  openSnackBar(mensaje : string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

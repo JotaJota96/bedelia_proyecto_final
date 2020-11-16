@@ -2543,6 +2543,11 @@
                     "id": {
                         "type": "integer"
                     },
+                    "estado": {
+                        "description": "A = Aceptada, R = Rechazada, N = NotificacionEnviada, null = ninguna de las anteriores",
+                        "type": "string",
+                        "readOnly": "true"
+                    },
                     "img_ci": {
                         "type": "string"
                     },
@@ -2693,6 +2698,9 @@
                     "acta_confirmada": {
                         "type": "boolean",
                         "readOnly": true
+                    },
+                    "periodo": {
+                        "type": "string"
                     },
                     "curso": {
                         "$ref": "#/components/schemas/CursoDTO"

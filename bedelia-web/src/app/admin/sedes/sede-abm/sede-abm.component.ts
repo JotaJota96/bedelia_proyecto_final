@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DireccionDTO } from 'src/app/clases/direccion-dto';
 import { SedeDTO} from 'src/app/clases/sede-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { SedesService } from 'src/app/servicios/sedes.service';
 
 const DEPARTAMENTOS:string[] = [
@@ -53,7 +54,7 @@ export class SedeABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) =>{
-          this.openSnackBar("No se pudieron cargar la sede desde la base de dato");
+          openSnackBar(this._snackBar, "No se pudieron cargar la sede");
         }
       );
     }
@@ -107,16 +108,9 @@ export class SedeABMComponent implements OnInit {
         this.router.navigate(['/admin/sede']);
       },
       (error) =>{
-        this.openSnackBar("No se pudo crear la sede");
+        openSnackBar(this._snackBar, "No se pudo crear la sede");
       }
     );
   }
   
-  openSnackBar(mensaje : string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

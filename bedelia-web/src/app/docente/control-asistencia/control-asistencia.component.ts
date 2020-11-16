@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ClaseDictadaDTO } from 'src/app/clases/clase-dictada-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
@@ -43,7 +44,7 @@ export class ControlAsistenciaComponent implements OnInit {
       (datos) => {
         this.listaCurso = datos;
       }, (error) => {
-        this.openSnackBar("No se pudo cargar los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
       }
     );
 
@@ -60,6 +61,7 @@ export class ControlAsistenciaComponent implements OnInit {
       }
     });
 
+    this.claseDictada = undefined;
     
     this.edicionServ.getEstudiantesCurso(this.formulario.controls['curso'].value).subscribe(
       (datos)=>{
@@ -79,16 +81,9 @@ export class ControlAsistenciaComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error)=>{
-        this.openSnackBar("Error al registrar las asistencias");
+        openSnackBar(this._snackBar, "Error al registrar las asistencias");
       }
     );
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }
