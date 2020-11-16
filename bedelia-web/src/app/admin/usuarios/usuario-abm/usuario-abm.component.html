@@ -93,6 +93,7 @@
             <mat-card-actions align="end">
                 <button mat-raised-button color="primary" [routerLink]="['/admin/usuarios']">Volver</button>
                 <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid" (click)="agregar()">Crear</button>
+                <mat-spinner class="mr-2" diameter="30" *ngIf="enviandoDatos"></mat-spinner>
             </mat-card-actions>
         </mat-card>
     </div>

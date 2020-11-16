@@ -64,6 +64,7 @@ export class UsuarioABMComponent implements OnInit {
   listaSedes: SedeDTO[];
   esAdministrativo: boolean = false;
   sedeSeleccionada:SedeDTO = null;
+  enviandoDatos:boolean = false;
 
   public formulario: FormGroup;
 
@@ -160,6 +161,8 @@ export class UsuarioABMComponent implements OnInit {
   }
 
   agregar() {
+    this.enviandoDatos = true;
+
     let usu: UsuarioDTO = new UsuarioDTO();
     usu.persona = new PersonaDTO();
     usu.persona.direccion = new DireccionDTO();
@@ -193,15 +196,19 @@ export class UsuarioABMComponent implements OnInit {
           this.adminisServ.asignar(sede, this.formulario.controls['cedula'].value).subscribe(
             (datos) => {
               this.formulario.controls['sede'].setValue(undefined);
+              this.router.navigate(['/admin/usuarios']);
             },
             (error) => {
+              this.enviandoDatos = false;
               openSnackBar(this._snackBar, "No se pudo asignar la sede")
             }
           );
+        }else{
+          this.router.navigate(['/admin/usuarios']);
         }
-        this.router.navigate(['/admin/usuarios']);
       },
       (error) => {
+        this.enviandoDatos = false;
         openSnackBar(this._snackBar, "No se pudo crear el usuario")
       }
     );
