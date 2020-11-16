@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from './servicios/usuarios.service';
 
@@ -94,6 +94,8 @@ const MENU_ESTUDIANTE:MenuSection[] = [
 })
 export class AppComponent {
   
+  menuMode:string = "side";
+  
   constructor(
     protected UsuServ:UsuariosService,
     private router:Router) { }
@@ -126,5 +128,14 @@ export class AppComponent {
   logout(){
     this.UsuServ.logout();
     this.router.navigate(['/']);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth >= 992){
+      this.menuMode = "side";
+    }else{
+      this.menuMode = "over";
+    }
   }
 }
