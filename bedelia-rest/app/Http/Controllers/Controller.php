@@ -338,6 +338,7 @@ class Controller extends BaseController
      *     @OA\Property(property="tipo",            type="string",  readOnly=true, description="EX = examen, LE = cursos"),
      *     @OA\Property(property="fecha",           type="string",  readOnly=true, description="Fecha del examen (si tipo = EX)"),
      *     @OA\Property(property="acta_confirmada", type="boolean", readOnly=true),
+     *     @OA\Property(property="periodo",         type="string"),
      *     @OA\Property(
      *         property="curso",
      *         ref="#/components/schemas/CursoDTO",

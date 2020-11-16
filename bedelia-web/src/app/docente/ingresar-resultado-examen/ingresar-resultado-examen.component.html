@@ -37,6 +37,7 @@
                             <mat-list role="list" class="m-auto">
                                 <mat-list-item role="listitem">ID: </mat-list-item>
                                 <mat-list-item role="listitem">Tipo de acta: </mat-list-item>
+                                <mat-list-item role="listitem">Período: </mat-list-item>
                                 <mat-list-item role="listitem">Confirmada: </mat-list-item>
                                 <mat-list-item role="listitem" *ngIf="acta.tipo == 'EX'">Fecha del exámen: </mat-list-item>
                             </mat-list>
@@ -45,6 +46,7 @@
                             <mat-list role="list" class="m-auto">
                                 <mat-list-item role="listitem">{{ acta.id }}</mat-list-item>
                                 <mat-list-item role="listitem">{{ acta.tipo | tipoActa }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ acta.periodo }}</mat-list-item>
                                 <mat-list-item role="listitem">{{ acta.acta_confirmada== true ? 'si' : 'no' }}</mat-list-item>
                                 <mat-list-item role="listitem" *ngIf="acta.tipo == 'EX'">{{ acta.fecha | date:'dd/MM/yyyy' | fechaNull }}</mat-list-item>
                             </mat-list>

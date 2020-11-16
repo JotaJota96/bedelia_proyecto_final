@@ -2699,6 +2699,9 @@
                         "type": "boolean",
                         "readOnly": true
                     },
+                    "periodo": {
+                        "type": "string"
+                    },
                     "curso": {
                         "$ref": "#/components/schemas/CursoDTO"
                     },
