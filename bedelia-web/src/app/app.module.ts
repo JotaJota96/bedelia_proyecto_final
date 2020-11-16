@@ -68,6 +68,7 @@ import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-
 import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
 import { DescripcionInscripcionCursoPipe } from './pipes/descripcion-inscripcion-curso.pipe';
 import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcion-examen.pipe';
+import { EstadoPostulacionPipe } from './pipes/estado-postulacion.pipe';
 
 
 @NgModule({
@@ -115,6 +116,7 @@ import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcio
     VerificacionEscolaridadComponent,
     DescripcionInscripcionCursoPipe,
     DescripcionInscripcionExamenPipe,
+    EstadoPostulacionPipe,
   ],
   imports: [
     MatStepperModule,

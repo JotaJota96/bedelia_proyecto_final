@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class UsuariosComponent implements OnInit {
       (datos) => {
         this.usuariosDataSource.data = datos;
       }, (error) => {
-        this.openSnackBar("No se pudieron cargar los usuarios de la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar los usuarios");
       }
     );
     // Defino una funcion de filtrado personalizada
@@ -37,14 +38,6 @@ export class UsuariosComponent implements OnInit {
   aplicarFiltro(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.usuariosDataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { openSnackBar } from 'src/app/global-functions';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class CarreraComponent implements OnInit {
       (datos) => {
         this.carreraDataSource.data = datos;
       }, (error) => {
-        this.openSnackBar("No se pudieron cargar las carreras desde la base de dato");
+        openSnackBar(this._snackBar, "No se pudieron cargar las carreras");
       }
     );
   }
@@ -32,11 +33,4 @@ export class CarreraComponent implements OnInit {
     this.carreraDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

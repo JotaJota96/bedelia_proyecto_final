@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { error } from 'protractor';
+import { openSnackBar } from 'src/app/global-functions';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 
 @Component({
@@ -30,7 +31,7 @@ export class VerificacionEscolaridadComponent implements OnInit {
     //     this.estudianteServ.getEscolaridadPDFCodigo(this.formulario.controls['codigo'].value);
     //   },
     //   (error)=>{
-    //     this.openSnackBar("El codigo de verificacion no es valido");
+    //     openSnackBar(this._snackBar, "El codigo de verificacion no es valido");
     //   }
     // );
     this.mostrarSpinner = true;
@@ -49,16 +50,9 @@ export class VerificacionEscolaridadComponent implements OnInit {
       },
       (error)=>{
         this.mostrarSpinner = false;
-        this.openSnackBar("El codigo de verificacion no es valido");
+        openSnackBar(this._snackBar, "El codigo de verificación no es válido");
       }
     );
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

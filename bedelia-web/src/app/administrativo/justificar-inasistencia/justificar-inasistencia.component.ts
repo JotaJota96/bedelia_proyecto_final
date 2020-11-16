@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { UsuarioDTO } from 'src/app/clases/usuario-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -43,13 +44,26 @@ export class JustificarInasistenciaComponent implements OnInit {
   }
 
   buscar(){
-    this.mostrarDatos = true;
     this.usuServ.get(this.formulario.controls['ci'].value).subscribe(
       (datos)=>{
-        this.persona = datos.persona;
+        let esEstudiante = false;
+        datos.roles.forEach(element => {
+          if(element == "estudiante"){
+            esEstudiante = true;
+          }
+        });
+
+        if(esEstudiante){
+          this.persona = datos.persona;
+          this.mostrarDatos = true;
+        }else{
+          this.mostrarDatos = false;
+          openSnackBar(this._snackBar, "Error al cargar los datos del estudiante");
+        }
       },
       (error)=>{
-        this.openSnackBar("Error al traer los datos del estudiante");
+        this.mostrarDatos = false;
+        openSnackBar(this._snackBar, "Error al cargar los datos del estudiante");
       }
     );
   }
@@ -60,17 +74,10 @@ export class JustificarInasistenciaComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error)=>{
-        this.openSnackBar("Error al justificar las inasistencias")
+        openSnackBar(this._snackBar, "Error al justificar las inasistencias")
       }
     );
     
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

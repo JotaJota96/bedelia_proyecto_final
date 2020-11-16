@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from './servicios/usuarios.service';
 
@@ -60,8 +60,8 @@ const MENU_DOCENTE:MenuSection[] = [
   {
     nombre: "Área docente",
     items: [
-      {nombre: "Ingresar resultados de exámenes", link: "docente/ingreso/resultados-examen"},
       {nombre: "Ingresar resultados de cursos",   link: "docente/ingreso/resultados-curso"},
+      {nombre: "Ingresar resultados de exámenes", link: "docente/ingreso/resultados-examen"},
       {nombre: "Control de asistencia",           link: "docente/control-asistencia"},
     ],
   }, {
@@ -93,6 +93,8 @@ const MENU_ESTUDIANTE:MenuSection[] = [
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
+  menuMode:string = "side";
   
   constructor(
     protected UsuServ:UsuariosService,
@@ -126,5 +128,14 @@ export class AppComponent {
   logout(){
     this.UsuServ.logout();
     this.router.navigate(['/']);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth >= 992){
+      this.menuMode = "side";
+    }else{
+      this.menuMode = "over";
+    }
   }
 }

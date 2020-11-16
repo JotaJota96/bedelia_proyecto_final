@@ -22,4 +22,7 @@ export class ModalInformarComponent implements OnInit {
   enviar(){
     this.dialogRef.close(this.formulario.controls['mensaje'].value);
   }
+  cerrar(){
+    this.dialogRef.close();
+  }
 }

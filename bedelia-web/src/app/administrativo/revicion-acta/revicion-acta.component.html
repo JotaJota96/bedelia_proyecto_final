@@ -1,7 +1,13 @@
 <div class="container">
+    <h1 class="mt-2">Revisión de actas</h1>
+    <mat-card class="mt-2">
+        <mat-spinner class="mx-auto mt-5" *ngIf="sedeOk == undefined"></mat-spinner>
 
-    <mat-card class="mt-5">
-        <mat-card-content>
+        <mat-card-content *ngIf="sedeOk == false">
+            <p>No puede realizar esta accion debido a que no tiene una sede asignada</p>
+        </mat-card-content>
+        
+        <mat-card-content *ngIf="sedeOk == true">
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Lista de actas de curso" name="ActaCurso" formControlName="ActaCurso">
@@ -12,58 +18,90 @@
                 </mat-form-field>
 
                 <div class="col-12 col-md-2 m-auto" align="end">
-                    <button mat-raised-button (click)="buscar()" color="primary">Seleccionar acta</button>
+                    <button mat-raised-button [disabled]="!formulario.valid" (click)="buscar()" color="primary">Seleccionar</button>
                 </div>
             </form>
         </mat-card-content>
-    </mat-card>
 
-    <mat-card class="mt-2" *ngIf="actaSeleccionada != null">
-        <mat-card-content class="row">
-            <button class="ml-3" color="primary" [disabled]="actaSeleccionada.acta_confirmada == true" mat-raised-button (click)="confirmar()">Confirmar acta</button>
-        </mat-card-content>
         <mat-card-content>
-            <mat-card><p>ID Acta:  {{actaSeleccionada.id}}</p></mat-card>
-            <mat-card><p>Tipo Acta:  {{actaSeleccionada.tipo | tipoActa}}</p></mat-card>
-            <mat-card *ngIf="actaSeleccionada.tipo != 'LE'"><p>Fecha Acta:  {{actaSeleccionada.fecha}}</p></mat-card>
+
+            <mat-card class="mt-2" *ngIf="actaSeleccionada != null">
+                <mat-card-header>
+                    <mat-card-title>
+                        {{ actaSeleccionada.curso.nombre }}
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-list role="list" class="m-auto">
+                                <mat-list-item role="listitem">ID: </mat-list-item>
+                                <mat-list-item role="listitem">Tipo de acta: </mat-list-item>
+                                <mat-list-item role="listitem">Período: </mat-list-item>
+                                <mat-list-item role="listitem">Confirmada: </mat-list-item>
+                                <mat-list-item role="listitem" *ngIf="actaSeleccionada.tipo == 'EX'">Fecha del exámen: </mat-list-item>
+                            </mat-list>
+                        </div>
+                        <div class="col-6">
+                            <mat-list role="list" class="m-auto">
+                                <mat-list-item role="listitem">{{ actaSeleccionada.id }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ actaSeleccionada.tipo | tipoActa }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ actaSeleccionada.periodo }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ actaSeleccionada.acta_confirmada== true ? 'si' : 'no' }}</mat-list-item>
+                                <mat-list-item role="listitem" *ngIf="actaSeleccionada.tipo == 'EX'">{{ actaSeleccionada.fecha | date:'dd/MM/yyyy' | fechaNull }}</mat-list-item>
+                            </mat-list>
+                        </div>
+                    </div>
+                </mat-card-content>
+        
+                <mat-card-content>
+                    <!-- Tabla -->
+                    <table mat-table [dataSource]="notasDataSource" class="col-12">
+                        <!-- Columna -->
+                        <ng-container matColumnDef="cedula">
+                            <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
+                        </ng-container>
+
+                        <!-- Columna -->
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                        </ng-container>
+
+                        <!-- Columna -->
+                        <ng-container matColumnDef="apellido">
+                            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+                            <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+                        </ng-container>
+
+                        <!-- Columna -->
+                        <ng-container matColumnDef="nota">
+                            <th mat-header-cell *matHeaderCellDef> Nota </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nota | nota}} </td>
+                        </ng-container>
+
+                        <!-- Definicion de columnas y filas, o algo asi-->
+                        <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+
+                        <!-- Esto se muestra si la tabla esta vacia -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No hay ningún estudiante inscripto</td>
+                        </tr>
+                    </table>
+                </mat-card-content>
+
+                <mat-card-actions align="end" class="pr-5">
+                </mat-card-actions>
+            </mat-card>
+
         </mat-card-content>
-        <mat-card-content>
-            <!-- Tabla -->
-            <table mat-table [dataSource]="usuariosDataSource" class="col-12">
-                <!-- Columna -->
-                <ng-container matColumnDef="cedula">
-                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                    <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
-                </ng-container>
 
-                <!-- Columna -->
-                <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                </ng-container>
-
-                <!-- Columna -->
-                <ng-container matColumnDef="apellido">
-                    <th mat-header-cell *matHeaderCellDef> Apellido </th>
-                    <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
-                </ng-container>
-
-                <!-- Columna -->
-                <ng-container matColumnDef="nota">
-                    <th mat-header-cell *matHeaderCellDef> Nota </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nota | nota}} </td>
-                </ng-container>
-
-                <!-- Definicion de columnas y filas, o algo asi-->
-                <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
-
-                <!-- Esto se muestra si la tabla esta vacia -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
-                </tr>
-            </table>
-        </mat-card-content>
+        <mat-card-actions align="end" class="pr-5">
+            <button mat-raised-button color="primary" [routerLink]="['/admin/carrera']">Volver</button>
+            <button class="ml-3" color="primary" *ngIf="actaSeleccionada != null" [disabled]="actaSeleccionada.acta_confirmada == true" mat-raised-button (click)="confirmar()">Confirmar acta</button>
+        </mat-card-actions>
     </mat-card>
 
 </div>

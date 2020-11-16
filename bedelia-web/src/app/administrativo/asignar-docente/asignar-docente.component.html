@@ -1,71 +1,117 @@
 <div class="container">
-    <mat-card class="mt-5">
-        <form [formGroup]="formularioBusqueda" class="row">
-            
-            <mat-form-field class="col-12 col-md-10">
-                <mat-label>Cedula del docente</mat-label>
-                <input matInput name="ci" formControlName="ci">
-            </mat-form-field>
+    <h1 class="mt-2">Asignar docentes</h1>
+    <mat-card class="mt-2">
+        <mat-spinner class="mx-auto mt-5" *ngIf="sedeOk == undefined || (sedeOk == true && (periodoLeOk == undefined || periodoExOk == undefined))"></mat-spinner>
 
-            <div align="center" class="col-12 col-md-2 m-auto">
-                <button [disabled]="!formularioBusqueda.valid" mat-raised-button color="primary"
-                    (click)="buscar()">Buscar</button>
-            </div>
+        <mat-card-content *ngIf="periodoLeOk == false && periodoExOk == false">
+            <p>Actualmente no se puede asignar docente</p>
+            <p>La asignación solo se puede realizar durante los períodos de exámenes, cursos, o de inscripción a los mismos.</p>
+        </mat-card-content>
 
-        </form>
-        <form [formGroup]="formularioAsignar" class="row">
-            <div class="col-12 col-md-10">
-                <mat-form-field [style.width.%]=100>
-                    <mat-select placeholder="Lista de curso sin docentes" name="curso" formControlName="curso">
-                        <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
-                            {{curso.curso.nombre}}
-                        </mat-option>
-                    </mat-select>
+        <mat-card-content *ngIf="sedeOk == false">
+            <p>No puede realizar esta accion debido a que no tiene una sede asignada</p>
+        </mat-card-content>
+        
+        <mat-card-content *ngIf="periodoLeOk == true || periodoExOk == true">
+            <form [formGroup]="formularioBusqueda" class="row">
+                <mat-form-field class="col-12 col-md-10">
+                    <mat-label>Cedula del docente</mat-label>
+                    <input matInput name="ci" formControlName="ci">
                 </mat-form-field>
-            </div>
-            
-            <div align="center" class="col-12 col-md-2 m-auto">
-                <button  mat-raised-button color="primary" (click)="asignarCurso()">Asignar curso</button>
-            </div>
+                <div align="center" class="col-12 col-md-2 m-auto">
+                    <button [disabled]="!formularioBusqueda.valid" mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+                </div>
+            </form>
 
-            <div class="col-12 col-md-10">
-                <mat-form-field [style.width.%]=100>
-                    <mat-select placeholder="Lista de examenes sin docentes" name="examen" formControlName="examen">
-                        <mat-option *ngFor="let examen of listaExamen" [value]="examen.id">
-                            {{examen.curso.nombre}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div align="center" class="col-12 col-md-2 m-auto">
-                <button mat-raised-button color="primary" (click)="asignarExamen()">Asignar examen</button>
-            </div>
-        </form>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Asignar a curso</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content *ngIf="periodoLeOk == false">
+                    <p>Actualmente no hay ningun período de cursos o de inscripcion a cursos vigente.</p>
+                </mat-card-content>
+                
+                <mat-card-content *ngIf="periodoLeOk == true">
+                    <form [formGroup]="formularioAsignarACurso" class="row">
+                        <div class="col-12 col-md-10">
+                            <mat-form-field [style.width.%]=100>
+                                <mat-select placeholder="Seleccione un curso" name="curso" formControlName="curso">
+                                    <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
+                                        {{curso.curso.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div align="center" class="col-12 col-md-2 m-auto">
+                            <button  mat-raised-button color="primary" [disabled]="!mostrarDatos || !formularioAsignarACurso.valid" (click)="asignarCurso()">Asignar</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+
+
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Asignar a exámen</mat-card-title>
+                </mat-card-header>
+                <mat-card-content *ngIf="periodoExOk == false">
+                    <p>Actualmente no hay ningun período de exámenes o de inscripcion a exámenes vigente.</p>
+                </mat-card-content>
+                
+                <mat-card-content *ngIf="periodoExOk == true">
+                    <form [formGroup]="formularioAsignarAExamen" class="row">
+                        <div class="col-12 col-md-10">
+                            <mat-form-field [style.width.%]=100>
+                                <mat-select placeholder="Seleccione un examen" name="examen" formControlName="examen">
+                                    <mat-option *ngFor="let examen of listaExamen" [value]="examen.id">
+                                        {{examen.curso.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div align="center" class="col-12 col-md-2 m-auto">
+                            <button mat-raised-button color="primary" [disabled]="!mostrarDatos || !formularioAsignarAExamen.valid" (click)="asignarExamen()">Asignar</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-card-content>
+
+        <mat-card-actions align="end" class="mt-2">
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+        </mat-card-actions>
     </mat-card>
 
     <mat-card *ngIf="mostrarDatos" class="mt-2">
-        <div class="row">
-            <div class="col-6">
-                <mat-list role="list" class="m-auto">
-                    <mat-list-item role="listitem">Cedula: </mat-list-item>
-                    <mat-list-item role="listitem">Nombre: </mat-list-item>
-                    <mat-list-item role="listitem">Apellido: </mat-list-item>
-                    <mat-list-item role="listitem">Correo: </mat-list-item>
-                    <mat-list-item role="listitem">Sexo: </mat-list-item>
-                    <mat-list-item role="listitem">Fecha Nacimiento: </mat-list-item>
-                </mat-list>
+        <mat-card-header>
+            <mat-card-title>Datos del docente</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="row">
+                <div class="col-6">
+                    <mat-list role="list" class="m-auto">
+                        <mat-list-item role="listitem">Cedula: </mat-list-item>
+                        <mat-list-item role="listitem">Nombre: </mat-list-item>
+                        <mat-list-item role="listitem">Apellido: </mat-list-item>
+                        <mat-list-item role="listitem">Correo: </mat-list-item>
+                        <mat-list-item role="listitem">Sexo: </mat-list-item>
+                        <mat-list-item role="listitem">Fecha Nacimiento: </mat-list-item>
+                    </mat-list>
+                </div>
+                <div class="col-6">
+                    <mat-list role="list" class="m-auto">
+                        <mat-list-item role="listitem">{{persona.cedula}}</mat-list-item>
+                        <mat-list-item role="listitem">{{persona.nombre}}</mat-list-item>
+                        <mat-list-item role="listitem">{{persona.apellido}}</mat-list-item>
+                        <mat-list-item role="listitem">{{persona.correo}}</mat-list-item>
+                        <mat-list-item role="listitem">{{persona.sexo | sexo}}</mat-list-item>
+                        <mat-list-item role="listitem">{{persona.fecha_nac | date:'dd/MM/yyyy'}}
+                        </mat-list-item>
+                    </mat-list>
+                </div>
             </div>
-            <div class="col-6">
-                <mat-list role="list" class="m-auto">
-                    <mat-list-item role="listitem">{{persona.cedula}}</mat-list-item>
-                    <mat-list-item role="listitem">{{persona.nombre}}</mat-list-item>
-                    <mat-list-item role="listitem">{{persona.apellido}}</mat-list-item>
-                    <mat-list-item role="listitem">{{persona.correo}}</mat-list-item>
-                    <mat-list-item role="listitem">{{persona.sexo | sexo}}</mat-list-item>
-                    <mat-list-item role="listitem">{{persona.fecha_nac | date:'dd/MM/yyyy'}}
-                    </mat-list-item>
-                </mat-list>
-            </div>
-        </div>
+        </mat-card-content>
     </mat-card>
 </div>

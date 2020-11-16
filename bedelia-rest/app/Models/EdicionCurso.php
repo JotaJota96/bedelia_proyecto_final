@@ -70,6 +70,7 @@ class EdicionCurso extends Model
             "id"              => $this->id,
             "tipo"            => 'LE',
             "acta_confirmada" => $this->acta_confirmada,
+            "periodo"         => $this->periodoLectivo->periodo->toString(),
             "fecha"           => null,
             "curso"           => $this->curso,
             "notas"           => array(),
