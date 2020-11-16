@@ -7,7 +7,11 @@
           <p>Actualmente no hay ningun período de cursos vigente.</p>
         </mat-card-content>
     
-        <mat-card-content *ngIf="periodoOk == true">
+        <mat-card-content *ngIf="periodoOk == true && listaCurso.length == 0">
+            <p>Actualmente no tiene asignado ningún curso</p>
+          </mat-card-content>
+
+        <mat-card-content *ngIf="periodoOk == true && listaCurso.length > 0">
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Seleccione un curso" name="curso" formControlName="curso">
