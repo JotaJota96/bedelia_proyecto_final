@@ -23,7 +23,7 @@ services:
         depends_on:
             - db
         ports:
-            - 8080:80
+            - 8081:80
         networks:
             laravel_net:
                 ipv4_address: 172.16.100.8
@@ -42,6 +42,34 @@ services:
         networks:
             laravel_net:
                 ipv4_address: 172.16.100.10
+    web:
+        build:
+            context: ./bedelia-web
+            dockerfile: DockerFile
+        container_name: bedelia-web
+        depends_on:
+            - rest
+        ports:
+            - 80:80
+        volumes:
+            - ./bedelia-web/dist/bedelia-web:/var/www/html
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.11
+    pwa:
+        build:
+            context: ./bedelia-pwa
+            dockerfile: DockerFile
+        container_name: bedelia-pwa
+        depends_on:
+            - rest
+        ports:
+            - 8080:80
+        volumes:
+            - ./bedelia-pwa/dist/bedelia-pwa:/var/www/html
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.12
 
 networks:
     laravel_net:
