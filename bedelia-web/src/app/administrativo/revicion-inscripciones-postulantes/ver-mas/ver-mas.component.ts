@@ -20,6 +20,7 @@ export class VerMasComponent implements OnInit {
   postulante: PostulanteDTO = undefined;
   persona: PersonaDTO = undefined;
   permitirAcciones: boolean = false;
+  enviandoDatos:boolean = false;
 
   ngOnInit(): void {
 
@@ -43,12 +44,15 @@ export class VerMasComponent implements OnInit {
       if (result == undefined) return; // le dio 'Volver'
       let elMensaje = result;
       openSnackBar(this._snackBar, "Enviando mensaje...", 'ok');
+      this.enviandoDatos = true;
 
       this.postulanteServis.notificar(this.postulante.id, elMensaje).subscribe(
         (datos) => {
+          this.enviandoDatos = false;
           openSnackBar(this._snackBar, "El mensaje fue enviado correctamente", 'ok');
         },
         (error) => {
+          this.enviandoDatos = false;
           openSnackBar(this._snackBar, "No se pudo mandar el mensaje");
         }
       )
@@ -67,11 +71,13 @@ export class VerMasComponent implements OnInit {
   }
 
   aceptar() {
+    this.enviandoDatos = true;
     this.postulanteServis.aceptar(this.postulante.id).subscribe(
       (datos) => {
         this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
+        this.enviandoDatos = false;
         openSnackBar(this._snackBar, "No se pudo aceptar la postulacion");
       }
     );
