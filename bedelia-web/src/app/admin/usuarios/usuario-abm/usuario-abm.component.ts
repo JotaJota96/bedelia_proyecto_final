@@ -161,6 +161,13 @@ export class UsuarioABMComponent implements OnInit {
   }
 
   agregar() {
+    if (this.esAdministrativo == true) {
+      if(this.formulario.controls['sede'].value == undefined){
+        openSnackBar(this._snackBar, "Se debe seleccionar una sede")
+        return;
+      }
+    }
+    
     this.enviandoDatos = true;
 
     let usu: UsuarioDTO = new UsuarioDTO();
@@ -180,13 +187,6 @@ export class UsuarioABMComponent implements OnInit {
     usu.persona.direccion.calle = this.formulario.controls['calle'].value;
     usu.persona.direccion.numero = this.formulario.controls['numero'].value;
     usu.persona.fecha_nac = formatDate(usu.persona.fecha_nac, 'yyyy-MM-dd', 'en-US');
-    
-    if (this.esAdministrativo == true) {
-      if(this.formulario.controls['sede'].value == undefined){
-        openSnackBar(this._snackBar, "Se debe seleccionar una sede")
-        return;
-      }
-    }
     
     let sede: SedeDTO = this.formulario.controls['sede'].value;
 
