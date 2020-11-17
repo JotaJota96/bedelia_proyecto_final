@@ -82,6 +82,7 @@
       <button mat-raised-button color="warn"                [disabled]="!permitirAcciones" (click)="rechasar()">Rechasar</button>
       <button mat-raised-button class="btn-color-notificar" [disabled]="!permitirAcciones" (click)="informarProblema()">Informar problema</button>
       <button mat-raised-button color="primary"             [disabled]="!permitirAcciones" (click)="aceptar()">Aceptar</button>
+      <mat-spinner class="mr-2" diameter="30" *ngIf="enviandoDatos"></mat-spinner>
     </mat-card-actions>
 
   </mat-card>

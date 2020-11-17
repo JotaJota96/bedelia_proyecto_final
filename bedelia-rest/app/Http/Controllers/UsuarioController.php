@@ -226,7 +226,7 @@ class UsuarioController extends Controller
             'destinatario' => $usu->persona->correo,
             'nombre'       => $usu->persona->nombre,
             'usuario'      => $usu->persona->cedula,
-            'contrasenia'  => $usu->contrasenia,
+            'contrasenia'  => Crypt::decrypt($usu->contrasenia),
         ];
         \App\Mail\CorreoBienvenida::enviar($mailData);
 

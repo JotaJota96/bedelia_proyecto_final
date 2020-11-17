@@ -9,8 +9,8 @@
   </div>
   <div class="row m-0 p-0 justify-content-end col-7 col-sm-5 col-md-4">
     <button mat-raised-button [routerLink]="['/']">Inicio</button>
-    <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Iniciar sesión</button>
-    <button mat-raised-button *ngIf="logeado()" (click)="logout()">Cerrar sesion</button>
+    <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Ligin</button>
+    <button mat-raised-button *ngIf="logeado()" (click)="logout()">Logout</button>
   </div>
 </mat-toolbar>
 
