@@ -353,7 +353,7 @@ class PostulantesController extends Controller
                     'nombre'        => $usu->persona->nombre,
                     'nombreCarrera' => $insc->carrera->nombre,
                     'usuario'       => $usu->persona->cedula,
-                    'contrasenia'   => $usu->persona->cedula,
+                    'contrasenia'   => Crypt::decrypt($usu->contrasenia),
                 ];
                 if ($reciclarUsuario){
                     $mailData = [
