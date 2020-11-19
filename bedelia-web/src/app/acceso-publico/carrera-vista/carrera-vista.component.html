@@ -24,7 +24,7 @@
           <mat-card-content>
             <div [innerHTML]="carrera.descripcion"></div>
           </mat-card-content>
-          
+
           <mat-divider></mat-divider>
 
           <h2 class="ml-3 mt-4 mb-2">Duración de la carrera</h2>
@@ -71,29 +71,29 @@
                 <th mat-header-cell *matHeaderCellDef> Nombre </th>
                 <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
               </ng-container>
-            
+
               <!-- Columna -->
               <ng-container matColumnDef="semestre">
                 <th mat-header-cell *matHeaderCellDef> Semestre </th>
                 <td mat-cell *matCellDef="let element"> {{element.semestre}} </td>
               </ng-container>
-            
+
               <!-- Columna -->
               <ng-container matColumnDef="creditos">
                 <th mat-header-cell *matHeaderCellDef> Créditos </th>
                 <td mat-cell *matCellDef="let element"> {{element.cant_creditos}} </td>
               </ng-container>
-            
+
               <!-- Columna -->
               <ng-container matColumnDef="optativo">
                 <th mat-header-cell *matHeaderCellDef> Optativo </th>
                 <td mat-cell *matCellDef="let element"> {{element.optativo ? "Si" : "No"}} </td>
               </ng-container>
-            
+
               <!-- Definicion de columnas y filas, o algo asi-->
               <tr mat-header-row *matHeaderRowDef="columnasAMostrar;sticky: true"></tr>
               <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
-            
+
               <!-- Esto se muestra si la tabla esta vacia -->
               <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
@@ -112,35 +112,36 @@
           </mat-card-header>
           <mat-card-content>
             <mat-spinner class="m-auto" *ngIf="mostrarGrafo() == undefined"></mat-spinner>
-          
+
             <div *ngIf="mostrarGrafo() == false">
               <span class="m-auto">
                 No se han definido las previas para los cursos de esta carrera
               </span>
             </div>
-          
+
             <div *ngIf="mostrarGrafo() == true" class="graph-container">
-              <ngx-graph class="chart-container" 
-              [autoCenter]="true" 
-              [zoomLevel]="0.2" 
-              [links]="links" 
-              [nodes]="nodes" 
+              <ngx-graph class="chart-container"
+              [autoCenter]="true"
+              [zoomLevel]="0.2"
+              [draggingEnabled]="false"
+              [links]="links"
+              [nodes]="nodes"
               [clusters]="semestre"
               layout="dagreCluster">
-              
+
                 <ng-template #defsTemplate>
                   <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
                     <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
                   </svg:marker>
                 </ng-template>
-          
+
                 <ng-template #clusterTemplate let-cluster>
                   <svg:g class="node cluster" ngx-tooltip>
                     <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height"
                       [attr.fill]="cluster.data.color" />
                   </svg:g>
                 </ng-template>
-          
+
                 <ng-template #nodeTemplate let-node>
                   <svg:g class="node" ngx-tooltip>
                     <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
@@ -150,7 +151,7 @@
                     </svg:text>
                   </svg:g>
                 </ng-template>
-          
+
                 <ng-template #linkTemplate let-link>
                   <svg:g class="edge">
                     <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
