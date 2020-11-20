@@ -1,10 +1,8 @@
-.example-spacer {
-  flex: 1 1 auto;
-}
-.example-container {
+
+.main-container {
   width: 100%;
-  height: 100%;
-  border: 1px solid #555;
+  /*la altura del contenedor será el 100% - la altura de la navbar*/
+  height:calc(100% - 64px);
 }
 .mat-raised-button{
   margin: 5px;

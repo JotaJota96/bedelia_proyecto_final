@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -17,12 +18,11 @@ export class LoginComponent implements OnInit {
   public formulario: FormGroup;
   public formularioRol: FormGroup;
 
-  public mostrarErrorLogin: boolean = false;
   public roles: String[];
   public datosLogin:LoginResponseDTO;
 
-  constructor(
-    protected usuServ:UsuariosService, 
+  constructor(private _snackBar: MatSnackBar,
+    protected accServ:UsuariosService, 
     private router:Router) {
   }
 
@@ -44,8 +44,15 @@ export class LoginComponent implements OnInit {
   }
   eleguirRol(){
     let rol:String = this.formularioRol.controls['rol'].value;
-    this.usuServ.almacenarDatosLogin(this.datosLogin, rol);
+    this.accServ.almacenarDatosLogin(this.datosLogin, rol);
     this.router.navigate(['/']);
+  }
+
+  keyDownFunction(event, accion:string) {
+    if (event.keyCode === 13) {
+      if (accion == 'login') this.login();
+      if (accion == 'eleguirRol') this.eleguirRol();
+    }
   }
 
   login(){
@@ -54,14 +61,13 @@ export class LoginComponent implements OnInit {
     datosLogin.id = this.formulario.controls['usuario'].value;
     datosLogin.contrasenia = this.formulario.controls['contrasenia'].value;
 
-    this.usuServ.login(datosLogin).subscribe(
+    this.accServ.login(datosLogin).subscribe(
       (retorno)=>{
         // si login es correcto
         this.datosLogin = retorno;
         this.roles = retorno.roles
 
         this.vaciarCampos();
-        this.mostrarErrorLogin = false;
         this.titulo = "Seleccione un rol"
 
         // si tiene un solo rol, se lo selecciona automaticamente
@@ -71,10 +77,14 @@ export class LoginComponent implements OnInit {
         }
       },
       (error)=>{
-        //datos incorrectos
+        if (error.status == 401){
+          openSnackBar(this._snackBar, "Los datos son incorrectos");
+        }else{
+          openSnackBar(this._snackBar, "Error en la comunicación con el servidor");
+        }
         this.vaciarCampos();
-        this.mostrarErrorLogin = true;
       }
     );
   }
+
 }

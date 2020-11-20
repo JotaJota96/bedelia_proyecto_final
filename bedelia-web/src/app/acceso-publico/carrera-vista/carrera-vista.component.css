@@ -1,0 +1,22 @@
+.barra{
+    background-color: #3f51b5;
+    color: white;
+    /*height: 180px;*/
+}
+.titulo{
+    color: white;
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.3em;
+}
+
+
+.tabla {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.graph-container{
+    height: 400px;
+}

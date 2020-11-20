@@ -1,0 +1,173 @@
+<div class="barra container-fluid">
+  <div class="row">
+    <div class="mx-auto col-12 col-md-10 pt-5">
+      <h1 class="titulo">{{carrera.nombre}}</h1>
+    </div>
+
+    <!-- Boton para postularse-->
+    <div class="mx-auto col-12 col-md-10 py-2 d-flex">
+      <button mat-raised-button class="ml-auto" [routerLink]="['/inscripcion/carrera', carrera.id]">Postularce</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <mat-card class="mt-3">
+    <div class=" row">
+
+      <!-- Descripcion de la carrera -->
+      <div class="col-12 col-lg-8 my-2">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Descripción de la carrera</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div [innerHTML]="carrera.descripcion"></div>
+          </mat-card-content>
+
+          <mat-divider></mat-divider>
+
+          <h2 class="ml-3 mt-4 mb-2">Duración de la carrera</h2>
+          <p>Cantidad de semestres: {{carrera.cant_semestres}} </p>
+        </mat-card>
+      </div>
+
+      <!-- Sedes en las que se dicta -->
+      <div class="col-12 col-lg-4 my-2">
+        <mat-card>
+          <h2 class="mb-2">Sedes en las que se dicta</h2>
+          <mat-list role="list" *ngFor="let item of listaSedes">
+            <mat-list-item role="listitem">{{item.direccion.ciudad}} - {{item.direccion.departamento}}
+            </mat-list-item>
+          </mat-list>
+          <span *ngIf="listaSedes.length == 0" class="m-auto">
+            Por el momento esta carrera no se dicta en nignuna sede
+          </span>
+        </mat-card>
+      </div>
+
+      <!-- Areas de estudio -->
+      <!--
+      <div class="col-12 col-lg-6 mt-1">
+        <mat-card>
+          <h2 class="mb-2">Áreas de estudio</h2>
+          <mat-list role="list" *ngFor="let item of listaAreaEstudo">
+            <mat-list-item role="listitem">{{item.area}}</mat-list-item>
+          </mat-list>
+        </mat-card>
+      </div>
+      -->
+
+      <!-- Tabla de cursos -->
+      <div class="col-12 my-2">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Cursos de la carrera</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="tabla">
+            <table mat-table class="col-12" [dataSource]="cursoDataSource">
+              <!-- Columna -->
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+
+              <!-- Columna -->
+              <ng-container matColumnDef="semestre">
+                <th mat-header-cell *matHeaderCellDef> Semestre </th>
+                <td mat-cell *matCellDef="let element"> {{element.semestre}} </td>
+              </ng-container>
+
+              <!-- Columna -->
+              <ng-container matColumnDef="creditos">
+                <th mat-header-cell *matHeaderCellDef> Créditos </th>
+                <td mat-cell *matCellDef="let element"> {{element.cant_creditos}} </td>
+              </ng-container>
+
+              <!-- Columna -->
+              <ng-container matColumnDef="optativo">
+                <th mat-header-cell *matHeaderCellDef> Optativo </th>
+                <td mat-cell *matCellDef="let element"> {{element.optativo ? "Si" : "No"}} </td>
+              </ng-container>
+
+              <!-- Definicion de columnas y filas, o algo asi-->
+              <tr mat-header-row *matHeaderRowDef="columnasAMostrar;sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+
+              <!-- Esto se muestra si la tabla esta vacia -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
+              </tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+
+      <!-- Tabla de cursos -->
+      <div class="col-12 my-2">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Previaturas</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-spinner class="m-auto" *ngIf="mostrarGrafo() == undefined"></mat-spinner>
+
+            <div *ngIf="mostrarGrafo() == false">
+              <span class="m-auto">
+                No se han definido las previas para los cursos de esta carrera
+              </span>
+            </div>
+
+            <div *ngIf="mostrarGrafo() == true" class="graph-container">
+              <ngx-graph class="chart-container"
+              [autoCenter]="true"
+              [zoomLevel]="0.2"
+              [draggingEnabled]="false"
+              [links]="links"
+              [nodes]="nodes"
+              [clusters]="semestre"
+              layout="dagreCluster">
+
+                <ng-template #defsTemplate>
+                  <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+                    <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                  </svg:marker>
+                </ng-template>
+
+                <ng-template #clusterTemplate let-cluster>
+                  <svg:g class="node cluster" ngx-tooltip>
+                    <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height"
+                      [attr.fill]="cluster.data.color" />
+                  </svg:g>
+                </ng-template>
+
+                <ng-template #nodeTemplate let-node>
+                  <svg:g class="node" ngx-tooltip>
+                    <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
+                      [attr.fill]="node.data.color" />
+                    <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
+                      {{node.label}}
+                    </svg:text>
+                  </svg:g>
+                </ng-template>
+
+                <ng-template #linkTemplate let-link>
+                  <svg:g class="edge">
+                    <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+                    <svg:text class="edge-label" text-anchor="middle">
+                      <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+                        startOffset="50%">
+                        {{link.label}}
+                      </textPath>
+                    </svg:text>
+                  </svg:g>
+                </ng-template>
+              </ngx-graph>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+</div>

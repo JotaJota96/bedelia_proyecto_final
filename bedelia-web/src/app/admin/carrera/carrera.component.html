@@ -1,0 +1,51 @@
+<div class="container">
+    <h1 class="mt-2">Gestión de carreras</h1>
+    <div class="row d-flex">
+        <!-- Campo para escrbir un filtro -->
+        <mat-form-field class="col-6">
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="aplicarFiltro($event)" placeholder="Cédula, correo, nombre o apellido" #input>
+        </mat-form-field>
+    
+        <div class="col-6 mb-2">
+            <button mat-raised-button color="primary" [routerLink]="['/admin/carrera/abm']">Agregar</button>
+        </div>
+    </div>
+    <!-- Tabla -->
+    <table mat-table [dataSource]="carreraDataSource" class="col-12">
+        <!-- Columna -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Columna -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <!-- Columna -->
+        <ng-container matColumnDef="cant_semestres">
+            <th mat-header-cell *matHeaderCellDef> Cantidad de semestres </th>
+            <td mat-cell *matCellDef="let element"> {{element.cant_semestres}} </td>
+        </ng-container>
+
+        <!-- Columna -->
+        <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef> Accion </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button [routerLink]="['/ver/carrera',element.id]">Ver detalle</button>
+            </td>
+        </ng-container>
+
+        <!-- Definicion de columnas y filas, o algo asi-->
+        <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+
+        <!-- Esto se muestra si la tabla esta vacia -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
+        </tr>
+    </table>
+</div>

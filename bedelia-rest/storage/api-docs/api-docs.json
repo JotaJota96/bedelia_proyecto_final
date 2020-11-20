@@ -9,6 +9,1951 @@
         "version": "1.0"
     },
     "paths": {
+        "/administrativos/{ci}/sede/": {
+            "get": {
+                "tags": [
+                    "Administrativos"
+                ],
+                "description": "Devuelve la sede en la que trabaja el usuario administrativo",
+                "operationId": "App\\Http\\Controllers\\AdministrativosController::obtenerSede",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "Cédula del usuario administrativo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la sede donde trabaja el usuario administratvo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Administrativos"
+                ],
+                "description": "Establece la sede en la que trabaja el usuario administrativo",
+                "operationId": "App\\Http\\Controllers\\AdministrativosController::establecerSede",
+                "parameters": [
+                    {
+                        "name": "ci",
+                        "in": "path",
+                        "description": "Cédula del usuario administrativo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SedeDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve la sede donde trabaja el usuario administratvo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/areasEstudio/{id}": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaEstudioDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/areasEstudio": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AreaEstudioDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaEstudioDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/areasEstudio/{id}/cursos": {
+            "get": {
+                "tags": [
+                    "Areas de estudio"
+                ],
+                "description": "Devuelve los cursos que pertenecen al area de estudio",
+                "operationId": "App\\Http\\Controllers\\AreaEstudioController::obtenerCursosPertenecientesAUnArea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/carreras/{id}": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/carreras": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerTodos",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CarreraDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/carreras/{id}/cursos": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "description": "Devuelve la lista de cursos que conforman la carrera",
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerCursosDeCarrera",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/carreras/{id}/previas": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "description": "Devuelve las relaciones de previas entre los cursos que conforman la carrera",
+                "operationId": "App\\Http\\Controllers\\CarrerasController::obtenerPreviasEntreCursosDeCarrera",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PreviaDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/carreras/": {
+            "post": {
+                "tags": [
+                    "Carreras"
+                ],
+                "operationId": "App\\Http\\Controllers\\CarrerasController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarreraCreateDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/cursos/{id}": {
+            "get": {
+                "tags": [
+                    "Cursos"
+                ],
+                "operationId": "App\\Http\\Controllers\\CursoController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CursoDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/cursos": {
+            "get": {
+                "tags": [
+                    "Cursos"
+                ],
+                "operationId": "App\\Http\\Controllers\\CursoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Cursos"
+                ],
+                "operationId": "App\\Http\\Controllers\\CursoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CursoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CursoDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/inscripciones/{ciEstudiante}": {
+            "post": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Inscribe a un estudiante a ediciones de curso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarEstudiante",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante a inscribir",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "ID de los EdicionCurso a los que se inscribirá el estudiante",
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/{id}/docente/{ciDocente}": {
+            "put": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Asigna un docente a una edicion de curso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::asignarDocente",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/docente/{ciDocente}": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "devuelve los EdicionCurso que el docente dicta en el PeriodoLectivo actual",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::CursosDocente",
+                "parameters": [
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EdicionCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/{id}/estudiantes": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Devuelve los estudiantes inscritos al EdicionCurso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::estudiantes",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClaseDictadaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/{id}/clasesDictada": {
+            "post": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Registra una nueva ClaseDictada y la asistencias de los estudiantes",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::Agregar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClaseDictadaDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClaseDictadaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/{ciEstudiante}/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Los EdicionCurso a los que el estudiante puede inscribirse en el PeriodoLectivo actual",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::listarParaInscripcion",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EdicionCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/edicionesCurso/{id}/notas": {
+            "get": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Obtiene las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::ObtenerNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Marca como confirmada el acta del EdicionCurso",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::ConfirmarActa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Ediciones Curso"
+                ],
+                "description": "Registra las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\EdicionesCursoController::IngresarNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del edicion curso",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActaDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/estudiantes/{ciEstudiante}/carreras": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve las carreras a las que está inscripto el estudiante",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::Careras",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve un usuario correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarreraDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/estudiantes/{ciEstudiante}/asistencias": {
+            "put": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "justifica las inasistencias del estudiante para las clases dictadas dentro del rango de fechas",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::JustificarInasistencias",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fecha_inicio": {
+                                        "type": "string"
+                                    },
+                                    "fecha_fin": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve la escolaridad de un estudiante para ser mostraa en frontend",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::obtenerEscolaridad",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos de la escolaridad del estudiante",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EscolaridadDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/estudiantes/{ciEstudiante}/escolaridad/{idCarrera}/pdf": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve la escolaridad de un estudiante como PDF",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::obtenerEscolaridadPDF",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Todavía no se ha definido el objeto"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/estudiantes/escolaridad/{codigo}": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Devuelve la escolaridad basandose en su código de identificacion",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::verificarEscolaridad",
+                "parameters": [
+                    {
+                        "name": "codigo",
+                        "in": "path",
+                        "description": "Código de la escolaridad",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Todavía no se ha definido el objeto"
+                    }
+                }
+            }
+        },
+        "/estudiantes/escolaridad/{codigo}/existe": {
+            "get": {
+                "tags": [
+                    "Estudiantes"
+                ],
+                "description": "Verifica si existe una escolaridad con ese codigo de verificacion",
+                "operationId": "App\\Http\\Controllers\\EstudianteController::verificarCodigoEscolaridad",
+                "parameters": [
+                    {
+                        "name": "codigo",
+                        "in": "path",
+                        "description": "Código de la escolaridad",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Todavía no se ha definido el objeto"
+                    }
+                }
+            }
+        },
+        "/examenes/inscripciones/{ciEstudiante}": {
+            "post": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Inscribe a un estudiante a exámenes",
+                "operationId": "App\\Http\\Controllers\\ExamenController::asignarEstudiante",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante a inscribir",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "ID de los Examenes a los que se inscribirá el estudiante",
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/examenes/{id}/docente/{ciDocente}": {
+            "put": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Asigna un docente a una exámen",
+                "operationId": "App\\Http\\Controllers\\ExamenController::asignarDocente",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del exámen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/examenes/docente/{ciDocente}": {
+            "get": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "devuelve los Examen que el docente toma en el PeriodoExamen actual",
+                "operationId": "App\\Http\\Controllers\\ExamenController::ExamenessDocente",
+                "parameters": [
+                    {
+                        "name": "ciDocente",
+                        "in": "path",
+                        "description": "CI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamenDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/examenes/{ciEstudiante}/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Devuelve los Examenes a los que el estudiante puede inscribirse en el PeriodoExamen actual",
+                "operationId": "App\\Http\\Controllers\\ExamenController::listarParaInscripcion",
+                "parameters": [
+                    {
+                        "name": "ciEstudiante",
+                        "in": "path",
+                        "description": "CI del estudiante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "ID de la carrera",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamenDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/examenes/{id}/notas": {
+            "get": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Obtiene las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\ExamenController::ObtenerNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Marca como confirmada el acta del Examen",
+                "operationId": "App\\Http\\Controllers\\ExamenController::ConfirmarActa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Exámenes"
+                ],
+                "description": "Registra las notas obtenidas por los estudiantes",
+                "operationId": "App\\Http\\Controllers\\ExamenController::IngresarNotas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActaDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActaDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/periodos": {
+            "get": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "Devuelve el ultimo anio lectivo ingresado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnioLectivoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnioLectivoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "No devuelve nada, ya es bastante que funcione xD"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/periodos/actual/{tipo}": {
+            "get": {
+                "tags": [
+                    "Periodos"
+                ],
+                "operationId": "App\\Http\\Controllers\\PeriodoLectivoController::actual",
+                "parameters": [
+                    {
+                        "name": "tipo",
+                        "in": "path",
+                        "description": "Tipo de periodo. Puede ser 'IE', 'EX', 'IC' o 'LE'",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Si se está en un periodo del tipo especificado"
+                    },
+                    "404": {
+                        "description": "Si NO se está en un periodo del tipo especificado"
+                    }
+                }
+            }
+        },
+        "/postulantes/{id}": {
+            "get": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "devuelve una postulacion especifica, incluyendo la persona asociada y su direccion",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostulanteDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Elimina la postulacion especifica",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::rechazar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/postulantes": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Registra en el sistema los datos de un postulante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostulanteDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostulanteDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/postulantes/{id}/notificar": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Envia un email al postulante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::notificar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "mensaje": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/postulantes/{id}/aceptar": {
+            "post": {
+                "tags": [
+                    "Postulante"
+                ],
+                "description": "Acepta al postulante generandole una cuenta de estudiante",
+                "operationId": "App\\Http\\Controllers\\PostulantesController::aceptar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la postulacion",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes/{id}": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos de la sede",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes/": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerTodos",
+                "responses": {
+                    "200": {
+                        "description": "Todas las sedes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SedeDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes": {
+            "post": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SedeDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos de la sede creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SedeDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes/{id}/postulantes": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerListaPostulantesDeSede",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PostulanteDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes/{id}/edicionesCurso": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerEdicionesCurso",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EdicionCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes/{id}/examenes": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerExamenes",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamenDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/sedes/{id}/actas": {
+            "get": {
+                "tags": [
+                    "Sedes"
+                ],
+                "operationId": "App\\Http\\Controllers\\SedesController::obtenerActas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ActaDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/tiposCurso/{id}": {
+            "get": {
+                "tags": [
+                    "Tipos de curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\TipoCursoController::obtenerUno",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoCursoDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/tiposCurso": {
+            "get": {
+                "tags": [
+                    "Tipos de curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\TipoCursoController::obtenerLista",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TipoCursoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tipos de curso"
+                ],
+                "operationId": "App\\Http\\Controllers\\TipoCursoController::agregar",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoCursoDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoCursoDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
         "/usuarios/login": {
             "post": {
                 "tags": [
@@ -66,7 +2011,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios/": {
@@ -89,7 +2039,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         },
         "/usuarios": {
@@ -118,7 +2073,106 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/usuarios/docentes": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "operationId": "App\\Http\\Controllers\\UsuarioController::obtenerDocentes",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/usuarios/passReset": {
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "description": "Actualiza la contraseña del usuario",
+                "operationId": "App\\Http\\Controllers\\UsuarioController::cambiarContrasenia",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devuelve datos del usuario logueado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/usuarios/passChk": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "description": "Verifica si la contrasenia actual es correcta",
+                "operationId": "App\\Http\\Controllers\\UsuarioController::verificarContrasenia",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña correcta"
+                    },
+                    "401": {
+                        "description": "Contraseña incorrecta"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
             }
         }
     },
@@ -141,6 +2195,9 @@
                         "type": "string"
                     },
                     "correo": {
+                        "type": "string"
+                    },
+                    "token": {
                         "type": "string"
                     },
                     "roles": {
@@ -217,12 +2274,512 @@
                     }
                 },
                 "type": "object"
+            },
+            "SedeDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "telefono": {
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "$ref": "#/components/schemas/DireccionDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoCursoDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "tipo": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AreaEstudioDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "creditos": {
+                        "description": "Depende de la carrera",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "CursoDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string"
+                    },
+                    "max_inasistencias": {
+                        "type": "integer"
+                    },
+                    "cant_creditos": {
+                        "type": "integer"
+                    },
+                    "cant_clases": {
+                        "type": "integer"
+                    },
+                    "semestre": {
+                        "description": "Depende de la carrera",
+                        "type": "integer"
+                    },
+                    "optativo": {
+                        "description": "Depende de la carrera",
+                        "type": "integer"
+                    },
+                    "area_estudio": {
+                        "$ref": "#/components/schemas/AreaEstudioDTO"
+                    },
+                    "tipo_curso": {
+                        "$ref": "#/components/schemas/TipoCursoDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "AnioLectivoDTO": {
+                "properties": {
+                    "ini_1er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-01-01"
+                    },
+                    "fin_1er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-01-15"
+                    },
+                    "ini_1er_per_exam": {
+                        "type": "string",
+                        "example": "2018-02-01"
+                    },
+                    "fin_1er_per_exam": {
+                        "type": "string",
+                        "example": "2018-02-15"
+                    },
+                    "ini_1er_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-03-01"
+                    },
+                    "fin_1er_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-03-15"
+                    },
+                    "ini_1er_per_lect": {
+                        "type": "string",
+                        "example": "2018-04-01"
+                    },
+                    "fin_1er_per_lect": {
+                        "type": "string",
+                        "example": "2018-04-15"
+                    },
+                    "ini_2do_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-05-01"
+                    },
+                    "fin_2do_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-05-15"
+                    },
+                    "ini_2do_per_exam": {
+                        "type": "string",
+                        "example": "2018-06-01"
+                    },
+                    "fin_2do_per_exam": {
+                        "type": "string",
+                        "example": "2018-06-15"
+                    },
+                    "ini_2do_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-07-01"
+                    },
+                    "fin_2do_per_insc_lect": {
+                        "type": "string",
+                        "example": "2018-07-15"
+                    },
+                    "ini_2do_per_lect": {
+                        "type": "string",
+                        "example": "2018-08-01"
+                    },
+                    "fin_2do_per_lect": {
+                        "type": "string",
+                        "example": "2018-08-15"
+                    },
+                    "ini_3er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-09-01"
+                    },
+                    "fin_3er_per_insc_exam": {
+                        "type": "string",
+                        "example": "2018-09-15"
+                    },
+                    "ini_3er_per_exam": {
+                        "type": "string",
+                        "example": "2018-10-01"
+                    },
+                    "fin_3er_per_exam": {
+                        "type": "string",
+                        "example": "2018-10-15"
+                    }
+                },
+                "type": "object"
+            },
+            "CarreraDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string"
+                    },
+                    "cant_semestres": {
+                        "type": "integer"
+                    },
+                    "areas_estudio": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AreaEstudioDTO"
+                        }
+                    },
+                    "sedes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SedeDTO"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "PreviaDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "carrera_id": {
+                        "type": "integer"
+                    },
+                    "curso_id": {
+                        "type": "integer"
+                    },
+                    "curso_id_previa": {
+                        "type": "integer"
+                    },
+                    "tipo": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CarreraCreateDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string"
+                    },
+                    "cant_semestres": {
+                        "type": "integer"
+                    },
+                    "sedes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SedeDTO"
+                        }
+                    },
+                    "areas_estudio": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AreaEstudioDTO"
+                        }
+                    },
+                    "previas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PreviaDTO"
+                        }
+                    },
+                    "cursos": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "semestre": {
+                                    "type": "integer"
+                                },
+                                "optativo": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "PostulanteDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "estado": {
+                        "description": "A = Aceptada, R = Rechazada, N = NotificacionEnviada, null = ninguna de las anteriores",
+                        "type": "string",
+                        "readOnly": "true"
+                    },
+                    "img_ci": {
+                        "type": "string"
+                    },
+                    "img_escolaridad": {
+                        "type": "string"
+                    },
+                    "img_carne_salud": {
+                        "type": "string"
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "carrera": {
+                        "$ref": "#/components/schemas/CarreraDTO"
+                    },
+                    "persona": {
+                        "$ref": "#/components/schemas/PersonaDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "EdicionCursoDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "acta_confirmada": {
+                        "type": "boolean"
+                    },
+                    "habilitado": {
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = curso ya aprobado, -1 = no se cumple con las previas, -2 = ya se está inscrito",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "curso": {
+                        "$ref": "#/components/schemas/CursoDTO"
+                    },
+                    "docente": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "ExamenDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "fecha": {
+                        "type": "string"
+                    },
+                    "acta_confirmada": {
+                        "type": "boolean"
+                    },
+                    "habilitado": {
+                        "description": "1 = el estudiante está habilitado para inscribirse, 0 = no es necesario dar el examen, -1 = no ha ganado el derecho a dar examen, -2 = ya se está inscrito",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "sede": {
+                        "$ref": "#/components/schemas/SedeDTO"
+                    },
+                    "curso": {
+                        "$ref": "#/components/schemas/CursoDTO"
+                    },
+                    "docente": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    }
+                },
+                "type": "object"
+            },
+            "ClaseDictadaDTO": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "fecha": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "curso_id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "edicion_curso_id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "lista": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "ciEstudiante": {
+                                    "type": "string"
+                                },
+                                "nombre": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "apellido": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "asistencia": {
+                                    "type": "number",
+                                    "writeOnly": true
+                                },
+                                "total_asistencias": {
+                                    "type": "number",
+                                    "readOnly": true
+                                },
+                                "total_llegadas_tarde": {
+                                    "type": "number",
+                                    "readOnly": true
+                                },
+                                "total_inasistencias": {
+                                    "type": "number",
+                                    "readOnly": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ActaDTO": {
+                "properties": {
+                    "id": {
+                        "description": "ID del Examen o EdicionCurso (segun tipo",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tipo": {
+                        "description": "EX = examen, LE = cursos",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "fecha": {
+                        "description": "Fecha del examen (si tipo = EX)",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "acta_confirmada": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "periodo": {
+                        "type": "string"
+                    },
+                    "curso": {
+                        "$ref": "#/components/schemas/CursoDTO"
+                    },
+                    "notas": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "ciEstudiante": {
+                                    "type": "string"
+                                },
+                                "nombre": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "apellido": {
+                                    "type": "string",
+                                    "readOnly": true
+                                },
+                                "nota": {
+                                    "type": "number"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "EscolaridadDTO": {
+                "properties": {
+                    "usuario": {
+                        "$ref": "#/components/schemas/UsuarioDTO"
+                    },
+                    "carrera": {
+                        "$ref": "#/components/schemas/CarreraDTO"
+                    },
+                    "nota_promedio": {
+                        "type": "number"
+                    },
+                    "semestres": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "numero": {
+                                    "type": "integer"
+                                },
+                                "detalle": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "curso": {
+                                                "$ref": "#/components/schemas/CursoDTO"
+                                            },
+                                            "tipo": {
+                                                "type": "string"
+                                            },
+                                            "periodo": {
+                                                "type": "string"
+                                            },
+                                            "nota": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
             "api_key": {
                 "type": "apiKey",
-                "description": "Token de autenticacion conformato como '<token>'",
+                "description": "Token de autenticacion con formato 'bearer <token>'",
                 "name": "Authorization",
                 "in": "header"
             }

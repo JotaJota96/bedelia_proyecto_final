@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from './servicios/usuarios.service';
 
@@ -22,56 +22,69 @@ const MENU_ADMIN:MenuSection[] = [
   }, {
     nombre: "Gestión de carreras",
     items: [
-      {nombre: "Carreras",           link: "#"},
-      {nombre: "Cursos",             link: "#"},
-      {nombre: "Áreas de estudio",   link: "#"},
-      {nombre: "Tipos de curso",     link: "#"},
+      {nombre: "Carreras",           link: "admin/carrera"},
+      {nombre: "Cursos",             link: "admin/curso"},
+      {nombre: "Áreas de estudio",   link: "admin/area"},
+      {nombre: "Tipos de curso",     link: "admin/tipo"},
     ],
   }, {
     nombre: "Otros",
     items: [
-      {nombre: "Año lectivo",   link: "#"},
-      {nombre: "Cedes",         link: "#"},
+      {nombre: "Año lectivo",   link: "admin/periodos"},
+      {nombre: "Sedes",         link: "admin/sede"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 const MENU_ADMINISTRATIVO:MenuSection[] = [
   {
     nombre: "Administración",
     items: [
-      {nombre: "Asignar docente",             link: "#"},
-      {nombre: "Revisar postulaciónes",       link: "#"},
-      {nombre: "Revisar actas de exámenes",   link: "#"},
-      {nombre: "Revisar actas de cursos",     link: "#"},
-      {nombre: "Justificar inasistencias",    link: "#"},
+      {nombre: "Asignar docente",                        link: "administrativo/asignar-docente"},
+      {nombre: "Revisar postulaciónes",                  link: "administrativo/revicion-postulante"},
+      {nombre: "Revisar actas de cursos / examenes",     link: "administrativo/revicion-acta"},
+      {nombre: "Justificar inasistencias",               link: "administrativo/justificar-inasistencia"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 const MENU_DOCENTE:MenuSection[] = [
   {
     nombre: "Área docente",
     items: [
-      {nombre: "Ingresar resultados de exámenes", link: "#"},
-      {nombre: "Ingresar resultados de cursos",   link: "#"},
-      {nombre: "Control de asistencia",           link: "#"},
+      {nombre: "Ingresar resultados de cursos",   link: "docente/ingreso/resultados-curso"},
+      {nombre: "Ingresar resultados de exámenes", link: "docente/ingreso/resultados-examen"},
+      {nombre: "Control de asistencia",           link: "docente/control-asistencia"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 const MENU_ESTUDIANTE:MenuSection[] = [
   {
-    nombre: "Datos",
-    items: [
-      {nombre: "Mis datos",   link: "#"},
-    ],
-  }, {
     nombre: "Académico",
     items: [
-      {nombre: "Escolaridad",            link: "#"},
-      {nombre: "Inscripcion a cursos",   link: "#"},
-      {nombre: "Inscripcion a exámenes", link: "#"},
-      {nombre: "Año lectivo",            link: "#"},
+      {nombre: "Escolaridad",            link: "estudiante/consultar-escolaridad"},
+      {nombre: "Inscripcion a cursos",   link: "estudiante/inscripcion/curso"},
+      {nombre: "Inscripcion a exámenes", link: "estudiante/inscripcion/examen"},
     ],
-  },
+  }, {
+    nombre: "Mis datos",
+    items: [
+      {nombre: "Cambiar contraseña ",   link: "usuarios/cambiar/contrasenia"},
+    ],
+  }
 ];
 
 @Component({
@@ -80,6 +93,8 @@ const MENU_ESTUDIANTE:MenuSection[] = [
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
+  menuMode:string = "side";
   
   constructor(
     protected UsuServ:UsuariosService,
@@ -113,5 +128,14 @@ export class AppComponent {
   logout(){
     this.UsuServ.logout();
     this.router.navigate(['/']);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth >= 992){
+      this.menuMode = "side";
+    }else{
+      this.menuMode = "over";
+    }
   }
 }

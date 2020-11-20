@@ -23,13 +23,13 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->withFacades();
+$app->withFacades(true, [
+    'Illuminate\Support\Facades\Mail' => 'Mail',
+    'Barryvdh\DomPDF\Facade' => 'PDF',
+]);
 
 $app->withEloquent();
 
-$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
-
-$app->configure('swagger-lume');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -63,6 +63,13 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('mail');
+$app->configure('dompdf');
+
+// aplica la siguiente configuracion solo si NO se esta en modo de produccion
+if (strcmp(env('APP_ENV'), 'prod') != 0){
+    $app->configure('swagger-lume');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -80,9 +87,10 @@ $app->middleware([
     App\Http\Middleware\CorsMiddleware::class
 ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'rol' => App\Http\Middleware\RolMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -96,9 +104,18 @@ $app->middleware([
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(\SwaggerLume\ServiceProvider::class);
+
+
+$app->register(App\Providers\AuthServiceProvider::class);
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+
+// aplica la siguiente configuracion solo si NO se esta en modo de produccion
+if (strcmp(env('APP_ENV'), 'prod') != 0){
+    $app->register(\SwaggerLume\ServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------

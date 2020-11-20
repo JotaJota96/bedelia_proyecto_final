@@ -6,7 +6,7 @@
       </mat-card-header>
       <mat-card-content>
         <!-- inicio form usuario y contrasenia-->
-        <form  [formGroup]="formulario" *ngIf="datosLogin == undefined">
+        <form  [formGroup]="formulario" *ngIf="datosLogin == undefined" (keydown)="keyDownFunction($event, 'login')">
           <mat-form-field [style.width.%]=100>
             <input matInput placeholder="Cédula o correo" name="usuario" formControlName="usuario">
           </mat-form-field>
@@ -15,12 +15,11 @@
             <input matInput placeholder="Contraseña" type="password" name="contrasenia" formControlName="contrasenia">
           </mat-form-field>
 
-          <mat-error *ngIf="mostrarErrorLogin">Datos incorrectos, por favor vuelva a intentar</mat-error>
         </form>
         <!-- fin form usuario y contrasenia-->
 
         <!-- inicio form rol-->
-        <form [formGroup]="formularioRol" *ngIf="datosLogin != undefined">
+        <form [formGroup]="formularioRol" *ngIf="datosLogin != undefined" (keydown)="keyDownFunction($event, 'elegirRol')">
           <mat-form-field class="mt-3" appearance="fill" [style.width.%]=100>
             <mat-select placeholder="Seleccione un rol" formControlName="rol">
               <mat-option *ngFor="let rol of roles" [value]="rol">

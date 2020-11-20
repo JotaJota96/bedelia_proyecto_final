@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EdicionCurso extends Model
 {
     protected $table = "edicion_curso";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'acta_confirmada'
     ];
@@ -39,6 +39,51 @@ class EdicionCurso extends Model
 
 	// devuelve coleccion
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante');
+        return $this->belongsToMany('App\Models\Estudiante','inscripcion_curso')->withPivot('nota');
+    }
+
+    // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+
+    public function contarAsistidas($idEstudiante, $valor = null){
+        // si valor = null: suma todo
+        // si valor = {0, 0.5, 1}: suma solo las asistencias que tengan ese valor
+        $cont = 0;
+        foreach ($this->clasesDictada as $claseDictada) {
+            foreach ($claseDictada->estudiantes as $estudiante) {
+                if ($estudiante->id == $idEstudiante) {
+                    $valorAsistencia = $estudiante->pivot->asistencia;
+
+                    // comparo con triple = para distinguir un null de un 0
+                    if ($valor === null){
+                        $cont += $valorAsistencia;
+                    }else if ($valorAsistencia == $valor){
+                        $cont++;
+                    }
+                }
+            }
+        }
+        return $cont;
+    }
+
+    public function obtenerActa(){
+        $res = array (
+            "id"              => $this->id,
+            "tipo"            => 'LE',
+            "acta_confirmada" => $this->acta_confirmada,
+            "periodo"         => $this->periodoLectivo->periodo->toString(),
+            "fecha"           => null,
+            "curso"           => $this->curso,
+            "notas"           => array(),
+        );
+        foreach ($this->estudiantes as $estudiante) {
+            $nota = array (
+                "ciEstudiante" => $estudiante->usuario->persona->cedula,
+                "nombre" =>       $estudiante->usuario->persona->nombre,
+                "apellido" =>     $estudiante->usuario->persona->apellido,
+                "nota" =>         $estudiante->pivot->nota,
+            );
+            array_push($res['notas'], $nota);
+        }
+        return $res;
     }
 }

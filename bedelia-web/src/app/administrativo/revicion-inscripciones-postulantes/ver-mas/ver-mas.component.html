@@ -1,0 +1,89 @@
+<div class="container">
+  <h1 class="mt-2">Revisión de postulantes</h1>
+  <mat-card class="mt-2">
+    <mat-spinner *ngIf="postulante == undefined" class="mx-auto"></mat-spinner>
+    <mat-card-content *ngIf="postulante != undefined">
+
+      <h3 class="mt-3">Postulación</h3>
+      <div class="row">
+        <div class="col-6">
+            <mat-list role="list" class="m-auto">
+              <mat-list-item role="listitem">Estado de la postulación: </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="col-6">
+            <mat-list role="list" class="m-auto">
+              <mat-list-item role="listitem">{{postulante.estado | estadoPostulacion}}</mat-list-item>
+            </mat-list>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h3 class="mt-3">Datos personales</h3>
+      <div class="row">
+        <div class="col-6">
+            <mat-list role="list" class="m-auto">
+              <mat-list-item role="listitem">Cedula: </mat-list-item>
+              <mat-list-item role="listitem">Nombre: </mat-list-item>
+              <mat-list-item role="listitem">Apellido: </mat-list-item>
+              <mat-list-item role="listitem">Correo: </mat-list-item>
+              <mat-list-item role="listitem">Sexo: </mat-list-item>
+              <mat-list-item role="listitem">Fecha de nacimiento: </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="col-6">
+            <mat-list role="list" class="m-auto">
+              <mat-list-item role="listitem">{{persona.cedula}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.nombre}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.apellido}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.correo}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.sexo | sexo}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.fecha_nac | date:'dd/MM/yyyy'}}</mat-list-item>
+            </mat-list>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h3 class="mt-3">Lugar de residencia</h3>
+      <div class="row">
+        <div class="col-6">
+            <mat-list role="list" class="m-auto">
+              <mat-list-item role="listitem">Departamento: </mat-list-item>
+              <mat-list-item role="listitem">Ciudad: </mat-list-item>
+              <mat-list-item role="listitem">Calle: </mat-list-item>
+              <mat-list-item role="listitem">Número: </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="col-6">
+            <mat-list role="list" class="m-auto">
+              <mat-list-item role="listitem">{{persona.direccion.departamento}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.direccion.ciudad}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.direccion.calle}}</mat-list-item>
+              <mat-list-item role="listitem">{{persona.direccion.numero}}</mat-list-item>
+            </mat-list>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h3 class="mt-3">Documentación adjunta</h3>
+      
+      <div class="row mx-2">
+        <a class="col-12 col-md-4 enlaceboton" download="" href="{{postulante.img_ci}}" >Descargar imágen de cédula</a>
+        <a class="col-12 col-md-4 enlaceboton" download="" href="{{postulante.img_escolaridad}}">Descargar imágen de escolaridad</a>
+        <a class="col-12 col-md-4 enlaceboton" download="" href="{{postulante.img_carne_salud}}">Descargar imágen de carné de salud</a>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary"             [routerLink]="['/administrativo/revicion-postulante']">Volver</button>
+      <button mat-raised-button color="warn"                [disabled]="!permitirAcciones" (click)="rechasar()">Rechasar</button>
+      <button mat-raised-button class="btn-color-notificar" [disabled]="!permitirAcciones" (click)="informarProblema()">Informar problema</button>
+      <button mat-raised-button color="primary"             [disabled]="!permitirAcciones" (click)="aceptar()">Aceptar</button>
+      <mat-spinner class="mr-2" diameter="30" *ngIf="enviandoDatos"></mat-spinner>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

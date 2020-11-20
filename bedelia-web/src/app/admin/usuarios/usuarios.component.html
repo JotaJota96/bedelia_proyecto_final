@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Usuarios</h1>
+    <h1 class="mt-2">Gestión de usuarios</h1>
     <div class="row d-flex">
         <!-- Campo para escrbir un filtro -->
         <mat-form-field class="col-6">
@@ -41,7 +41,7 @@
         <ng-container matColumnDef="accion">
             <th mat-header-cell *matHeaderCellDef> Accion </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button disabled>Ver detalle</button>
+                <button mat-raised-button [routerLink]="['/admin/usuarios/abm',element.persona.cedula]">Ver detalle</button>
             </td>
         </ng-container>
 

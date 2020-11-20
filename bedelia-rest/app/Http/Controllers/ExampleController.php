@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class ExampleController extends Controller
 {
-    public function __construct(){
-        //
-    }
+    protected $request;
 
-    //
+    public function __construct(Request $request){
+        $this->request = $request;
+    }
 }

@@ -1,0 +1,23 @@
+<div class="container">
+    <h1 class="mt-2">Gestión de áreas de estudio</h1>
+    <div class="row">
+        <mat-card class="col-12  mx-auto my-2 example-card">
+            <mat-card-header>
+                <mat-card-title>Ingrese los datos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="formulario"  class="row">
+                    <div class="col-12 pl-5 pr-5">
+                        <!-- datos de la persona -->
+                        <mat-form-field [style.width.%]=100>
+                            <input matInput placeholder="Area" name="area" formControlName="area">
+                        </mat-form-field>
+                    </div>
+                </form>
+            </mat-card-content>
+            <mat-card-actions align="end" class="pr-5">
+                <button mat-raised-button color="primary"[disabled]="!formulario.valid" (click)="agregar()">Acceder</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

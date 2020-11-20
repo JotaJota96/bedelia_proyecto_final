@@ -1,0 +1,86 @@
+<div class="container">
+    <h1 class="mt-2">Escolaridad</h1>
+    <mat-card class="mt-3">
+        <mat-card-content>
+            <!-- datos de la direccion -->
+            <form [formGroup]="formulario" class="row mb-2">
+                    
+                <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
+                    <mat-select placeholder="Carrera" name="carrera" formControlName="carrera">
+                        <mat-option *ngFor="let carrera of listaCarrera" [value]="carrera.id">
+                            {{carrera.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="col-12 col-md-2 mb-2 m-auto">
+                    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="obtenerEscolaridad()">Consultar</button>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-divider *ngIf="escolaridad != null"></mat-divider>
+        <mat-card-content class="my-4" *ngIf="escolaridad != null">
+            <div>
+                <button class="d-inline" mat-raised-button color="primary" (click)="descargarEscolaridad()">Obtener PDF escolaridad</button>
+                <mat-spinner class="d-inline ml-3" *ngIf="mostrarSpinner" diameter="25"></mat-spinner>
+            </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="escolaridad != null">
+            <mat-card class="mb-5">
+                <h1>Informacion básica</h1> 
+                <div class=" row mx-auto">
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Cédula: </h2>
+                        <h3>{{escolaridad.usuario.persona.cedula}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-3">
+                        <h2>Nombre completo: </h2>
+                        <h3>{{escolaridad.usuario.persona.nombre}} {{escolaridad.usuario.persona.apellido}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-4">
+                        <h2>Carrera: </h2>
+                        <h3>{{escolaridad.carrera.nombre}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-3">
+                        <h2>Nota promedio: </h2>
+                        <h3>{{escolaridad.nota_promedio}}</h3>
+                    </mat-card>
+                </div>
+            </mat-card>
+            <mat-card class="mt-1 " *ngFor="let semestre of escolaridad.semestres">
+                <h1>Semestre {{semestre.numero}}</h1> 
+                <div class="p-2 row">
+                    <mat-card class="col-12 col-md-6">
+                        <h2>Curso</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Tipo</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Periodo</h2>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2">
+                        <h2>Nota</h2>
+                    </mat-card>
+                </div>
+                <div class="row" *ngFor="let curso of semestre.detalle">
+                    <mat-card class="col-12 col-md-6 mb-2">
+                        <h3>{{curso.curso.nombre}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2 mb-2">
+                        <h3>{{curso.tipo | tipoActa}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2 mb-2">
+                        <h3>{{curso.periodo}}</h3>
+                    </mat-card>
+                    <mat-card class="col-12 col-md-2 mb-2">
+                        <h3>{{curso.nota | nota}}</h3>
+                    </mat-card>
+                </div>
+            </mat-card>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

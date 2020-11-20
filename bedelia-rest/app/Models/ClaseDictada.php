@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClaseDictada extends Model
 {
     protected $table = "clase_dictada";
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'fecha'
     ];
@@ -17,6 +17,6 @@ class ClaseDictada extends Model
     }
 
     public function estudiantes() {
-        return $this->belongsToMany('App\Models\Estudiante');
+        return $this->belongsToMany('App\Models\Estudiante','asistencia')->withPivot('asistencia');
     }
 }
