@@ -20,6 +20,7 @@ services:
     phpmyadmin:
         image: phpmyadmin
         container_name: bedelia-phpmyadmin
+        restart: always
         depends_on:
             - db
         ports:
@@ -32,6 +33,7 @@ services:
             context: ./bedelia-rest
             dockerfile: DockerFile
         container_name: bedelia-rest
+        restart: always
         depends_on:
             - db
         ports:
@@ -47,6 +49,7 @@ services:
             context: ./bedelia-web
             dockerfile: DockerFile
         container_name: bedelia-web
+        restart: always
         depends_on:
             - rest
         ports:
@@ -61,6 +64,7 @@ services:
             context: ./bedelia-pwa
             dockerfile: DockerFile
         container_name: bedelia-pwa
+        restart: always
         depends_on:
             - rest
         ports:
