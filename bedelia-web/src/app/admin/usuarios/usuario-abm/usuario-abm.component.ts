@@ -82,7 +82,7 @@ export class UsuarioABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) => {
-          openSnackBar(this._snackBar, "No se pudo cargar el usuario");
+          openSnackBar(this._snackBar, "Error al cargar el usuario");
         }
       );
     }
@@ -92,7 +92,7 @@ export class UsuarioABMComponent implements OnInit {
         this.listaSedes = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar las sedes");
+        openSnackBar(this._snackBar, "Error al cargar las sedes");
       }
     );
 
@@ -163,7 +163,7 @@ export class UsuarioABMComponent implements OnInit {
   agregar() {
     if (this.esAdministrativo == true) {
       if(this.formulario.controls['sede'].value == undefined){
-        openSnackBar(this._snackBar, "Se debe seleccionar una sede")
+        openSnackBar(this._snackBar, "Se debe seleccionar una sede");
         return;
       }
     }
@@ -200,7 +200,7 @@ export class UsuarioABMComponent implements OnInit {
             },
             (error) => {
               this.enviandoDatos = false;
-              openSnackBar(this._snackBar, "No se pudo asignar la sede")
+              openSnackBar(this._snackBar, "No se pudo asignar la sede");
             }
           );
         }else{
@@ -209,7 +209,7 @@ export class UsuarioABMComponent implements OnInit {
       },
       (error) => {
         this.enviandoDatos = false;
-        openSnackBar(this._snackBar, "No se pudo crear el usuario")
+        openSnackBar(this._snackBar, "No se pudo crear el usuario");
       }
     );
 

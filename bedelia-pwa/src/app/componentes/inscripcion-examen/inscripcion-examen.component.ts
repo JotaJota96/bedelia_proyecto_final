@@ -56,7 +56,7 @@ export class InscripcionExamenComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error) => {
-        this.openSnackBar("Error al cargar las carreras del estudiante");
+        this.openSnackBar("Error al cargar las carreras");
       }
     );
 
@@ -75,13 +75,13 @@ export class InscripcionExamenComponent implements OnInit {
         });
       },
       (error) => {
-        this.openSnackBar("Error al obtener los examenes para este periodo lectivo");
+        this.openSnackBar("Error al obtener los exámenes para este período lectivo");
       });
   }
 
   confirmar() {
     if(this.selectedOptions.length == 0){
-      this.openSnackBar("Debes seleccionar como minimo 1 carrera")
+      this.openSnackBar("Debes seleccionar una carrera");
       return;
     }
     this.examenServ.inscripciones(this.ciEstudiante, this.selectedOptions).subscribe(
@@ -89,7 +89,7 @@ export class InscripcionExamenComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error) => {
-        this.openSnackBar("Error al inscrivirse a una examen");
+        this.openSnackBar("Error al inscribirse a exámenes");
       }
     );
   }

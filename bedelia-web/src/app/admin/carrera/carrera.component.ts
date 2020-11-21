@@ -23,7 +23,7 @@ export class CarreraComponent implements OnInit {
       (datos) => {
         this.carreraDataSource.data = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar las carreras");
+        openSnackBar(this._snackBar, "Error al cargar las carreras");
       }
     );
   }

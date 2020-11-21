@@ -49,7 +49,7 @@ export class RevicionActaComponent implements OnInit {
         }
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar datos");
+        openSnackBar(this._snackBar, "Error al cargar datos");
       }
     );
 
@@ -97,7 +97,7 @@ export class RevicionActaComponent implements OnInit {
           this.router.navigate(['/']);
         },
         (error)=>{
-          openSnackBar(this._snackBar, "Error al confirmar el acta");  
+          openSnackBar(this._snackBar, "Error al confirmar el acta");
         });
     }
     if(this.actaSeleccionada.tipo == "EX"){

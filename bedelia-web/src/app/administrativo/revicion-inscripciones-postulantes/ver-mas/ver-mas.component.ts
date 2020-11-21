@@ -53,7 +53,7 @@ export class VerMasComponent implements OnInit {
         },
         (error) => {
           this.enviandoDatos = false;
-          openSnackBar(this._snackBar, "No se pudo mandar el mensaje");
+          openSnackBar(this._snackBar, "No se pudo enviar el mensaje");
         }
       )
     });
@@ -65,7 +65,7 @@ export class VerMasComponent implements OnInit {
         this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo rechasar la postulacion");
+        openSnackBar(this._snackBar, "No se pudo rechazar la postulación");
       }
     )
   }
@@ -78,7 +78,7 @@ export class VerMasComponent implements OnInit {
       },
       (error) => {
         this.enviandoDatos = false;
-        openSnackBar(this._snackBar, "No se pudo aceptar la postulacion");
+        openSnackBar(this._snackBar, "No se pudo aceptar la postulación");
       }
     );
   }

@@ -44,7 +44,7 @@ export class RevicionInscripcionesPostulantesComponent implements OnInit {
         }
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar los datos");
+        openSnackBar(this._snackBar, "Error al cargar los datos");
       }
     )
   }
