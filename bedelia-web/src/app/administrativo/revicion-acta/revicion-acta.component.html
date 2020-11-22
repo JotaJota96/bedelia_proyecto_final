@@ -4,7 +4,7 @@
         <mat-spinner class="mx-auto mt-5" *ngIf="sedeOk == undefined"></mat-spinner>
 
         <mat-card-content *ngIf="sedeOk == false">
-            <p>No puede realizar esta accion debido a que no tiene una sede asignada</p>
+            <p>No puede realizar esta acción debido a que no tiene una sede asignada</p>
         </mat-card-content>
         
         <mat-card-content *ngIf="sedeOk == true">
@@ -39,7 +39,7 @@
                                 <mat-list-item role="listitem">Tipo de acta: </mat-list-item>
                                 <mat-list-item role="listitem">Período: </mat-list-item>
                                 <mat-list-item role="listitem">Confirmada: </mat-list-item>
-                                <mat-list-item role="listitem" *ngIf="actaSeleccionada.tipo == 'EX'">Fecha del exámen: </mat-list-item>
+                                <mat-list-item role="listitem" *ngIf="actaSeleccionada.tipo == 'EX'">Fecha del examen: </mat-list-item>
                             </mat-list>
                         </div>
                         <div class="col-6">

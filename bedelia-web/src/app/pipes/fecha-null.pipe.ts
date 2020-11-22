@@ -7,7 +7,7 @@ export class FechaNullPipe implements PipeTransform {
 
   transform(value: string): string {
     if(value == null){
-      return "Fecha no defenida";
+      return "Fecha no definida";
     }else{
       return value;
     }
