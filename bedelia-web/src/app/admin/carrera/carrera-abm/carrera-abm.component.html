@@ -59,7 +59,7 @@
 
                                 <div class="row">
                                     <mat-form-field class="col-12 col-md-6" [style.width.%]=100>
-                                        <mat-select placeholder="Seleccione un áreas" name="area"
+                                        <mat-select placeholder="Seleccione un área" name="area"
                                             formControlName="area">
                                             <mat-option *ngFor="let area of listaAreasEstudio" [value]="area">
                                                 {{area.area}}
@@ -68,13 +68,13 @@
                                     </mat-form-field>
 
                                     <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
-                                        <input matInput placeholder="Creditos" name="creditos"
+                                        <input matInput placeholder="Créditos" name="creditos"
                                             formControlName="creditos">
                                     </mat-form-field>
 
                                     <div class="col-12 col-md-3 m-auto" align="end">
                                         <button mat-raised-button (click)="asignarArea()"
-                                            [disabled]="!formularioArea.valid" color="primary">Agregar area de estudio</button>
+                                            [disabled]="!formularioArea.valid" color="primary">Agregar área de estudio</button>
                                     </div>
                                 </div>
 

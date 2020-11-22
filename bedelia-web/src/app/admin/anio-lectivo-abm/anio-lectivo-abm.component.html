@@ -1,8 +1,8 @@
 <div class="container">
-    <h1 class="mt-2">Gestión de año levtivo</h1>
+    <h1 class="mt-2">Gestión de año lectivo</h1>
     <div class="row d-flex">
         <div class="col-12 mb-2">
-            <button mat-raised-button color="primary" *ngIf="soloLectura" (click)="crearPeriodo()">Crear un prtiodo</button>
+            <button mat-raised-button color="primary" *ngIf="soloLectura" (click)="crearPeriodo()">Crear</button>
         </div>
     </div>
     <mat-card class="col-12  mx-auto example-card">
@@ -12,7 +12,7 @@
                     
                     <div class="row mt-3">
                         <h4 class="col-12 col-md-6 m-auto">
-                            Período de inscripción a exámnes (Enero)
+                            Período de inscripción a exámenes (Enero)
                         </h4>
 
                         <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
@@ -34,7 +34,7 @@
 
                     <div class="row mt-3">
                         <h4 class="col-12 col-md-6 m-auto">
-                            Período de exámnes (Enero)
+                            Período de exámenes (Enero)
                         </h4>
                         
                         <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
@@ -100,7 +100,7 @@
                     
                     <div class="row mt-3">
                         <h4 class="col-12 col-md-6 m-auto">
-                            Período de inscripción a exámnes (Julio)
+                            Período de inscripción a exámenes (Julio)
                         </h4>
                             
                         <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
@@ -122,7 +122,7 @@
                     
                     <div class="row mt-3">
                         <h4 class="col-12 col-md-6 m-auto">
-                            Período de exámnes (Julio)
+                            Período de exámenes (Julio)
                         </h4>
                             
                         <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
@@ -188,7 +188,7 @@
                     
                     <div class="row mt-3">
                         <h4 class="col-12 col-md-6 m-auto">
-                            Período de inscripción a exámnes (Diciembre)
+                            Período de inscripción a exámenes (Diciembre)
                         </h4>
 
                         <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
@@ -210,7 +210,7 @@
                     
                     <div class="row mt-3">
                         <h4 class="col-12 col-md-6 m-auto">
-                            Período de exámnes (Diciembre)
+                            Período de exámenes (Diciembre)
                         </h4>
 
                         <mat-form-field class="col-12 col-md-3" [style.width.%]=100>
@@ -234,7 +234,7 @@
             </form>
         </mat-card-content>
         <mat-card-actions align="end">
-            <button mat-raised-button *ngIf="!soloLectura" (click)="volver()">Volver</button>
+            <button mat-raised-button color="primary" *ngIf="!soloLectura" (click)="volver()">Volver</button>
             <button mat-raised-button color="primary" *ngIf="!soloLectura" [disabled]="!formulario.valid" (click)="agregar()">Crear</button>
         </mat-card-actions>
     </mat-card>
