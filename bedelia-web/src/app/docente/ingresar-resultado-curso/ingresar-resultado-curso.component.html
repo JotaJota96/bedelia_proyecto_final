@@ -4,7 +4,7 @@
         <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
         
         <mat-card-content *ngIf="periodoOk == false">
-          <p>Actualmente no hay ningun período de cursos vigente.</p>
+          <p>Actualmente no hay ningún período de cursos vigente.</p>
         </mat-card-content>
     
         <mat-card-content *ngIf="periodoOk == true && listaCurso.length == 0">
@@ -103,7 +103,7 @@
         
                         <!-- Esto se muestra si la tabla esta vacia -->
                         <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
+                            <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
                         </tr>
                     </table>
                 </mat-card-content>

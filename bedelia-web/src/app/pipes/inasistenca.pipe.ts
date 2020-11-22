@@ -7,7 +7,7 @@ export class InasistencaPipe implements PipeTransform {
 
   transform(value: number): string {
     if(value < 0){
-      return "Maximo superado"
+      return "Máximo superado"
     }else{
       return value+""
     }
