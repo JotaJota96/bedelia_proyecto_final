@@ -76,8 +76,8 @@ const MENU_ESTUDIANTE:MenuSection[] = [
     nombre: "Académico",
     items: [
       {nombre: "Escolaridad",            link: "estudiante/consultar-escolaridad"},
-      {nombre: "Inscripcion a cursos",   link: "estudiante/inscripcion/curso"},
-      {nombre: "Inscripcion a exámenes", link: "estudiante/inscripcion/examen"},
+      {nombre: "Inscripción a cursos",   link: "estudiante/inscripcion/curso"},
+      {nombre: "Inscripción a exámenes", link: "estudiante/inscripcion/examen"},
     ],
   }, {
     nombre: "Mis datos",
