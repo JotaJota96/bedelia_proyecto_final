@@ -8,7 +8,7 @@ export class SexoPipe implements PipeTransform {
 
   transform(value: string): string {
     if(value == "M"){
-      return "Masculion"
+      return "Masculino"
     }
     if(value == "F"){
       return "Femenino"

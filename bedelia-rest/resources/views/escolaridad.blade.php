@@ -39,7 +39,7 @@
             padding:    4px !important;
         }
         @page { margin: 100px 25px; }
-        header { 
+        header {
             position: fixed;
             top: -80px;
             left: 0px;
@@ -88,7 +88,7 @@
                     </div>
                 </td>
                 <td class="small text-right page-number ">
-                    Página: 
+                    Página:
                 </td>
             </tr>
         </table>
@@ -103,7 +103,7 @@
             Código de verificación: <b>{{ $codigoVerificacion }}</b>. (Válido hasta: <b>{{ $fechaValidez }}</b>)
         </p>
         <p class="my-1 text-center">
-            Puede validar esta escolaridad en <a href="{{ $urlVerificar }}">{{ $urlVerificar }}</a>.
+            Puede validar esta escolaridad en <a href="{{ $urlVerificar }}">{{ $urlVerificar }}</a>
         </p>
     </footer>
     <!-- Fin de pie de todas las páginas-->
@@ -126,7 +126,7 @@
                 Fecha de emisión: {{ $fecha }}
             </p>
         </div>
-        
+
         <div class="my-4">
             <table class="table">
                 <tr>
@@ -155,20 +155,20 @@
                 </tr>
             </table>
         </div>
-        
+
         <hr class="my-2">
-    
+
         <div class="my-3">
             <p class="titulo-4 text-center">
                 Progreso académico
             </p>
-    
+
             @foreach ($semestres as $sem)
             <div class="no-break">
                 <p class="titulo-5">
                     Semestre {{ $sem['numero'] }}
                 </p>
-    
+
                 <table class="table">
                     <tr class="table-secondary">
                         <th class="pl-2">Curso</th>
@@ -176,7 +176,7 @@
                         <th class="pl-2">Período</th>
                         <th class="pl-2">Nota</th>
                     </tr>
-    
+
                     @foreach ($sem['detalle'] as $linea)
                     <?php
                     switch ($linea['tipo']) {
@@ -184,7 +184,7 @@
                             $linea['tipo'] = "Curso";
                             break;
                         case 'EX':
-                            $linea['tipo'] = "Exámen";
+                            $linea['tipo'] = "Examen";
                             break;
                         default:
                             $linea['tipo'] = "-";
@@ -208,7 +208,7 @@
             </div>
             @endforeach
         </div>
-        
+
         <hr>
 
         <div class="no-break mt-5 row ">
@@ -236,7 +236,7 @@
                 </table>
             </div>
         </div>
-        
+
         <!--
         <div class="my-4">
             <p class="my-1 text-center">

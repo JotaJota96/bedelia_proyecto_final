@@ -30,14 +30,14 @@ export class ExamenesService {
   }
 
   getNotasDeEstudiante(idExamen:number){
-    return this.http.get<ActaDTO>(this.apiURL + "/" + idExamen + "/notas/");
+    return this.http.get<ActaDTO>(this.apiURL + "/" + idExamen + "/notas");
   }
 
   confirmarActa(idExamen:number){
-    return this.http.put<ActaDTO  >(this.apiURL + "/" + idExamen + "/notas/", null);
+    return this.http.put<ActaDTO  >(this.apiURL + "/" + idExamen + "/notas", null);
   }
 
   registrarNotas(idExamen:number, acta:ActaDTO) {
-    return this.http.post(this.apiURL + "/" + idExamen + "/notas/", acta);
+    return this.http.post(this.apiURL + "/" + idExamen + "/notas", acta);
   }
 }

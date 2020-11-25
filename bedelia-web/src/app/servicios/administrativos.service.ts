@@ -17,6 +17,6 @@ export class AdministrativosService {
   }
 
   asignar(datos:SedeDTO, id: string) {
-    return this.http.post<SedeDTO>(this.apiURL + "/" + id +"/sede/", datos);
+    return this.http.post<SedeDTO>(this.apiURL + "/" + id +"/sede", datos);
   }
 }

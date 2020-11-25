@@ -28,11 +28,11 @@ export class EdicionesCursoService {
   }
 //---
   getEstudiantesCurso(id:number){
-    return this.http.get<ClaseDictadaDTO>(this.apiURL + "/" + id + "/estudiantes/" );
+    return this.http.get<ClaseDictadaDTO>(this.apiURL + "/" + id + "/estudiantes");
   }
   
   crearClaseDicta(idEdicionCurso: number, clasDic: ClaseDictadaDTO) {
-    return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/clasesDictada/", clasDic);
+    return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/clasesDictada", clasDic);
   }
 
   getEdicionesParaInscribirse(ci:string,idCarrera:number){
@@ -40,14 +40,14 @@ export class EdicionesCursoService {
   }
 //--
   getEdicionesParaActa(idCurso:number){
-    return this.http.get<ActaDTO>(this.apiURL + "/" + idCurso + "/notas/");
+    return this.http.get<ActaDTO>(this.apiURL + "/" + idCurso + "/notas");
   }
 
   confirmarActa(idCurso: number) {
-    return this.http.put(this.apiURL + "/" + idCurso + "/notas/", null);
+    return this.http.put(this.apiURL + "/" + idCurso + "/notas", null);
   }
 
   registrarNotasActa(idEdicionCurso: number, acta:ActaDTO) {
-    return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/notas/", acta);
+    return this.http.post<ClaseDictadaDTO>(this.apiURL + "/" + idEdicionCurso + "/notas", acta);
   }
 }

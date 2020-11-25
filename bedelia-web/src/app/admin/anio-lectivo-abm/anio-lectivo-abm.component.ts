@@ -59,7 +59,7 @@ export class AnioLectivoABMComponent implements OnInit {
         this.cargaDeDatos(datos);
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los años lectivos");
+        openSnackBar(this._snackBar, "Error al cargar los años lectivos");
       }
     );
   }
@@ -194,7 +194,7 @@ export class AnioLectivoABMComponent implements OnInit {
         this.soloLectura = true;
       },
       (error) => {
-        openSnackBar(this._snackBar, "Error al crear el año lectivo");
+        openSnackBar(this._snackBar, "No se pudo crear el año lectivo");
       }
     );
   }

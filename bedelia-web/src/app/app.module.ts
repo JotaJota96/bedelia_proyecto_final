@@ -70,6 +70,7 @@ import { DescripcionInscripcionCursoPipe } from './pipes/descripcion-inscripcion
 import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcion-examen.pipe';
 import { EstadoPostulacionPipe } from './pipes/estado-postulacion.pipe';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,10 @@ import { EstadoPostulacionPipe } from './pipes/estado-postulacion.pipe';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorTokenInterceptor,
       multi: true
+    },
+    {
+      provide: LocationStrategy, 
+      useClass: HashLocationStrategy
     },
   ],
   bootstrap: [AppComponent]

@@ -13,7 +13,7 @@ export class EstudianteService {
   constructor(protected http:HttpClient) { }
 
   getCarreras(ci:string){
-    return this.http.get<CarreraDTO[]>(this.apiURL + "/"+ ci+"/carreras/");
+    return this.http.get<CarreraDTO[]>(this.apiURL + "/"+ ci+"/carreras");
   }
 
   getEscolaridad(ci:string, idCarrera: number){

@@ -38,7 +38,7 @@ export class AreaEstudioABMComponent implements OnInit {
         this.router.navigate(['/admin/area']);
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo crear el area de estudio");
+        openSnackBar(this._snackBar, "No se pudo crear el área de estudio");
       }
     );
     this.dialogRef.close();

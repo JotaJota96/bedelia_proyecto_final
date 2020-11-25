@@ -57,7 +57,7 @@ export class InscripcionCursoComponent implements OnInit {
         this.listaCurso = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "Error al obtener los cursos para la carrera seleccionada")
+        openSnackBar(this._snackBar, "Error al obtener los cursos para la carrera seleccionada");
       }
     );
   }

@@ -15,11 +15,11 @@ export class EstudianteService {
   constructor(protected http:HttpClient) { }
 
   getCarreras(ci:string){
-    return this.http.get<CarreraDTO[]>(this.apiURL + "/"+ ci+"/carreras/");
+    return this.http.get<CarreraDTO[]>(this.apiURL + "/"+ ci+"/carreras");
   }
 
   justificarInasistencia(ciEstudiante:string, fechaInicio:string, fechaFin:string){
-    return this.http.put(this.apiURL + '/' + ciEstudiante + "/asistencias/",{fecha_inicio:fechaInicio, fecha_fin:fechaFin});
+    return this.http.put(this.apiURL + '/' + ciEstudiante + "/asistencias",{fecha_inicio:fechaInicio, fecha_fin:fechaFin});
   }
 
   getEscolaridad(ci:string, idCarrera: number){
