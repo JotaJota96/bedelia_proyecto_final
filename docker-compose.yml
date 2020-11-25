@@ -31,7 +31,7 @@ services:
     rest:
         build:
             context: ./bedelia-rest
-            dockerfile: DockerFile
+            dockerfile: Dockerfile
         container_name: bedelia-rest
         restart: always
         depends_on:
@@ -39,38 +39,33 @@ services:
         ports:
             - 8000:80
         volumes:
-            - ./bedelia-rest:/var/www
-            - ./bedelia-rest/public:/var/www/html
+            - ./bedelia-rest/.env:/var/www/.env
         networks:
             laravel_net:
                 ipv4_address: 172.16.100.10
     web:
         build:
             context: ./bedelia-web
-            dockerfile: DockerFile
+            dockerfile: Dockerfile
         container_name: bedelia-web
         restart: always
         depends_on:
             - rest
         ports:
             - 80:80
-        volumes:
-            - ./bedelia-web/dist/bedelia-web:/var/www/html
         networks:
             laravel_net:
                 ipv4_address: 172.16.100.11
     pwa:
         build:
             context: ./bedelia-pwa
-            dockerfile: DockerFile
+            dockerfile: Dockerfile
         container_name: bedelia-pwa
         restart: always
         depends_on:
             - rest
         ports:
             - 8080:80
-        volumes:
-            - ./bedelia-pwa/dist/bedelia-pwa:/var/www/html
         networks:
             laravel_net:
                 ipv4_address: 172.16.100.12
@@ -81,8 +76,7 @@ networks:
         ipam:
             driver: default
             config:
-                - 
-                    subnet: 172.16.100.0/24
+                - subnet: 172.16.100.0/24
 
 
 

@@ -43,7 +43,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
       (datos) => {
         this.listaExamen = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
+        openSnackBar(this._snackBar, "Error al cargar los cursos");
       }
     );
     
@@ -60,7 +60,7 @@ export class IngresarResultadoExamenComponent implements OnInit {
         this.usuariosDataSource.data = datos.notas;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
+        openSnackBar(this._snackBar, "Error al cargar los cursos");
       }
     );
   }
