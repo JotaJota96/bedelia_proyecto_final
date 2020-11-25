@@ -68,7 +68,7 @@ export class AsignarDocenteComponent implements OnInit {
               this.listaExamen = datos;
             },
             (error) => {
-              openSnackBar(this._snackBar, "Error al cargar los examenes");
+              openSnackBar(this._snackBar, "Error al cargar los exámenes");
             }
           )
         }
@@ -101,7 +101,7 @@ export class AsignarDocenteComponent implements OnInit {
       (error)=>{
         this.mostrarDatos = false;
         this.persona = null;
-        openSnackBar(this._snackBar, "La CI que se ingreso no es de un docente");
+        openSnackBar(this._snackBar, "La cédula que se ingreso no es de un docente");
       }
     );
     

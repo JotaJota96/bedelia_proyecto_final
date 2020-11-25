@@ -59,7 +59,7 @@ export class InscripcionExamenComponent implements OnInit {
         this.listaExamen = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "Error al obtener los examenes para este periodo lectivo");
+        openSnackBar(this._snackBar, "Error al obtener los exámenes para este periodo lectivo");
       });
   }
 

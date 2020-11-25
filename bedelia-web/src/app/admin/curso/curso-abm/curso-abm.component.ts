@@ -32,7 +32,7 @@ export class CursoABMComponent implements OnInit {
         this.listaArea = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar las áreas de estudio");
+        openSnackBar(this._snackBar, "Error al cargar las áreas de estudio");
       }
     )
 
@@ -41,7 +41,7 @@ export class CursoABMComponent implements OnInit {
         this.listaTipo = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar los tipos de curso");
+        openSnackBar(this._snackBar, "Error al cargar los tipos de curso");
       }
     )
 
@@ -56,7 +56,7 @@ export class CursoABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) => {
-          openSnackBar(this._snackBar, "Error cargar el curso");
+          openSnackBar(this._snackBar, "Error al cargar el curso");
         }
       );
     }

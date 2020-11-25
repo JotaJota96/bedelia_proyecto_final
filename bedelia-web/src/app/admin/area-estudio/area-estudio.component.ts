@@ -25,7 +25,7 @@ export class AreaEstudioComponent implements OnInit {
       (datos) => {
         this.areaDataSource.data = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar las áreas de estudio");
+        openSnackBar(this._snackBar, "Error al cargar las áreas de estudio");
       }
     );
   }
@@ -36,7 +36,7 @@ export class AreaEstudioComponent implements OnInit {
         this.areaDataSource.data = datos;
       },
       (error) => {
-        openSnackBar(this._snackBar, "No se pudieron cargar los dato");
+        openSnackBar(this._snackBar, "Error al cargar los dato");
       }
     );
   }

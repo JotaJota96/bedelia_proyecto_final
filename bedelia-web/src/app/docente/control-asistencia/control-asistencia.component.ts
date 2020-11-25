@@ -44,7 +44,7 @@ export class ControlAsistenciaComponent implements OnInit {
       (datos) => {
         this.listaCurso = datos;
       }, (error) => {
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
+        openSnackBar(this._snackBar, "Error al cargar los cursos");
       }
     );
 
