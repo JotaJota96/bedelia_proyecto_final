@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SedesService } from 'src/app/servicios/sedes.service';
 import { SedeDTO } from 'src/app/clases/sede-dto';
 import { AdministrativosService } from 'src/app/servicios/administrativos.service';
+import { openSnackBar } from 'src/app/global-functions';
 
 
 const DEPARTAMENTOS: string[] = [
@@ -63,6 +64,7 @@ export class UsuarioABMComponent implements OnInit {
   listaSedes: SedeDTO[];
   esAdministrativo: boolean = false;
   sedeSeleccionada:SedeDTO = null;
+  enviandoDatos:boolean = false;
 
   public formulario: FormGroup;
 
@@ -80,7 +82,7 @@ export class UsuarioABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) => {
-          this.openSnackBar("No se pudo cargar el usuario de la base de dato");
+          openSnackBar(this._snackBar, "Error al cargar el usuario");
         }
       );
     }
@@ -90,7 +92,7 @@ export class UsuarioABMComponent implements OnInit {
         this.listaSedes = datos;
       },
       (error) => {
-        this.openSnackBar("No se pudo cargar las sedes de la base de dato");
+        openSnackBar(this._snackBar, "Error al cargar las sedes");
       }
     );
 
@@ -159,6 +161,15 @@ export class UsuarioABMComponent implements OnInit {
   }
 
   agregar() {
+    if (this.esAdministrativo == true) {
+      if(this.formulario.controls['sede'].value == undefined){
+        openSnackBar(this._snackBar, "Se debe seleccionar una sede");
+        return;
+      }
+    }
+    
+    this.enviandoDatos = true;
+
     let usu: UsuarioDTO = new UsuarioDTO();
     usu.persona = new PersonaDTO();
     usu.persona.direccion = new DireccionDTO();
@@ -177,13 +188,6 @@ export class UsuarioABMComponent implements OnInit {
     usu.persona.direccion.numero = this.formulario.controls['numero'].value;
     usu.persona.fecha_nac = formatDate(usu.persona.fecha_nac, 'yyyy-MM-dd', 'en-US');
     
-    if (this.esAdministrativo == true) {
-      if(this.formulario.controls['sede'].value == undefined){
-        this.openSnackBar("Se deve seleccionar una sede")
-        return;
-      }
-    }
-    
     let sede: SedeDTO = this.formulario.controls['sede'].value;
 
     this.usuServ.create(usu).subscribe(
@@ -192,26 +196,23 @@ export class UsuarioABMComponent implements OnInit {
           this.adminisServ.asignar(sede, this.formulario.controls['cedula'].value).subscribe(
             (datos) => {
               this.formulario.controls['sede'].setValue(undefined);
+              this.router.navigate(['/admin/usuarios']);
             },
             (error) => {
-              this.openSnackBar("No se pudo asignar la sede")
+              this.enviandoDatos = false;
+              openSnackBar(this._snackBar, "No se pudo asignar la sede");
             }
           );
+        }else{
+          this.router.navigate(['/admin/usuarios']);
         }
-        this.router.navigate(['/admin/usuarios']);
       },
       (error) => {
-        this.openSnackBar("No se pudo crear el usuario")
+        this.enviandoDatos = false;
+        openSnackBar(this._snackBar, "No se pudo crear el usuario");
       }
     );
 
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

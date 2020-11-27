@@ -44,6 +44,7 @@ class Examen extends Model
             "id"              => $this->id,
             "tipo"            => 'EX',
             "acta_confirmada" => $this->acta_confirmada,
+            "periodo"         => $this->periodoExamen->periodo->toString(),
             "fecha"           => $this->fecha,
             "curso"           => $this->curso,
             "notas"           => array(),

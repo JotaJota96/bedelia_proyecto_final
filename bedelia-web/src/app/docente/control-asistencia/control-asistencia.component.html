@@ -1,86 +1,95 @@
 <div class="container">
-    <mat-card class="mt-5">
+    <h1 class="mt-2">Control de asistencia</h1>
+    <mat-card class="mt-2">
         <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
-        
+
         <mat-card-content *ngIf="periodoOk == false">
-          <p>Actualmente no hay ningun período de cursos vigente.</p>
+            <p>Actualmente no hay ningún período de cursos vigente.</p>
         </mat-card-content>
-    
-        <mat-card-content *ngIf="periodoOk == true">
+
+        <mat-card-content *ngIf="periodoOk == true && listaCurso.length == 0">
+            <p>Actualmente no tiene asignado ningún curso</p>
+          </mat-card-content>
+
+        <mat-card-content *ngIf="periodoOk == true && listaCurso.length > 0">
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
                     <mat-select placeholder="Lista de curso" name="curso" formControlName="curso">
                         <mat-option *ngFor="let curso of listaCurso" [value]="curso.id">
-                            {{curso.curso.nombre}}
+                            {{curso.curso.nombre}} ( {{curso.sede.direccion.ciudad}} )
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <div class="col-12 col-md-2 m-auto" align="end">
-                    <button mat-raised-button (click)="confirmar()" color="primary">Seleccionar carrera </button>
+                    <button mat-raised-button [disabled]="!formulario.valid" (click)="confirmar()" color="primary">Seleccionar </button>
                 </div>
             </form>
         </mat-card-content>
-    </mat-card>
-    <mat-card class="mt-2" *ngIf="periodoOk == true">
-        <!-- Tabla -->
-        <table mat-table [dataSource]="usuariosDataSource" class="col-12">
-            <!-- Columna -->
-            <ng-container matColumnDef="cedula">
-                <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
-            </ng-container>
 
-            <!-- Columna -->
-            <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-            </ng-container>
-
-            <!-- Columna -->
-            <ng-container matColumnDef="apellido">
-                <th mat-header-cell *matHeaderCellDef> Apellido </th>
-                <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
-            </ng-container>
-
-            <!-- Columna -->
-            <ng-container matColumnDef="cant_asistencias">
-                <th mat-header-cell *matHeaderCellDef> Acistencias</th>
-                <td mat-cell *matCellDef="let element"> {{element.total_asistencias}} </td>
-            </ng-container>
-
-            <!-- Columna -->
-            <ng-container matColumnDef="calculo">
-                <th mat-header-cell *matHeaderCellDef> Inasistencias restantes</th>
-                <td mat-cell *matCellDef="let element"> {{this.cursoSeleccionado.max_inasistencias - (element.total_inasistencias +(element.total_llegadas_tarde * 0.5)) | inasistenca}} </td>
-            </ng-container>
-
-            <!-- Columna -->
-            <ng-container matColumnDef="accion">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element"  align="end">
-                    <mat-form-field class="col-12" [style.width.%]=100>
-                        <mat-select [(ngModel)]="element.asistencia">
-                            <mat-option  [value]="1.0">Asistió</mat-option>
-                            <mat-option  [value]="0.5">Llegada tarde</mat-option>
-                            <mat-option  [value]="0.0">No asistió</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </td>
-            </ng-container>
-
-            <!-- Definicion de columnas y filas, o algo asi-->
-            <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
-
-            <!-- Esto se muestra si la tabla esta vacia -->
-            <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
-            </tr>
-        </table>
+        <mat-card-content class="mt-2" *ngIf="periodoOk == true && claseDictada != undefined">
+            <!-- Tabla -->
+            <table mat-table [dataSource]="usuariosDataSource" class="col-12">
+                <!-- Columna -->
+                <ng-container matColumnDef="cedula">
+                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
+                </ng-container>
+    
+                <!-- Columna -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                </ng-container>
+    
+                <!-- Columna -->
+                <ng-container matColumnDef="apellido">
+                    <th mat-header-cell *matHeaderCellDef> Apellido </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+                </ng-container>
+    
+                <!-- Columna -->
+                <ng-container matColumnDef="cant_asistencias">
+                    <th mat-header-cell *matHeaderCellDef> Asistencias</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.total_asistencias + (element.total_llegadas_tarde * 0.5) }}</td>
+                </ng-container>
+    
+                <!-- Columna -->
+                <ng-container matColumnDef="calculo">
+                    <th mat-header-cell *matHeaderCellDef> Inasistencias restantes</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{this.cursoSeleccionado.max_inasistencias - (element.total_inasistencias +(element.total_llegadas_tarde * 0.5)) | inasistenca}}
+                    </td>
+                </ng-container>
+    
+                <!-- Columna -->
+                <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element" align="end">
+                        <mat-form-field class="col-12" [style.width.%]=100>
+                            <mat-select [(ngModel)]="element.asistencia">
+                                <mat-option [value]="1.0">Asistió</mat-option>
+                                <mat-option [value]="0.5">Llegada tarde</mat-option>
+                                <mat-option [value]="0.0">No asistió</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+    
+                <!-- Definicion de columnas y filas, o algo asi-->
+                <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+    
+                <!-- Esto se muestra si la tabla esta vacia -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
+                </tr>
+            </table>
+        </mat-card-content>
 
         <mat-card-actions align="end">
-            <button mat-raised-button (click)="confirmarPasajeLista()" color="primary">Seleccionar carrera </button>
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+            <button mat-raised-button (click)="confirmarPasajeLista()" *ngIf="claseDictada != undefined" [disabled]="cursoSeleccionado == undefined" color="primary">Confirmar </button>
         </mat-card-actions>
     </mat-card>
 </div>

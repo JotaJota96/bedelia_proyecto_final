@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { openSnackBar } from 'src/app/global-functions';
 import { AreaEstudioService } from 'src/app/servicios/area-estudio.service';
 import { AreaEstudioABMComponent } from './area-estudio-abm/area-estudio-abm.component';
 
@@ -24,7 +25,7 @@ export class AreaEstudioComponent implements OnInit {
       (datos) => {
         this.areaDataSource.data = datos;
       }, (error) => {
-        this.openSnackBar("No se pudo cargar las areas de estudio de la base de dato");
+        openSnackBar(this._snackBar, "Error al cargar las áreas de estudio");
       }
     );
   }
@@ -35,7 +36,7 @@ export class AreaEstudioComponent implements OnInit {
         this.areaDataSource.data = datos;
       },
       (error) => {
-        this.openSnackBar("No se pudieron cargar los dato");
+        openSnackBar(this._snackBar, "Error al cargar los dato");
       }
     );
   }
@@ -48,11 +49,4 @@ export class AreaEstudioComponent implements OnInit {
     });
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

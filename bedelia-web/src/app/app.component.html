@@ -5,17 +5,17 @@
     </button>
   </div>
   <div class="row m-0 p-0 justify-content-center col-3 col-sm-2 col-md-4">
-    <a href="/"><img src="\assets\img\UTEC.png" width="100"></a>
+    <a [routerLink]="['/']"><img src="\assets\img\UTEC.png" width="100"></a>
   </div>
   <div class="row m-0 p-0 justify-content-end col-7 col-sm-5 col-md-4">
     <button mat-raised-button [routerLink]="['/']">Inicio</button>
-    <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Iniciar sesión</button>
-    <button mat-raised-button *ngIf="logeado()" (click)="logout()">Cerrar sesion</button>
+    <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Login</button>
+    <button mat-raised-button *ngIf="logeado()" (click)="logout()">Logout</button>
   </div>
 </mat-toolbar>
 
 <mat-drawer-container class="main-container">
-  <mat-drawer #drawer mode="side" [opened]="logeado()">
+  <mat-drawer #drawer class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 p-0" [mode]="menuMode" [opened]="logeado()">
 
     <mat-accordion multi *ngFor="let seccion of menuAMostrar()">
       <mat-expansion-panel hideToggle expanded>

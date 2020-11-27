@@ -40,6 +40,8 @@ import { DescripcionInscripcionCursoPipe } from './pipe/descripcion-inscripcion-
 import { DescripcionInscripcionExamenPipe } from './pipe/descripcion-inscripcion-examen.pipe';
 import { DesconectadoComponent } from './componentes/desconectado/desconectado.component';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +90,10 @@ import { DesconectadoComponent } from './componentes/desconectado/desconectado.c
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorTokenInterceptor,
       multi: true
+    },
+    {
+      provide: LocationStrategy, 
+      useClass: HashLocationStrategy
     },
   ],
   bootstrap: [AppComponent]

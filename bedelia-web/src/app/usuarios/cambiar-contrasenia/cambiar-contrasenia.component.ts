@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginDTO } from 'src/app/clases/login-dto';
 import { LoginResponseDTO } from 'src/app/clases/login-response-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -40,13 +41,13 @@ export class CambiarContraseniaComponent implements OnInit {
           },
           (error) => {
             this.formulario.controls['contraseniaActual'].setErrors({'incorrecto': true});
-            this.openSnackBar("No se pudo cambiar la contraseña");
+            openSnackBar(this._snackBar, "No se pudo cambiar la contraseña");
           }
         );
       },
       (error) => {
         this.formulario.controls['contraseniaActual'].setErrors({'incorrecto': true});
-        this.openSnackBar("No se pudo cambiar la contraseña");
+        openSnackBar(this._snackBar, "No se pudo cambiar la contraseña");
       }
     );
   }
@@ -81,11 +82,4 @@ export class CambiarContraseniaComponent implements OnInit {
 
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

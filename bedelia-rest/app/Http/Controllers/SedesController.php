@@ -188,7 +188,7 @@ class SedesController extends Controller
         $retEdicionesCursos = array();
         try {
             $Sede = Sede::where('id', $id)->first();
-            
+
             // ---- guarda en $retEdicionesCursos los EdicionCurso que se dicten en el proximo o actual PeriodoLectivo
             $idPeriodo = 0;
             $pla  = PeriodoLectivo::periodoActual();
@@ -211,7 +211,7 @@ class SedesController extends Controller
                 }
             }
             // ----
-            
+
             return response()->json($retEdicionesCursos, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener los EdicionCurso.' . $e->getMessage()], 500);
@@ -334,23 +334,27 @@ class SedesController extends Controller
             $plAnterior = PeriodoLectivo::periodoAnterior();
             if      ($plActual != null)   $idPeriodo = $plActual->id;
             else if ($plAnterior != null) $idPeriodo = $plAnterior->id;
-            else throw new \Exception("No se encontró ningun período lectivo válido");
-            
-            $RES = array_merge($RES, $sede->obtenerActas('LE', $idPeriodo));
+            else $idPeriodo = null;
+
+            if ($idPeriodo != null){
+                $RES = array_merge($RES, $sede->obtenerActas('LE', $idPeriodo));
+            }
 
             // obtengo el ID del PeriodoExamen actual o anterior
             $peActual   = PeriodoExamen::periodoActual();
             $peAnterior = PeriodoExamen::periodoAnterior();
             if      ($peActual != null)   $idPeriodo = $peActual->id;
             else if ($peAnterior != null) $idPeriodo = $peAnterior->id;
-            else throw new \Exception("No se encontró ningun período lectivo válido");
-            
-            $RES = array_merge($RES, $sede->obtenerActas('EX', $idPeriodo));
+            else $idPeriodo = null;
+
+            if ($idPeriodo != null){
+                $RES = array_merge($RES, $sede->obtenerActas('EX', $idPeriodo));
+            }
 
             return response()->json($RES, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al obtener los exámenes.' . $e->getMessage()], 500);
         }
     }
-    
+
 }

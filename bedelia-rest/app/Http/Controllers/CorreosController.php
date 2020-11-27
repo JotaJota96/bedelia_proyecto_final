@@ -17,14 +17,14 @@ class CorreosController extends Controller {
     }
 
     public function enviarCorreo(){
-        $mailData = [
-            'destinatario' => $this->request->json('to'),
-            'nombre'       => $this->request->json('nombre'),
-            'usuario'      => $this->request->json('usuario'),
-            'contrasenia'  => $this->request->json('contrasenia'),
-        ];
+        // $mailData = [
+        //     'destinatario' => $this->request->json('to'),
+        //     'nombre'       => $this->request->json('nombre'),
+        //     'usuario'      => $this->request->json('usuario'),
+        //     'contrasenia'  => $this->request->json('contrasenia'),
+        // ];
 
-        CorreoBienvenida::enviar($mailData);
-        return response()->json(null, 200);
+        // CorreoBienvenida::enviar($mailData);
+        // return response()->json(null, 200);
     }
 }

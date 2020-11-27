@@ -21,7 +21,7 @@ export class ExamenesService {
     return this.http.put(this.apiURL + "/" + idExamen + "/docente/" + ciDocente, null);
   }
 
-  getEdicionesParaInscrivirse(ci:string, idCarrera:number){
+  getEdicionesParaInscribirse(ci:string, idCarrera:number){
     return this.http.get<ExamenDTO[]>(this.apiURL + "/" + ci + "/" + idCarrera);
   }
 
@@ -30,14 +30,14 @@ export class ExamenesService {
   }
 
   getNotasDeEstudiante(idExamen:number){
-    return this.http.get<ActaDTO>(this.apiURL + "/" + idExamen + "/notas/");
+    return this.http.get<ActaDTO>(this.apiURL + "/" + idExamen + "/notas");
   }
 
   confirmarActa(idExamen:number){
-    return this.http.put<ActaDTO  >(this.apiURL + "/" + idExamen + "/notas/", null);
+    return this.http.put<ActaDTO  >(this.apiURL + "/" + idExamen + "/notas", null);
   }
 
   registrarNotas(idExamen:number, acta:ActaDTO) {
-    return this.http.post(this.apiURL + "/" + idExamen + "/notas/", acta);
+    return this.http.post(this.apiURL + "/" + idExamen + "/notas", acta);
   }
 }

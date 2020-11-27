@@ -239,11 +239,11 @@ class Controller extends BaseController
      * )
      */
 
-
     /**
      * @OA\Schema(
      *     schema="PostulanteDTO",
      *     @OA\Property(property="id",              type="integer"),
+     *     @OA\Property(property="estado",          type="string", readOnly="true", description="A = Aceptada, R = Rechazada, N = NotificacionEnviada, null = ninguna de las anteriores"),
      *     @OA\Property(property="img_ci",          type="string"),
      *     @OA\Property(property="img_escolaridad", type="string"),
      *     @OA\Property(property="img_carne_salud", type="string"),
@@ -338,6 +338,7 @@ class Controller extends BaseController
      *     @OA\Property(property="tipo",            type="string",  readOnly=true, description="EX = examen, LE = cursos"),
      *     @OA\Property(property="fecha",           type="string",  readOnly=true, description="Fecha del examen (si tipo = EX)"),
      *     @OA\Property(property="acta_confirmada", type="boolean", readOnly=true),
+     *     @OA\Property(property="periodo",         type="string"),
      *     @OA\Property(
      *         property="curso",
      *         ref="#/components/schemas/CursoDTO",

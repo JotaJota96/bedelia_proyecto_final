@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AreaEstudioDTO } from 'src/app/clases/area-estudio-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AreaEstudioService } from 'src/app/servicios/area-estudio.service';
 
 @Component({
@@ -37,17 +38,10 @@ export class AreaEstudioABMComponent implements OnInit {
         this.router.navigate(['/admin/area']);
       },
       (error) => {
-        this.openSnackBar("No se pudo crear el area de estudio");
+        openSnackBar(this._snackBar, "No se pudo crear el área de estudio");
       }
     );
     this.dialogRef.close();
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

@@ -37,11 +37,11 @@ export class SedesService {
   }
 
   getExamen(id:number){
-    return this.http.get<ExamenDTO[]>(this.apiURL + '/' + id + '/examenes/');
+    return this.http.get<ExamenDTO[]>(this.apiURL + '/' + id + '/examenes');
   }
 
   getActas(id:number){
-    return this.http.get<ActaDTO[]>(this.apiURL + '/' + id + '/actas/');
+    return this.http.get<ActaDTO[]>(this.apiURL + '/' + id + '/actas');
   }
 
 }

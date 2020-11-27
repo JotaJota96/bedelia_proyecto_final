@@ -1,4 +1,5 @@
 <div class="container">
+    <h1 class="mt-2">Gestión de sedes</h1>
     <div class="row">
         <mat-card class="col-12  mx-auto my-2 example-card">
             <mat-card-header>
@@ -10,7 +11,7 @@
                     <div class="col-12 pl-5 pr-5">
                         <!-- datos de la persona -->
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Telefono" name="telefono" formControlName="telefono"
+                            <input matInput placeholder="Teléfono" name="telefono" formControlName="telefono"
                                 [readonly]="soloLectura">
                         </mat-form-field>
 
@@ -46,7 +47,7 @@
             <mat-card-actions align="end" class="pr-5">
                 <button mat-raised-button *ngIf="!soloLectura" color="primary"  [routerLink]="['/admin/sede']">Volver</button>
                 <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid"
-                    (click)="agregar()">Acceder</button>
+                    (click)="agregar()">Confirmar</button>
 
                 <button mat-raised-button *ngIf="soloLectura" color="primary"
                     [routerLink]="['/admin/sede']">Volver</button>

@@ -1,36 +1,71 @@
 <div class="container">
-    <div class="row mt-5">
-        <mat-card class="col-12">
+    <h1 class="mt-2">Revisión de postulantes</h1>
+    <mat-card class="mt-2">
+        <mat-spinner class="mx-auto mt-5" *ngIf="sedeOk == undefined"></mat-spinner>
+
+        <mat-card-content *ngIf="sedeOk == false">
+            <p>No puede realizar esta acción debido a que no tiene una sede asignada</p>
+        </mat-card-content>
+        
+        <mat-card-content *ngIf="sedeOk == true">
             <table mat-table [dataSource]="sedeDataSource" class="col-12">
                 <!-- Columna -->
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
-        
+                
                 <!-- Columna -->
-                <ng-container matColumnDef="persona">
-                    <th mat-header-cell *matHeaderCellDef> Cedula </th>
+                <ng-container matColumnDef="cedula">
+                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
                     <td mat-cell *matCellDef="let element"> {{element.persona.cedula}} </td>
                 </ng-container>
-        
+                
+                <!-- Columna -->
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef> Estado </th>
+                    <td mat-cell *matCellDef="let element"> {{element.estado | estadoPostulacion}} </td>
+                </ng-container>
+
+                <!-- Columna -->
+                <ng-container matColumnDef="carrera">
+                    <th mat-header-cell *matHeaderCellDef> Carrera </th>
+                    <td mat-cell *matCellDef="let element"> {{element.carrera.nombre}} </td>
+                </ng-container>
+                
+                <!-- Columna -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.persona.nombre}} </td>
+                </ng-container>
+                
+                <!-- Columna -->
+                <ng-container matColumnDef="apellido">
+                    <th mat-header-cell *matHeaderCellDef> Apellido </th>
+                    <td mat-cell *matCellDef="let element"> {{element.persona.apellido}} </td>
+                </ng-container>
+                
                 <!-- Columna -->
                 <ng-container matColumnDef="accion">
-                    <th mat-header-cell *matHeaderCellDef> Accion </th>
+                    <th mat-header-cell *matHeaderCellDef> Acción </th>
                     <td align="end" mat-cell *matCellDef="let element">
                         <button mat-raised-button [routerLink]="['/administrativo/postulante/ver/',element.id]">Ver detalle</button>
                     </td>
                 </ng-container>
-        
+                
                 <!-- Definicion de columnas y filas, o algo asi-->
                 <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
                 <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
-        
+                
                 <!-- Esto se muestra si la tabla esta vacia -->
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
                 </tr>
             </table>
-        </mat-card>
-    </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end" class="mt-2">
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+        </mat-card-actions>
+    </mat-card>
 </div>

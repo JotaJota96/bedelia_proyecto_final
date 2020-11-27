@@ -2,10 +2,11 @@
     <mat-card-content>
         <form [formGroup]="formulario" class="row px-4 mt-4">
             <p>Ingresar Nota</p>
-            <input matInput class="col-12 m-auto" placeholder="Nota del estuciante" type="number" min="1" max="5"  name="nota" formControlName="nota">
+            <input matInput class="col-12 m-auto" placeholder="Nota del estudiante" type="number" min="1" max="5"  name="nota" formControlName="nota">
         </form>
     </mat-card-content>
-    <mat-card-actions>
-        <button [disabled]="!formulario.valid" (click)="enviar()" mat-button>Enviar</button>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="cerrar()">Volver</button>
+        <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="confirmar()">Confirmar</button>
     </mat-card-actions>
 </mat-card>

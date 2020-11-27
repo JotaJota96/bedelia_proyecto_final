@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonaDTO } from 'src/app/clases/persona-dto';
 import { PostulanteDTO } from 'src/app/clases/postulante-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { PostulanteService } from 'src/app/servicios/postulante.service';
 import { ModalInformarComponent } from '../modal-informar/modal-informar.component';
 
@@ -16,9 +17,10 @@ export class VerMasComponent implements OnInit {
 
   constructor(private router: Router,private _snackBar: MatSnackBar, public dialog: MatDialog, private rutaActiva: ActivatedRoute, protected postulanteServis: PostulanteService) { }
 
-  elMensaje: string;
-  postulante: PostulanteDTO = new PostulanteDTO;
-  persona: PersonaDTO = new PersonaDTO;
+  postulante: PostulanteDTO = undefined;
+  persona: PersonaDTO = undefined;
+  permitirAcciones: boolean = false;
+  enviandoDatos:boolean = false;
 
   ngOnInit(): void {
 
@@ -29,26 +31,29 @@ export class VerMasComponent implements OnInit {
         (datos) => {
           this.postulante = datos;
           this.persona = datos.persona;
+          this.permitirAcciones = this.postulante.estado == null || this.postulante.estado == 'N';
         }
       );
     }
 
   }
 
-  verDocumentos() {
-
-  }
-
   informarProblema() {
     const dialogRef = this.dialog.open(ModalInformarComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.elMensaje = result;
-      this.postulanteServis.notificar(this.postulante.id, this.elMensaje).subscribe(
+      if (result == undefined) return; // le dio 'Volver'
+      let elMensaje = result;
+      openSnackBar(this._snackBar, "Enviando mensaje...", 'ok');
+      this.enviandoDatos = true;
+
+      this.postulanteServis.notificar(this.postulante.id, elMensaje).subscribe(
         (datos) => {
-          this.openSnackBar("El mensaje fue enviado");
+          this.enviandoDatos = false;
+          openSnackBar(this._snackBar, "El mensaje fue enviado correctamente", 'ok');
         },
         (error) => {
-          this.openSnackBar("No se pudo mandar el mensaje");
+          this.enviandoDatos = false;
+          openSnackBar(this._snackBar, "No se pudo enviar el mensaje");
         }
       )
     });
@@ -60,18 +65,20 @@ export class VerMasComponent implements OnInit {
         this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
-        this.openSnackBar("No se pudo rechasar la postulacion");
+        openSnackBar(this._snackBar, "No se pudo rechazar la postulación");
       }
     )
   }
 
   aceptar() {
+    this.enviandoDatos = true;
     this.postulanteServis.aceptar(this.postulante.id).subscribe(
       (datos) => {
         this.router.navigate(['/administrativo/revicion-postulante']);
       },
       (error) => {
-        this.openSnackBar("No se pudo aceptar la postulacion");
+        this.enviandoDatos = false;
+        openSnackBar(this._snackBar, "No se pudo aceptar la postulación");
       }
     );
   }
@@ -80,11 +87,4 @@ export class VerMasComponent implements OnInit {
     
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

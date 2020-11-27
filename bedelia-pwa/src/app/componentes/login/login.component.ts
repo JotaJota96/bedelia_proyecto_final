@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
         
       },
       (error)=>{
-        this.openSnackBar("Los datos del usuario son incorrectos");
+        this.openSnackBar("Los datos de inicio de sesión son incorrectos");
         this.vaciarCampos();
       }
     );
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
   openSnackBar(mensaje : string) {
     this._snackBar.open(mensaje,'Salir', {
       duration: 3000,
-      horizontalPosition: 'end',
+      horizontalPosition: 'center',
       verticalPosition: "bottom",
     });
   }

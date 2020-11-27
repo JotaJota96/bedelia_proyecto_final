@@ -68,7 +68,9 @@ import { VerificacionEscolaridadComponent } from './acceso-publico/verificacion-
 import { InterceptorTokenInterceptor } from './interceptores/interceptor-token.interceptor';
 import { DescripcionInscripcionCursoPipe } from './pipes/descripcion-inscripcion-curso.pipe';
 import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcion-examen.pipe';
+import { EstadoPostulacionPipe } from './pipes/estado-postulacion.pipe';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,7 @@ import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcio
     VerificacionEscolaridadComponent,
     DescripcionInscripcionCursoPipe,
     DescripcionInscripcionExamenPipe,
+    EstadoPostulacionPipe,
   ],
   imports: [
     MatStepperModule,
@@ -147,6 +150,10 @@ import { DescripcionInscripcionExamenPipe } from './pipes/descripcion-inscripcio
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorTokenInterceptor,
       multi: true
+    },
+    {
+      provide: LocationStrategy, 
+      useClass: HashLocationStrategy
     },
   ],
   bootstrap: [AppComponent]

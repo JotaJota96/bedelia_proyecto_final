@@ -1,69 +1,118 @@
 <div class="container">
-    <mat-card class="mt-5">
-        <mat-card-content>
+    <h1 class="mt-2">Ingresar resultados de exámenes</h1>
+    <mat-card class="mt-2">
+        <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
+        
+        <mat-card-content *ngIf="periodoOk == false">
+          <p>Actualmente no hay ningún período de exámenes vigente.</p>
+        </mat-card-content>
+    
+        <mat-card-content *ngIf="periodoOk == true && listaExamen.length == 0">
+            <p>Actualmente no tiene asignado ningún curso</p>
+          </mat-card-content>
+
+        <mat-card-content *ngIf="periodoOk == true && listaExamen.length > 0">
             <form [formGroup]="formulario" class="row">
                 <mat-form-field class="col-12 col-md-10" [style.width.%]=100>
-                    <mat-select placeholder="Lista de examen" name="examen" formControlName="examen">
+                    <mat-select placeholder="Seleccione un exámen" name="examen" formControlName="examen">
                         <mat-option *ngFor="let examen of listaExamen" [value]="examen.id">
-                            {{examen.curso.nombre}}
+                            {{examen.curso.nombre}} ( {{examen.sede.direccion.ciudad}} )
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <div class="col-12 col-md-2 m-auto" align="end">
-                    <button mat-raised-button (click)="buscar()" color="primary">Seleccionar curso </button>
+                    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="buscar()">Seleccionar</button>
                 </div>
             </form>
         </mat-card-content>
-    </mat-card>
-    <mat-card class="mt-2">
-        <mat-card-header>
-            <button color="primary" mat-raised-button (click)="confirmar()">Confirmar</button>
-        </mat-card-header>
-        <mat-card-content>
-            <!-- Tabla -->
-            <table mat-table [dataSource]="usuariosDataSource" class="col-12">
-                <!-- Columna -->
-                <ng-container matColumnDef="cedula">
-                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
-                    <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
-                </ng-container>
 
-                <!-- Columna -->
-                <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                </ng-container>
+        <mat-card-content *ngIf="examenSeleccionado">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        {{ acta.curso.nombre }}
+                    </mat-card-title>
+                </mat-card-header>
 
-                <!-- Columna -->
-                <ng-container matColumnDef="apellido">
-                    <th mat-header-cell *matHeaderCellDef> Apellido </th>
-                    <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
-                </ng-container>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-list role="list" class="m-auto">
+                                <mat-list-item role="listitem">ID: </mat-list-item>
+                                <mat-list-item role="listitem">Tipo de acta: </mat-list-item>
+                                <mat-list-item role="listitem">Período: </mat-list-item>
+                                <mat-list-item role="listitem">Confirmada: </mat-list-item>
+                                <mat-list-item role="listitem" *ngIf="acta.tipo == 'EX'">Fecha del examen: </mat-list-item>
+                            </mat-list>
+                        </div>
+                        <div class="col-6">
+                            <mat-list role="list" class="m-auto">
+                                <mat-list-item role="listitem">{{ acta.id }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ acta.tipo | tipoActa }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ acta.periodo }}</mat-list-item>
+                                <mat-list-item role="listitem">{{ acta.acta_confirmada== true ? 'si' : 'no' }}</mat-list-item>
+                                <mat-list-item role="listitem" *ngIf="acta.tipo == 'EX'">{{ acta.fecha | date:'dd/MM/yyyy' | fechaNull }}</mat-list-item>
+                            </mat-list>
+                        </div>
+                    </div>
+                </mat-card-content>
+                
+                <mat-divider></mat-divider>
+                
+                <h3 class="ml-3 mt-4">Estudiantes</h3>
 
-                <!-- Columna -->
-                <ng-container matColumnDef="nota">
-                    <th mat-header-cell *matHeaderCellDef> Nota </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nota | nota}} </td>
-                </ng-container>
-
-                <!-- Columna -->
-                <ng-container matColumnDef="accion">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element" align="end">
-                        <button class="mx-1" [disabled]="!element.acta_confirmada" (click)="ingresarNota(element.ciEstudiante)" mat-raised-button>Ingresar nota</button>
-                    </td>
-                </ng-container>
-
-                <!-- Definicion de columnas y filas, o algo asi-->
-                <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
-
-                <!-- Esto se muestra si la tabla esta vacia -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No se selecciono ningun curso</td>
-                </tr>
-            </table>
+                <mat-card-content>
+                    <!-- Tabla -->
+                    <table mat-table [dataSource]="usuariosDataSource" class="col-12">
+                        <!-- Columna -->
+                        <ng-container matColumnDef="cedula">
+                            <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ciEstudiante}} </td>
+                        </ng-container>
+    
+                        <!-- Columna -->
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                        </ng-container>
+    
+                        <!-- Columna -->
+                        <ng-container matColumnDef="apellido">
+                            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+                            <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+                        </ng-container>
+    
+                        <!-- Columna -->
+                        <ng-container matColumnDef="nota">
+                            <th mat-header-cell *matHeaderCellDef> Nota </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nota | nota}} </td>
+                        </ng-container>
+    
+                        <!-- Columna -->
+                        <ng-container matColumnDef="accion">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element" align="end">
+                                <button mat-raised-button class="mx-1" [disabled]="acta.acta_confirmada == true" (click)="ingresarNota(element.ciEstudiante)">Ingresar nota</button>
+                            </td>
+                        </ng-container>
+    
+                        <!-- Definicion de columnas y filas, o algo asi-->
+                        <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnasAMostrar;"></tr>
+    
+                        <!-- Esto se muestra si la tabla esta vacia -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No hay nada para mostrar</td>
+                        </tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
         </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+            <button mat-raised-button color="primary" *ngIf="examenSeleccionado" [disabled]="usuariosDataSource.data.length == 0" (click)="confirmar()">Confirmar</button>
+        </mat-card-actions>
     </mat-card>
 </div>

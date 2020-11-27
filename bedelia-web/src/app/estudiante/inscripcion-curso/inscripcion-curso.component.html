@@ -1,9 +1,10 @@
 <div class="container">
-  <mat-card class="mt-5">
+  <h1 class="mt-2">Inscripción a cursos</h1>
+  <mat-card class="mt-3">
     <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
     
     <mat-card-content *ngIf="periodoOk == false">
-      <p>Actualmente no hay ningun período de inscripcion a cursos vigente.</p>
+      <p>Actualmente no hay ningún período de inscripción a cursos vigente.</p>
     </mat-card-content>
 
     <mat-card-content *ngIf="periodoOk == true">
@@ -17,7 +18,7 @@
         </mat-form-field>
 
         <div class="col-12 col-md-2 m-auto" align="end">
-          <button mat-raised-button (click)="cargarMateria()" [disabled]="!formulario.valid" color="primary">Seleccionar carrera </button>
+          <button mat-raised-button (click)="cargarMateria()" [disabled]="!formulario.valid" color="primary">Seleccionar</button>
         </div>
       </form>
 

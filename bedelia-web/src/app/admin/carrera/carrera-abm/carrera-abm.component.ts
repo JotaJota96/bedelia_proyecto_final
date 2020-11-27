@@ -11,6 +11,7 @@ import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { CursoDTO } from 'src/app/clases/curso-dto';
 import { PreviaDTO } from 'src/app/clases/previa-dto';
 import { SedeDTO } from 'src/app/clases/sede-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AreaEstudioService } from 'src/app/servicios/area-estudio.service';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 import { CursoService } from 'src/app/servicios/curso.service';
@@ -59,7 +60,7 @@ export class CarreraABMComponent implements OnInit {
       (datos) => {
         this.listaAreasEstudio = datos;
       },(erro)=>{
-        this.openSnackBar("No se puediero traer las areas de estudio de la base de dato")
+        openSnackBar(this._snackBar, "Error al cargar las áreas de estudio");
       }
     );
 
@@ -67,7 +68,7 @@ export class CarreraABMComponent implements OnInit {
       (datos) => {
         this.listaSedes = datos;
       },(error)=>{
-        this.openSnackBar("No se pudieron traer las sedes desde la base de dato");
+        openSnackBar(this._snackBar, "Error al cargar las sedes");
       }
     );
     
@@ -76,7 +77,7 @@ export class CarreraABMComponent implements OnInit {
     //   (datos) => {
     //     this.listaCurso = datos;
     //   },(error)=>{
-    //     this.openSnackBar("No se pudieron traer los cursos desde la base de dato");
+    //     openSnackBar(this._snackBar, "Error al cargar los cursos");
     //   }
     // );
 
@@ -129,7 +130,7 @@ export class CarreraABMComponent implements OnInit {
           this.listaCurso.push(element);
         });
       },(error)=>{
-        this.openSnackBar("No se pudieron traer los cursos desde la base de dato");
+        openSnackBar(this._snackBar, "Error al cargar los cursos");
       }
     );
   }
@@ -206,7 +207,7 @@ export class CarreraABMComponent implements OnInit {
         }
       });
     } else {
-      this.openSnackBar("No se puede agregar previas a las materias de primer semestre");
+      openSnackBar(this._snackBar, "No se puede agregar previas a las materias de primer semestre");
     }
 
 
@@ -219,7 +220,7 @@ export class CarreraABMComponent implements OnInit {
   crear() {
     let vsdc = this.verificarSumaDeCreditos();
     if (vsdc != true ){
-      this.openSnackBar("El área de estudio '" + vsdc + "' requiere mas creditos que los entregados por los cursos de la carrera");
+      openSnackBar(this._snackBar, "El área de estudio '" + vsdc + "' requiere mas créditos que los entregados por los cursos de la carrera");
       return;
     }
     let carrera: CarreraCreateDTO = new CarreraCreateDTO();
@@ -237,7 +238,7 @@ export class CarreraABMComponent implements OnInit {
         this.router.navigate(['/admin/carrera']);
       },
       (error) => {
-        this.openSnackBar("No se pudo crear la carrera");
+        openSnackBar(this._snackBar, "No se pudo crear la carrera");
       }
     );
   }
@@ -262,11 +263,4 @@ export class CarreraABMComponent implements OnInit {
     }
   }
 
-  openSnackBar(mensaje : string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: "bottom",
-    });
-  }
 }

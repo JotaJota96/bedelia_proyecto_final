@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CarreraDTO } from 'src/app/clases/carrera-dto';
 import { EdicionCursoDTO } from 'src/app/clases/edicion-curso-dto';
+import { openSnackBar } from 'src/app/global-functions';
 import { AnioLectivoService } from 'src/app/servicios/anio-lectivo.service';
 import { EdicionesCursoService } from 'src/app/servicios/ediciones-curso.service';
 import { EstudianteService } from 'src/app/servicios/estudiante.service';
@@ -41,7 +42,7 @@ export class InscripcionCursoComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error) => {
-        this.openSnackBar("Error al cargar las carreras del estudiante");
+        openSnackBar(this._snackBar, "Error al cargar las carreras");
       }
     );
 
@@ -51,12 +52,12 @@ export class InscripcionCursoComponent implements OnInit {
   }
 
   cargarMateria() {
-    this.edicionCursoServ.getEdicionesParaInscrivirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
+    this.edicionCursoServ.getEdicionesParaInscribirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
       (datos) => {
         this.listaCurso = datos;
       },
       (error) => {
-        this.openSnackBar("Error al obtener los cursos para la carrera seleccionada")
+        openSnackBar(this._snackBar, "Error al obtener los cursos para la carrera seleccionada");
       }
     );
   }
@@ -69,16 +70,9 @@ export class InscripcionCursoComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error)=>{
-        this.openSnackBar("Error al inscrivirse a una materia");
+        openSnackBar(this._snackBar, "Error al inscribirse a una materia");
       }
     );
   }
 
-  openSnackBar(mensaje: string) {
-    this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: "top",
-    });
-  }
 }

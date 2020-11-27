@@ -53,7 +53,7 @@ export class InscripcionCursoComponent implements OnInit {
         this.listaCarrera = datos;
       },
       (error) => {
-        this.openSnackBar("Error al cargar las carreras del estudiante");
+        this.openSnackBar("Error al cargar las carreras");
       }
     );
 
@@ -72,14 +72,14 @@ export class InscripcionCursoComponent implements OnInit {
         });
       },
       (error) => {
-        this.openSnackBar("Error al obtener los cursos para la carrera seleccionada")
+        this.openSnackBar("Error al obtener los cursos para la carrera seleccionada");
       }
     );
   }
 
   confirmar() {
     if(this.selectedOptions.length == 0){
-      this.openSnackBar("Debes seleccionar como minimo 1 carrera")
+      this.openSnackBar("Debes seleccionar una carrera");
       return;
     }
     let usu = this.usuServ.obtenerDatosLoginAlmacenado();
@@ -88,7 +88,7 @@ export class InscripcionCursoComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error)=>{
-        this.openSnackBar("Error al inscrivirse a una materia");
+        this.openSnackBar("Error al inscribirse a cursos");
       }
     );
   }
