@@ -1,0 +1,36 @@
+<div class="container">
+  <mat-card class="mt-5">
+    <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
+
+    <mat-card-content *ngIf="periodoOk == false">
+      <p>Actualmente no hay ningun período de inscripción a cursos vigente.</p>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="periodoOk == true">
+      <form [formGroup]="formulario" class="row p-2">
+        <mat-form-field class="p-0 col-12" [style.width.%]=100>
+          <mat-select placeholder="Lista de carreras inscripto" name="carrera" formControlName="carrera">
+            <mat-option *ngFor="let carrera of listaCarrera" [value]="carrera.id">
+              {{carrera.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button class="col-12" mat-raised-button (click)="cargarMateria()" [disabled]="!formulario.valid"
+          color="primary">Seleccionar carrera </button>
+      </form>
+
+      <mat-selection-list class="curso" #curso [(ngModel)]="selectedOptions">
+        <mat-list-option class="mt-2 mb-2" *ngFor="let curso of listaCurso" [disabled]="curso.habilitado != 1"
+          [value]="curso.id">
+          <div mat-line>{{curso.curso.nombre}}</div>
+          <div mat-line class=" descripcion">{{ curso.habilitado | descripcionInscripcionCurso }}</div>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions align="end" class="row">
+      <button mat-raised-button class="col-12" color="primary" (click)="confirmar()" *ngIf="listaCurso.length > 0"
+        [disabled]="selectedOptions.length < 1">Confirmar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -54,7 +54,7 @@ export class SedeABMComponent implements OnInit {
           this.cargaDeDatos(datos);
         },
         (error) =>{
-          openSnackBar(this._snackBar, "No se pudieron cargar la sede");
+          openSnackBar(this._snackBar, "Error al cargar la sede");
         }
       );
     }

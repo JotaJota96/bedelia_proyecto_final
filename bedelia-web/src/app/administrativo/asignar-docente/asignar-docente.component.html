@@ -9,13 +9,13 @@
         </mat-card-content>
 
         <mat-card-content *ngIf="sedeOk == false">
-            <p>No puede realizar esta accion debido a que no tiene una sede asignada</p>
+            <p>No puede realizar esta acción debido a que no tiene una sede asignada</p>
         </mat-card-content>
         
         <mat-card-content *ngIf="periodoLeOk == true || periodoExOk == true">
             <form [formGroup]="formularioBusqueda" class="row">
                 <mat-form-field class="col-12 col-md-10">
-                    <mat-label>Cedula del docente</mat-label>
+                    <mat-label>Cédula del docente</mat-label>
                     <input matInput name="ci" formControlName="ci">
                 </mat-form-field>
                 <div align="center" class="col-12 col-md-2 m-auto">
@@ -29,7 +29,7 @@
                 </mat-card-header>
 
                 <mat-card-content *ngIf="periodoLeOk == false">
-                    <p>Actualmente no hay ningun período de cursos o de inscripcion a cursos vigente.</p>
+                    <p>Actualmente no hay ningún período de cursos o de inscripción a cursos vigente.</p>
                 </mat-card-content>
                 
                 <mat-card-content *ngIf="periodoLeOk == true">
@@ -53,10 +53,10 @@
 
             <mat-card>
                 <mat-card-header>
-                    <mat-card-title>Asignar a exámen</mat-card-title>
+                    <mat-card-title>Asignar a examen</mat-card-title>
                 </mat-card-header>
                 <mat-card-content *ngIf="periodoExOk == false">
-                    <p>Actualmente no hay ningun período de exámenes o de inscripcion a exámenes vigente.</p>
+                    <p>Actualmente no hay ningún período de exámenes o de inscripción a exámenes vigente.</p>
                 </mat-card-content>
                 
                 <mat-card-content *ngIf="periodoExOk == true">
@@ -97,7 +97,7 @@
                         <mat-list-item role="listitem">Apellido: </mat-list-item>
                         <mat-list-item role="listitem">Correo: </mat-list-item>
                         <mat-list-item role="listitem">Sexo: </mat-list-item>
-                        <mat-list-item role="listitem">Fecha Nacimiento: </mat-list-item>
+                        <mat-list-item role="listitem">Fecha de nacimiento: </mat-list-item>
                     </mat-list>
                 </div>
                 <div class="col-6">

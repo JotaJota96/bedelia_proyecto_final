@@ -22,6 +22,3 @@ export function openSnackBar(_snackBar: MatSnackBar, mensaje : string, tipo : 'o
     verticalPosition: "top",
   });
 }
-export function test(){
-  openSnackBar(null, "", "error");
-}

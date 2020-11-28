@@ -60,7 +60,7 @@ export class CarreraABMComponent implements OnInit {
       (datos) => {
         this.listaAreasEstudio = datos;
       },(erro)=>{
-        openSnackBar(this._snackBar, "No se pudiero cargar las áreas de estudio")
+        openSnackBar(this._snackBar, "Error al cargar las áreas de estudio");
       }
     );
 
@@ -68,7 +68,7 @@ export class CarreraABMComponent implements OnInit {
       (datos) => {
         this.listaSedes = datos;
       },(error)=>{
-        openSnackBar(this._snackBar, "No se pudieron cargar las sedes");
+        openSnackBar(this._snackBar, "Error al cargar las sedes");
       }
     );
     
@@ -77,7 +77,7 @@ export class CarreraABMComponent implements OnInit {
     //   (datos) => {
     //     this.listaCurso = datos;
     //   },(error)=>{
-    //     openSnackBar(this._snackBar, "No se pudo cargar los cursos");
+    //     openSnackBar(this._snackBar, "Error al cargar los cursos");
     //   }
     // );
 
@@ -130,7 +130,7 @@ export class CarreraABMComponent implements OnInit {
           this.listaCurso.push(element);
         });
       },(error)=>{
-        openSnackBar(this._snackBar, "No se pudo cargar los cursos");
+        openSnackBar(this._snackBar, "Error al cargar los cursos");
       }
     );
   }
@@ -220,7 +220,7 @@ export class CarreraABMComponent implements OnInit {
   crear() {
     let vsdc = this.verificarSumaDeCreditos();
     if (vsdc != true ){
-      openSnackBar(this._snackBar, "El área de estudio '" + vsdc + "' requiere mas creditos que los entregados por los cursos de la carrera");
+      openSnackBar(this._snackBar, "El área de estudio '" + vsdc + "' requiere mas créditos que los entregados por los cursos de la carrera");
       return;
     }
     let carrera: CarreraCreateDTO = new CarreraCreateDTO();

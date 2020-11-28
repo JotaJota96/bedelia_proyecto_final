@@ -24,7 +24,7 @@ export class TipoCursoComponent implements OnInit {
       (datos) => {
         this.tipoDataSource.data = datos;
       },(error)=>{
-        openSnackBar(this._snackBar, "No se pudieron cargar los tipos de curso");
+        openSnackBar(this._snackBar, "Error al cargar los tipos de curso");
       }
     );
   }
@@ -34,7 +34,7 @@ export class TipoCursoComponent implements OnInit {
       (datos) => {
         this.tipoDataSource.data = datos;
       },(error)=>{
-        openSnackBar(this._snackBar, "No se pudo cargar los tipos de curso");
+        openSnackBar(this._snackBar, "Error al cargar los tipos de curso");
       }
     );
   }

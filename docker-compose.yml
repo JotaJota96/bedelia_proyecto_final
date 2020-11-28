@@ -1,0 +1,86 @@
+version: '3.3'
+services:
+    db:
+        container_name: bedelia-db
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 1234
+            MYSQL_DATABASE: bedelia
+            MYSQL_USER: user
+            MYSQL_PASSWORD: 1234
+        volumes:
+            - ./docker-database:/var/lib/mysql
+        ports:
+            - 3306:3306
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.9
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: bedelia-phpmyadmin
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 8081:80
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.8
+    rest:
+        build:
+            context: ./bedelia-rest
+            dockerfile: Dockerfile
+        container_name: bedelia-rest
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 8000:80
+        volumes:
+            - ./bedelia-rest/.env:/var/www/.env
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.10
+    web:
+        build:
+            context: ./bedelia-web
+            dockerfile: Dockerfile
+        container_name: bedelia-web
+        restart: always
+        depends_on:
+            - rest
+        ports:
+            - 80:80
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.11
+    pwa:
+        build:
+            context: ./bedelia-pwa
+            dockerfile: Dockerfile
+        container_name: bedelia-pwa
+        restart: always
+        depends_on:
+            - rest
+        ports:
+            - 8080:80
+        networks:
+            laravel_net:
+                ipv4_address: 172.16.100.12
+
+networks:
+    laravel_net:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.100.0/24
+
+
+
+
+
+
+

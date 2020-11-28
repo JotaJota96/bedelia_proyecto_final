@@ -75,7 +75,7 @@ export class CarreraVistaComponent implements OnInit {
           );
         },
         (error) => {
-          openSnackBar(this._snackBar, "No se pudo cargar los datos");
+          openSnackBar(this._snackBar, "Error al cargar los datos");
           this.carrera = null;
         }
       );

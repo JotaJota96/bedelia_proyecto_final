@@ -74,7 +74,7 @@ export class JustificarInasistenciaComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error)=>{
-        openSnackBar(this._snackBar, "Error al justificar las inasistencias")
+        openSnackBar(this._snackBar, "Error al justificar las inasistencias");
       }
     );
     

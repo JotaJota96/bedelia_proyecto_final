@@ -16,7 +16,7 @@
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <textarea rows="4" matInput placeholder="Descripcion" name="descripcion" formControlName="descripcion"
+                            <textarea rows="4" matInput placeholder="Descripción" name="descripcion" formControlName="descripcion"
                                 [readonly]="soloLectura"></textarea>
                         </mat-form-field>
 
@@ -31,14 +31,14 @@
                         </mat-form-field>
 
                         <mat-form-field [style.width.%]=100>
-                            <input matInput placeholder="Maximo de inasistencias" name="max_inasistencias"
+                            <input matInput placeholder="Máximo de inasistencias" name="max_inasistencias"
                                 formControlName="max_inasistencias" [readonly]="soloLectura">
                         </mat-form-field>
                     </div>
 
                     <div class="col-12 col-md-6 pl-5 pr-5">
                         <mat-form-field [style.width.%]=100>
-                            <mat-select placeholder="Area de estudio" formControlName="area_estudio">
+                            <mat-select placeholder="Área de estudio" formControlName="area_estudio">
                                 <mat-option *ngFor="let area of listaArea" [value]="area.id" [disabled]="soloLectura">
                                     {{area.area}}
                                 </mat-option>
@@ -59,7 +59,7 @@
             <mat-card-actions align="end" class="pr-5">
                 <button mat-raised-button *ngIf="!soloLectura" color="primary" [routerLink]="['/admin/curso']">Volver</button>
                 <button mat-raised-button *ngIf="!soloLectura" color="primary" [disabled]="!formulario.valid"
-                    (click)="agregar()">Acceder</button>
+                    (click)="agregar()">Confirmar</button>
                 <button mat-raised-button *ngIf="soloLectura" color="primary"
                     [routerLink]="['/admin/curso']">Volver</button>
             </mat-card-actions>
