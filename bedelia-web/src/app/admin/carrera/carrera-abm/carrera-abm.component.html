@@ -44,8 +44,9 @@
                                 </div>
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
-                                        <mat-chip *ngFor="let sede of listaSedeSeleccionada">
+                                        <mat-chip *ngFor="let sede of listaSedeSeleccionada" [removable]="true" (removed)="quitarSede(sede)">
                                             {{sede.direccion.departamento}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
                                         </mat-chip>
                                     </mat-chip-list>
                                 </div>

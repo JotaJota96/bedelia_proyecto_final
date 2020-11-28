@@ -110,6 +110,14 @@ export class CarreraABMComponent implements OnInit {
     this.formularioSede.controls['sede'].setValue(undefined);
   }
 
+  quitarSede(sede:SedeDTO){
+    const index = this.listaSedeSeleccionada.indexOf(sede);
+
+    if (index >= 0) {
+      this.listaSedeSeleccionada.splice(index, 1);
+    }
+  }
+
   asignarArea() {
     if (this.listaAreaSeleccionada.includes(this.formularioArea.controls['area'].value)) {
       return;
@@ -214,7 +222,10 @@ export class CarreraABMComponent implements OnInit {
   }
 
   validarForm():boolean{
-    return this.formulario.valid && this.listaSemestre.length != 0 && this.listaSedes.length != 0  &&  this.listaAreaSeleccionada.length != 0
+    return this.formulario.valid 
+      && this.listaSemestre.length > 0 
+      && this.listaSedeSeleccionada.length > 0  
+      &&  this.listaAreaSeleccionada.length > 0;
   }
 
   crear() {
