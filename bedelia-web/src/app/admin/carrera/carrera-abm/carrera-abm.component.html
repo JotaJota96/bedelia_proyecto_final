@@ -81,8 +81,10 @@
 
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
-                                        <mat-chip *ngFor="let area of listaAreaSeleccionada">{{area.area}}
-                                            ({{area.creditos}} creditos) </mat-chip>
+                                        <mat-chip *ngFor="let area of listaAreaSeleccionada" [removable]="true" (removed)="quitarArea(area)">
+                                            {{area.area}} ({{area.creditos}} creditos)
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
                                     </mat-chip-list>
                                 </div>
 

@@ -128,8 +128,8 @@ export class CarreraABMComponent implements OnInit {
     let idArea = this.formularioArea.controls['area'].value.id;
     this.listaAreaSeleccionada.push(this.formularioArea.controls['area'].value);
 
-    this.formularioArea.controls['area'].setValue(undefined);
-    this.formularioArea.controls['creditos'].setValue("");
+    this.formularioArea.reset();
+    this.formularioCurso.reset();
 
     // actualizo la lista de cursos para incluir los de la nueva area de estudio
     this.areaServ.getCursos(idArea).subscribe(
@@ -143,10 +143,46 @@ export class CarreraABMComponent implements OnInit {
     );
   }
 
+  quitarArea(area:AreaEstudioDTO){
+    const index = this.listaAreaSeleccionada.indexOf(area);
+
+    if (index < 0) return;
+
+    // verifico si ya se agregó algun curso que pertenece a esa area de estudio
+    // si encuentro alguno muestro un error
+    let cancelar = this.areaDeEstudioEnUso(area);
+
+    if (cancelar){
+      openSnackBar(this._snackBar, "No se puede quitar el área de estudio, ya se han agregado cursos que pertenecen a ella");
+    }else{
+      // ahora hay que remover los cursos que pertenecian a esa area del desplegable de cursos
+      this.listaCurso = this.listaCurso.filter(function(value, index, arr){ 
+        return value.area_estudio.id != area.id;
+    });
+
+      this.listaAreaSeleccionada.splice(index, 1);
+    }
+  }
+
+  areaDeEstudioEnUso(area:AreaEstudioDTO):boolean{
+    // devuelve si ya se agregó algun curso que pertenece a esa area de estudio
+
+    // reviso en los cursos sin agregar a semestre
+    let usadoEnListaCursoSeleccionados = this.listaCursoSeleccionados.some(elem => elem.area_estudio.id == area.id);
+    // reviso en los cursos ya agregados a algun semestre
+    let usadoEnSemestre = this.listaSemestre.some(sem => sem.cursos.some(cur => cur.area_estudio.id == area.id));
+
+    return usadoEnListaCursoSeleccionados || usadoEnSemestre;
+  }
+
   asignarCurso() {
     if (this.listaTodosCursoSeleccionados.includes(this.formularioCurso.controls['curso'].value)) {
       return;
     }
+    if ( ! this.listaCurso.includes(this.formularioCurso.controls['curso'].value)){
+      return;
+    }
+
     (this.formularioCurso.controls['curso'].value).semestre = this.contadorSemestres;
 
     let optativo:boolean = this.formularioCurso.controls['optativo'].value;
@@ -154,7 +190,7 @@ export class CarreraABMComponent implements OnInit {
     
     this.listaTodosCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
     this.listaCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
-    this.formularioCurso.controls['curso'].setValue(undefined);
+    this.formularioCurso.reset();
   }
 
   crearSemestre() {
