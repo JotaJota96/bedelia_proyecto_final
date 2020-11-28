@@ -164,17 +164,6 @@ export class CarreraABMComponent implements OnInit {
     }
   }
 
-  areaDeEstudioEnUso(area:AreaEstudioDTO):boolean{
-    // devuelve si ya se agregó algun curso que pertenece a esa area de estudio
-
-    // reviso en los cursos sin agregar a semestre
-    let usadoEnListaCursoSeleccionados = this.listaCursoSeleccionados.some(elem => elem.area_estudio.id == area.id);
-    // reviso en los cursos ya agregados a algun semestre
-    let usadoEnSemestre = this.listaSemestre.some(sem => sem.cursos.some(cur => cur.area_estudio.id == area.id));
-
-    return usadoEnListaCursoSeleccionados || usadoEnSemestre;
-  }
-
   asignarCurso() {
     if (this.listaTodosCursoSeleccionados.includes(this.formularioCurso.controls['curso'].value)) {
       return;
@@ -192,6 +181,17 @@ export class CarreraABMComponent implements OnInit {
     this.listaCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
     this.formularioCurso.reset();
   }
+  
+  quitarCurso(curso:CursoDTO){
+    let index = -1;
+
+    index = this.listaCursoSeleccionados.indexOf(curso);
+    if (index >= 0) this.listaCursoSeleccionados.splice(index, 1);
+    
+    index = this.listaTodosCursoSeleccionados.indexOf(curso);
+    if (index >= 0) this.listaTodosCursoSeleccionados.splice(index, 1);
+  }
+
 
   crearSemestre() {
     this.listaSemestre.push({
@@ -280,6 +280,8 @@ export class CarreraABMComponent implements OnInit {
     carrera.cursos = this.listaTodosCursoSeleccionados;
     carrera.previas = this.listaPrevias;
 
+    //console.log(carrera);
+    //return;
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
         this.router.navigate(['/admin/carrera']);
@@ -308,6 +310,17 @@ export class CarreraABMComponent implements OnInit {
     }else{
       return ret;
     }
+  }
+
+  areaDeEstudioEnUso(area:AreaEstudioDTO):boolean{
+    // devuelve si ya se agregó algun curso que pertenece a esa area de estudio
+
+    // reviso en los cursos sin agregar a semestre
+    let usadoEnListaCursoSeleccionados = this.listaCursoSeleccionados.some(elem => elem.area_estudio.id == area.id);
+    // reviso en los cursos ya agregados a algun semestre
+    let usadoEnSemestre = this.listaSemestre.some(sem => sem.cursos.some(cur => cur.area_estudio.id == area.id));
+
+    return usadoEnListaCursoSeleccionados || usadoEnSemestre;
   }
 
 }

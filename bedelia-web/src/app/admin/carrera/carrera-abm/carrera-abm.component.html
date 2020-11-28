@@ -112,8 +112,8 @@
                                         <mat-form-field [style.width.%]=100>
                                             <mat-select placeholder="Tipo de curso" name="optativo"
                                                 formControlName="optativo">
-                                                <mat-option value="true">Obligatorio</mat-option>
-                                                <mat-option value="false">Optativo</mat-option>
+                                                <mat-option value="false">Obligatorio</mat-option>
+                                                <mat-option value="true">Optativo</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
@@ -131,7 +131,9 @@
 
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
-                                        <mat-chip *ngFor="let curso of listaCursoSeleccionados">{{curso.nombre}}
+                                        <mat-chip *ngFor="let curso of listaCursoSeleccionados" [removable]="true" (removed)="quitarCurso(curso)">
+                                            {{curso.nombre}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
                                         </mat-chip>
                                     </mat-chip-list>
                                 </div>
