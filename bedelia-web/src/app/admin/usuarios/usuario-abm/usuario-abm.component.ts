@@ -62,7 +62,6 @@ export class UsuarioABMComponent implements OnInit {
   rolSeleccionado: string;
   soloLectura: boolean = false;
   listaSedes: SedeDTO[];
-  esAdministrativo: boolean = false;
   sedeSeleccionada:SedeDTO = null;
   enviandoDatos:boolean = false;
 
@@ -153,15 +152,21 @@ export class UsuarioABMComponent implements OnInit {
     if (this.rolesSeleccionados.includes(this.rolSeleccionado)) {
       return;
     }
-    if (this.rolSeleccionado == "administrativo") {
-      this.esAdministrativo = true;
-    }
+    
     this.rolesSeleccionados.push(this.rolSeleccionado);
     this.formulario.controls['roles'].setValue(this.rolesSeleccionados);
   }
+  
+  quitarRol(rol:string){
+    const index = this.rolesSeleccionados.indexOf(rol);
+
+    if (index >= 0) {
+      this.rolesSeleccionados.splice(index, 1);
+    }
+  }
 
   agregar() {
-    if (this.esAdministrativo == true) {
+    if (this.esAdministrativo() == true) {
       if(this.formulario.controls['sede'].value == undefined){
         openSnackBar(this._snackBar, "Se debe seleccionar una sede");
         return;
@@ -192,7 +197,7 @@ export class UsuarioABMComponent implements OnInit {
 
     this.usuServ.create(usu).subscribe(
       (datos) => {
-        if (this.esAdministrativo == true) {
+        if (this.esAdministrativo() == true) {
           this.adminisServ.asignar(sede, this.formulario.controls['cedula'].value).subscribe(
             (datos) => {
               this.formulario.controls['sede'].setValue(undefined);
@@ -215,4 +220,7 @@ export class UsuarioABMComponent implements OnInit {
 
   }
 
+  esAdministrativo():boolean{
+    return this.rolesSeleccionados.indexOf("administrativo") >= 0;
+  }
 }
