@@ -152,10 +152,10 @@ INSERT INTO `admin`(`id`) VALUES
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `administrativo`
 --
-INSERT INTO `administrativo`(`id`) VALUES
-    (  1 ),
-    ( 15 ),
-    ( 16 );
+INSERT INTO `administrativo`(`id`, `sede_id`) VALUES
+    (  1,    1 ),
+    ( 15,    2 ),
+    ( 16, null );
 
 
 -- ------------------------------------------------------------------------
