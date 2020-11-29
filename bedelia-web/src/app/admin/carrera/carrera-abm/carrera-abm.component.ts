@@ -38,13 +38,11 @@ export class CarreraABMComponent implements OnInit {
 
   listaCursoSeleccionados: CursoDTO[] = [];
   listaSedes: SedeDTO[] = [];
-  listaCursoPrevias: CursoDTO[] = [];
   listaAreasEstudio: AreaEstudioDTO[];
   listaCurso: CursoDTO[] = [];
   listaSemestre: Isemestre[] = [];
 
   previaOcultar: boolean = false;
-  idCursoPrevia: number;
 
   public formulario: FormGroup;
   public formularioSede: FormGroup;
@@ -158,7 +156,7 @@ export class CarreraABMComponent implements OnInit {
       // ahora hay que remover los cursos que pertenecian a esa area del desplegable de cursos
       this.listaCurso = this.listaCurso.filter(function(value, index, arr){ 
         return value.area_estudio.id != area.id;
-    });
+      });
 
       this.listaAreaSeleccionada.splice(index, 1);
     }
@@ -209,52 +207,60 @@ export class CarreraABMComponent implements OnInit {
   }
 
   cargarListaPrevia(curso: CursoDTO, claveSemestre: number) {
-    this.listaCursoPrevias = [];
-    this.idCursoPrevia = curso.id;
+    // si se le quieren establecer las previas al primer semestre, da error
+    if (claveSemestre == 1) {
+      openSnackBar(this._snackBar, "No se puede agregar previas a las materias de primer semestre");
+      return;
+    }
+
+    // lista de cursos de los semestres anteriores al seleccionado
+    let listaCursoPrevias: CursoDTO[] = [];
+    // id del curso al que se le estableceran las previas
+    let idCursoPrevia: number = curso.id;
+    // coleccion de previas generadas
     let listaPrevia:PreviaDTO[] = [];
+
+    // se obtienen los cursos dictados en los semestres anteriores
     this.listaSemestre.forEach(element => {
       if (element.clave < claveSemestre) {
         element.cursos.forEach(cursos => {
-          this.listaCursoPrevias.push(cursos);
+          listaCursoPrevias.push(cursos);
         });
       }
     });
-
+    
+    // obtengo las previas que ya habian sido definidas anteriormente (para comparar y que no se agregen repetidas)
     this.listaPrevias.forEach(element => {
       if (element.curso_id == curso.id){
         listaPrevia.push(element);
       }
     });
 
-    if (claveSemestre != 1) {
-      const dialogRef = this.dialog.open(ModalPreviaComponent, {
-        data: {
-          curso: curso,
-          listaCursos: this.listaCursoPrevias,
-          listaPrevia: listaPrevia
-        }
+    // abre el dialogo pasandole la informacion que necesita
+    const dialogRef = this.dialog.open(ModalPreviaComponent, {
+      data: {
+        curso: curso, // curso al que se le definiran las previas
+        listaCursos: listaCursoPrevias, // lista de cursos que se pueden seleccionar
+        listaPrevia: listaPrevia // lista de previas definidas anteriormente
+      }
+    });
+
+    // cuando el dialogo se cierra
+    dialogRef.afterClosed().subscribe(result => {
+      // si no se devuelve nada, es que se cerro
+      if (result == undefined) return;
+
+      // saco todas las previas asociadas al curso para luego volverlas a agregar
+      // (saco todas por si se decide eliminar alguna)
+      this.listaPrevias = this.listaPrevias.filter(function(value, index, arr){ 
+        return value.curso_id != curso.id;
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined){
-          result.listaPrevia.forEach(element => {
-            let agregar = true;
-            this.listaPrevias.forEach(elem => {
-              if (element.curso_id_previa == elem.curso_id_previa && element.curso_id == elem.curso_id) {
-                agregar = false;
-              }
-            });
-            if (agregar) {
-              this.listaPrevias.push(element);
-            }
-          });
-        }
+      // recorre la lista de previas devuelta y agrego todas
+      result.listaPrevia.forEach(element => {
+        this.listaPrevias.push(element);
       });
-    } else {
-      openSnackBar(this._snackBar, "No se puede agregar previas a las materias de primer semestre");
-    }
-
-
+    });
   }
 
   validarForm():boolean{
