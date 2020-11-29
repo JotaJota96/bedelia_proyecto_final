@@ -139,6 +139,9 @@
                   <svg:g class="node cluster" ngx-tooltip>
                     <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height"
                       [attr.fill]="cluster.data.color" />
+                    <svg:text alignment-baseline="central" [attr.x]="40" [attr.y]="100">
+                      {{cluster.label}}
+                    </svg:text>
                   </svg:g>
                 </ng-template>
 
