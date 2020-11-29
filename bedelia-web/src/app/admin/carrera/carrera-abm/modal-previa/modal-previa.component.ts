@@ -35,28 +35,33 @@ export class ModalPreviaComponent implements OnInit {
   }
 
   asignarPrevia() {
-    let salir = false;
+    let agregar = true;
     let previa : PreviaDTO = new PreviaDTO();
     previa.curso_id = this.curso.id;
     previa.nombre_carrera_previa = (this.formularioPrevia.controls['cursoPrevio'].value).nombre;
     previa.curso_id_previa = (this.formularioPrevia.controls['cursoPrevio'].value).id;
     previa.tipo = this.formularioPrevia.controls['tipoPrevia'].value;
 
-    this.listaPrevia.forEach(element => {
-      if(element.curso_id_previa == previa.curso_id_previa && element.curso_id == previa.curso_id) {
-        salir = true;
-      }
-    });
+    agregar = ! this.listaPrevia.some(element => element.curso_id_previa == previa.curso_id_previa && element.curso_id == previa.curso_id);
 
-    if(salir){
-      return;
+    if(agregar){
+      this.listaPrevia.push(previa);
+      this.formularioPrevia.reset();
     }
-    this.listaPrevia.push(previa);
+  }
+
+  quitarPrevia(previa:PreviaDTO){
+    const index = this.listaPrevia.indexOf(previa);
+
+    if (index >= 0) {
+      this.listaPrevia.splice(index, 1);
+    }
   }
 
   aceptar(){
     this.dialogRef.close(this.data);
   }
+
   cerrar(){
     this.dialogRef.close();
   }

@@ -44,8 +44,9 @@
                                 </div>
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
-                                        <mat-chip *ngFor="let sede of listaSedeSeleccionada">
+                                        <mat-chip *ngFor="let sede of listaSedeSeleccionada" [removable]="true" (removed)="quitarSede(sede)">
                                             {{sede.direccion.departamento}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
                                         </mat-chip>
                                     </mat-chip-list>
                                 </div>
@@ -80,8 +81,10 @@
 
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
-                                        <mat-chip *ngFor="let area of listaAreaSeleccionada">{{area.area}}
-                                            ({{area.creditos}} creditos) </mat-chip>
+                                        <mat-chip *ngFor="let area of listaAreaSeleccionada" [removable]="true" (removed)="quitarArea(area)">
+                                            {{area.area}} ({{area.creditos}} creditos)
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
                                     </mat-chip-list>
                                 </div>
 
@@ -109,8 +112,8 @@
                                         <mat-form-field [style.width.%]=100>
                                             <mat-select placeholder="Tipo de curso" name="optativo"
                                                 formControlName="optativo">
-                                                <mat-option value="true">Obligatorio</mat-option>
-                                                <mat-option value="false">Optativo</mat-option>
+                                                <mat-option value="false">Obligatorio</mat-option>
+                                                <mat-option value="true">Optativo</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
@@ -128,7 +131,9 @@
 
                                 <div class="mb-2">
                                     <mat-chip-list aria-label="Fish selection">
-                                        <mat-chip *ngFor="let curso of listaCursoSeleccionados">{{curso.nombre}}
+                                        <mat-chip *ngFor="let curso of listaCursoSeleccionados" [removable]="true" (removed)="quitarCurso(curso)">
+                                            {{curso.nombre}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
                                         </mat-chip>
                                     </mat-chip-list>
                                 </div>
@@ -138,12 +143,16 @@
                             <div>
                                 <mat-card *ngFor="let semestre of listaSemestre" class="mt-5">
                                     <mat-card-header>
-                                        <mat-card-title>Semestre {{semestre.clave}}</mat-card-title>
+                                        <mat-card-title>
+                                            Semestre {{semestre.clave}}
+                                            <button mat-button color="warn" (click)="quitarSemestre(semestre)">Quitar</button>
+                                        </mat-card-title>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <mat-chip-list aria-label="Fish selection">
-                                            <mat-chip (click)="cargarListaPrevia(curso, semestre.clave)"
-                                                *ngFor="let curso of semestre.cursos">{{curso.nombre}}</mat-chip>
+                                            <mat-chip *ngFor="let curso of semestre.cursos" (click)="cargarListaPrevia(curso, semestre.clave)">
+                                                {{curso.nombre}}
+                                            </mat-chip>
                                         </mat-chip-list>
                                     </mat-card-content>
                                 </mat-card>

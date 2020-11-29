@@ -33,15 +33,17 @@
 
             <div class="my-2">
                 <mat-chip-list aria-label="Fish selection">
-                    <mat-chip *ngFor="let previa of listaPrevia">
-                        {{previa.nombre_carrera_previa}} ({{previa.tipo}}) </mat-chip>
+                    <mat-chip *ngFor="let previa of listaPrevia"  [removable]="true" (removed)="quitarPrevia(previa)">
+                        {{previa.nombre_carrera_previa}} ({{previa.tipo}})
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
                 </mat-chip-list>
             </div>
             
 
             <mat-card-actions align="end" class="mt-2">
                 <button mat-raised-button color="primary" (click)="cerrar() " >Volver</button>
-                <button (click)="aceptar()" [disabled]="listaPrevia .length == 0" mat-raised-button color="primary">Aceptar</button>
+                <button (click)="aceptar()" mat-raised-button color="primary">Aceptar</button>
             </mat-card-actions>
 
         </mat-card-content>

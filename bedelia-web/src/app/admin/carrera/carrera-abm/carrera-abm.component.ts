@@ -16,6 +16,7 @@ import { AreaEstudioService } from 'src/app/servicios/area-estudio.service';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
+import { DialogoConfirmacionComponent } from 'src/app/usuarios/dialogo-confirmacion/dialogo-confirmacion.component';
 import { ModalPreviaComponent } from './modal-previa/modal-previa.component';
 
 export interface Isemestre {
@@ -38,13 +39,11 @@ export class CarreraABMComponent implements OnInit {
 
   listaCursoSeleccionados: CursoDTO[] = [];
   listaSedes: SedeDTO[] = [];
-  listaCursoPrevias: CursoDTO[] = [];
   listaAreasEstudio: AreaEstudioDTO[];
   listaCurso: CursoDTO[] = [];
   listaSemestre: Isemestre[] = [];
 
   previaOcultar: boolean = false;
-  idCursoPrevia: number;
 
   public formulario: FormGroup;
   public formularioSede: FormGroup;
@@ -110,6 +109,14 @@ export class CarreraABMComponent implements OnInit {
     this.formularioSede.controls['sede'].setValue(undefined);
   }
 
+  quitarSede(sede:SedeDTO){
+    const index = this.listaSedeSeleccionada.indexOf(sede);
+
+    if (index >= 0) {
+      this.listaSedeSeleccionada.splice(index, 1);
+    }
+  }
+
   asignarArea() {
     if (this.listaAreaSeleccionada.includes(this.formularioArea.controls['area'].value)) {
       return;
@@ -120,8 +127,8 @@ export class CarreraABMComponent implements OnInit {
     let idArea = this.formularioArea.controls['area'].value.id;
     this.listaAreaSeleccionada.push(this.formularioArea.controls['area'].value);
 
-    this.formularioArea.controls['area'].setValue(undefined);
-    this.formularioArea.controls['creditos'].setValue("");
+    this.formularioArea.reset();
+    this.formularioCurso.reset();
 
     // actualizo la lista de cursos para incluir los de la nueva area de estudio
     this.areaServ.getCursos(idArea).subscribe(
@@ -135,10 +142,35 @@ export class CarreraABMComponent implements OnInit {
     );
   }
 
+  quitarArea(area:AreaEstudioDTO){
+    const index = this.listaAreaSeleccionada.indexOf(area);
+
+    if (index < 0) return;
+
+    // verifico si ya se agregó algun curso que pertenece a esa area de estudio
+    // si encuentro alguno muestro un error
+    let cancelar = this.areaDeEstudioEnUso(area);
+
+    if (cancelar){
+      openSnackBar(this._snackBar, "No se puede quitar el área de estudio, ya se han agregado cursos que pertenecen a ella");
+    }else{
+      // ahora hay que remover los cursos que pertenecian a esa area del desplegable de cursos
+      this.listaCurso = this.listaCurso.filter(function(value, index, arr){ 
+        return value.area_estudio.id != area.id;
+      });
+
+      this.listaAreaSeleccionada.splice(index, 1);
+    }
+  }
+
   asignarCurso() {
     if (this.listaTodosCursoSeleccionados.includes(this.formularioCurso.controls['curso'].value)) {
       return;
     }
+    if ( ! this.listaCurso.includes(this.formularioCurso.controls['curso'].value)){
+      return;
+    }
+
     (this.formularioCurso.controls['curso'].value).semestre = this.contadorSemestres;
 
     let optativo:boolean = this.formularioCurso.controls['optativo'].value;
@@ -146,8 +178,19 @@ export class CarreraABMComponent implements OnInit {
     
     this.listaTodosCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
     this.listaCursoSeleccionados.push(this.formularioCurso.controls['curso'].value);
-    this.formularioCurso.controls['curso'].setValue(undefined);
+    this.formularioCurso.reset();
   }
+  
+  quitarCurso(curso:CursoDTO){
+    let index = -1;
+
+    index = this.listaCursoSeleccionados.indexOf(curso);
+    if (index >= 0) this.listaCursoSeleccionados.splice(index, 1);
+    
+    index = this.listaTodosCursoSeleccionados.indexOf(curso);
+    if (index >= 0) this.listaTodosCursoSeleccionados.splice(index, 1);
+  }
+
 
   crearSemestre() {
     this.listaSemestre.push({
@@ -164,57 +207,107 @@ export class CarreraABMComponent implements OnInit {
     this.formularioCurso.controls['curso'].setValue(undefined);
   }
 
+  // ¡wii! Al fin una recursiva :-)
+  quitarSemestre(semestre:Isemestre){
+    this.dialog
+    .open(DialogoConfirmacionComponent, {
+      data: '¿Desea eliminar el semestre ' + semestre.clave + '?. También se eliminarán los semestres posteriores.'
+    })
+    .afterClosed()
+    .subscribe((confirmado: boolean) => {
+      if (confirmado) {
+        this.quitarSemestreRecursivo(semestre.clave);
+      }
+    });
+  }
+
+  quitarSemestreRecursivo(claveSemestre:number){
+    if (this.contadorSemestres == claveSemestre) return;
+
+    // llamo recursividad para que elimine los siguientes semestres comenzando por el ultimo
+    this.quitarSemestreRecursivo(claveSemestre+1);
+
+    // elimino el semestre especificado por clave y todas sus cosas relacionadas
+    // asumiendo que es el ultimo
+
+    // busco el semestre especificado y recorro sus cursos
+    let semestre = this.listaSemestre.find(element => element.clave == claveSemestre);
+    // elimino de la lista de cursos y de previas, las cosas relacinadas con los cursos del semestre a eliminar
+    semestre.cursos.forEach(c => {
+      this.listaTodosCursoSeleccionados = this.listaTodosCursoSeleccionados.filter(cs => cs.id != c.id);
+      this.listaPrevias = this.listaPrevias.filter(p => p.curso_id != c.id);
+
+      // y tambien hay que agregar los cursos sel semestre quitado a la lista de cursos para que puedan volver a ser seleccionados
+      this.listaCurso.push(c);
+    });
+
+    // quito el semestre y actualizo el contador
+    this.listaSemestre.pop();
+    this.contadorSemestres--;
+  }
+
   cargarListaPrevia(curso: CursoDTO, claveSemestre: number) {
-    this.listaCursoPrevias = [];
-    this.idCursoPrevia = curso.id;
+    // si se le quieren establecer las previas al primer semestre, da error
+    if (claveSemestre == 1) {
+      openSnackBar(this._snackBar, "No se puede agregar previas a las materias de primer semestre");
+      return;
+    }
+
+    // lista de cursos de los semestres anteriores al seleccionado
+    let listaCursoPrevias: CursoDTO[] = [];
+    // id del curso al que se le estableceran las previas
+    let idCursoPrevia: number = curso.id;
+    // coleccion de previas generadas
     let listaPrevia:PreviaDTO[] = [];
+
+    // se obtienen los cursos dictados en los semestres anteriores
     this.listaSemestre.forEach(element => {
       if (element.clave < claveSemestre) {
         element.cursos.forEach(cursos => {
-          this.listaCursoPrevias.push(cursos);
+          listaCursoPrevias.push(cursos);
         });
       }
     });
-
+    
+    // obtengo las previas que ya habian sido definidas anteriormente (para comparar y que no se agregen repetidas)
     this.listaPrevias.forEach(element => {
       if (element.curso_id == curso.id){
         listaPrevia.push(element);
       }
     });
 
-    if (claveSemestre != 1) {
-      const dialogRef = this.dialog.open(ModalPreviaComponent, {
-        data: {
-          curso: curso,
-          listaCursos: this.listaCursoPrevias,
-          listaPrevia: listaPrevia
-        }
+    // abre el dialogo pasandole la informacion que necesita
+    const dialogRef = this.dialog.open(ModalPreviaComponent, {
+      data: {
+        curso: curso, // curso al que se le definiran las previas
+        listaCursos: listaCursoPrevias, // lista de cursos que se pueden seleccionar
+        listaPrevia: listaPrevia // lista de previas definidas anteriormente
+      }
+    });
+
+    // cuando el dialogo se cierra
+    dialogRef.afterClosed().subscribe(result => {
+      // si no se devuelve nada, es que se cerro
+      if (result == undefined) return;
+
+      // saco todas las previas asociadas al curso para luego volverlas a agregar
+      // (saco todas por si se decide eliminar alguna)
+      this.listaPrevias = this.listaPrevias.filter(function(value, index, arr){ 
+        return value.curso_id != curso.id;
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined){
-          result.listaPrevia.forEach(element => {
-            let agregar = true;
-            this.listaPrevias.forEach(elem => {
-              if (element.curso_id_previa == elem.curso_id_previa && element.curso_id == elem.curso_id) {
-                agregar = false;
-              }
-            });
-            if (agregar) {
-              this.listaPrevias.push(element);
-            }
-          });
-        }
+      // recorre la lista de previas devuelta y agrego todas
+      result.listaPrevia.forEach(element => {
+        this.listaPrevias.push(element);
       });
-    } else {
-      openSnackBar(this._snackBar, "No se puede agregar previas a las materias de primer semestre");
-    }
-
-
+    });
   }
 
   validarForm():boolean{
-    return this.formulario.valid && this.listaSemestre.length != 0 && this.listaSedes.length != 0  &&  this.listaAreaSeleccionada.length != 0
+    return this.formulario.valid 
+      && this.listaSemestre.length > 0 
+      && this.listaSedeSeleccionada.length > 0  
+      &&  this.listaAreaSeleccionada.length > 0;
   }
 
   crear() {
@@ -233,6 +326,8 @@ export class CarreraABMComponent implements OnInit {
     carrera.cursos = this.listaTodosCursoSeleccionados;
     carrera.previas = this.listaPrevias;
 
+    //console.log(carrera);
+    //return;
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
         this.router.navigate(['/admin/carrera']);
@@ -261,6 +356,17 @@ export class CarreraABMComponent implements OnInit {
     }else{
       return ret;
     }
+  }
+
+  areaDeEstudioEnUso(area:AreaEstudioDTO):boolean{
+    // devuelve si ya se agregó algun curso que pertenece a esa area de estudio
+
+    // reviso en los cursos sin agregar a semestre
+    let usadoEnListaCursoSeleccionados = this.listaCursoSeleccionados.some(elem => elem.area_estudio.id == area.id);
+    // reviso en los cursos ya agregados a algun semestre
+    let usadoEnSemestre = this.listaSemestre.some(sem => sem.cursos.some(cur => cur.area_estudio.id == area.id));
+
+    return usadoEnListaCursoSeleccionados || usadoEnSemestre;
   }
 
 }
