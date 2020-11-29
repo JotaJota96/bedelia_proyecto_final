@@ -206,6 +206,38 @@ export class CarreraABMComponent implements OnInit {
     this.formularioCurso.controls['curso'].setValue(undefined);
   }
 
+  // ¡wii! Al fin una recursiva :-)
+  quitarSemestre(claveSemestre:number, pedirConfirmacion:boolean = false){
+    if (this.contadorSemestres == claveSemestre) return;
+
+    // si hay que pedir confirmacion
+    if (pedirConfirmacion){
+      // ...
+      // si no se confirma, agregar un return;
+    }
+
+    // llamo recursividad para que elimine los siguientes semestres comenzando por el ultimo
+    this.quitarSemestre(claveSemestre+1);
+
+    // elimino el semestre especificado por clave y todas sus cosas relacionadas
+    // asumiendo que es el ultimo
+
+    // busco el semestre especificado y recorro sus cursos
+    let semestre = this.listaSemestre.find(element => element.clave == claveSemestre);
+    // elimino de la lista de cursos y de previas, las cosas relacinadas con los cursos del semestre a eliminar
+    semestre.cursos.forEach(c => {
+      this.listaTodosCursoSeleccionados = this.listaTodosCursoSeleccionados.filter(cs => cs.id != c.id);
+      this.listaPrevias = this.listaPrevias.filter(p => p.curso_id != c.id);
+
+      // y tambien hay que agregar los cursos sel semestre quitado a la lista de cursos para que puedan volver a ser seleccionados
+      this.listaCurso.push(c);
+    });
+
+    // quito el semestre y actualizo el contador
+    this.listaSemestre.pop();
+    this.contadorSemestres--;
+  }
+
   cargarListaPrevia(curso: CursoDTO, claveSemestre: number) {
     // si se le quieren establecer las previas al primer semestre, da error
     if (claveSemestre == 1) {
@@ -286,8 +318,8 @@ export class CarreraABMComponent implements OnInit {
     carrera.cursos = this.listaTodosCursoSeleccionados;
     carrera.previas = this.listaPrevias;
 
-    //console.log(carrera);
-    //return;
+    console.log(carrera);
+    return;
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
         this.router.navigate(['/admin/carrera']);

@@ -143,12 +143,16 @@
                             <div>
                                 <mat-card *ngFor="let semestre of listaSemestre" class="mt-5">
                                     <mat-card-header>
-                                        <mat-card-title>Semestre {{semestre.clave}}</mat-card-title>
+                                        <mat-card-title>
+                                            Semestre {{semestre.clave}}
+                                            <button mat-button color="warn" (click)="quitarSemestre(semestre.clave, true)">Quitar</button>
+                                        </mat-card-title>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <mat-chip-list aria-label="Fish selection">
-                                            <mat-chip (click)="cargarListaPrevia(curso, semestre.clave)"
-                                                *ngFor="let curso of semestre.cursos">{{curso.nombre}}</mat-chip>
+                                            <mat-chip *ngFor="let curso of semestre.cursos" (click)="cargarListaPrevia(curso, semestre.clave)">
+                                                {{curso.nombre}}
+                                            </mat-chip>
                                         </mat-chip-list>
                                     </mat-card-content>
                                 </mat-card>
