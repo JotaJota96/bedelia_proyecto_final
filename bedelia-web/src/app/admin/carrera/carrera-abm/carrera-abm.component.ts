@@ -16,6 +16,7 @@ import { AreaEstudioService } from 'src/app/servicios/area-estudio.service';
 import { CarreraService } from 'src/app/servicios/carrera.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { SedesService } from 'src/app/servicios/sedes.service';
+import { DialogoConfirmacionComponent } from 'src/app/usuarios/dialogo-confirmacion/dialogo-confirmacion.component';
 import { ModalPreviaComponent } from './modal-previa/modal-previa.component';
 
 export interface Isemestre {
@@ -207,17 +208,24 @@ export class CarreraABMComponent implements OnInit {
   }
 
   // ¡wii! Al fin una recursiva :-)
-  quitarSemestre(claveSemestre:number, pedirConfirmacion:boolean = false){
+  quitarSemestre(semestre:Isemestre){
+    this.dialog
+    .open(DialogoConfirmacionComponent, {
+      data: '¿Desea eliminar el semestre ' + semestre.clave + '?. También se eliminarán los semestres posteriores.'
+    })
+    .afterClosed()
+    .subscribe((confirmado: boolean) => {
+      if (confirmado) {
+        this.quitarSemestreRecursivo(semestre.clave);
+      }
+    });
+  }
+
+  quitarSemestreRecursivo(claveSemestre:number){
     if (this.contadorSemestres == claveSemestre) return;
 
-    // si hay que pedir confirmacion
-    if (pedirConfirmacion){
-      // ...
-      // si no se confirma, agregar un return;
-    }
-
     // llamo recursividad para que elimine los siguientes semestres comenzando por el ultimo
-    this.quitarSemestre(claveSemestre+1);
+    this.quitarSemestreRecursivo(claveSemestre+1);
 
     // elimino el semestre especificado por clave y todas sus cosas relacionadas
     // asumiendo que es el ultimo
@@ -318,8 +326,8 @@ export class CarreraABMComponent implements OnInit {
     carrera.cursos = this.listaTodosCursoSeleccionados;
     carrera.previas = this.listaPrevias;
 
-    console.log(carrera);
-    return;
+    //console.log(carrera);
+    //return;
     this.carreraServ.create(carrera).subscribe(
       (datos) => {
         this.router.navigate(['/admin/carrera']);

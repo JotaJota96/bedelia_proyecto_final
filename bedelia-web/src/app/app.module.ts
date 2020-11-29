@@ -72,6 +72,7 @@ import { EstadoPostulacionPipe } from './pipes/estado-postulacion.pipe';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { OptativoObligatorioPipe } from './pipes/optativo-obligatorio.pipe';
+import { DialogoConfirmacionComponent } from './usuarios/dialogo-confirmacion/dialogo-confirmacion.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +121,7 @@ import { OptativoObligatorioPipe } from './pipes/optativo-obligatorio.pipe';
     DescripcionInscripcionExamenPipe,
     EstadoPostulacionPipe,
     OptativoObligatorioPipe,
+    DialogoConfirmacionComponent,
   ],
   imports: [
     MatStepperModule,
