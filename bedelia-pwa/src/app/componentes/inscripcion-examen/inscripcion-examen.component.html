@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card class="mt-5">
+  <mat-card class="mt-3">
     <mat-spinner class="mx-auto mt-5" *ngIf="periodoOk == undefined"></mat-spinner>
     
     <mat-card-content *ngIf="periodoOk == false">
@@ -15,10 +15,19 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button class="col-12" mat-raised-button (click)="cargarExamenes()" [disabled]="!formulario.valid" color="primary">Seleccionar
-          carrera </button>
+        <button class="col-12" mat-raised-button (click)="cargarExamenes()" [disabled]="!formulario.valid" color="primary">Seleccionar carrera </button>
       </form>
+    </mat-card-content>
 
+    <mat-card-content *ngIf="mostrarSpinner">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+    
+    <mat-card-content *ngIf="listaVacia == true">
+      <p>No hay ningún examen al que te puedas inscribir</p>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="listaVacia == false">
       <mat-selection-list class="curso" #examen [(ngModel)]="selectedOptions">
         <mat-list-option class="mt-2 mb-4" *ngFor="let examen of listaExamen" [disabled]="examen.habilitado != 1"
           [value]="examen.id">
@@ -28,7 +37,7 @@
         </mat-list-option>
       </mat-selection-list>
     </mat-card-content>
-    <mat-card-actions align="end" class="row">
+    <mat-card-actions class="row">
       <button mat-raised-button class="col-12" color="primary" (click)="confirmar()" *ngIf="listaExamen.length > 0"
         [disabled]="selectedOptions.length < 1">Confirmar</button>
     </mat-card-actions>
