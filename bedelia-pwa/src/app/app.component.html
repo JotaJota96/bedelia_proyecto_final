@@ -1,20 +1,17 @@
 <mat-toolbar color="primary" class="container-fluid">
-  <div class="row m-0 p-0 justify-content-start col-2 col-sm-5 col-md-4">
+  <div class="row m-0 p-0 justify-content-start col-2">
     <button mat-icon-button *ngIf="logeado()" (click)="drawer.toggle()" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div *ngIf="logeado()" class="row m-0 p-0 justify-content-end col-2 col-sm-5 col-md-4">
-  </div>
-  <div class="row m-0 p-0 justify-content-center col-4 col-sm-2 col-md-4">
+  <div class="row m-0 p-0 justify-content-center col-8">
     <a class="mt-2" [routerLink]="['/']"><img src="\assets\img\UTEC.png" width="100"></a>
   </div>
-  <div class="row m-0 p-0 justify-content-end col-6 col-sm-5 col-md-4">
-    <button mat-raised-button *ngIf="!logeado()" [routerLink]="['/login']">Iniciar sesión</button>
+  <div class="row m-0 p-0 justify-content-end col-2">
   </div>
 </mat-toolbar>
 
-<mat-drawer-container class="row example-container">
+<mat-drawer-container [style.width.%]=100 class="example-container">
   <mat-drawer [style.width.%]=100 #drawer mode="over" [opened]="false">
     <mat-accordion multi *ngFor="let seccion of menuAMostrar()">
 
@@ -48,7 +45,7 @@
     </mat-accordion>
   </mat-drawer>
 
-  <mat-drawer-content class="col-12">
+  <mat-drawer-content [style.width.%]=100>
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

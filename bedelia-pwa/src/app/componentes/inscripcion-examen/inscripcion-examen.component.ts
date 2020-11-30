@@ -20,6 +20,9 @@ import { UsuariosService } from 'src/app/servis/usuarios.service';
 export class InscripcionExamenComponent implements OnInit {
   selectedOptions: number[] = [];
   listaExamen: ExamenDTO[] = [];
+  listaVacia:boolean = undefined;
+  mostrarSpinner:boolean = false;
+
   listaCarrera: CarreraDTO[] = [];
   ciEstudiante: string;
   periodoOk:boolean = undefined;
@@ -66,15 +69,16 @@ export class InscripcionExamenComponent implements OnInit {
   }
 
   cargarExamenes() {
+    this.listaVacia = undefined;
+    this.mostrarSpinner = true;
     this.examenServ.getEdicionesParaInscrivirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
       (datos) => {
-        datos.forEach(element => {
-          if(element.habilitado == 1){
-            this.listaExamen.push(element)
-          }
-        });
+        this.listaExamen = datos.filter(element => element.habilitado == 1);
+        this.listaVacia = this.listaExamen.length == 0;
+        this.mostrarSpinner = false;
       },
       (error) => {
+        this.mostrarSpinner = false;
         this.openSnackBar("Error al obtener los exámenes para este período lectivo");
       });
   }

@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row ml-1">
-      <mat-card class="col-12 mx-auto my-5 example-card">
+    <div class="row p-3">
+      <mat-card class="col-12 col-sm-10 col-md-6 col-lg-4 mx-auto mt-1">
         <mat-card-header>
           <mat-card-title>Iniciar sesión</mat-card-title>
         </mat-card-header>
@@ -16,8 +16,8 @@
           </form>
           
         </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="login()">Acceder</button>
+        <mat-card-actions>
+          <button class="col-12" mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="login()">Acceder</button>
         </mat-card-actions>
       </mat-card>
     </div>
