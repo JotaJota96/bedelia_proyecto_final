@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "bedelia-pwa"
+  "defaultProject": "bedelia-pwa",
+  "cli": {
+    "analytics": false
+  }
 }

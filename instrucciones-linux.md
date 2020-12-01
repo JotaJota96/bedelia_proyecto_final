@@ -97,9 +97,8 @@ Recuerde que para cada sección de esta guía, debe estar posicionado en la raí
 1. Instalar dependencias de la API REST
 
     ```bash
-    cd bedelia-rest
     docker run --rm -it \
-        -v $PWD:/app \
+        -v $PWD/bedelia-rest/:/app \
         composer:1.10.10 \
         bash -c "\
             cd /app; \
@@ -118,28 +117,28 @@ Recuerde que para cada sección de esta guía, debe estar posicionado en la raí
 2. Instalar dependencias y compilar el sitio web
 
     ```bash
-    cd bedelia-web
     docker run --rm -it \
-        -v $PWD:/usr/src/app \
+        -v $PWD/bedelia-web/:/usr/src/app \
         node:12.18.3 \
         bash -c "\
+            export NG_CLI_ANALYTICS=ci; \
             cd /usr/src/app; \
             npm install; \
-            npm run build; \
+            npm run prod; \
             "
     ```
 
 3. Instalar dependencias y compilar la aplicación PWA
 
     ```bash
-    cd bedelia-pwa
     docker run --rm -it \
-        -v $PWD:/usr/src/app \
+        -v $PWD/bedelia-pwa/:/usr/src/app \
         node:12.18.3 \
         bash -c "\
+            export NG_CLI_ANALYTICS=ci; \
             cd /usr/src/app; \
             npm install; \
-            npm run build; \
+            npm run prod; \
             "
     ```
 
