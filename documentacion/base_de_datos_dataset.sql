@@ -468,7 +468,7 @@ INSERT INTO `inscripcion_curso`(`edicion_curso_id`, `estudiante_id`, `nota`) VAL
     ( 3, 8, 4.98),
     ( 3, 9, 4.15),
     (10, 1, 4.11),
-    (10, 2, 5.01),
+    (10, 2, 4.42),
     (10, 3, 4.12),
     (10, 4, 2.15),
     (10, 5, 4.15),
@@ -505,13 +505,13 @@ UPDATE edicion_curso SET acta_confirmada = true WHERE id IN (1,2,3,10,11,12);
 INSERT INTO `inscripcion_examen`(`examen_id`, `estudiante_id`, `nota`) VALUES
     ( 19, 4, 3.25),
     ( 19, 9, 4.15),
-    ( 20, 8, 3.80),
+    ( 20, 8, 3.87),
     ( 40, 4, 3.51),
-    ( 41, 1, 4.11),
+    ( 41, 1, 4.12),
     ( 41, 6, 3.37),
     ( 42, 3, 5.00),
     ( 42, 5, 2.50),
-    ( 60, 5, 5.50)
+    ( 60, 5, 4.73)
 ;
 UPDATE examen SET acta_confirmada = true WHERE id IN (19,20,41,42,60);
 
