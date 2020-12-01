@@ -98,7 +98,7 @@ export class InscripcionCursoComponent implements OnInit {
 
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
+      duration: 4000,
       horizontalPosition: 'center',
       verticalPosition: "bottom",
     });

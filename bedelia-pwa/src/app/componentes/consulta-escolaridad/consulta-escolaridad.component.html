@@ -15,12 +15,16 @@
             </form>
         </mat-card-content>
 
+        <mat-card-content *ngIf="mostrarSpinner">
+            <mat-spinner class="mx-auto"></mat-spinner>
+        </mat-card-content>
+
         <mat-divider *ngIf="escolaridad != null"></mat-divider>
 
         <mat-card-content *ngIf="escolaridad != null">
             <h1 class="pt-4">Información básica</h1> 
             <div class=" row mx-auto">
-                <mat-card class="col-12 col-md-2">
+                <mat-card class="col-12">
                     <h4>Cédula: {{escolaridad.usuario.persona.cedula}}</h4>
                     <h4>Nombre completo: {{escolaridad.usuario.persona.nombre}} {{escolaridad.usuario.persona.apellido}}</h4>
                     <h4>Carrera: {{escolaridad.carrera.nombre}}</h4>

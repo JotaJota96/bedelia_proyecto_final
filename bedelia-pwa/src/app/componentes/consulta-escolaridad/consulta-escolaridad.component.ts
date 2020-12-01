@@ -17,6 +17,7 @@ export class ConsultaEscolaridadComponent implements OnInit {
   listaCarrera : CarreraDTO[] = [];
   escolaridad: EscolaridadDTO = null;
   ciLogeado: string;
+  mostrarSpinner:boolean = false;
 
   constructor(private onlineService: ConnectionService,private router: Router, private _snackBar: MatSnackBar,
      protected estudianteServ: EstudianteService, protected usuServ: UsuariosService) { }
@@ -43,6 +44,9 @@ export class ConsultaEscolaridadComponent implements OnInit {
     this.estudianteServ.getCarreras(this.ciLogeado).subscribe(
       (datos)=>{
         this.listaCarrera = datos;
+      },
+      (error)=>{
+        this.openSnackBar("Error al cargar las carreras");
       }
     );
 
@@ -52,12 +56,15 @@ export class ConsultaEscolaridadComponent implements OnInit {
   }
 
   obtenerEscolaridad(){
+    this.mostrarSpinner = true;
     this.estudianteServ.getEscolaridad(this.ciLogeado,this.formulario.controls['carrera'].value).subscribe(
       (datos)=>{
+        this.mostrarSpinner = false;
         this.escolaridad = datos;
       },
       (error)=>{
-
+        this.mostrarSpinner = false;
+        this.openSnackBar("No se pudo cargar la escolaridad");
       }
     );
   }
@@ -65,7 +72,7 @@ export class ConsultaEscolaridadComponent implements OnInit {
 
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
+      duration: 4000,
       horizontalPosition: 'center',
       verticalPosition: "bottom",
     });
