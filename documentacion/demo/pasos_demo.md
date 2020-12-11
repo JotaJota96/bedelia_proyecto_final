@@ -3,7 +3,7 @@
 ## Crear Carrera (Admin)
 
 1. **Nombre:**
-   > Tecnólogo en análizis y desarrollo de sistema
+   > Tecnólogo en análisis y desarrollo de sistema
 2. **Descripción**
    > El Tecnólogo en Análisis y Desarrollo de Sistemas forma ciudadanos críticos y solidarios, con formación técnica y tecnológica para actuar tanto en Brasil como en Uruguay en situaciones que impliquen planificación, análisis, desarrollo, testeo, implementación, manutención, evaluación y utilización de tecnologías emergentes empleadas en el desarrollo de sistemas computacionales, observando los criterios de calidad del producto final.
 3. **Sedes en las que se dicta**
