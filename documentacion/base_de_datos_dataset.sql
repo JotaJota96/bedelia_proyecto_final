@@ -419,6 +419,8 @@ INSERT INTO `examen`(`curso_id`, `sede_id`, `periodo_examen_id`)
     ORDER BY cs.sede_id, p.id, cc.curso_id
 ;
 
+UPDATE examen e SET e.acta_confirmada = true WHERE e.periodo_examen_id < 30;
+UPDATE examen e SET e.docente_id = 1 WHERE e.id = 146;
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `inscripcion_carrera`
@@ -455,7 +457,7 @@ INSERT INTO `inscripcion_curso`(`edicion_curso_id`, `estudiante_id`, `nota`) VAL
     ( 2, 4, 4.15),
     ( 2, 5, 4.55),
     ( 2, 6, 4.13),
-    ( 2, 7, 1.57),
+    ( 2, 7, 2.57),
     ( 2, 8, 2.98),
     ( 2, 9, 4.15),
     ( 3, 1, 4.11),
@@ -505,15 +507,15 @@ UPDATE edicion_curso SET acta_confirmada = true WHERE id IN (1,2,3,10,11,12);
 INSERT INTO `inscripcion_examen`(`examen_id`, `estudiante_id`, `nota`) VALUES
     ( 19, 4, 3.25),
     ( 19, 9, 4.15),
-    ( 20, 8, 3.80),
     ( 40, 4, 3.51),
     ( 41, 1, 4.11),
     ( 41, 6, 3.37),
     ( 42, 3, 5.00),
     ( 42, 5, 2.50),
-    ( 60, 5, 5.50)
+    ( 60, 5, 5.50),
+    ( 146, 7, 0.00),
+    ( 146, 8, 0.00)
 ;
-UPDATE examen SET acta_confirmada = true WHERE id IN (19,20,41,42,60);
 
 -- ------------------------------------------------------------------------
 -- Truncar tablas antes de insertar `clase_dictada`
