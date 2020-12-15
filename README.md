@@ -67,17 +67,21 @@ Para más información consultar  la <a href="./documentacion/Letra.pdf">letra d
 <table>
     <tr>
         <td>
+            Inicio
             <img src="./documentacion/capturas/pwa/1_inicio.png">
         </td>
         <td>
+            Menú
             <img src="./documentacion/capturas/pwa/2_menu.png">
         </td>
     </tr>
     <tr>
         <td>
+            Consulta de escolaridad
             <img src="./documentacion/capturas/pwa/3_escolaridad.png">
         </td>
         <td>
+            Inscripción a cursos
             <img src="./documentacion/capturas/pwa/4_inscripcion.png">
         </td>
     </tr>
