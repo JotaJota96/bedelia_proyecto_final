@@ -100,8 +100,7 @@ Recuerde que para cada sección de esta guía, debe estar posicionado en la raí
 1. Instalar dependencias de la API REST
 
     ```PowerShell
-    cd bedelia-rest
-    docker run --rm -it -v $PWD/:/app composer:1.10.10 bash -c "cd /app; composer install;"
+    docker run --rm -it -v $PWD/bedelia-rest/:/app composer:1.10.10 bash -c "cd /app; composer install;"
     ```
 
     Explicación:
@@ -115,15 +114,13 @@ Recuerde que para cada sección de esta guía, debe estar posicionado en la raí
 2. Instalar dependencias y compilar el sitio web
 
     ```PowerShell
-    cd bedelia-web
-    docker run --rm -it -v $PWD/:/usr/src/app node:12.18.3 bash -c "export NG_CLI_ANALYTICS=ci; cd /usr/src/app; npm install; npm run build;"
+    docker run --rm -it -v $PWD/bedelia-web/:/usr/src/app node:12.18.3 bash -c "export NG_CLI_ANALYTICS=ci; cd /usr/src/app; npm install; npm run prod;"
     ```
 
 3. Instalar dependencias y compilar la aplicación PWA
 
     ```PowerShell
-    cd bedelia-pwa
-    docker run --rm -it -v $PWD/:/usr/src/app node:12.18.3 bash -c "export NG_CLI_ANALYTICS=ci; cd /usr/src/app; npm install; npm run build;"
+    docker run --rm -it -v $PWD/bedelia-pwa/:/usr/src/app node:12.18.3 bash -c "export NG_CLI_ANALYTICS=ci; cd /usr/src/app; npm install; npm run prod;"
     ```
 
 ### Instalar dependencias y compilar (sin Docker)

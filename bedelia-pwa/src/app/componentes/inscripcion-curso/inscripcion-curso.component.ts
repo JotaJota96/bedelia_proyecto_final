@@ -21,6 +21,8 @@ export class InscripcionCursoComponent implements OnInit {
   ciEstudiante: string;
   periodoOk:boolean = undefined;
 
+  listaVacia:boolean = undefined;
+  mostrarSpinner:boolean = false;
 
   public formulario: FormGroup;
   
@@ -63,15 +65,16 @@ export class InscripcionCursoComponent implements OnInit {
   }
 
   cargarMateria() {
+    this.listaVacia = undefined;
+    this.mostrarSpinner = true;
     this.edicionCursoServ.getEdicionesParaInscrivirse(this.ciEstudiante, this.formulario.controls['carrera'].value).subscribe(
       (datos) => {
-        datos.forEach(element => {
-          if(element.habilitado == 1){
-            this.listaCurso.push(element);
-          }
-        });
+        this.listaCurso = datos.filter(element => element.habilitado == 1);
+        this.listaVacia = this.listaCurso.length == 0;
+        this.mostrarSpinner = false;
       },
       (error) => {
+        this.mostrarSpinner = false;
         this.openSnackBar("Error al obtener los cursos para la carrera seleccionada");
       }
     );
@@ -95,7 +98,7 @@ export class InscripcionCursoComponent implements OnInit {
 
   openSnackBar(mensaje: string) {
     this._snackBar.open(mensaje, 'Salir', {
-      duration: 3000,
+      duration: 4000,
       horizontalPosition: 'center',
       verticalPosition: "bottom",
     });

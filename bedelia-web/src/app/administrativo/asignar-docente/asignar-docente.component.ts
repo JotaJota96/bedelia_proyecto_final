@@ -51,26 +51,9 @@ export class AsignarDocenteComponent implements OnInit {
       (datosSede) => {
         this.sedeOk = datosSede.id != null;
         if (this.sedeOk) {
-          this.setPeriodoLeOk();
-          this.setPeriodoExOk();
-
-          this.sedeServ.getCrsos(datosSede.id).subscribe(
-            (datos) => {
-              this.listaCurso = datos;
-            },
-            (error) => {
-              openSnackBar(this._snackBar, "Error al cargar los cursos");
-            }
-          )
-
-          this.sedeServ.getExamen(datosSede.id).subscribe(
-            (datos) => {
-              this.listaExamen = datos;
-            },
-            (error) => {
-              openSnackBar(this._snackBar, "Error al cargar los exámenes");
-            }
-          )
+          // establece si se esta en periodos correctos y carga las listas
+          this.setPeriodoLeOk(datosSede.id);
+          this.setPeriodoExOk(datosSede.id);
         }
       }
     );
@@ -133,26 +116,59 @@ export class AsignarDocenteComponent implements OnInit {
     )
   }
 
-  setPeriodoLeOk(){
+  setPeriodoLeOk(idSede:number){
     this.alecServ.enPeriodo('LE').subscribe(
-      (data) => {  this.periodoLeOk = true; },
+      (data) => {
+        this.periodoLeOk = true;
+        this.cargarListaCursos(idSede);
+      },
       (error) => { this.periodoLeOk =  this.periodoLeOk == true ? true : false; }
     );
     this.alecServ.enPeriodo('IC').subscribe(
-      (data) => {  this.periodoLeOk = true; },
+      (data) => {
+        this.periodoLeOk = true;
+        this.cargarListaCursos(idSede);
+      },
       (error) => { this.periodoLeOk =  this.periodoLeOk == true ? true : false; }
     );
   }
 
-  setPeriodoExOk(){
+  setPeriodoExOk(idSede:number){
     this.alecServ.enPeriodo('EX').subscribe(
-      (data) => {  this.periodoExOk = true; },
+      (data) => {
+        this.periodoExOk = true;
+        this.cargarListaExamenes(idSede);
+      },
       (error) => { this.periodoExOk =  this.periodoExOk == true ? true : false; }
     );
     this.alecServ.enPeriodo('IE').subscribe(
-      (data) => {  this.periodoExOk = true; },
+      (data) => {
+        this.periodoExOk = true;
+        this.cargarListaExamenes(idSede);
+      },
       (error) => { this.periodoExOk =  this.periodoExOk == true ? true : false; }
     );
+  }
+
+  cargarListaCursos(idSede:number){
+    this.sedeServ.getCrsos(idSede).subscribe(
+      (datos) => {
+        this.listaCurso = datos;
+      },
+      (error) => {
+        openSnackBar(this._snackBar, "Error al cargar los cursos");
+      }
+    )
+  }
+  cargarListaExamenes(idSede:number){
+    this.sedeServ.getExamen(idSede).subscribe(
+      (datos) => {
+        this.listaExamen = datos;
+      },
+      (error) => {
+        openSnackBar(this._snackBar, "Error al cargar los exámenes");
+      }
+    )
   }
 
 }

@@ -15,7 +15,7 @@ services:
         ports:
             - 3306:3306
         networks:
-            laravel_net:
+            bedelia_net:
                 ipv4_address: 172.16.100.9
     phpmyadmin:
         image: phpmyadmin
@@ -26,7 +26,7 @@ services:
         ports:
             - 8081:80
         networks:
-            laravel_net:
+            bedelia_net:
                 ipv4_address: 172.16.100.8
     rest:
         build:
@@ -41,7 +41,7 @@ services:
         volumes:
             - ./bedelia-rest/.env:/var/www/.env
         networks:
-            laravel_net:
+            bedelia_net:
                 ipv4_address: 172.16.100.10
     web:
         build:
@@ -54,7 +54,7 @@ services:
         ports:
             - 80:80
         networks:
-            laravel_net:
+            bedelia_net:
                 ipv4_address: 172.16.100.11
     pwa:
         build:
@@ -67,11 +67,11 @@ services:
         ports:
             - 8080:80
         networks:
-            laravel_net:
+            bedelia_net:
                 ipv4_address: 172.16.100.12
 
 networks:
-    laravel_net:
+    bedelia_net:
         driver: bridge
         ipam:
             driver: default
